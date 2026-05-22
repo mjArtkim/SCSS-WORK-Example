@@ -1,0 +1,965 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+
+    <div th:replace="~{|recruit/include/user/inc_head|}"></div>
+</head>
+<body>
+<section class="min-h">
+    <section>
+        <div class="recruit-header wrap">
+            <div class="header-box">
+                <div th:replace="~{|recruit/include/user/inc_header|}"></div>
+            </div>
+        </div>
+        <div class="wrap">
+            <section class="re-resume re-resume--job-posting js-job-posting">
+                <div class="re-resume__layout">
+                    <div class="re-resume__content">
+                        <h2 class="re-resume__page-title">공고등록</h2>
+                        <div class="re-resume__block">
+                            <label class="re-resume__field-label re-resume__field-label--block" for="postingTitle">공고제목 <span>*</span></label>
+                            <input id="postingTitle" class="re-resume__input" type="text" placeholder="이곳에 공고 제목을 입력해주세요.">
+                        </div>
+                        <div class="re-resume__block">
+                            <label class="re-resume__field-label re-resume__field-label--block" for="facilityType">시설 유형 <span>*</span></label>
+                            <div class="re-resume__select-wrap">
+                                <select id="facilityType" class="re-resume__select js-post-facility">
+                                    <option selected disabled>선택해주세요</option>
+                                    <option>노인 의료복지시설 (요양원, 요양병원 등 / 입소)</option>
+                                    <option>방문 요양·돌봄 서비스 (재가요양, 방문요양)</option>
+                                    <option>주야간 보호센터 (데이케어센터)</option>
+                                    <option>노인여가복지시설 (경로당, 복지관 등)</option>
+                                    <option>장애인 복지시설 (거주시설, 직업재활시설 등)</option>
+                                    <option>장애인 활동지원 서비스 (방문형)</option>
+                                    <option>아동·청소년 돌봄센터 (지역아동센터, 방과후 등)</option>
+                                    <option>종합사회복지관</option>
+                                    <option>기타</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="re-resume__block">
+                            <label class="re-resume__field-label re-resume__field-label--block" for="jobKeyword">직무<span>*</span></label>
+                            <div class="re-resume__search-field">
+                                <input id="jobKeyword" class="re-resume__input js-post-job-input" type="text" placeholder="직무를 입력하고 엔터를 눌러주세요">
+                                <button type="button" class="re-resume__text-button js-post-job-add">전체보기</button>
+                            </div>
+                            <div class="re-resume__selection-box js-post-job-box">
+                                <p class="re-resume__placeholder-copy js-post-job-empty">선택하신 직무가 이곳에 등록됩니다.</p>
+                                <div class="re-resume__selected-list js-post-job-list" hidden></div>
+                                <button type="button" class="re-resume__text-link">찾으시는 직무가 없으신가요?</button>
+                            </div>
+                        </div>
+                        <div class="re-resume__block">
+                            <div class="re-resume__field-label re-resume__field-label--block">모집인원<span>*</span></div>
+                            <div class="re-resume__count-row">
+                                <label class="re-resume__count-box" for="hireCount">
+                                    <span class="sound-only">모집 인원</span>
+                                    <input id="hireCount" class="re-resume__count-input" type="number" min="0" value="0">
+                                    <span class="re-resume__count-unit">명 모집</span>
+                                </label>
+                                <p class="re-resume__inline-note">*정확한 인원 예측이 어려운 경우 많은 기업은 00명을 기입합니다.</p>
+                            </div>
+                        </div>
+                        <div class="re-resume__block">
+                            <div class="re-resume__field-label re-resume__field-label--block">고용형태<span>*</span></div>
+                            <div class="mo-add-condition__check-list">
+                                <label class="mo-add-condition__check">
+                                    <input type="checkbox" class="js-post-employment-input" value="정규직"/>
+                                    <span>정규직</span>
+                                </label>
+                                <label class="mo-add-condition__check">
+                                    <input type="checkbox" class="js-post-employment-input" value="계약직">
+                                    <span>계약직</span>
+                                </label>
+                                <label class="mo-add-condition__check">
+                                    <input type="checkbox" class="js-post-employment-input" value="파견직"/>
+                                    <span>파견직</span>
+                                </label>
+                                <label class="mo-add-condition__check">
+                                    <input type="checkbox" class="js-post-employment-input" value="아르바이트">
+                                    <span>아르바이트</span>
+                                </label>
+                                <label class="mo-add-condition__check">
+                                    <input type="checkbox" class="js-post-employment-input" value="인턴">
+                                    <span>인턴</span>
+                                </label>
+                                <label class="mo-add-condition__check">
+                                    <input type="checkbox" class="js-post-employment-input" value="대체인력">
+                                    <span>대체인력</span>
+                                </label>
+                                <label class="mo-add-condition__check">
+                                    <input type="checkbox" class="js-post-employment-input" value="위촉직">
+                                    <span>위촉직</span>
+                                </label>
+                                <label class="mo-add-condition__check">
+                                    <input type="checkbox" class="js-post-employment-input" value="파트타임">
+                                    <span>파트타임</span>
+                                </label>
+                                <label class="mo-add-condition__check">
+                                    <input type="checkbox" class="js-post-employment-input" value="전임">
+                                    <span>전임</span>
+                                </label>
+                                <label class="mo-add-condition__check">
+                                    <input type="checkbox" class="js-post-employment-input" value="교육생">
+                                    <span>교육생</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="re-resume__block">
+                            <div class="re-resume__field-label re-resume__field-label--block">경력<span>*</span></div>
+                            <div class="re-resume__career-row">
+                                <div class="mo-add-condition__check-list re-resume__career-checks">
+                                    <label class="mo-add-condition__check">
+                                        <input type="checkbox"/>
+                                        <span>신입</span>
+                                    </label>
+                                    <label class="mo-add-condition__check">
+                                        <input type="checkbox">
+                                        <span>경력무관</span>
+                                    </label>
+                                    <label class="mo-add-condition__check">
+                                        <input type="checkbox"/>
+                                        <span>경력</span>
+                                    </label>
+                                </div>
+                                <div class="re-resume__career-selects">
+                                    <div class="re-resume__select-wrap">
+                                        <select class="re-resume__select re-resume__select--compact re-resume__select--filled js-post-career-range-type">
+                                            <option selected>연수무관</option>
+                                            <option>이상</option>
+                                            <option>이하</option>
+                                        </select>
+                                    </div>
+                                    <div class="re-resume__select-wrap">
+                                        <select class="re-resume__select re-resume__select--compact re-resume__select--filled js-post-career-year">
+                                            <option selected>1년이상</option>
+                                            <option>2년이상</option>
+                                            <option>3년이상</option>
+                                            <option>5년이상</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="re-resume__block">
+                            <label class="re-resume__field-label re-resume__field-label--block" for="educationLevel">학력 <span>*</span></label>
+                            <div class="re-resume__select-wrap">
+                                <select id="educationLevel" class="re-resume__select">
+                                    <option selected disabled>선택해주세요</option>
+                                    <option>학력무관</option>
+                                    <option>고등학교 졸업</option>
+                                    <option>대학(2,3년) 졸업</option>
+                                    <option>대학교(4년) 졸업</option>
+                                    <option>석사 졸업</option>
+                                    <option>박사 졸업</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="re-resume__block">
+                            <div class="re-resume__field-head">
+                                <div class="re-resume__field-label">급여</div>
+                                <label class="re-resume__check-label" for="salaryNegotiable">
+                                    <input id="salaryNegotiable" class="js-post-salary-negotiable" type="checkbox">
+                                    <span class="re-resume__check-box" aria-hidden="true"></span>
+                                    <span class="re-resume__check-copy">면접 후 결정</span>
+                                </label>
+                            </div>
+                            <div class="re-resume__salary-row">
+                                <div class="re-resume__select-wrap">
+                                    <select class="re-resume__select re-resume__select--compact re-resume__select--filled js-post-salary-type">
+                                        <option selected>연봉</option>
+                                        <option>월급</option>
+                                        <option>일급</option>
+                                        <option>시급</option>
+                                    </select>
+                                </div>
+                                <label class="re-resume__unit-field js-post-salary-amount-wrap" for="salaryAmount">
+                                    <span class="sound-only">급여 금액</span>
+                                    <input id="salaryAmount" class="re-resume__unit-input js-post-salary-amount" type="number" min="0" value="0">
+                                    <span class="re-resume__unit-copy js-post-salary-unit">만원</span>
+                                </label>
+                                <label class="re-resume__meta-field js-post-week-hours-wrap" for="workHours">
+                                    <span class="re-resume__meta-label">근무시간</span>
+                                    <input id="workHours" class="re-resume__meta-input js-post-week-hours" type="number" min="0" value="40">
+                                    <span class="re-resume__meta-suffix">시간</span>
+                                </label>
+                            </div>
+                            <p class="re-resume__helper-note re-resume__helper-note--right">*주 40시간 기준 최저연봉 약 25,882,560원 (2026년 최저시급 10,320원)</p>
+                        </div>
+                        <div class="re-resume__block">
+                            <label class="re-resume__field-label re-resume__field-label--block" for="workPlaceKeyword">근무지 <span>*</span></label>
+                            <div class="re-resume__location-row">
+                                <input id="workPlaceKeyword" class="re-resume__input" type="text" placeholder="근무지를 입력해주세요">
+                                <button type="button" class="re-resume__inline-btn re-resume__inline-btn--sm">추가</button>
+                                <input class="re-resume__input" type="text" placeholder="">
+                                <button type="button" class="re-resume__inline-btn re-resume__inline-btn--sm">변경</button>
+                            </div>
+                            <div class="re-resume__location-meta">
+                                <button type="button" class="re-resume__map-link js-post-map-toggle">지도 보기</button>
+                                <p class="re-resume__helper-note">*모집분야의 근무지와 본사가 다른경우, 실제 근무지를 작성해주세요.</p>
+                            </div>
+                            <div class="re-resume__map-panel js-post-map-panel" hidden>
+                                <div class="re-resume__map-box" aria-hidden="true"></div>
+                            </div>
+                        </div>
+                        <div class="re-resume__block">
+                            <div class="re-resume__field-head">
+                                <div class="re-resume__field-label">근무조건</div>
+                                <label class="re-resume__check-label" for="workConditionNegotiable">
+                                    <input id="workConditionNegotiable" class="js-post-time-negotiable" type="checkbox">
+                                    <span class="re-resume__check-box" aria-hidden="true"></span>
+                                    <span class="re-resume__check-copy">면접 후 결정</span>
+                                </label>
+                            </div>
+                            <div class="re-resume__work-row">
+                                <div class="re-resume__weekday-list">
+                                    <button type="button" class="re-resume__weekday-btn js-post-day-btn" value="월">월</button>
+                                    <button type="button" class="re-resume__weekday-btn js-post-day-btn" value="화">화</button>
+                                    <button type="button" class="re-resume__weekday-btn js-post-day-btn" value="수">수</button>
+                                    <button type="button" class="re-resume__weekday-btn js-post-day-btn" value="목">목</button>
+                                    <button type="button" class="re-resume__weekday-btn js-post-day-btn" value="금">금</button>
+                                    <button type="button" class="re-resume__weekday-btn js-post-day-btn" value="토">토</button>
+                                    <button type="button" class="re-resume__weekday-btn js-post-day-btn" value="일">일</button>
+                                </div>
+                                <button type="button" class="re-resume__time-field js-post-time-trigger" aria-expanded="false">
+                                    <span class="js-post-time-display">오전 00:00 ~ 오후 00:00</span>
+                                    <span class="re-resume__time-icon" aria-hidden="true"></span>
+                                </button>
+                            </div>
+                            <div class="re-resume__time-editor js-post-time-editor" hidden>
+                                <label class="re-resume__time-edit-field" for="postingStartTime">
+                                    <span class="re-resume__time-edit-label">시작</span>
+                                    <input id="postingStartTime" class="re-resume__time-edit-input js-post-start-time" type="time">
+                                </label>
+                                <label class="re-resume__time-edit-field" for="postingEndTime">
+                                    <span class="re-resume__time-edit-label">종료</span>
+                                    <input id="postingEndTime" class="re-resume__time-edit-input js-post-end-time" type="time">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="re-resume__block">
+                            <div class="re-resume__field-label re-resume__field-label--block">채용절차</div>
+                            <div class="re-resume__process-row">
+                                <div class="re-resume__process-list js-post-process-list"></div>
+                                <span class="re-resume__process-divider js-post-process-divider" aria-hidden="true"></span>
+                                <button type="button" class="re-resume__process-add js-post-process-add">
+                                    <span>추가</span>
+                                    <span class="re-resume__process-plus" aria-hidden="true"></span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="re-resume__block">
+                            <div class="re-resume__field-label re-resume__field-label--block">복리후생</div>
+                            <div class="re-resume__search-field">
+                                <input class="re-resume__input" type="text" placeholder="복리후생을 등록해주세요">
+                                <button type="button" class="re-resume__text-button">전체보기</button>
+                            </div>
+                            <div class="re-resume__selection-box re-resume__selection-box--large">
+                                <p class="re-resume__placeholder-copy">선택하신 복리후생이 이곳에 등록됩니다.</p>
+                                <button type="button" class="re-resume__text-link">찾으시는 복리후생이 없으신가요?</button>
+                            </div>
+                        </div>
+                        <div class="re-resume__block">
+                            <div class="re-resume__field-head">
+                                <label class="re-resume__field-label" for="postingPeriod">접수기간 <span>*</span></label>
+                                <label class="re-resume__check-label" for="closeWhenFilled">
+                                    <input id="closeWhenFilled" class="js-post-close-when-filled" type="checkbox">
+                                    <span class="re-resume__check-box" aria-hidden="true"></span>
+                                    <span class="re-resume__check-copy">채용 시 마감</span>
+                                </label>
+                            </div>
+                            <div class="re-resume__period-top">
+                                <div class="re-resume__select-wrap re-resume__period-select">
+                                    <select id="postingPeriod" class="re-resume__select re-resume__select--compact re-resume__select--filled js-post-period-select">
+                                        <option value="1m" selected>1개월</option>
+                                        <option value="15d">15일</option>
+                                        <option value="2m">2개월</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="re-resume__period-grid">
+                                <div class="re-resume__period-col">
+                                    <label class="re-resume__sub-label" for="postingStartDate">게시일</label>
+                                    <div class="re-resume__date-inline">
+                                        <label class="re-resume__date-field" for="postingStartDate">
+                                            <span class="re-resume__date-icon" aria-hidden="true"></span>
+                                            <input id="postingStartDate" class="re-resume__date-input js-post-start-date" type="text" placeholder="0000.00.00" readonly>
+                                        </label>
+                                        <div class="re-resume__select-wrap">
+                                            <select class="re-resume__select re-resume__select--compact re-resume__select--filled">
+                                                <option selected>00시</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="re-resume__period-col">
+                                    <label class="re-resume__sub-label" for="postingEndDate">마감일</label>
+                                    <div class="re-resume__date-inline">
+                                        <label class="re-resume__date-field" for="postingEndDate">
+                                            <span class="re-resume__date-icon" aria-hidden="true"></span>
+                                            <input id="postingEndDate" class="re-resume__date-input js-post-end-date" type="text" placeholder="0000.00.00" readonly>
+                                        </label>
+                                        <div class="re-resume__select-wrap">
+                                            <select class="re-resume__select re-resume__select--compact re-resume__select--filled">
+                                                <option selected>00시</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="re-resume__block">
+                            <div class="re-resume__field-label re-resume__field-label--block">자격요건</div>
+                            <div class="re-resume__search-field">
+                                <input class="re-resume__input" type="text" placeholder="자격증을 등록해주세요">
+                                <button type="button" class="re-resume__text-button">전체보기</button>
+                            </div>
+                            <div class="re-resume__selection-box re-resume__selection-box--large">
+                                <p class="re-resume__placeholder-copy">선택하신 자격증이 이곳에 등록됩니다.</p>
+                                <button type="button" class="re-resume__text-link">찾으시는 자격증이 없으신가요?</button>
+                            </div>
+                        </div>
+                        <div class="re-resume__block re-resume__block--group">
+                            <div class="re-resume__group-head">
+                                <h3 class="re-resume__section-name">인사담당자</h3>
+                                <label class="re-resume__check-label" for="managerPrivateAll">
+                                    <input id="managerPrivateAll" class="js-post-manager-private-all" type="checkbox">
+                                    <span class="re-resume__check-box" aria-hidden="true"></span>
+                                    <span class="re-resume__check-copy">전체 비공개</span>
+                                </label>
+                            </div>
+                            <div class="re-resume__contact-field">
+                                <label class="re-resume__sub-label" for="managerName">담당자 정보 <span>*</span></label>
+                                <div class="re-resume__manager-row">
+                                    <input id="managerName" class="re-resume__input" type="text" placeholder="이름">
+                                    <input class="re-resume__input" type="text" placeholder="부서정보">
+                                    <label class="re-resume__check-label re-resume__check-label--save" for="saveManagerInfo">
+                                        <input id="saveManagerInfo" type="checkbox">
+                                        <span class="re-resume__check-box" aria-hidden="true"></span>
+                                        <span class="re-resume__check-copy">현재 담당자 정보 저장</span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="re-resume__dual-row">
+                                <div class="re-resume__contact-field">
+                                    <label class="re-resume__sub-label" for="managerPhone">전화번호 <span>*</span></label>
+                                    <div class="re-resume__privacy-row">
+                                        <input id="managerPhone" class="re-resume__input" type="text" placeholder="000-0000-0000">
+                                        <label class="re-resume__privacy-toggle" for="managerPhonePrivate">
+                                            <input id="managerPhonePrivate" class="js-post-manager-private" type="checkbox">
+                                            <span class="re-resume__check-box" aria-hidden="true"></span>
+                                            <span class="re-resume__check-copy">비공개</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="re-resume__contact-field">
+                                    <label class="re-resume__sub-label" for="managerMobile">휴대폰</label>
+                                    <div class="re-resume__privacy-row">
+                                        <input id="managerMobile" class="re-resume__input" type="text" placeholder="000-0000-0000">
+                                        <label class="re-resume__privacy-toggle" for="managerMobilePrivate">
+                                            <input id="managerMobilePrivate" class="js-post-manager-private" type="checkbox">
+                                            <span class="re-resume__check-box" aria-hidden="true"></span>
+                                            <span class="re-resume__check-copy">비공개</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="re-resume__dual-row">
+                                <div class="re-resume__contact-field">
+                                    <label class="re-resume__sub-label" for="managerEmail">이메일 <span>*</span></label>
+                                    <div class="re-resume__privacy-row">
+                                        <input id="managerEmail" class="re-resume__input" type="email" placeholder="payma@payma.co.kr">
+                                        <label class="re-resume__privacy-toggle" for="managerEmailPrivate">
+                                            <input id="managerEmailPrivate" class="js-post-manager-private" type="checkbox">
+                                            <span class="re-resume__check-box" aria-hidden="true"></span>
+                                            <span class="re-resume__check-copy">비공개</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="re-resume__contact-field">
+                                    <label class="re-resume__sub-label" for="managerFax">팩스</label>
+                                    <div class="re-resume__privacy-row">
+                                        <input id="managerFax" class="re-resume__input" type="text">
+                                        <label class="re-resume__privacy-toggle" for="managerFaxPrivate">
+                                            <input id="managerFaxPrivate" class="js-post-manager-private" type="checkbox">
+                                            <span class="re-resume__check-box" aria-hidden="true"></span>
+                                            <span class="re-resume__check-copy">비공개</span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="re-resume__block re-resume__block--group">
+                            <h3 class="re-resume__section-name">접수 방법과 이력서</h3>
+                            <div class="re-resume__option-block">
+                                <div class="re-resume__sub-label">접수방법<span>*</span></div>
+                                <div class="mo-add-condition__check-list re-resume__option-checks">
+                                    <label class="mo-add-condition__check">
+                                        <input type="checkbox" class="js-post-method-input" value="구인구직 접수" checked>
+                                        <span>구인구직 접수</span>
+                                    </label>
+                                    <label class="mo-add-condition__check">
+                                        <input type="checkbox" class="js-post-method-input" value="홈페이지 접수">
+                                        <span>홈페이지 접수</span>
+                                    </label>
+                                    <label class="mo-add-condition__check">
+                                        <input type="checkbox" class="js-post-method-input" value="E-Mail 접수">
+                                        <span>E-Mail 접수</span>
+                                    </label>
+                                </div>
+                                <div class="re-resume__method-detail-list">
+                                    <div class="re-resume__method-static js-post-method-resume">구인구직 이력서</div>
+                                    <div class="re-resume__method-line js-post-method-homepage" hidden>
+                                        <input class="re-resume__method-input" type="text" placeholder="홈페이지 접수 URL을 입력해주세요.">
+                                    </div>
+                                    <div class="re-resume__method-line js-post-method-email" hidden>
+                                        <input class="re-resume__method-input" type="email" placeholder="이메일 주소를 입력해주세요.">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="re-resume__option-block">
+                                <div class="re-resume__sub-label">이력서<span>*</span></div>
+                                <div class="mo-add-condition__check-list re-resume__option-checks">
+                                    <label class="mo-add-condition__check">
+                                        <input type="checkbox">
+                                        <span>구인구직 이력서</span>
+                                    </label>
+                                    <label class="mo-add-condition__check">
+                                        <input type="checkbox">
+                                        <span>자사양식</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="re-resume__notice-card">
+                            <strong class="re-resume__notice-title">공고 등록 전 꼭 확인해야 할 사항</strong>
+                            <div class="re-resume__notice-body">
+                                <div>
+                                    <label class="re-resume__check-label re-resume__check-label--notice" for="privacyGuideAgree">
+                                        <input id="privacyGuideAgree" type="checkbox">
+                                        <span class="re-resume__check-box" aria-hidden="true"></span>
+                                        <span class="re-resume__check-copy">구직자의 개인정보를 안전하게 보호해주세요.</span>
+                                    </label>
+                                    <p class="re-resume__notice-copy">
+                                        더욱 안전한 채용 환경을 위해 아래 내용을 함께 확인해주세요.<br/>
+                                        확인 완료시 ‘개인정보 보호를 준수하는 기업’으로 표시됩니다.
+                                    </p>
+                                </div>
+                                <div>
+                                    <ul class="re-resume__notice-list">
+                                        <li>최저임금을 준수하지 않는 공고는 등록이 제한될 수 있습니다.</li>
+                                        <li>채용과 무관한 개인정보 요구 시 공고가 삭제될 수 있습니다.</li>
+                                        <li>성별, 연령 등 차별적 조건이 포함된 공고는 제한될 수 있습니다.</li>
+                                        <li>금전 요구, 물품 구매 유도 등 부적절한 내용은 등록할 수 없습니다.</li>
+                                        <li>허위 또는 부적절한 공고는 관리자 검토 후 삭제될 수 있습니다.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <aside class="re-resume__aside">
+                        <div class="re-resume__sticky">
+                            <button type="button" class="re-resume__side-btn re-resume__side-btn--ghost">임시저장</button>
+                            <button type="button" class="re-resume__side-btn re-resume__side-btn--primary" onclick="movePage('/recruit/user/jobPostingEdit')">다음단계</button>
+                        </div>
+                    </aside>
+                </div>
+            </section>
+        </div>
+    </section>
+    <footer class="min-h__bottom">
+        <div class="footer-box">
+            <div th:replace="~{|recruit/include/user/inc_footer|}"></div>
+        </div>
+    </footer>
+</section>
+<script th:inline="javascript">
+    $(function () {
+        const $root = $('.js-job-posting');
+
+        if (!$root.length) {
+            return;
+        }
+
+        const $allSelects = $root.find('select');
+        const $jobInput = $root.find('.js-post-job-input');
+        const $jobAddButton = $root.find('.js-post-job-add');
+        const $jobList = $root.find('.js-post-job-list');
+        const $jobEmpty = $root.find('.js-post-job-empty');
+        const $employmentExtra = $root.find('.js-post-employment-extra');
+        const $salaryType = $root.find('.js-post-salary-type');
+        const $salaryUnit = $root.find('.js-post-salary-unit');
+        const $salaryAmount = $root.find('.js-post-salary-amount');
+        const $salaryAmountWrap = $root.find('.js-post-salary-amount-wrap');
+        const $weekHours = $root.find('.js-post-week-hours');
+        const $weekHoursWrap = $root.find('.js-post-week-hours-wrap');
+        const $salaryNegotiable = $root.find('.js-post-salary-negotiable');
+        const $dayButtons = $root.find('.js-post-day-btn');
+        const $timeTrigger = $root.find('.js-post-time-trigger');
+        const $timeDisplay = $root.find('.js-post-time-display');
+        const $timeEditor = $root.find('.js-post-time-editor');
+        const $startTime = $root.find('.js-post-start-time');
+        const $endTime = $root.find('.js-post-end-time');
+        const $timeNegotiable = $root.find('.js-post-time-negotiable');
+        const $processList = $root.find('.js-post-process-list');
+        const $processAdd = $root.find('.js-post-process-add');
+        const $processDivider = $root.find('.js-post-process-divider');
+        const $periodSelect = $root.find('.js-post-period-select');
+        const $startDate = $root.find('.js-post-start-date');
+        const $endDate = $root.find('.js-post-end-date');
+        const $closeWhenFilled = $root.find('.js-post-close-when-filled');
+        const $methodInputs = $root.find('.js-post-method-input');
+        const $methodResume = $root.find('.js-post-method-resume');
+        const $methodHomepage = $root.find('.js-post-method-homepage');
+        const $methodEmail = $root.find('.js-post-method-email');
+        const $managerPrivateAll = $root.find('.js-post-manager-private-all');
+        const $managerPrivates = $root.find('.js-post-manager-private');
+        const $facilitySelect = $root.find('.js-post-facility');
+        const $mapToggle = $root.find('.js-post-map-toggle');
+        const $mapPanel = $root.find('.js-post-map-panel');
+
+        const salaryUnitMap = {
+            annual: '만원',
+            monthly: '만원',
+            daily: '원',
+            hourly: '원'
+        };
+
+        const salaryTypeMap = {
+            '연봉': 'annual',
+            '월급': 'monthly',
+            '일급': 'daily',
+            '시급': 'hourly'
+        };
+
+        const processOrder = ['서류합격', '1차면접', '2차면접', '인성면접', '임원면접', '최종합격'];
+        const finalProcessStep = processOrder[processOrder.length - 1];
+        const optionalProcessOrder = processOrder.slice(0, processOrder.length - 1);
+        const selectedProcessSteps = [finalProcessStep];
+        const selectedJobs = [];
+
+        function fn_postToggleHidden($target, isVisible) {
+            $target.prop('hidden', !isVisible);
+        }
+
+        function fn_postUpdateSelectState($select) {
+            const $selectedOption = $select.find('option:selected');
+            const isFilled = Boolean($.trim($selectedOption.val() || '')) || !$selectedOption.is(':disabled');
+
+            $select.toggleClass('re-resume__select--filled', isFilled);
+        }
+
+        function fn_postRenderJobs() {
+            $jobList.empty();
+
+            $.each(selectedJobs, function (_, job) {
+                const $item = $('<button>', {
+                    type: 'button',
+                    class: 're-resume__selected-chip js-post-job-remove',
+                    value: job
+                });
+
+                $item.append($('<span>').text(job));
+                $item.append($('<span>', {
+                    class: 're-resume__selected-chip-remove',
+                    'aria-hidden': 'true'
+                }));
+
+                $jobList.append($item);
+            });
+
+            const hasJobs = selectedJobs.length > 0;
+
+            fn_postToggleHidden($jobList, hasJobs);
+            fn_postToggleHidden($jobEmpty, !hasJobs);
+        }
+
+        function fn_postAddJob(value) {
+            const job = $.trim(value);
+
+            if (!job || $.inArray(job, selectedJobs) !== -1) {
+                return;
+            }
+
+            selectedJobs.push(job);
+            $jobInput.val('');
+            fn_postRenderJobs();
+        }
+
+        function fn_postRemoveJob(value) {
+            const index = $.inArray(value, selectedJobs);
+
+            if (index === -1) {
+                return;
+            }
+
+            selectedJobs.splice(index, 1);
+            fn_postRenderJobs();
+        }
+
+        function fn_postUpdateEmploymentMoreState(isOpen) {
+            fn_postToggleHidden($employmentExtra, isOpen);
+        }
+
+        function fn_postGetSelectedExtraEmployment() {
+            return $employmentExtra.find('.js-post-employment-input:checked');
+        }
+
+        function fn_postUpdateSalaryUnit() {
+            const selectedText = $.trim($salaryType.find('option:selected').text());
+            const salaryType = salaryTypeMap[selectedText] || 'annual';
+
+            $salaryUnit.text(salaryUnitMap[salaryType] || '만원');
+        }
+
+        function fn_postUpdateSalaryNegotiable() {
+            const isDisabled = $salaryNegotiable.is(':checked');
+
+            $salaryType.prop('disabled', isDisabled);
+            $salaryAmount.prop('disabled', isDisabled);
+            $weekHours.prop('disabled', isDisabled);
+            $salaryAmountWrap.toggleClass('is-disabled', isDisabled);
+            $weekHoursWrap.toggleClass('is-disabled', isDisabled);
+        }
+
+        function fn_postFormatTimeLabel(value, fallbackPeriod) {
+            if (!value) {
+                return fallbackPeriod + ' 00:00';
+            }
+
+            const timeParts = value.split(':');
+            const hour = Number(timeParts[0]);
+            const minute = timeParts[1] || '00';
+            const isAfternoon = hour >= 12;
+            const displayHour = String(hour % 12 || 12).padStart(2, '0');
+
+            return (isAfternoon ? '오후' : '오전') + ' ' + displayHour + ':' + minute;
+        }
+
+        function fn_postUpdateTimeDisplay() {
+            const startLabel = fn_postFormatTimeLabel($startTime.val(), '오전');
+            const endLabel = fn_postFormatTimeLabel($endTime.val(), '오후');
+            const isFilled = Boolean($startTime.val() || $endTime.val());
+
+            $timeDisplay.text(startLabel + ' ~ ' + endLabel);
+            $timeTrigger.toggleClass('is-filled', isFilled);
+        }
+
+        function fn_postUpdateTimeNegotiable() {
+            const isDisabled = $timeNegotiable.is(':checked');
+
+            $dayButtons.prop('disabled', isDisabled);
+            $timeTrigger.prop('disabled', isDisabled).toggleClass('is-disabled', isDisabled);
+            $startTime.prop('disabled', isDisabled);
+            $endTime.prop('disabled', isDisabled);
+
+            if (isDisabled) {
+                fn_postToggleHidden($timeEditor, false);
+                $timeTrigger.attr('aria-expanded', 'false');
+            }
+        }
+
+        function fn_postSortProcesses() {
+            selectedProcessSteps.sort(function (leftStep, rightStep) {
+                return $.inArray(leftStep, processOrder) - $.inArray(rightStep, processOrder);
+            });
+        }
+
+        function fn_postGetNextMissingProcess() {
+            let nextMissingStep = '';
+
+            $.each(optionalProcessOrder, function (_, stepLabel) {
+                if ($.inArray(stepLabel, selectedProcessSteps) === -1) {
+                    nextMissingStep = stepLabel;
+                    return false;
+                }
+            });
+
+            return nextMissingStep;
+        }
+
+        function fn_postRenderProcesses() {
+            const hasRemainingStep = Boolean(fn_postGetNextMissingProcess());
+
+            $processList.empty();
+
+            $.each(selectedProcessSteps, function (index, stepLabel) {
+                const $chip = $('<div>', {
+                    class: 're-resume__process-chip'
+                });
+
+                $chip.append($('<span>', {
+                    class: 're-resume__process-label'
+                }).text(stepLabel));
+
+                if (stepLabel !== finalProcessStep) {
+                    $chip.append($('<button>', {
+                        type: 'button',
+                        class: 're-resume__process-remove js-post-process-remove',
+                        value: stepLabel,
+                        'aria-label': stepLabel + ' 삭제'
+                    }));
+                } else {
+                    $chip.addClass('is-final');
+                }
+
+                $processList.append($chip);
+
+                if (index < selectedProcessSteps.length - 1) {
+                    $processList.append($('<span>', {
+                        class: 're-resume__process-arrow',
+                        'aria-hidden': 'true'
+                    }));
+                }
+            });
+
+            $processAdd.prop('disabled', !hasRemainingStep).toggleClass('is-disabled', !hasRemainingStep);
+            $processDivider.toggleClass('is-disabled', !hasRemainingStep);
+        }
+
+        function fn_postAddProcessStep() {
+            const nextStep = fn_postGetNextMissingProcess();
+
+            if (!nextStep) {
+                return;
+            }
+
+            selectedProcessSteps.push(nextStep);
+            fn_postSortProcesses();
+            fn_postRenderProcesses();
+        }
+
+        function fn_postRemoveProcessStep(stepLabel) {
+            const processIndex = $.inArray(stepLabel, selectedProcessSteps);
+
+            if (processIndex === -1 || stepLabel === finalProcessStep) {
+                return;
+            }
+
+            selectedProcessSteps.splice(processIndex, 1);
+            fn_postRenderProcesses();
+        }
+
+        function fn_postCloneDate(date) {
+            return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+        }
+
+        function fn_postFormatDate(date) {
+            return $.datepicker.formatDate('yy.mm.dd', date);
+        }
+
+        function fn_postParseDate(value) {
+            if (!value) {
+                return null;
+            }
+
+            try {
+                return $.datepicker.parseDate('yy.mm.dd', value);
+            } catch (error) {
+                return null;
+            }
+        }
+
+        function fn_postAddDays(date, days) {
+            const nextDate = fn_postCloneDate(date);
+
+            nextDate.setDate(nextDate.getDate() + days);
+            return nextDate;
+        }
+
+        function fn_postAddMonths(date, months) {
+            const nextDate = fn_postCloneDate(date);
+            const originalDay = nextDate.getDate();
+
+            nextDate.setMonth(nextDate.getMonth() + months);
+
+            if (nextDate.getDate() !== originalDay) {
+                nextDate.setDate(0);
+            }
+
+            return nextDate;
+        }
+
+        function fn_postSyncDateRange() {
+            const startDate = fn_postParseDate($startDate.val());
+            const endDate = fn_postParseDate($endDate.val());
+
+            $startDate.datepicker('option', 'maxDate', endDate || null);
+            $endDate.datepicker('option', 'minDate', startDate || null);
+        }
+
+        function fn_postApplyPeriod(periodValue) {
+            let startDate = fn_postParseDate($startDate.val());
+
+            if (!startDate) {
+                startDate = fn_postCloneDate(new Date());
+                $startDate.val(fn_postFormatDate(startDate));
+            }
+
+            let endDate = fn_postCloneDate(startDate);
+
+            if (periodValue === '15d') {
+                endDate = fn_postAddDays(startDate, 15);
+            }
+
+            if (periodValue === '1m') {
+                endDate = fn_postAddMonths(startDate, 1);
+            }
+
+            if (periodValue === '2m') {
+                endDate = fn_postAddMonths(startDate, 2);
+            }
+
+            $startDate.val(fn_postFormatDate(startDate));
+            $endDate.val(fn_postFormatDate(endDate));
+            fn_postSyncDateRange();
+        }
+
+        function fn_postUpdateCloseWhenFilled() {
+            const isClosedWhenFilled = $closeWhenFilled.is(':checked');
+
+            $periodSelect.prop('disabled', isClosedWhenFilled);
+            $endDate.prop('disabled', isClosedWhenFilled);
+            $endDate.closest('.re-resume__date-field').toggleClass('is-disabled', isClosedWhenFilled);
+        }
+
+        function fn_postUpdateMethodDetail() {
+            const selectedValues = $methodInputs.filter(':checked').map(function () {
+                return $(this).val();
+            }).get();
+
+            $methodResume.prop('hidden', $.inArray('구인구직 접수', selectedValues) === -1);
+            $methodHomepage.prop('hidden', $.inArray('홈페이지 접수', selectedValues) === -1);
+            $methodEmail.prop('hidden', $.inArray('E-Mail 접수', selectedValues) === -1);
+        }
+
+        function fn_postSyncManagerPrivateAll() {
+            const allChecked = $managerPrivates.length && $managerPrivates.filter(':checked').length === $managerPrivates.length;
+
+            $managerPrivateAll.prop('checked', allChecked);
+        }
+
+        const datepickerBaseOption = {
+            dateFormat: 'yy.mm.dd',
+            showOtherMonths: true,
+            changeMonth: true,
+            changeYear: true
+        };
+
+        $startDate.datepicker($.extend({}, datepickerBaseOption, {
+            onSelect: fn_postSyncDateRange
+        }));
+
+        $endDate.datepicker($.extend({}, datepickerBaseOption, {
+            onSelect: fn_postSyncDateRange
+        }));
+
+        $allSelects.each(function () {
+            fn_postUpdateSelectState($(this));
+        });
+
+        $allSelects.on('change', function () {
+            fn_postUpdateSelectState($(this));
+        });
+
+        $jobAddButton.on('click', function () {
+            fn_postAddJob($jobInput.val());
+        });
+
+        $jobInput.on('keydown', function (event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                fn_postAddJob($jobInput.val());
+            }
+        });
+
+        $jobList.on('click', '.js-post-job-remove', function () {
+            fn_postRemoveJob($(this).val() || '');
+        });
+
+        $employmentExtra.find('.js-post-employment-input').on('change', function () {
+            fn_postUpdateEmploymentMoreState(fn_postGetSelectedExtraEmployment().length > 0 || !$employmentExtra.prop('hidden'));
+        });
+
+        $salaryType.on('change', fn_postUpdateSalaryUnit);
+        $salaryNegotiable.on('change', fn_postUpdateSalaryNegotiable);
+
+        $dayButtons.on('click', function () {
+            if ($(this).prop('disabled')) {
+                return;
+            }
+
+            $(this).toggleClass('is-selected');
+        });
+
+        $timeTrigger.on('click', function () {
+            const shouldOpen = $timeEditor.prop('hidden');
+
+            if ($timeTrigger.prop('disabled')) {
+                return;
+            }
+
+            fn_postToggleHidden($timeEditor, shouldOpen);
+            $timeTrigger.attr('aria-expanded', shouldOpen ? 'true' : 'false');
+        });
+
+        $startTime.add($endTime).on('input', fn_postUpdateTimeDisplay);
+        $timeNegotiable.on('change', fn_postUpdateTimeNegotiable);
+
+        $processAdd.on('click', fn_postAddProcessStep);
+        $processList.on('click', '.js-post-process-remove', function () {
+            fn_postRemoveProcessStep($(this).val());
+        });
+
+        $periodSelect.on('change', function () {
+            fn_postApplyPeriod($(this).val());
+        });
+
+        $startDate.add($endDate).on('click', function () {
+            if ($(this).prop('disabled')) {
+                return;
+            }
+
+            $(this).datepicker('show');
+        });
+
+        $closeWhenFilled.on('change', fn_postUpdateCloseWhenFilled);
+        $methodInputs.on('change', fn_postUpdateMethodDetail);
+
+        $managerPrivateAll.on('change', function () {
+            $managerPrivates.prop('checked', $(this).is(':checked'));
+        });
+
+        $managerPrivates.on('change', fn_postSyncManagerPrivateAll);
+
+        $facilitySelect.on('change', function () {
+            fn_postUpdateSelectState($(this));
+        });
+
+        $mapToggle.on('click', function () {
+            const shouldOpen = $mapPanel.prop('hidden');
+
+            fn_postToggleHidden($mapPanel, shouldOpen);
+            $(this).text(shouldOpen ? '지도 닫기' : '지도 보기');
+        });
+
+        fn_postRenderJobs();
+        fn_postUpdateEmploymentMoreState(false);
+        fn_postUpdateSalaryUnit();
+        fn_postUpdateSalaryNegotiable();
+        fn_postUpdateTimeDisplay();
+        fn_postUpdateTimeNegotiable();
+        fn_postRenderProcesses();
+        fn_postApplyPeriod($periodSelect.val());
+        fn_postUpdateCloseWhenFilled();
+        fn_postUpdateMethodDetail();
+        fn_postSyncManagerPrivateAll();
+    });
+</script>
+</body>
+</html>

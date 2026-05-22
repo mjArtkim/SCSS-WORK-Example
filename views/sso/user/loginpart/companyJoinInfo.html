@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+  <div th:replace="~{|sso/include/user/inc_head|}"></div>
+
+  <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+
+  <script src="/js/common/auth.js"></script>
+</head>
+<body>
+<div class="app-shell app-shell--auth app-shell--quick-actions-hidden app-shell--join">
+  <div class="app-body">
+    <div class="site-header header-box wrap join-header-wrap">
+      <div th:replace="~{|sso/include/user/inc_header|}"></div>
+    </div>
+    <div class="site-content">
+      <div class="re-login wrap">
+        <button class="join-page__back" type="button" data-role="join-back" aria-label="이전 단계로 이동" onclick="goBack()">
+          <span class="icon-svg join-page__back-icon" data-icon-name="chevron_left" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/chevron_left_icon.svg');"></span>
+        </button>
+        <div class="re-login__inner">
+          <h2 class="re-login__tit">회원가입</h2>
+          <div class="re-login__depth re-login__depth--join">
+            <div class="re-join">
+              <div class="re-join__steps" aria-label="회원가입 단계">
+                <div class="re-join__step">
+                  <span class="re-join__step-icon re-join__step-icon--terms" aria-hidden="true"></span>
+                  <strong class="re-join__step-label">약관동의</strong>
+                </div>
+                <span class="re-join__step-arrow" aria-hidden="true"></span>
+                <div class="re-join__step re-join__step--active">
+                  <span class="re-join__step-icon re-join__step-icon--profile" aria-hidden="true"></span>
+                  <strong class="re-join__step-label">정보입력</strong>
+                </div>
+                <span class="re-join__step-arrow" aria-hidden="true"></span>
+                <div class="re-join__step">
+                  <span class="re-join__step-icon re-join__step-icon--done" aria-hidden="true"></span>
+                  <strong class="re-join__step-label">가입완료</strong>
+                </div>
+              </div>
+
+              <div class="re-company-join">
+                <p class="re-company-join__required"><span>*</span>표시는 필수 입력 항목입니다.</p>
+
+                <form class="re-company-join__form" novalidate>
+                  <h3 class="re-company-join__title">정보입력</h3>
+
+                  <div class="re-company-join__group">
+                    <label class="re-company-join__label" for="company-join-id">아이디<span>*</span></label>
+                    <span class="re-company-join__hint">※ 가입 후 아이디 변경은 불가합니다.</span>
+                    <div class="re-company-join__row">
+                      <input id="company-join-id" class="re-company-join__input" type="text" placeholder="아이디를 입력해주세요.">
+                      <button id="company-join-id-check" class="re-company-join__action" type="button" disabled>중복확인</button>
+                    </div>
+                  </div>
+
+                  <div class="re-company-join__group">
+                    <label class="re-company-join__label" for="company-join-password">비밀번호<span>*</span></label>
+                    <span class="re-company-join__hint">※4~16자의 영문,숫자 조합으로 가능합니다.</span>
+                    <div class="re-company-join__password">
+                      <input id="company-join-password" class="re-company-join__input re-company-join__input--password" type="password" placeholder="비밀번호를 입력해주세요.">
+                      <button class="re-company-join__toggle" type="button" data-target="#company-join-password" aria-label="비밀번호 보기"></button>
+                    </div>
+                  </div>
+
+                  <div class="re-company-join__group">
+                    <label class="re-company-join__label" for="company-join-password-confirm">비밀번호 확인<span>*</span></label>
+                    <div class="re-company-join__password">
+                      <input id="company-join-password-confirm" class="re-company-join__input re-company-join__input--password" type="password" placeholder="비밀번호를 다시 입력해주세요.">
+                      <button class="re-company-join__toggle" type="button" data-target="#company-join-password-confirm" aria-label="비밀번호 확인 보기"></button>
+                    </div>
+                  </div>
+
+                  <div class="re-company-join__group">
+                    <label class="re-company-join__label" for="company-join-mobile">휴대폰 번호</label>
+                    <input id="company-join-mobile" class="re-company-join__disinput" type="tel" inputmode="numeric" value="010-0000-0000" disabled>
+                  </div>
+
+                  <div class="re-company-join__group">
+                    <label class="re-company-join__label" for="company-join-email">이메일<span>*</span></label>
+                    <input id="company-join-email" class="re-company-join__input" type="email" placeholder="이메일을 입력해주세요.">
+                  </div>
+
+                  <div class="re-company-join__group">
+                    <label class="re-company-join__label" for="company-join-zipcode">주소<span>*</span></label>
+                    <div class="re-company-join__row">
+                      <input id="company-join-zipcode" class="re-company-join__input" type="text" placeholder="우편번호">
+                      <button class="re-company-join__action re-company-join__action--point" type="button">주소검색</button>
+                    </div>
+                    <input id="company-join-address" class="re-company-join__input re-company-join__zipcode" type="text" placeholder="주소">
+                    <input id="company-join-address-detail" class="re-company-join__input" type="text" placeholder="상세주소 입력">
+                  </div>
+
+                  <div class="re-company-join__actions">
+                    <button class="re-company-join__actions-btn re-company-join__actions-btn--prev" type="button" onclick="movePage('/companyJoin')">이전</button>
+                    <button class="re-company-join__actions-btn re-company-join__actions-btn--submit" type="button">회원가입</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-box">
+    <div th:replace="~{|sso/include/user/inc_footer|}"></div>
+  </div>
+  <input type="hidden" id="serverSnsResultCd" th:value="${snsResultCd}">
+  <input type="hidden" id="serverMsg" th:value="${msg}">
+</div>
+</body>
+<script th:inline="javascript">
+  $(function () {
+    const $joinForm = $('.re-company-join__form');
+
+    if ($joinForm.length === 0) {
+      return;
+    }
+
+    const $idInput = $('#company-join-id');
+    const $idCheckButton = $('#company-join-id-check');
+    const $mobileInput = $('#company-join-mobile');
+    const $mobileAuthButton = $('#company-join-mobile-auth');
+
+
+    function syncJoinActionState() {
+      $idCheckButton.prop('disabled', $.trim($idInput.val()) === '');
+      $mobileAuthButton.prop('disabled', $.trim($mobileInput.val()) === '');
+    }
+
+    $joinForm.on('input', '#company-join-id, #company-join-mobile', function () {
+      syncJoinActionState();
+    });
+
+    $joinForm.on('click', '.re-company-join__toggle', function () {
+      const $button = $(this);
+      const $target = $($button.data('target'));
+      const isPasswordType = $target.attr('type') === 'password';
+
+      $target.attr('type', isPasswordType ? 'text' : 'password');
+      $button.toggleClass('is-visible', isPasswordType);
+    });
+
+    syncJoinActionState();
+  });
+</script>
+</html>

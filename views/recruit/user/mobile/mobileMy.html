@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+  <head>
+    <div th:replace="~{|recruit/include/user/inc_head|}"></div>
+  </head>
+  <body>
+    <section>
+      <div class="header-box">
+        <div th:replace="~{|recruit/include/user/mobile/inc_mobile_main_header|}"></div>
+      </div>
+    </section>
+    <section class="mo-my">
+      <div class="mo-my__top">
+        <button type="button" class="mo-my__top--btn js-mo-my-tab--resume" th:classappend="${myType == 'resume'} ? ' is-active' : ''">이력서 관리</button>
+        <button type="button" class="mo-my__top--btn js-mo-my-tab--apply" th:classappend="${myType == 'apply'} ? ' is-active' : ''">지원내역</button>
+        <button type="button" class="mo-my__top--btn js-mo-my-tab--favorite" th:classappend="${myType == 'favorite'} ? ' is-active' : ''">관심공고</button>
+      </div>
+      <div class="mo-my__panel mo-my__resume js-mo-my-panel--resume" th:classappend="${myType == 'resume'} ? ' is-open' : ''">
+        <div class="mo-my__middle">
+          <button class="mo-my__middle--btn" type="button" onclick="movePage('/recruit/user/mobileResume')">새 이력서 등록</button>
+        </div>
+        <div class="mo-my__count">총 <span id="moMyResumeCount">0</span>건</div>
+        <div class="mo-my__content" id="moMyList"></div>
+        <div class="mo-my__pagination" id="moMyResumePagination" aria-label="이력서 페이지 이동" hidden></div>
+      </div>
+      <div class="mo-my__panel mo-my__apply js-mo-my-panel--apply" th:classappend="${myType == 'apply'} ? ' is-open' : ''">
+        <div class="mo-my__count">총 <span id="moMyApplyCount">0</span>건</div>
+        <div class="mo-my__content" id="moMyApply"></div>
+        <div class="mo-my__pagination" id="moMyApplyPagination" aria-label="지원내역 페이지 이동" hidden></div>
+      </div>
+      <div class="mo-my__panel mo-my__favorite js-mo-my-panel--favorite" th:classappend="${myType == 'favorite'} ? ' is-open' : ''">
+        <div class="mo-my__count">총 <span id="moMyFavoriteCount">0</span>건</div>
+        <div class="mo-my__content" id="moMyFavorite"></div>
+        <div class="mo-my__pagination" id="moMyFavoritePagination" aria-label="관심공고 페이지 이동" hidden></div>
+      </div>
+    </section>
+    <div class="mo-apply-sheet">
+      <div class="mo-apply-sheet__backdrop" ></div>
+      <div class="mo-apply-sheet__dialog" >
+        <div class="mo-apply-sheet__head">
+          <h2 class="mo-apply-sheet__title">입사지원</h2>
+          <button class="mo-apply-sheet__close" type="button" aria-label="닫기">
+            <span></span>
+          </button>
+        </div>
+        <div id="moMySheet"></div>
+      </div>
+    </div>
+    <div class="m-only">
+      <div th:replace="~{|recruit/include/user/mobile/inc_bnb|}"></div>
+    </div>
+  </body>
+<script th:inline="javascript">
+  $(function () {
+    fn_getMy();
+    fn_getApply();
+    fn_getFavorite();
+    fn_getSheet();
+
+    $('.mo-my__top--btn').on('click', function () {
+      const target = fn_getClassTarget($(this), 'js-mo-my-tab--');
+      $('.mo-my__top--btn').removeClass('is-active');
+      $(this).addClass('is-active');
+      $('.mo-my__panel').removeClass('is-open');
+      $(`.js-mo-my-panel--${target}`).addClass('is-open');
+    });
+
+    $(document)
+      .on('click', '.mo-my__more', function (e) {
+        e.preventDefault();
+        e.stopPropagation();
+
+        const $actions = $(this).closest('.mo-my__actions');
+        const isOpen = $actions.hasClass('is-open');
+
+        fn_closeMyMenus();
+
+        if (!isOpen) {
+          $actions.addClass('is-open');
+          $(this).attr('aria-expanded', 'true');
+        }
+      })
+
+      .on('click', '.mo-my__menu-item', function () {
+        fn_closeMyMenus();
+      })
+
+      .on('click', function (e) {
+        if (!$(e.target).closest('.mo-my__actions').length) {
+          fn_closeMyMenus();
+        }
+      })
+
+      .on('click', '.mo-my__pagination-button', function () {
+        if ($(this).is(':disabled')) {
+          return;
+        }
+
+        const panelName = $(this).data('pageGroup');
+        const pageAction = $(this).data('pageAction');
+        const pageNumber = Number($(this).data('page'));
+
+        fn_handleMoPagination(panelName, pageAction, pageNumber);
+      })
+
+      .on('click', '.re-company__button', function () {
+        $('.mo-apply-sheet').show();
+      })
+
+      .on('click', '.mo-apply-sheet__close, .mo-apply-sheet__backdrop', function () {
+        $('.mo-apply-sheet').hide();
+      });
+  });
+
+  function fn_closeMyMenus() {
+    $('.mo-my__actions').removeClass('is-open');
+    $('.mo-my__more').attr('aria-expanded', 'false');
+  }
+
+  function fn_getClassTarget($element, prefix) {
+    const classNames = ($element.attr('class') || '').split(/\s+/);
+    const targetClass = classNames.find(function (className) {
+      return className.indexOf(prefix) === 0;
+    });
+
+    return targetClass ? targetClass.slice(prefix.length) : '';
+  }
+
+  const MO_MY_PAGE_SIZE = 5;
+  const MO_MY_VISIBLE_PAGE_COUNT = 5;
+  const moMyPanelState = {
+    resume: {
+      items: [],
+      page: 1,
+      bodySelector: '#moMyList',
+      paginationSelector: '#moMyResumePagination',
+      countSelector: '#moMyResumeCount',
+      emptyMessage: '아직 등록된 이력서가 없습니다.<br> 이력서를 등록해주세요.',
+      renderItems: fn_renderMoResumeCards
+    },
+    apply: {
+      items: [],
+      page: 1,
+      bodySelector: '#moMyApply',
+      paginationSelector: '#moMyApplyPagination',
+      countSelector: '#moMyApplyCount',
+      emptyMessage: '지원하신 내역이 없습니다.',
+      renderItems: fn_renderMoApplyCards
+    },
+    favorite: {
+      items: [],
+      page: 1,
+      bodySelector: '#moMyFavorite',
+      paginationSelector: '#moMyFavoritePagination',
+      countSelector: '#moMyFavoriteCount',
+      emptyMessage: '등록된 관심기업이 없습니다.<br> 000님께 딱 맞는 공고를 확인해 보세요',
+      renderItems: fn_renderMoFavoriteCards
+    }
+  };
+
+  function fn_renderMoResumeCards(items) {
+    return $.map(items, function (item) {
+      return fn_buildResumeCard(item, true);
+    }).join('');
+  }
+
+  function fn_renderMoApplyCards(items) {
+    return $.map(items, function (item) {
+      return `<article class="mo-my__list">
+                <div class="mo-my__list--top">
+                  <div class="mo-my__list--txt">${item.status}</div>
+                  <button class="mo-my__delete" type="button" aria-label="지원내역 삭제">
+                    <span></span>
+                  </button>
+                </div>
+                <div class="mo-my__list--name">${item.name}</div>
+                <div class="mo-my__list--tit">${item.title}</div>
+                <div class="mo-my__txt">${item.content}</div>
+                <div class="mo-my__date">지원일 : ${item.date}</div>
+              </article>`;
+    }).join('');
+  }
+
+  function fn_renderMoFavoriteCards(items) {
+    return $.map(items, function (item) {
+      return `<article class="re-company">
+                <div class="re-company__name">회사이름</div>
+                <div class="re-company__box">
+                  <h3 class="re-company__tit">${item.title}</h3>
+                  <button class="re-company__scrap" type="button" aria-label="scrap">
+                    <span></span>
+                  </button>
+                </div>
+                <div class="re-company__location">${item.address} | ${item.career} | ${item.study} </div>
+                <p>~${item.date}</p>
+                <button class="re-company__button">지원하기</button>
+              </article>`;
+    }).join('');
+  }
+  function fn_buildMyMenu() {
+    return `<div class="mo-my__actions">
+              <button class="mo-my__more" type="button" aria-label="이력서 더보기" aria-expanded="false">
+                <span></span>
+              </button>
+              <div class="mo-my__menu" role="menu" aria-label="이력서 작업 메뉴">
+                <button class="mo-my__menu-item" type="button" role="menuitem">이력서 수정하기</button>
+                <button class="mo-my__menu-item" type="button" role="menuitem">이력서 삭제하기</button>
+                <button class="mo-my__menu-item" type="button" role="menuitem">이력서 복사하기</button>
+                <button class="mo-my__menu-item" type="button" role="menuitem">대표이력서 변경하기</button>
+              </div>
+            </div>`;
+  }
+  function fn_buildResumeCard(item, useMenu) {
+    return `<article class="mo-my__list">
+            <div class="mo-my__list--top">
+              <div class="mo-my__list--info">
+                <div class="mo-my__list--txt">${item.date}</div>
+                <div class="mo-my__list--txt">${item.time}</div>
+                <div class="mo-my__list--txt">${item.status}</div>
+                <div class="mo-my__badge">대표</div>
+              </div>
+              ${useMenu ? fn_buildMyMenu() : ''}
+            </div>
+            <div class="mo-my__list--bottom">
+              <div class="mo-my__list--tit">${item.title}</div>
+            </div>
+          </article>`;
+  }
+  function fn_getMy(){
+    $.ajax({
+      url : '/recruit/user/test',
+      type : 'post',
+      data : JSON.stringify({}),
+      contentType : 'application/json',
+      success : function() {
+        let testJson = {
+          date : '0000-00-00',
+          time : '00:00',
+          status : '수정',
+          title : '이력서 제목 여기에 들어가는데 길어지면 어떻게될지'
+        };
+
+        let list = [];
+
+        for(let i = 0; i < 10; i += 1){
+          list.push(testJson);
+        }
+        fn_setMoPanelData('resume', list);
+      }
+    });
+  }
+  function fn_getApply(){
+    $.ajax({
+      url : '/recruit/user/test',
+      type : 'post',
+      data : JSON.stringify({}),
+      contentType : 'application/json',
+      success : function() {
+        let testJson = {'status' : '미열람', 'name' : '지원한 기업이름', 'title' : '기업이 낸 공고 제목이 이곳에 들어갑니다.', 'content' : '직무내용이 이곳에 들어갑니다.', 'date' : '0000-00-00'};
+        let list = [];
+        for(let i = 0; i < 10; i += 1){
+          list.push(testJson)
+        }
+        fn_setMoPanelData('apply', list);
+      }
+    });
+  }
+
+  function fn_getFavorite(){
+    $.ajax({
+      url : '/recruit/user/test',
+      type : 'post',
+      data : JSON.stringify({}),
+      contentType : 'application/json',
+      success : function() {
+        let testJson = {
+          date : '0000-00-00',
+          title : '이력서 제목 여기에 들어가는데 길어지면 어떻게될지',
+          address: '서울시 강동구',
+          career: '신입, 경력',
+          study: '학력무관'
+        };
+        let list = [];
+        for(let i = 0; i < 10; i += 1){
+          list.push(testJson)
+        }
+        fn_setMoPanelData('favorite', list);
+      }
+    });
+  }
+
+  function fn_getSheet(){
+    $.ajax({
+      url : '/recruit/user/test',
+      type : 'post',
+      data : JSON.stringify({}),
+      contentType : 'application/json',
+      success : function() {
+        let body = $('#moMySheet');
+        body.empty();
+
+        let sheetData = {
+          title: '[정규직/돌봄서비스]',
+          subTitle : '돌봄 서비스 도와주실분 채용합니다.',
+          department: '요양보호사(노인요양사)'
+        };
+
+        let resume = {
+          date : '0000-00-00',
+          time : '00:00',
+          status : '수정',
+          title : '이력서 제목 여기에 들어가는데 길어지면 어떻게될지'
+        };
+
+        let article = `<div class="mo-apply-sheet__body">
+                      <div class="mo-apply-sheet__category">${sheetData.title}</div>
+                      <div class="mo-apply-sheet__job-title">${sheetData.subTitle}</div>
+
+                      <div class="mo-apply-sheet__field">
+                        <div class="mo-apply-sheet__label">지원부문</div>
+                        <div class="mo-apply-sheet__value">${sheetData.department}</div>
+                      </div>
+
+                      <div class="mo-apply-sheet__field">
+                        <div class="mo-apply-sheet__label">이력서</div>
+                        <div class="mo-apply-sheet__summary">
+                          <span>보유 이력서 총 1개</span>
+                          <span class="mo-apply-sheet__summary-arrow" aria-hidden="true"></span>
+                        </div>
+
+                        <div class="mo-apply-sheet__resume">
+                          ${fn_buildResumeCard(resume, true)}
+                        </div>
+                      </div>
+                    </div>
+
+                    <button class="mo-apply-sheet__submit" type="button">지원하기</button>`;
+
+        body.append(article);
+      }
+    });
+  }
+
+  function fn_setMoPanelData(panelName, list) {
+    const panelState = moMyPanelState[panelName];
+
+    if (!panelState) {
+      return;
+    }
+
+    panelState.items = Array.isArray(list) ? list : [];
+    panelState.page = 1;
+    fn_renderMoPanel(panelName);
+  }
+
+  function fn_renderMoPanel(panelName) {
+    const panelState = moMyPanelState[panelName];
+
+    if (!panelState) {
+      return;
+    }
+
+    const $body = $(panelState.bodySelector);
+    const $pagination = $(panelState.paginationSelector);
+    const totalCount = panelState.items.length;
+
+    $(panelState.countSelector).text(totalCount);
+    $body.empty();
+
+    if (totalCount === 0) {
+      $body.append(`<div class="mo-my__empty">${panelState.emptyMessage}</div>`);
+      $pagination.empty().attr('hidden', true);
+      return;
+    }
+
+    const totalPages = fn_getMoTotalPages(panelName);
+    panelState.page = Math.min(Math.max(panelState.page, 1), totalPages);
+
+    const startIndex = (panelState.page - 1) * MO_MY_PAGE_SIZE;
+    const pageItems = panelState.items.slice(startIndex, startIndex + MO_MY_PAGE_SIZE);
+
+    $body.append(panelState.renderItems(pageItems));
+    fn_renderMoPagination(panelName);
+  }
+
+  function fn_getMoTotalPages(panelName) {
+    const panelState = moMyPanelState[panelName];
+
+    if (!panelState || panelState.items.length === 0) {
+      return 1;
+    }
+
+    return Math.ceil(panelState.items.length / MO_MY_PAGE_SIZE);
+  }
+
+  function fn_renderMoPagination(panelName) {
+    const panelState = moMyPanelState[panelName];
+
+    if (!panelState) {
+      return;
+    }
+
+    const $pagination = $(panelState.paginationSelector);
+    const totalPages = fn_getMoTotalPages(panelName);
+    const currentPage = panelState.page;
+
+    $pagination.empty();
+
+    if (totalPages <= 1) {
+      $pagination.attr('hidden', true);
+      return;
+    }
+
+    let startPage = Math.max(1, currentPage - Math.floor(MO_MY_VISIBLE_PAGE_COUNT / 2));
+    let endPage = startPage + MO_MY_VISIBLE_PAGE_COUNT - 1;
+
+    if (endPage > totalPages) {
+      endPage = totalPages;
+      startPage = Math.max(1, endPage - MO_MY_VISIBLE_PAGE_COUNT + 1);
+    }
+
+    const showFirstPage = startPage > 1;
+    const showLastPage = endPage < totalPages;
+
+    let article = `
+      <button
+        class="mo-my__pagination-button${currentPage === 1 ? ' is-disabled' : ''}"
+        type="button"
+        data-page-group="${panelName}"
+        data-page-action="prev"
+        ${currentPage === 1 ? 'disabled' : ''}
+      >이전</button>`;
+
+    if (showFirstPage) {
+      article += `
+        <button
+          class="mo-my__pagination-button${currentPage === 1 ? ' is-active' : ''}"
+          type="button"
+          data-page-group="${panelName}"
+          data-page-action="page"
+          data-page="1"
+          ${currentPage === 1 ? 'aria-current="page"' : ''}
+        >1</button>`;
+    }
+
+    if (startPage > 2) {
+      article += `
+        <button
+          class="mo-my__pagination-button mo-my__pagination-button--ellipsis"
+          type="button"
+          data-page-group="${panelName}"
+          data-page-action="first"
+        >...</button>`;
+    }
+
+    for (let i = startPage; i <= endPage; i += 1) {
+      article += `
+        <button
+          class="mo-my__pagination-button${i === currentPage ? ' is-active' : ''}"
+          type="button"
+          data-page-group="${panelName}"
+          data-page-action="page"
+          data-page="${i}"
+          ${i === currentPage ? 'aria-current="page"' : ''}
+        >${i}</button>`;
+    }
+
+    if (endPage < totalPages - 1) {
+      article += `
+        <button
+          class="mo-my__pagination-button mo-my__pagination-button--ellipsis"
+          type="button"
+          data-page-group="${panelName}"
+          data-page-action="last"
+        >...</button>`;
+    }
+
+    if (showLastPage) {
+      article += `
+        <button
+          class="mo-my__pagination-button${currentPage === totalPages ? ' is-active' : ''}"
+          type="button"
+          data-page-group="${panelName}"
+          data-page-action="page"
+          data-page="${totalPages}"
+          ${currentPage === totalPages ? 'aria-current="page"' : ''}
+        >${totalPages}</button>`;
+    }
+
+    article += `
+      <button
+        class="mo-my__pagination-button${currentPage === totalPages ? ' is-disabled' : ''}"
+        type="button"
+        data-page-group="${panelName}"
+        data-page-action="next"
+        ${currentPage === totalPages ? 'disabled' : ''}
+      >다음</button>`;
+
+    $pagination.append(article).removeAttr('hidden');
+  }
+
+  function fn_handleMoPagination(panelName, pageAction, pageNumber) {
+    const panelState = moMyPanelState[panelName];
+
+    if (!panelState) {
+      return;
+    }
+
+    const totalPages = fn_getMoTotalPages(panelName);
+    let nextPage = panelState.page;
+
+    if (pageAction === 'prev') {
+      nextPage -= 1;
+    } else if (pageAction === 'next') {
+      nextPage += 1;
+    } else if (pageAction === 'first') {
+      nextPage = 1;
+    } else if (pageAction === 'last') {
+      nextPage = totalPages;
+    } else if (pageAction === 'page') {
+      nextPage = pageNumber;
+    }
+
+    panelState.page = Math.min(Math.max(nextPage, 1), totalPages);
+    fn_renderMoPanel(panelName);
+  }
+
+
+</script>
+</html>

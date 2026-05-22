@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <div th:replace="~{|recruit/include/admin/inc_admin_head|}"></div>
+</head>
+<body id="page-top">
+<div class="wrapper goodList">
+    <div th:replace="~{|recruit/include/admin/inc_admin_header|}"></div>
+
+    <div class="container">
+        <div th:replace="~{|recruit/include/admin/inc_admin_side_left|}"></div>
+        <div class="contents">
+            <div class="inner">
+                <div class="tabWrap">
+                    <div class="tabCon">
+                        <div class="tab">
+                            <div class="headerArea flexBox">
+                                <h2>회원관리</h2>
+                                <div class="link">회원관리 &gt; 회원관리</div>
+                            </div>
+                            <ul class="outInfo2 mt10">
+                                <li>검색을 통해 회원정보를 찾아보실 수 있습니다.</li>
+                            </ul>
+                            <div class="item mt20">
+                                <div class="itemCon show">
+                                    <div class="recruitColumn v2">
+                                        <h4>검색어</h4>
+                                        <div class="rightCon mb10">
+                                            <select name="searchType" id="searchType" class="wdh_218">
+                                                <option value="id">회원ID</option>
+                                                <option value="name">회원명</option>
+                                                <option value="contact">연락처</option>
+                                            </select>
+                                            <input type="text" class="limit ml5 wdh_450" id="searchKeyword"
+                                                   placeholder="검색어를 입력해주세요." onkeyup="enterKey(event);">
+                                        </div>
+                                    </div>
+                                    <div class="recruitColumn v2">
+                                        <h4>회원구분</h4>
+                                        <div class="rightCon mb10">
+                                            <select name="userType" id="userType" class="wdh_218">
+                                                <option value="">전체</option>
+                                                <option value="1">일반회원</option>
+                                                <option value="2">요양보호사</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="recruitColumn v2">
+                                        <h4>기간</h4>
+                                        <div class="rightCon">
+                                            <div class="selWrap">
+                                                <select name="" id="dateSelect" class="wdh_218">
+                                                    <option value="regDt" id="searchRegDate">등록일</option>
+                                                    <option value="modDt" id="searchModDate">수정일</option>
+                                                </select>
+                                            </div>
+                                            <div class="dateBox flexBox mt10">
+                                                <div class="radioWrap flexBox">
+                                                    <input type="radio" id="dayAll" name="dayType" value="all"
+                                                           class="square" checked="checked">
+                                                    <label for="dayAll">전체</label>
+                                                    <input type="radio" id="dayPeriod" name="dayType" value="period"
+                                                           class="square">
+                                                    <label for="dayPeriod">기간</label>
+                                                </div>
+                                            </div>
+                                            <div class="dateBox flexBox mt10 dateTerms" style="visibility:hidden">
+                                                <div class="radioWrap flexBox">
+                                                    <input type="radio" id="day" name="day" value="1" class="square"
+                                                           checked>
+                                                    <label for="day">오늘</label>
+                                                    <input type="radio" id="day7" name="day" value="7" class="square">
+                                                    <label for="day7">1주일</label>
+                                                    <input type="radio" id="day30" name="day" value="30" class="square">
+                                                    <label for="day30">1개월</label>
+                                                    <input type="radio" id="day90" name="day" value="90" class="square">
+                                                    <label for="day90">3개월</label>
+                                                    <input type="radio" id="day180" name="day" value="180"
+                                                           class="square">
+                                                    <label for="day180">6개월</label>
+                                                    <input type="radio" id="day365" name="day" value="365"
+                                                           class="square">
+                                                    <label for="day365">1년</label>
+                                                </div>
+                                                <div class="calWrap flexBox">
+                                                    <div class="inpWrap">
+                                                        <input type="text" placeholder="" class="" id="str_date"
+                                                               readonly/>
+                                                    </div>
+                                                    <span class="inpTxt ml5">~</span>
+                                                    <div class="inpWrap ml5">
+                                                        <input type="text" placeholder="" class="" id="end_date"
+                                                               readonly/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="btnWrap">
+                                        <button class="btnType btnSize44 btnLineG3" onclick="fn_searchReset()">초기화
+                                        </button>
+                                        <button class="btnType btnSize44 btnColorP2" onclick="fn_searchList()">조회
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- item -->
+                            <div class="item">
+                                <p class="total2 pt20">회원목록 <span class="small ml5">총 <em id="totalCount"></em>개</span>
+                                </p>
+                                <div class="tblTop">
+                                    <div>
+                                        <button type="button" class="btnType btnColorExcel btnSize36 txtExcel"
+                                                onclick="fn_excelDownloadUserInfo()">엑셀다운로드
+                                        </button>
+                                    </div>
+                                    <div>
+                                        <select name=regDate"" id="regDate" class="wdh_160">
+                                            <option value="">등록일순</option>
+                                        </select>
+                                        <select name="pageRow" id="pageRow" class="wdh_160 ml5"
+                                                onchange="fn_searchList()">
+                                            <option value="10" selected>10개씩</option>
+                                            <option value="30">30개씩</option>
+                                            <option value="50">50개씩</option>
+                                            <option value="100">100개씩</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="grid_admin_goods_list" class="gridWrap">
+                                    <div class="card" style="overflow-x: auto;">
+                                        <table id="searchList" class="p-datatable" style="width:100%">
+                                            <thead class="p-datatable-thead">
+                                            <tr>
+                                                <th style="width: 4%;">No</th>
+                                                <th style="width: 5%;">회원구분</th>
+                                                <th style="width: 5%;">회원ID</th>
+                                                <th style="width: 5%;">회원명</th>
+                                                <th style="width: 10%;">연락처</th>
+                                                <th style="width: 10%;">등록일</th>
+                                                <th style="width: 5%;">정보수정</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+
+                                    </div>
+                                    <!-- Paginator 컴포넌트 -->
+                                    <div class="p-paginator p-paginator-bottom" id="PAGE_NAVI">
+                                    </div>
+                                    <input type="hidden" id="PAGE_INDEX" name="PAGE_INDEX" value="1"/>
+                                </div><!-- item -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="popLayer" class="popOverlay c popClose">
+        <div class="popWrap">
+            <div class="popInner">
+                <span class="btnPopClose" onclick="popLayerClose();">닫기</span>
+                <h2>회원정보수정</h2>
+                <div class="popCnt type3">
+                    <div class="popItemCon">
+                        <div class="mr10">
+                            <div class="popBasicTblWrap mt20">
+                                <table>
+                                    <input type="hidden" id="seq"/>
+                                    <colgroup>
+                                        <col width="32%">
+                                        <col width="auto">
+                                    </colgroup>
+                                    <tbody>
+                                        <tr>
+                                            <th>회원구분</th>
+                                            <td>
+                                                <select class="productTit popInfo wdh_full" id="grade">
+                                                    <option value="1">일반회원</option>
+                                                    <option value="2">요양보호사</option>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>회원ID</th>
+                                            <td><input readonly type="text" class="productTit popInfo wdh_full is_readonly" id="id"/></td>
+                                        </tr>
+                                        <tr>
+                                            <th>회원명</th>
+                                            <td><input type="text" class="productTit popInfo wdh_full" id="name"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>연락처</th>
+                                            <td><input class="productTit popInfo wdh_full" id="contact"/></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="btnWrap">
+                        <button class="btnType btnSize44 btnLineG3" onclick="popLayerClose();">취소</button>
+                        <button class="btnType btnSize44 btnColorP2" id="sendBtn" onclick="fn_updateUserInfo();">수정
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="popLayer2" class="popOverlay popClose">
+        <div class="popWrap">
+            <div class="popInner">
+                <span class="btnPopClose" onclick="popLayerClose();">닫기</span>
+                <h2>푸시발송</h2>
+                <div class="popCnt type3 popGoodsOpt">
+                    <div class="popItemCon">
+                        <div class="recruitColumn">
+                            <h4>제목</h4>
+                            <div class="wdh_full">
+                                <div class="dateBox">
+                                    <div class="calWrap mt10">
+                                        <div class="inpWrap wdh_full">
+                                            <input id="pushTitle" type="text" placeholder="제목을 입력해주세요."
+                                                   class="popInfo wdh_full">
+                                            <input id="pushSeq" type="hidden">
+                                            <input id="pushType" type="hidden">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="recruitColumn v2">
+                            <h4 class="flexBox">내용</h4>
+                            <div class="wdh_full">
+                                <div class="inpWrap mt10">
+                                    <div class="textareaBoxLimit">
+                                        <textarea id="pushContent" cols="" rows="2" placeholder="내용을 입력해주세요."
+                                                  class="popInfo wdh_full"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="btnWrap">
+                            <button class="btnType btnSize44 btnLineG3" onclick="popLayerClose();">닫기</button>
+                            <button class="btnType btnSize44 btnColorP2" id="pushBtn" onclick="fn_sendPush();">발송
+                            </button>
+                        </div>
+                    </div>
+                </div><!-- popCnt -->
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script th:inline="javascript">
+    let recordTotal = 0;
+    $(document).ready(function () {
+        getHistoryList('init');
+    });
+
+    function getHistoryList(type) {
+
+        let dayType = $("input[name='dayType']:checked").val()
+        let param = {
+            "PAGE_INDEX": $("#PAGE_INDEX").val(),
+            "pageRow": $("#pageRow").val(),
+            "searchType": $('#searchType').val(),
+            "searchKeyword": $('#searchKeyword').val(),
+            "userType": $("#userType").val(),
+            "dateType":$("#dateSelect").val(),
+            "strDate": (dayType === 'period') ? $("#str_date").val() : "",
+            "endDate": (dayType === 'period') ? $("#end_date").val() : "",
+        }
+
+        if ($('input[name=dayType]:checked').val() != 'all') {
+            param.strDate = $('#str_date').val();
+            param.endDate = $('#end_date').val();
+        }
+
+        $.ajax({
+            url: "/recruit/admin/user/ajax/userList",
+            data: JSON.stringify(param),
+            type: 'POST',
+            contentType: 'application/json',
+            beforeSend: function (xhr) {
+                $('.loading').show();
+            },
+            success: function (data) {
+                recordTotal = data.data.total;
+                if (type == 'init') {
+                    getHistoryListCallback(data.data);
+                } else {
+                    reDrawTable(data.data);
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                confirmModal({title: jqXHR});
+            },
+            complete: function () {
+                $('.loading').hide();
+            }
+        })
+    }
+
+    function getHistoryListCallback(data) {
+        let total = data.total;
+        let params = {
+            divId: "PAGE_NAVI",
+            pageIndex: "PAGE_INDEX",
+            totalCount: total,
+            recordCount: $("#pageRow").val(),
+            eventName: "getHistoryList"
+        };
+        gfn_renderPaging(params);
+
+        let list = data.list;
+        // 기본 columns 배열 정의
+        let columns = [
+            {
+                data: null,
+                render: function (data, type, row, meta) {
+                    let currentPage = $('#PAGE_INDEX').val();
+                    let recordCount = $("#pageRow").val();
+                    return (recordTotal - ((currentPage - 1) * recordCount) - meta.row);
+                }
+            }
+            , {
+                data: null,
+                render: function (data) {
+                    switch (data.grade) {
+                        case 1 :
+                            return "일반";
+                        case 2 :
+                            return "요양보호사";
+                    }
+                }
+            }
+            , {data: 'id'}
+            , {data: 'name'}
+            , {
+                data: null,
+                render: function (data, type, row) {
+                    return fn_contactNum(data.contact);
+                }
+            }
+            , {
+                data: null,
+                render: function (data, type, row) {
+                    return data.regDt ? data.regDt.split(' ')[0] : '-';
+                }
+            }
+            /*, {
+                data: null,
+                render: function (data, type, row) {
+                    return data.useYn == 'N' ? data.modDt : '-';
+                }
+            }
+            , {
+                data: null,
+                render: function (data, type, row) {
+                    return data.useYn == 'Y' ? (data.status == 'S' ? '정상' : '정지') : '탈퇴';
+                }
+            }
+            ,{
+                data: null,
+                render: function (data, type, row) {
+                    btn = data.useYn == 'N' ? '-' : '<button class="btnType btnColorOrg btnSize22 txtOrg" onclick=\'fn_openPushPop("' + data.seq + '", "user")\'>푸시발송</button>';
+                    return btn;
+                }
+            }*/
+            , {
+                data: null,
+                render: function (data, type, row) {
+                    return data.useYn == 'N' ? '-' : '<button class="btnType btnColorOrg btnSize22 txtOrg" onclick=\'fn_openUpdatePopup(' + data.userSeq + ')\'>정보수정</button>';
+                }
+            }
+            /* , {
+                 data: null,
+                 render: function (data, type, row) {
+                     //btn = data.useYn == 'N' ? '-' : '<button class="btnType btnColorR btnSize22 txtRed" onclick=\'fn_deleteUserInfo("' + data.seq + '")\'>탈퇴</button>';
+                     //return btn;
+                     return ""
+                 }
+             }
+              */
+        ];
+
+        // DataTables 초기화
+        $('#searchList').DataTable({
+            destroy: true,
+            data: list,
+            columnDefs: [
+                {targets: '_all', className: 'text-center'}
+            ],
+            columns: columns, // 동적으로 생성된 columns 설정
+            scrollY: false,
+            scrollX: false,
+            paging: true,
+            pageLength: 100,
+            dom: 't',
+            language: {
+                emptyTable: "조회하신 결과가 없습니다",
+                info: "Showing _START_ to _END_ of _TOTAL_ entries"
+            },
+            order: [0, 'desc']
+        });
+        $('#totalCount').html(numberWithCommas(total));
+    }
+
+    function fn_openUpdatePopup(seq) {
+        const param = {
+            "seq": seq
+        }
+
+        $.ajax({
+            url: "/recruit/admin/user/ajax/selectUserInfo",
+            data: JSON.stringify(param),
+            type: 'POST',
+            contentType: 'application/json',
+            beforeSend: function (xhr) {
+                $('.loading').show();
+            },
+            success: function (data) {
+                if (data.resultCd === "S") {
+                    let info = data.data;
+                    $('#seq').val(info.seq);
+                    $('#id').val(info.id);
+                    $('#name').val(info.name);
+                    $('#contact').val(fn_contactNum(info.contact));
+                    $('#grade').val(info.grade);
+                    $('#popLayer').removeClass('popClose');
+                } else {
+                    confirmModal({title: data.resultMsg});
+                }
+
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                confirmModal({title: jqXHR.statusText});
+            },
+            complete: function () {
+                $('.loading').hide();
+            }
+        })
+    }
+
+    function fn_updateUserInfo() {
+
+        const grade = $('#grade').val();
+        const name = $('#name').val().trim();
+
+        if (name === '') {
+            confirmModal({title: '이름을 입력해 주세요.'});
+            return;
+        }
+
+        let param = {
+            'seq': $('#seq').val(),
+            'name': name,
+            'grade': grade
+        }
+
+        $.ajax({
+            url: "/recruit/admin/user/ajax/updateUserInfo",
+            data: JSON.stringify(param),
+            type: 'POST',
+            contentType: 'application/json',
+            beforeSend: function (xhr) {
+                $('.loading').show();
+            },
+            success: function (data) {
+                confirmModal({
+                    title: data.resultMsg, confirm: function () {
+                        alertLayerClose();
+                        if (data.resultCd == 'S') {
+                            popLayerClose();
+                            getHistoryList();
+                        }else{
+                            confirmModal({title : data.resultMsg})
+                        }
+                    }
+                })
+
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                confirmModal({title: jqXHR.statusText});
+            },
+            complete: function () {
+                _accountChangeYn = 'N';
+                $('.loading').hide();
+            }
+        })
+    }
+
+    function fn_deleteUserInfo(seq) {
+        confirmModal({
+            title: '탈퇴처리 하시겠습니까?', cancelUse: true, confirm: function () {
+                alertLayerClose();
+                let param = {
+                    'seq': seq,
+                    'useYn': 'N'
+                }
+                $.ajax({
+                    url: "/admin/user/ajax/updateUserUseYn",
+                    data: JSON.stringify(param),
+                    type: 'POST',
+                    contentType: 'application/json',
+                    beforeSend: function (xhr) {
+                        $('.loading').show();
+                    },
+                    success: function (data) {
+                        let msg = data.resultMsg;
+                        confirmModal({
+                            title: msg, confirm: function () {
+                                alertLayerClose();
+                                if (data.resultCd == 'S') {
+                                    getHistoryList();
+                                }
+                            }
+                        })
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        confirmModal({title: jqXHR.statusText});
+                    },
+                    complete: function () {
+                        $('.loading').hide();
+                    }
+                })
+            }
+        })
+    }
+
+    function fn_openPushPop(seq, type) {
+        $('#pushSeq').val(seq);
+        $('#pushType').val(type);
+        $('#popLayer2').removeClass('popClose');
+    }
+
+    function fn_sendPush() {
+
+        let param = {
+            "seq": $('#pushSeq').val(),
+            "type": $('#pushType').val(),
+            "title": $('#pushTitle').val(),
+            "body": $('#pushContent').val()
+        }
+        if (param.title.replaceAll(' ', '') == "" || param.body.replaceAll(' ', '') == "") {
+            confirmModal({title: '모든 항목을 입력하세요.'})
+            return false;
+        }
+        $.ajax({
+            url: "/admin/user/ajax/adminSendPush",
+            data: JSON.stringify(param),
+            type: 'POST',
+            contentType: 'application/json',
+            beforeSend: function (xhr) {
+                $('.loading').show();
+            },
+            success: function (data) {
+                confirmModal({
+                    title: data.resultMsg, confirm: function () {
+                        alertLayerClose();
+                        if (data.resultCd == 'S') {
+                            popLayerClose();
+                        }
+                    }
+                })
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                confirmModal({title: jqXHR.statusText});
+            },
+            complete: function () {
+                $('.loading').hide();
+            }
+        });
+    }
+
+
+    function fn_excelDownloadUserInfo() {
+        $('.loading').show();
+        let excelUrl = "/admin/user/ajax/excelDownloadUserInfo";
+
+        let request = new XMLHttpRequest();
+        request.open('POST', excelUrl, true);
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+        request.responseType = 'blob';
+
+        request.onload = function (e) {
+
+            $(".loading").hide();
+
+            let filename = "";
+            let disposition = request.getResponseHeader('Content-Disposition');
+            if (disposition && disposition.indexOf('attachment') !== -1) {
+                let filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+                let matches = filenameRegex.exec(disposition);
+                if (matches != null && matches[1])
+                    filename = decodeURI(matches[1].replace(/['"]/g, ''));
+            }
+
+            if (this.status === 200) {
+                let blob = this.response;
+                if (window.navigator.msSaveOrOpenBlob) {
+                    window.navigator.msSaveBlob(blob, filename);
+                } else {
+                    let downloadLink = window.document.createElement('a');
+                    let contentTypeHeader = request.getResponseHeader("Content-Type");
+                    downloadLink.href = window.URL.createObjectURL(new Blob([blob], {type: contentTypeHeader}));
+                    downloadLink.download = filename;
+                    document.body.appendChild(downloadLink);
+                    downloadLink.click();
+                    document.body.removeChild(downloadLink);
+                }
+            }
+        };
+        let params = new URLSearchParams({
+            "searchType": $('#searchType').val(),
+            "searchKeyword": $('#searchKeyword').val()
+        });
+
+        if ($('input[name=dayType]:checked').val() != 'all') {
+            params.append("strDate", $('#str_date').val());
+            params.append("endDate", $('#end_date').val());
+        }
+
+        request.send(params.toString());
+    }
+
+</script>
+</html>

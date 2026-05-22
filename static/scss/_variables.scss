@@ -1,0 +1,40 @@
+@charset "utf-8";
+@use "sass:math";
+
+@function rem($px) {
+  @return #{math.div($px, 10)}rem;
+}
+
+$family-base: "A2z", sans-serif;
+
+$color-text: #333;
+$color-grey: #666;
+$color-white: #fff;
+$color-black: #000;
+$color-main: #e8485a;
+$color-card: #6971ff;
+$color-comu: #ff8dcc;
+$color-shop: #ff5500;
+$color-doct: #19d700;
+$color-insu: #ff615c;
+$color-edu: #ffcc00;
+$color-trip: #00c8ff;
+$color-map: #6B4EFF;
+$color-mainlight: #e8485dc7;
+$color-light-grey: #aaaaaa;
+
+$container-width: rem(1280);
+
+$space-sm: rem(10);
+$space-md: rem(20);
+$space-lg: rem(30);
+
+$radius: rem(10);
+
+$shadow-base: 0 0 rem(10) 0;
+$shadow: #{$shadow-base} rgba(0, 0, 0, 0.2);
+$login-shadow: 0 rem(0) rem(30) rgba(0, 0, 0, 0.1);
+
+@function shadow($color, $opacity: 0.2) {
+  @return #{$shadow-base} rgba($color, $opacity);
+}

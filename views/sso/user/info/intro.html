@@ -1,0 +1,414 @@
+
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="~{|sso/include/user/inc_head|}"></div>
+</head>
+<body>
+<div class="app-shell">
+    <div class="app-body">
+        <div class="site-header header-box wrap">
+            <div th:replace="~{|sso/include/user/inc_header|}"></div>
+        </div>
+        <section class="intro-page">
+            <div class="intro-page__hero wrap">
+                <header class="intro-page__header">
+                    <h2 class="intro-page__title">돌보미 소개</h2>
+                </header>
+                <div class="intro-box">
+                    <div class="intro-box__inner" data-aos="fade-up" data-aos-delay="100" data-aos-easing="ease-in-sine">
+                        <h3 class="intro-box__tit">돌보미와 함께하는 행복한 생활</h3>
+                        <p>
+                            돌보미는 돌봄 종사자의 삶을 더 편리하고 풍요롭게 만들기 위해 만들어진
+                            플랫폼입니다.
+                        </p>
+                        <p>
+                            일자리 연결부터 생활 혜택, 정보 공유, 커뮤니티까지 돌봄 종사자에게 꼭
+                            필요한 서비스를 한 곳에서 제공합니다.
+                        </p>
+                        <p>
+                            돌봄은 우리 사회를 지탱하는 중요한 역할입니다. 돌보미는 그 가치를
+                            존중하며 돌봄 종사자들의 더 나은 삶을 지원합니다.
+                        </p>
+                    </div>
+                    <div class="intro-box__img" data-aos="fade-up" data-aos-delay="100" data-aos-easing="ease-in-sine">
+                        <img src="/img/sso/user/intor_ai_01.webp" alt="돌보미 소개 첫번째 이미지" />
+                    </div>
+                </div>
+
+                <div class="intro-box intro-reverse">
+                    <div class="intro-box__inner" data-aos="fade-up" data-aos-delay="100" data-aos-easing="ease-in-sine">
+                        <h3 class="intro-box__tit">돌보미가 만들어가는 새로운 돌봄 생태계</h3>
+                        <p>
+                            돌보미는 단순한 서비스가 아니라 돌봄 종사자를 위한 통합 플랫폼을
+                            지향합니다.
+                        </p>
+                        <p>
+                            흩어져 있던 돌봄 서비스와 정보를 하나로 연결하여 더 편리하고 안정적인
+                            환경을 제공합니다.
+                        </p>
+                        <p>
+                            돌보미를 통해 돌봄 종사자는
+                            <strong
+                            >더 좋은 일자리를 찾고, 필요한 생활 혜택을 누리며, 서로의 경험을
+                                나누고, 다양한 서비스</strong
+                            >를 이용할 수 있습니다.
+                        </p>
+                    </div>
+                    <div class="intro-box__img" data-aos="fade-up" data-aos-delay="100" data-aos-easing="ease-in-sine">
+                        <img src="/img/sso/user/intor_ai_02.webp" alt="돌보미 소개 두번째 이미지" />
+                    </div>
+                </div>
+
+                <div class="intro-boxs">
+                    <div class="intro-boxs__inner">
+                        <h3 class="intro-boxs__tit" data-aos-delay="100" data-aos-easing="ease-in-sine">돌보미 주요 서비스</h3>
+                        <ul class="intro-card">
+                            <li
+                                    class="intro-card__list job"
+                                    data-aos="fade-up"
+                                    data-aos-delay="100"
+                                    data-aos-easing="ease-in-sine"
+                            >
+                                <div class="intro-card__top">
+                                    <div class="intro-card__name">
+                                        <div class="intro-card__img">
+                                            <img
+                                                    src="/img/sso/user/main_card_03.png"
+                                                    alt="구인구직 일러스트"
+                                            />
+                                        </div>
+                                        <div class="intro-card__title">돌봄 구인구직</div>
+                                    </div>
+                                </div>
+                                <div class="intro-card__box">
+                                    <div class="intro-card__sub">
+                                        <h3>돌봄 일자리를 찾고 연결하는 서비스 입니다.</h3>
+                                        <p>
+                                            내 주변의 돌봄 일자를 쉽고 빠르게 찾고 기관과 종사자가
+                                            효율적으로 연결 될 수 있도록 돕습니다.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="intro-card__bottom">
+                                    <a onclick="temp()" class="intro-card__subbtn">
+                                        <div class="intro-card__subbtn-tit">구인구직 바로가기</div>
+                                        <span
+                                                class="icon-svg intro-card__subicon"
+                                                data-icon-name="arrow_forward_ios"
+                                                aria-hidden="true"
+                                                style="--icon-url: url('/img/sso/user/icons/arrow_forward_ios_icon.svg');"
+                                        ></span>
+                                    </a>
+                                </div>
+                            </li>
+                            <li
+                                    class="intro-card__list shop"
+                                    data-aos="fade-up"
+                                    data-aos-delay="100"
+                                    data-aos-easing="ease-in-sine"
+                            >
+                                <div class="intro-card__top">
+                                    <div class="intro-card__name">
+                                        <div class="intro-card__img">
+                                            <img src="/img/sso/user/main_card_04.png" alt="쇼핑 일러스트" />
+                                        </div>
+                                        <div class="intro-card__title">돌봄 쇼핑</div>
+                                    </div>
+                                </div>
+                                <div class="intro-card__box">
+                                    <div class="intro-card__sub">
+                                        <h3>돌봄 종사자를 위한 전용 쇼핑 서비스입니다.</h3>
+                                        <p>
+                                            돌봄 현장에서 필요한 다양한 상품을 합리적인 가격으로 편리하게
+                                            이용할 수 있습니다.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="intro-card__bottom">
+                                    <a onclick="goToStore('/store/user/main')"  class="intro-card__subbtn">
+                                        <div class="intro-card__subbtn-tit">쇼핑몰 바로가기</div>
+                                        <span
+                                                class="icon-svg intro-card__subicon"
+                                                data-icon-name="arrow_forward_ios"
+                                                aria-hidden="true"
+                                                style="--icon-url: url('/img/sso/user/icons/arrow_forward_ios_icon.svg');"
+                                        ></span>
+                                    </a>
+                                </div>
+                            </li>
+                            <li
+                                class="intro-card__list map"
+                                data-aos="fade-up"
+                                data-aos-delay="100"
+                                data-aos-easing="ease-in-sine"
+                            >
+                                <div class="intro-card__top">
+                                    <div class="intro-card__name">
+                                        <div class="intro-card__img">
+                                            <img src="/img/sso/user/main_card_08.png" alt="지도 일러스트" />
+                                        </div>
+                                        <div class="intro-card__title">돌봄 지도</div>
+                                    </div>
+                                </div>
+                                <div class="intro-card__box">
+                                    <div class="intro-card__sub">
+                                        <h3>
+                                            돌봄 종사자를 위한 제휴 기관 찾기 서비스입니다.
+                                        </h3>
+                                        <p>요양병원, 제가센터 등 돌봄관련 기관을 찾아보세요.</p>
+                                    </div>
+                                </div>
+                                <div class="intro-card__bottom">
+                                    <a onclick="location.href = '/finder/maps';" class="intro-card__subbtn">
+                                        <div class="intro-card__subbtn-tit">
+                                            기관 찾아 보기
+                                        </div>
+                                        <span
+                                            class="icon-svg intro-card__subicon"
+                                            data-icon-name="arrow_forward_ios"
+                                            aria-hidden="true"
+                                            style="--icon-url: url('/img/sso/user/icons/arrow_forward_ios_icon.svg');"
+                                        ></span>
+                                    </a>
+                                </div>
+                            </li>
+                            <li
+                                    class="intro-card__list comu"
+                                    data-aos="fade-up"
+                                    data-aos-delay="100"
+                                    data-aos-easing="ease-in-sine"
+                            >
+                                <div class="intro-card__top">
+                                    <div class="intro-card__name">
+                                        <div class="intro-card__img">
+                                            <img
+                                                    src="/img/sso/user/main_card_02.png"
+                                                    alt="커뮤니티 일러스트"
+                                            />
+                                        </div>
+                                        <div class="intro-card__title">돌봄 커뮤니티</div>
+                                    </div>
+                                </div>
+                                <div class="intro-card__box">
+                                    <div class="intro-card__sub">
+                                        <h3>돌봄 종사자들이 함께 소통하는 공간입니다.</h3>
+                                        <p>
+                                            현장의 경험과 정보를 나누고 다른 돌봄 종사자들과 자유롭게
+                                            교류할 수 있습니다.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="intro-card__bottom">
+                                    <a onclick="temp()" class="intro-card__subbtn">
+                                        <div class="intro-card__subbtn-tit">커뮤니티 바로가기</div>
+                                        <span
+                                                class="icon-svg intro-card__subicon"
+                                                data-icon-name="arrow_forward_ios"
+                                                aria-hidden="true"
+                                                style="--icon-url: url('/img/sso/user/icons/arrow_forward_ios_icon.svg');"
+                                        ></span>
+                                    </a>
+                                </div>
+                            </li>
+                            <li
+                                    class="intro-card__list card"
+                                    data-aos="fade-up"
+                                    data-aos-delay="100"
+                                    data-aos-easing="ease-in-sine"
+                            >
+                                <div class="intro-card__top">
+                                    <div class="intro-card__name">
+                                        <div class="intro-card__img">
+                                            <img src="/img/sso/user/main_card_01.png" alt="카드 일러스트" />
+                                        </div>
+                                        <div class="intro-card__title">돌봄 카드</div>
+                                    </div>
+                                </div>
+                                <div class="intro-card__box">
+                                    <div class="intro-card__sub">
+                                        <h3>돌봄 종사자를 위한 전용 카드 서비스입니다.</h3>
+                                        <p>
+                                            생활에 필요한 다양한 혜택과 편리한 결제 서비스를 통해 돌봄
+                                            종사자의 경제적 부담을 줄이고더 나은 생활을 지원합니다.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="intro-card__bottom">
+                                    <a onclick="goToMain('/cardPreview')" class="intro-card__subbtn">
+                                        <div class="intro-card__subbtn-tit">카드 혜택 보러가기</div>
+                                        <span
+                                                class="icon-svg intro-card__subicon"
+                                                data-icon-name="arrow_forward_ios"
+                                                aria-hidden="true"
+                                                style="--icon-url: url('/img/sso/user/icons/arrow_forward_ios_icon.svg');"
+                                        ></span>
+                                    </a>
+                                </div>
+                            </li>
+                            <li
+                                    class="intro-card__list trip"
+                                    data-aos="fade-up"
+                                    data-aos-delay="100"
+                                    data-aos-easing="ease-in-sine"
+                            >
+                                <div class="intro-card__top">
+                                    <div class="intro-card__name">
+                                        <div class="intro-card__img">
+                                            <img src="/img/sso/user/main_card_05.png" alt="여행 일러스트" />
+                                        </div>
+                                        <div class="intro-card__title">돌봄 여행 레저</div>
+                                    </div>
+                                </div>
+                                <div class="intro-card__box">
+                                    <div class="intro-card__sub">
+                                        <h3>
+                                            돌봄 종사자를 위한 휴식과 여가를 위한 여행·레저 서비스입니다.
+                                        </h3>
+                                        <p>여행과 다양한 레저 혜택을 편리하게 즐겨보세요.</p>
+                                    </div>
+                                </div>
+                                <div class="intro-card__bottom">
+                                    <a onclick="goToStore('/store/user/product/productList/group/1')" class="intro-card__subbtn">
+                                        <div class="intro-card__subbtn-tit">
+                                            여행 레저 혜택 보러가기
+                                        </div>
+                                        <span
+                                                class="icon-svg intro-card__subicon"
+                                                data-icon-name="arrow_forward_ios"
+                                                aria-hidden="true"
+                                                style="--icon-url: url('/img/sso/user/icons/arrow_forward_ios_icon.svg');"
+                                        ></span>
+                                    </a>
+                                </div>
+                            </li>
+                            <li
+                                    class="intro-card__list insu"
+                                    data-aos="fade-up"
+                                    data-aos-delay="100"
+                                    data-aos-easing="ease-in-sine"
+                            >
+                                <div class="intro-card__top">
+                                    <div class="intro-card__name">
+                                        <div class="intro-card__img">
+                                            <img src="/img/sso/user/main_card_07.png" alt="보험 일러스트" />
+                                        </div>
+                                        <div class="intro-card__title">돌봄 보험</div>
+                                    </div>
+                                </div>
+                                <div class="intro-card__box">
+                                    <div class="intro-card__sub">
+                                        <h3>
+                                            돌봄 종사자를 위한 맞춤 보험 서비스입니다.
+                                        </h3>
+                                        <p>일하면서 생길 수 있는 위험을 미리 대비해보세요.</p>
+                                    </div>
+                                </div>
+                                <div class="intro-card__bottom">
+                                    <a onclick="goToStore('/store/user/product/productList/group/4')" class="intro-card__subbtn">
+                                        <div class="intro-card__subbtn-tit">
+                                            보험 보러가기
+                                        </div>
+                                        <span
+                                                class="icon-svg intro-card__subicon"
+                                                data-icon-name="arrow_forward_ios"
+                                                aria-hidden="true"
+                                                style="--icon-url: url('/img/sso/user/icons/arrow_forward_ios_icon.svg');"
+                                        ></span>
+                                    </a>
+                                </div>
+                            </li>
+                            <li
+                                    class="intro-card__list edu"
+                                    data-aos="fade-up"
+                                    data-aos-delay="100"
+                                    data-aos-easing="ease-in-sine"
+                            >
+                                <div class="intro-card__top">
+                                    <div class="intro-card__name">
+                                        <div class="intro-card__img">
+                                            <img src="/img/sso/user/main_card_06.png" alt="교육 일러스트" />
+                                        </div>
+                                        <div class="intro-card__title">돌봄 교육</div>
+                                    </div>
+                                </div>
+                                <div class="intro-card__box">
+                                    <div class="intro-card__sub">
+                                        <h3>
+                                            돌봄 역량을 높이는 교육 서비스입니다.
+                                        </h3>
+                                        <p>다양한 교육을 통해 돌봄 전문성을 키워보세요.</p>
+                                    </div>
+                                </div>
+                                <div class="intro-card__bottom">
+                                    <a onclick="goToStore('/store/user/product/productList/group/3')" class="intro-card__subbtn">
+                                        <div class="intro-card__subbtn-tit">
+                                            교육 강의 확인하기
+                                        </div>
+                                        <span
+                                                class="icon-svg intro-card__subicon"
+                                                data-icon-name="arrow_forward_ios"
+                                                aria-hidden="true"
+                                                style="--icon-url: url('/img/sso/user/icons/arrow_forward_ios_icon.svg');"
+                                        ></span>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="intro-box intro-reverse">
+                    <div class="intro-box__inner" data-aos="fade-up" data-aos-delay="100" data-aos-easing="ease-in-sine">
+                        <h3 class="intro-box__tit">앞으로 준비 중인서비스</h3>
+                        <p>
+                            돌보미는 돌봄 종사자의 삶 전반을 지원하기 위해 다양한 서비스를
+                            준비하고 있습니다.
+                        </p>
+                        <p>의료 서비스, 보험 서비스, 교육 서비스, 여행 · 레저 서비스 등</p>
+                        <p>
+                            앞으로도 돌봄 종사자에게 실질적인 도움이 되는 다양한 서비스가
+                            지속적으로 추가될 예정입니다.
+                        </p>
+                    </div>
+                    <div class="intro-box__img" data-aos="fade-up" data-aos-delay="100" data-aos-easing="ease-in-sine">
+                        <img src="/img/sso/user/intor_ai_03.webp" alt="돌보미 소개 세번째 이미지" />
+                    </div>
+                </div>
+
+                <div class="intro-box intro-final" data-aos="fade-up" data-aos-delay="100" data-aos-easing="ease-in-sine">
+                    <div class="intro-box__inner">
+                        <h3 class="intro-box__tit">돌봄의 가치를 높이는 플랫폼</h3>
+                        <p>
+                            돌보미는 돌봄 종사자의 더 나은 환경을 만들고 돌봄의 가치를 높이는 것을
+                            목표로 합니다.
+                        </p>
+                        <p>
+                            <strong
+                            >돌봄이 존중받는 사회,돌봄 종사자가 자부심을 가질 수 있는
+                                환경.</strong
+                            >
+                        </p>
+                        <div class="intro-final__img">
+                            <img
+                                    src="/img/sso/user/intor_ai_05.webp"
+                                    alt="돌보미 소개 아이콘 이미지"
+                            />
+                            <div>가 함께 만들어가겠습니다.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="footer-box">
+        <div th:replace="~{|sso/include/user/inc_footer|}"></div>
+    </div>
+</div>
+</body>
+<script th:inline="javascript">
+
+</script>
+</html>

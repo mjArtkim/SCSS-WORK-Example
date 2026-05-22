@@ -1,0 +1,55 @@
+.calendar,#calendar {margin-top:24px;pointer-events: none;}
+.fc .fc-toolbar.fc-header-toolbar {margin-bottom:0;padding: 12px;border-top:1px solid #e2e2e2;border-bottom:1px solid #D1D6DD;}
+.fc .fc-toolbar-title {color: #000;font-size: 1.375rem;font-style: normal;font-weight: 700;letter-spacing: -0.154px;}
+.fc-toolbar-chunk {pointer-events: auto;}
+.fc .fc-scrollgrid {border:0;}
+.fc .fc-button-primary {background-color: transparent;border-color: transparent;color:#d9d9d9;}
+.fc-col-header-cell.fc-day {border:0; padding:12px 0; color: #747475;font-size: 1.25rem;font-style: normal;font-weight: 400;line-height: 50.127px;letter-spacing: -0.6px;}
+.fc-col-header-cell a {cursor: auto;}
+.fc-scrollgrid.fc-scrollgrid-liquid {border:0;}
+.fc-scrollgrid-section.fc-scrollgrid-section-header > th {border:0;}
+.fc-theme-standard td {border:0;}
+.fc .fc-col-header-cell-cushion {padding:0;}
+.fc .fc-daygrid-body-unbalanced .fc-daygrid-day-events {display:none;}
+.fc .fc-daygrid-day-top {flex:1;flex-direction: column;justify-content: center;align-items: center;}
+.fc-txt-date {font-size: 12px;position: absolute;bottom:6px;}
+.fc .fc-daygrid-day-frame {display: flex;justify-content: center;}
+.fc-col-header thead > tr {display:flex;gap:15px;}
+.fc-col-header thead tr th {flex:1;border-radius: 12px;}
+.calendar.fc.fc-media-screen.fc-direction-ltr.fc-theme-standard, #calendar.fc.fc-media-screen.fc-direction-ltr.fc-theme-standard {max-width: 500px;margin:auto;}
+.fc-scroller {overflow: hidden !important;}
+.fc-scrollgrid-sync-table tbody > tr{display: flex;column-gap:8px;height:66px;}
+.fc-scrollgrid-sync-table tbody > tr+tr{margin-top:8px;}
+.fc-scrollgrid-sync-table tbody > tr > td{flex:1;border-radius: 12px;cursor: pointer;background-color: #FFF0E4;pointer-events: auto;border:1px solid #ff621f;}
+.fc .fc-daygrid-day.fc-day-today {background-color: #FFF0E4;}
+.fc .fc-daygrid-day.fc-day-today.on {background-color: #FF701F;}
+.fc-scrollgrid-sync-table tbody > tr > td.on{background-color: #FF701F;}
+.fc-scrollgrid-sync-table tbody > tr > td.on .fc-daygrid-day-number{color: #fff; text-decoration: underline;}
+.fc-scrollgrid-sync-table tbody > tr > td.fc-day-past{border:none;background-color: #eee;color:#c2c2c2;cursor:auto;}
+.fc-scrollgrid-sync-table tbody > tr > td.fc-day-other{border:0;background: #fff !important;color:#c2c2c2; pointer-events: none;}
+.fc-scrollgrid-sync-table tbody > tr > td.none{border:none;background-color: #eee;}
+.fc .fc-day-disabled {border:none; pointer-events: none;background-color:#eee !important;cursor: no-drop;}
+.txt_cal {margin-top: 8px; color: #55575C;font-size: 1rem;font-style: normal;font-weight: 400;letter-spacing: -0.48px;}
+.calendar_info {max-width: 500px; margin:0 auto 24px;display:flex;justify-content: end;gap:32px;}
+.calendar_info > li {position:relative;padding-left:32px;font-size: 1.125rem;font-style: normal;font-weight: 500;letter-spacing: -0.126px;line-height: 24px;}
+.calendar_info > li::after {content: '';display: block; position:absolute;left:0;top:0; width:24px;height:24px;border-radius: 4px;}
+.calendar_info > li:nth-child(1)::after {background-color:#FFF0E4;border:1px solid #ff621f;}
+.calendar_info > li:nth-child(2)::after {background-color: #eaeaea;}
+.calendar_info > li:nth-child(3)::after {background-color: #FF701F;}
+.txt_sub + .calendar_info {margin-top: 24px;}
+.fc .fc-day-disabled .fc-daygrid-day-number {cursor:default;color:rgb(194, 194, 194);}
+.fc .fc-day-past .fc-daygrid-day-number {cursor:default;color:rgb(194, 194, 194);}
+.fc .fc-daygrid-day-number {background-color: transparent;}
+@media all and (max-width:1200px) {
+  .calendar,#calendar {margin-top:12px;}
+  .calendar.fc.fc-media-screen.fc-direction-ltr.fc-theme-standard, #calendar.fc.fc-media-screen.fc-direction-ltr.fc-theme-standard {max-width: 320px;}
+  .fc .fc-toolbar.fc-header-toolbar {margin:0 -20px 8px;padding: 8px;}
+  .fc .fc-toolbar-title {font-size: 1rem;}
+  .fc-col-header-cell.fc-day {padding:14px 0;font-size: 0.875rem;line-height: 20px;letter-spacing: 0.4px;}
+  .fc-scrollgrid-sync-table tbody > tr{display: flex;gap:4px;height:50px;}
+  .fc-scrollgrid-sync-table tbody > tr+tr {margin-top: 4px;}
+  .txt_cal {font-size: 0.875rem;}
+  .calendar_info {max-width: 320px;margin:24px auto;}
+  .calendar_info > li {padding-left:24px;font-size: 0.875rem;line-height: 16px;}
+  .calendar_info > li::after {width:16px;height:16px;}
+}

@@ -1,0 +1,139 @@
+<div class="sub-menu wrap">
+  <div class="sub-menu__box">
+    <button class="re-menus"
+        type="button"
+        aria-expanded="false"
+        aria-label="전체 메뉴 열기">
+                <span class="re-menus__icon" aria-hidden="true">
+                    <span class="re-menus__line re-menus__line--top"></span>
+                    <span class="re-menus__line re-menus__line--middle"></span>
+                    <span class="re-menus__line re-menus__line--bottom"></span>
+                </span>
+    </button>
+    <div class="sub-menu__part">
+        <button class="sub-menu__btn">
+          <div class="sub-menu__icon my-icon"></div>
+          <div>MY</div>
+        </button>
+        <div class="menu-box">
+            <div class="menu-btn">
+                <button onclick="movePage('/recruit/user/companyMy?type=jobposting')">공고등록</button>
+                <button onclick="movePage('/recruit/user/companyMy?type=jobapply')">공고/지원자 관리</button>
+                <button onclick="movePage('/recruit/user/companyMy?type=company')">기업인증</button>
+                <button onclick="movePage('/recruit/user/recruitMy?type=resume')">이력서 관리</button>
+                <button onclick="movePage('/recruit/user/recruitMy?type=apply')">지원내역</button>
+                <button onclick="movePage('/recruit/user/recruitMy?type=favorite')">관심공고</button>
+            </div>
+        </div>
+    </div>
+    <div class="sub-menu__part">
+        <button class="sub-menu__btn">
+            <div class="sub-menu__icon reinfo-icon"></div>
+            <div>채용정보</div>
+        </button>
+        <div class="menu-box">
+            <div class="menu-btn">
+                <button type="button" onclick="movePage('/recruit/user/recruitInfo')">지역별</button>
+                <button type="button" onclick="movePage('/recruit/user/recruitInfo')">직종별</button>
+            </div>
+        </div>
+    </div>
+    <div class="sub-menu__part">
+        <button class="sub-menu__btn">
+            <div class="sub-menu__icon call-icon"></div>
+            <div>고객센터</div>
+        </button>
+        <div class="menu-box">
+            <div class="menu-btn">
+                <button onclick="movePage('/recruit/user/faqPage')">FAQ</button>
+                <button onclick="movePage('/recruit/user/notice')">공지사항</button>
+                <a href="tel:15660821">고객센터 연락</a>
+                <a href="mailto:payma@payma.co.kr">이메일 문의</a>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+<div class="sub-all" aria-hidden="true">
+    <div class="sub-all__inner wrap">
+        <ul class="sub-all__list">
+            <li class="sub-all__none"></li>
+            <li class="sub-all__menu">
+                <div class="menu-tit">MY</div>
+                <div class="menu-btn">
+                    <button onclick="movePage('/recruit/user/companyMy?type=jobposting')">공고등록</button>
+                    <button onclick="movePage('/recruit/user/companyMy?type=jobapply')">공고/지원자 관리</button>
+                    <button onclick="movePage('/recruit/user/recruitMy?type=resume')">이력서 관리</button>
+                    <button onclick="movePage('/recruit/user/recruitMy?type=apply')">지원내역</button>
+                    <button onclick="movePage('/recruit/user/recruitMy?type=favorite')">관심공고</button>
+                </div>
+            </li>
+            <li class="sub-all__menu">
+                <div class="menu-tit">채용정보</div>
+                <div class="menu-btn">
+                    <button type="button" onclick="movePage('/recruit/user/recruitInfo')">지역별</button>
+                    <button type="button" onclick="movePage('/recruit/user/recruitInfo')">직종별</button>
+                </div>
+            </li>
+            <li class="sub-all__menu">
+                <div class="menu-tit">고객센터</div>
+                <div class="menu-btn">
+                    <button onclick="movePage('/recruit/user/faqPage')">FAQ</button>
+                    <button onclick="movePage('/recruit/user/notice')">공지사항</button>
+                    <a href="tel:15660821">고객센터 연락</a>
+                    <a href="mailto:payma@payma.co.kr">이메일 문의</a>
+                </div>
+            </li>
+            <li class="sub-all__menu">
+                <div class="menu-tit">설정</div>
+                <div class="menu-btn">
+                    <button onclick="movePage('/recruit/user/recruitMy?type=setting')">내 정보 관리</button>
+                    <button type="button">기업인증</button>
+                    <button type="button" onclick="movePage('/main')">통합 홈으로 이동</button>
+                </div>
+            </li>
+        </ul>
+        <button class="company" type="button" onclick="movePage('/recruit/user/companyJoinInfo')">기업 회원이신가요?</button>
+    </div>
+</div>
+
+
+<script th:inline="javascript">
+    $(function () {
+        const $menuBtn = $(".re-menus");
+        const $subAll = $(".sub-all");
+        const $parts = $(".sub-menu__part");
+
+        $menuBtn.on("click", function (e) {
+            e.stopPropagation();
+            let isOpen = $(this).attr("aria-expanded") === "true";
+            $(this).attr("aria-expanded", !isOpen);
+            $parts.find(".menu-box").stop(true, true).slideUp(200);
+            if (isOpen) {
+                $subAll.attr("aria-hidden", "true").stop(true, true).slideUp(250);
+            } else {
+                $subAll.attr("aria-hidden", "false").stop(true, true).slideDown(250);
+            }
+        });
+        $subAll.on("click", function (e) {
+            e.stopPropagation();
+        });
+        $(document).on("click", function () {
+            $menuBtn.attr("aria-expanded", false);
+            $subAll.attr("aria-hidden", "true").stop(true, true).slideUp(250);
+            $parts.find(".menu-box").stop(true, true).slideUp(200);
+        });
+        $(".sub-menu__btn").on("click", function (e) {
+            e.stopPropagation();
+            $menuBtn.attr("aria-expanded", false);
+            $subAll.attr("aria-hidden", "true").stop(true, true).slideUp(250);
+            const $currentPart = $(this).closest(".sub-menu__part");
+            const $currentBox = $currentPart.find(".menu-box");
+            const isOpen = $currentBox.is(":visible");
+            $parts.find(".menu-box").stop(true, true).slideUp(200);
+            if (!isOpen) {
+                $currentBox.stop(true, true).slideDown(200);
+            }
+        });
+    });
+</script>

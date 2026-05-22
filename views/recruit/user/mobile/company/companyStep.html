@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+    <div th:replace="~{|recruit/include/user/inc_head|}"></div>
+</head>
+<body class="recruit-body">
+<section class="re-company-recruit">
+    <div>
+        <div th:replace="~{recruit/include/user/mobile/inc_recruit_head :: recruitHead}"></div>
+    </div>
+    <div class="re-company-recruit__content">
+        <div class="re-company-recruit__panel">
+            <div class="re-company-recruit__field">
+                <div class="re-company-recruit__field-head">
+                    <label class="re-company-recruit__label" for="company-manager-name">담당자 정보<span>*</span></label>
+                    <label class="re-company-recruit__check">
+                        <input type="checkbox">
+                        <span class="re-company-recruit__check-box" aria-hidden="true"></span>
+                        <span class="re-company-recruit__check-text">전체 비공개</span>
+                    </label>
+                </div>
+                <input id="company-manager-name" class="re-company-recruit__input" type="text" placeholder="이름">
+            </div>
+
+            <div class="re-company-recruit__field">
+                <label class="re-company-recruit__label" for="company-manager-phone">담당자 연락처<span>*</span></label>
+                <div class="re-company-recruit__inline">
+                    <input id="company-manager-phone" class="re-company-recruit__input" type="tel" inputmode="numeric">
+                    <label class="re-company-recruit__privacy">
+                        <input type="checkbox">
+                        <span class="re-company-recruit__check-box" aria-hidden="true"></span>
+                        <span class="re-company-recruit__check-text">비공개</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="re-company-recruit__field">
+                <label class="re-company-recruit__label" for="company-manager-email">담당자 이메일<span>*</span></label>
+                <div class="re-company-recruit__inline">
+                    <input id="company-manager-email" class="re-company-recruit__input" type="email">
+                    <label class="re-company-recruit__privacy">
+                        <input type="checkbox">
+                        <span class="re-company-recruit__check-box" aria-hidden="true"></span>
+                        <span class="re-company-recruit__check-text">비공개</span>
+                    </label>
+                </div>
+            </div>
+
+            <button class="re-company-recruit__manager-btn" type="button">담당자 정보 수정</button>
+        </div>
+
+        <div class="re-company-recruit__notice">
+            <p>이메일을 통해 허위입사지원의 사례가 발생되고 있습니다.<br>온라인 접수 선택 후 이메일을 비공개로 등록해주시면<br>악용되는 경우가 방지 됩니다.</p>
+            <p>입력된 정보는 공고 하단 담당자 정보에 공개되어 악용될 수 있으므로, 필요한 정보만 선택적으로 공개하시기 바랍니다.</p>
+        </div>
+
+        <div class="re-company-recruit__panel re-company-recruit__panel--location">
+            <div class="re-company-recruit__field">
+                <label class="re-company-recruit__label" for="company-work-address">근무지역<span>*</span></label>
+                <div class="re-company-recruit__location-fields">
+                    <input id="company-work-address" class="re-company-recruit__input" type="text" placeholder="주소를 입력해주세요">
+                    <input id="company-work-address-detail" class="re-company-recruit__input" type="text" placeholder="주소를 입력해주세요">
+                </div>
+            </div>
+
+            <div class="re-company-recruit__map-wrap">
+                <h2 class="re-company-recruit__map-title">지도로 확인</h2>
+                <div class="re-company-recruit__map" aria-hidden="true"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="re-company-recruit__footer">
+        <button class="re-company-recruit__nav re-company-recruit__nav--prev" type="button" aria-label="이전 단계" onclick="movePage('/recruit/user/main')" >
+            이전
+        </button>
+        <button class="re-company-recruit__nav re-company-recruit__nav--next" type="button" onclick="movePage('/recruit/user/companyStep2')">다음 단계</button>
+    </div>
+</section>
+<script th:inline="javascript"></script>
+</body>
+</html>

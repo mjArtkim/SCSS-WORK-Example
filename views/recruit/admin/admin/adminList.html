@@ -1,0 +1,507 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <div th:replace="~{|recruit/include/admin/inc_admin_head|}"></div>
+</head>
+<body id="page-top">
+<div class="wrapper goodList">
+    <div th:replace="~{|recruit/include/admin/inc_admin_header|}"></div>
+
+    <div class="container">
+        <div th:replace="~{|recruit/include/admin/inc_admin_side_left|}"></div>
+        <div class="contents">
+            <div class="inner">
+                <div class="tabWrap">
+                    <div class="tabCon">
+                        <div class="tab">
+                            <div class="headerArea flexBox">
+                                <h2>관리자 관리</h2>
+                                <div class="link">관리자 관리 &gt; 관리자 관리</div>
+                            </div>
+                            <ul class="outInfo2 mt10">
+                                <li>관리자를 검색하여 관리자정보를 확인하실 수 있습니다.</li>
+                            </ul>
+                            <div class="item mt20">
+                                <div class="itemCon show">
+                                    <div class="recruitColumn v2">
+                                        <h4>검색어</h4>
+                                        <div class="rightCon mb10">
+                                            <select name="searchType" id="searchType" class="wdh_218">
+                                                <option value="memId">관리자ID</option>
+                                                <option value="memNm">관리자명</option>
+                                                <option value="memContact">연락처</option>
+                                            </select>
+                                            <input type="text" class="limit ml5 wdh_450" id="searchKeyword"
+                                                   placeholder="검색어를 입력해주세요." onkeyup="enterKey(event);">
+                                        </div>
+                                    </div>
+
+                                    <div class="recruitColumn v2">
+                                        <h4>기간</h4>
+                                        <div class="rightCon">
+                                            <div class="selWrap">
+                                                <select name="" id="" class="wdh_218">
+                                                    <option value="">등록일</option>
+                                                </select>
+                                            </div>
+                                            <div class="dateBox flexBox mt10">
+                                                <div class="radioWrap flexBox">
+                                                    <input type="radio" id="dayAll" name="dayType" value="all"
+                                                           class="square" checked="checked">
+                                                    <label for="dayAll">전체</label>
+                                                    <input type="radio" id="dayPeriod" name="dayType" value="period"
+                                                           class="square">
+                                                    <label for="dayPeriod">기간</label>
+                                                </div>
+                                            </div>
+                                            <div class="dateBox flexBox mt10 dateTerms" style="visibility:hidden">
+                                                <div class="radioWrap flexBox">
+                                                    <input type="radio" id="day" name="day" value="1" class="square"
+                                                           checked>
+                                                    <label for="day">오늘</label>
+                                                    <input type="radio" id="day7" name="day" value="7" class="square">
+                                                    <label for="day7">1주일</label>
+                                                    <input type="radio" id="day30" name="day" value="30" class="square">
+                                                    <label for="day30">1개월</label>
+                                                    <input type="radio" id="day90" name="day" value="90" class="square">
+                                                    <label for="day90">3개월</label>
+                                                    <input type="radio" id="day180" name="day" value="180"
+                                                           class="square">
+                                                    <label for="day180">6개월</label>
+                                                    <input type="radio" id="day365" name="day" value="365"
+                                                           class="square">
+                                                    <label for="day365">1년</label>
+                                                </div>
+                                                <div class="calWrap flexBox">
+                                                    <div class="inpWrap">
+                                                        <input type="text" placeholder="" class="" id="str_date"
+                                                               readonly/>
+                                                    </div>
+                                                    <span class="inpTxt ml5">~</span>
+                                                    <div class="inpWrap ml5">
+                                                        <input type="text" placeholder="" class="" id="end_date"
+                                                               readonly/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="btnWrap">
+                                        <button class="btnType btnSize44 btnLineG3" onclick="fn_searchReset()">초기화
+                                        </button>
+                                        <button class="btnType btnSize44 btnColorP2" onclick="fn_searchList()">조회
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- item -->
+                            <div class="item">
+                                <p class="total2 pt20">관리자목록 <span class="small ml5">총 <em id="totalCount"></em>개</span>
+                                </p>
+                                <div class="tblTop">
+                                    <button type="button" class="btnType btnSize36 btnLineG" onclick="fn_openRegPop()">
+                                        관리자 등록
+                                    </button>
+                                    <div>
+                                        <select name=regDate"" id="regDate" class="wdh_160">
+                                            <option value="">등록일순</option>
+                                        </select>
+                                        <select name="pageRow" id="pageRow" class="wdh_160 ml5"
+                                                onchange="fn_searchList()">
+                                            <option value="10" selected>10개씩</option>
+                                            <option value="30">30개씩</option>
+                                            <option value="50">50개씩</option>
+                                            <option value="100">100개씩</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="grid_admin_goods_list" class="gridWrap">
+                                    <div class="card" style="overflow-x: auto;">
+                                        <table id="searchList" class="p-datatable" style="width:100%">
+                                            <thead class="p-datatable-thead">
+                                            <tr>
+                                                <th style="width: 4%;">No</th>
+                                                <th style="width: 5%;">권한명</th>
+                                                <th style="width: 5%;">ID</th>
+                                                <th style="width: 5%;">이름</th>
+                                                <th style="width: 10%;">연락처</th>
+                                                <th style="width: 10%;">등록일</th>
+                                                <th style="width: 6%;">정보수정</th>
+                                                <th style="width: 6%;">삭제</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+
+                                    </div>
+                                    <!-- Paginator 컴포넌트 -->
+                                    <div class="p-paginator p-paginator-bottom" id="PAGE_NAVI">
+                                    </div>
+                                    <input type="hidden" id="PAGE_INDEX" name="PAGE_INDEX" value="1"/>
+                                </div><!-- item -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="popLayer" class="popOverlay c popClose">
+        <div class="popWrap">
+            <div class="popInner">
+                <span class="btnPopClose" onclick="popLayerClose();">닫기</span>
+                <h2>관리자 등록</h2>
+                <!-- popup 업체 정보 -->
+                <div class="popCnt type3">
+                    <div class="popItemCon">
+                        <div class="mr10">
+                            <div class="popTblTop v3 mt10">
+                                <p>관리자 정보</p>
+                            </div>
+                            <div class="popBasicTblWrap mt20">
+                                <table>
+                                    <input type="hidden" id="seq"/>
+                                    <colgroup>
+                                        <col width="32%">
+                                        <col width="auto">
+                                    </colgroup>
+                                    <tbody>
+                                    <tr>
+                                        <th>ID</th>
+                                        <td><input type="text" class="productTit popInfo wdh_full" id="id"></td>
+                                    </tr>
+                                    <tr id="pwTr">
+                                        <th>비밀번호</th>
+                                        <td><input type="password" class="productTit popInfo wdh_full" id="pw"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>관리자명</th>
+                                        <td><input type="text" class="productTit popInfo wdh_full" id="name"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>연락처</th>
+                                        <td><input type="text" class="productTit popInfo wdh_full" id="contact"
+                                                   maxlength="11"></td>
+                                    </tr>
+                                    <tr>
+                                        <th>권한</th>
+                                        <td>
+                                            <select class="productTit popInfo wdh_full" id="auth">
+                                                <th:block th:each="item, itemStat : ${authList}">
+                                                    <option th:value="${item.authCd}" th:text="${item.name}"></option>
+                                                </th:block>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>사용여부</th>
+                                        <td>
+                                            <select class="productTit popInfo wdh_full" id="usedType">
+                                                <option value="Y">사용</option>
+                                                <option value="N">미사용</option>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="btnWrap">
+                        <button class="btnType btnSize44 btnLineG3" onclick="popLayerClose();">취소</button>
+                        <button class="btnType btnSize44 btnColorP2" id="sendBtn" onclick="fn_updateAdminInfo();">등록
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script>
+
+    let recordTotal = 0;
+    $(document).ready(function () {
+        $('#userContact').on('input keydown', function (event) {
+            filterNumber(this, event, 'none');
+        });
+        getHistoryList('init');
+    });
+
+    function getHistoryList(type) {
+
+        let param = {
+            "PAGE_INDEX": $("#PAGE_INDEX").val(),
+            "pageRow": $("#pageRow").val(),
+            "searchType": $('#searchType').val(),
+            "searchKeyword": $('#searchKeyword').val()
+        }
+
+        if ($('input[name=dayType]:checked').val() != 'all') {
+            param.strDate = $('#str_date').val();
+            param.endDate = $('#end_date').val();
+        }
+
+        $.ajax({
+            url: "/recruit/admin/ajax/selectAdminList",
+            data: JSON.stringify(param),
+            type: 'POST',
+            contentType: 'application/json',
+            beforeSend: function (xhr) {
+                $('.loading').show();
+            },
+            success: function (data) {
+                recordTotal = data.data.total;
+                if (type == 'init') {
+                    getHistoryListCallback(data.data);
+                } else {
+                    reDrawTable(data.data);
+                }
+
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                confirmModal({title: jqXHR.statusText});
+            },
+            complete: function () {
+                $('.loading').hide();
+            }
+        })
+
+    }
+
+    function getHistoryListCallback(data) {
+        var total = data.total;
+        var params = {
+            divId: "PAGE_NAVI",
+            pageIndex: "PAGE_INDEX",
+            totalCount: total,
+            recordCount: $("#pageRow").val(),
+            eventName: "getHistoryList"
+        };
+        gfn_renderPaging(params);
+
+        var list = data.list;
+        var table = $('#searchList').DataTable({
+            destroy: true,
+            data: list,
+            columnDefs: [
+                {targets: '_all', className: 'text-center'}
+            ],
+            columns: [
+                {
+                    data: null,
+                    render: function (data, type, row, meta) {
+                        let currentPage = $('#PAGE_INDEX').val();
+                        let recordCount = $("#pageRow").val();
+                        let no = recordTotal - ((currentPage - 1) * recordCount) - meta.row;
+                        return no;
+                    }
+                },
+                {data: 'authName'},
+                {data: 'id'},
+                {data: 'name'},
+                {
+                    data: null,
+                    render: function (data, type, row) {
+                        return fn_contactNum(data.contact);
+                    }
+                },
+                {data: 'regDt'},
+                {
+                    data: 'seq', render: function (data, type, row) {
+                        return '<button class="btnType btnColorB btnSize22 txtBlue" onclick=\'fn_openUpdatePopup("' + data + '", "user")\'>수정</button>';
+                    }
+                },
+                {
+                    data: 'seq', render: function (data, type, row) {
+                        return '<button class="btnType btnColorR btnSize22 txtRed" onclick=\'fn_deleteAdminInfo("' + data + '", "user")\'>삭제</button>';
+                    }
+                }
+            ],
+            scrollY: false,
+            scrollX: false,
+            paging: true,
+            pageLength: 100,
+            dom: 't',
+            language: {
+                emptyTable: "조회하신 결과가 없습니다",
+                info: "Showing _START_ to _END_ of _TOTAL_ entries"
+            },
+            order: [0, 'desc']
+        });
+        $('.total2 #totalCount').html(numberWithCommas(total));
+    }
+
+    function fn_openRegPop() {
+        $('#id').val('');
+        $('#id').prop('readonly', false);
+        $('#pw').val('');
+        $('#pwTr').show();
+        $('#name').val('');
+        $('#contact').val('');
+        $('#auth option:first').prop('selected', true);
+        $('#useYn').val('Y');
+        $('#companySeq').val('1');
+        $('#popLayer').find('h2').text('관리자 등록');
+        $('#sendBtn').text('등록');
+        $('#popLayer').removeClass('popClose');
+    }
+
+    function fn_openUpdatePopup(seq) {
+        let param = {
+            "seq": seq
+        }
+        $.ajax({
+            url: "/recruit/admin/ajax/selectAdminInfo",
+            data: JSON.stringify(param),
+            type: 'POST',
+            contentType: 'application/json',
+            beforeSend: function (xhr) {
+                $('.loading').show();
+            },
+            success: function (data) {
+                let info = data.data.info;
+
+                $('#seq').val(info.seq);
+                $('#id').val(info.id);
+                $('#id').prop('readonly', true);
+                $('#pwTr').hide();
+                $('#name').val(info.name);
+                $('#contact').val(info.contact);
+                $('#auth').val(info.authCd);
+                $('#usedType').val(info.useYn);
+                $('#companySeq').val(info.companySeq);
+                $('#popLayer').find('h2').text('관리자 수정');
+                $('#sendBtn').text('수정');
+                $('#popLayer').removeClass('popClose');
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                confirmModal({title: jqXHR.statusText});
+            },
+            complete: function () {
+                $('.loading').hide();
+            }
+        })
+
+
+    }
+
+    function fn_updateAdminInfo() {
+        let id = $('#id').val().replaceAll(' ', '');
+        let companySeq = $('#companySeq').val();
+        let name = $('#name').val().replaceAll(' ', '');
+        let contact = $('#contact').val().replaceAll(' ', '');
+        let authCd = $('#auth').val();
+        let useYn = $('#useYn').val();
+
+        if (id == '') {
+            confirmModal({title: 'ID를 입력해주세요'});
+            return;
+        }
+        if (name == '') {
+            confirmModal({title: '이름을 입력해주세요'});
+            return;
+        }
+        if (contact == '') {
+            confirmModal({title: '연락처를 입력해주세요'});
+            return;
+        }
+
+        let param = {
+            'companySeq': companySeq,
+            'name': name,
+            'contact': contact,
+            'authCd': authCd,
+            "useYn": useYn
+        }
+        let url = '';
+        if ($('#sendBtn').text() == '등록') {
+            param.id = id;
+            let pw = $('#pw').val().replaceAll(' ', '');
+            if (pw == '') {
+                confirmModal({title: '비밀번호를 입력해주세요'});
+                return;
+            }
+            param.pw = pw;
+            url = '/recruit/admin/ajax/insertAdminInfo';
+        } else {
+            param.seq = $('#seq').val();
+            url = '/recruit/admin/ajax/updateAdminInfo';
+        }
+        $.ajax({
+            url: url,
+            data: JSON.stringify(param),
+            type: 'POST',
+            contentType: 'application/json',
+            beforeSend: function (xhr) {
+                $('.loading').show();
+            },
+            success: function (data) {
+                let msg = data.resultMsg;
+                confirmModal({
+                    title: msg, confirm: function () {
+                        alertLayerClose();
+                        if (data.resultCd == 'S') {
+                            popLayerClose();
+                            getHistoryList();
+                        }
+                    }
+                })
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                confirmModal({title: jqXHR.statusText});
+            },
+            complete: function () {
+                $('.loading').hide();
+            }
+        })
+    }
+
+    function fn_deleteAdminInfo(seq) {
+
+        confirmModal({
+            title: '해당관리자 계정을 삭제하시겠습니까?', cancelUse: true, confirm: function () {
+                alertLayerClose();
+                let param = {
+                    seq: seq
+                    , useYn: 'N'
+                };
+                $.ajax({
+                    url: '/recruit/admin/ajax/updateAdminUseYn',
+                    data: JSON.stringify(param),
+                    type: 'POST',
+                    contentType: 'application/json',
+                    beforeSend: function (xhr) {
+                        $('.loading').show();
+                    },
+                    success: function (data) {
+                        let msg = data.resultMsg;
+                        confirmModal({
+                            title: msg, confirm: function () {
+                                alertLayerClose();
+                                if (data.resultCd == 'S') {
+                                    popLayerClose();
+                                    getHistoryList();
+                                }
+                            }
+                        })
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        confirmModal({title: jqXHR.statusText});
+                    },
+                    complete: function () {
+                        $('.loading').hide();
+                    }
+                })
+            }
+        })
+
+    }
+
+</script>
+</html>

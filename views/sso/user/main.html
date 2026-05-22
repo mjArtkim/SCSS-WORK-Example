@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="~{|sso/include/user/inc_head|}"></div>
+    <script src="/js/sso/user/main.js"></script>
+</head>
+<body>
+<div class="app-shell app-shell--footer-hidden">
+    <div class="app-body">
+        <div class="site-header header-box wrap">
+            <div th:replace="~{|sso/include/user/inc_header|}"></div>
+        </div>
+        <main class="site-content" aria-live="polite">
+            <section class="main">
+                <div class="main__wrap wrap">
+                    <div class="main__left">
+                        <div class="main__pcscroll">
+                            <div class="main__inleft">
+                                <h1 class="main__title">
+                                    <div class="main__top">
+                                        <div class="main__red">돌보미</div>
+                                        <div class="main__small">와</div>
+                                        <div class="main__black">함께하는</div>
+                                    </div>
+                                    <div class="main__bottom">
+                                        <div class="main__red">행복</div>
+                                        <div class="main__small">한</div>
+                                        <div class="main__black">생활</div>
+                                    </div>
+                                </h1>
+                                <div class="pc-only-txt">보험에서 돌봄까지 당신의 생활 파트너</div>
+                                <a onclick="movePage('/intro');" class="main__left-btn">서비스 소개</a>
+                            </div>
+                            <div class="main-pc-scroll">스크롤</div>
+                        </div>
+                        <div class="pc-footer wrap">
+                            <div class="footer-inner">
+                                <div class="footer-inner__tit">페이마 주식회사</div>
+                                <address class="footer-company-info">
+                                    <div class="fci">
+                                        <p>대표자 : 이승현</p>
+                                        <p>54601&#41; 전북특별자치도 익산시 인북로3길 28 301호</p>
+                                        <p>통신판매업 : 2026-전북익산-0140</p>
+                                        <div class="add-personal">
+                                            <a onclick="movePage('/terms')">
+                                                개인정보처리방침
+                                            </a>
+                                            <a class="cursor-pointer" onclick="movePage('/termsOfUse')">이용약관</a>
+                                        </div>
+                                    </div>
+                                    <div class="fci">
+                                        <p>사업자등록번호 : 279-86-03330</p>
+                                        <div class="fci__flex">
+                                            <p>TEL : <a href="tel:15660821">1566-0821</a></p>
+                                            <p>FAX : 02-702-1235</p>
+                                        </div>
+                                        <p>
+                                            E-MAIL :
+                                            <a href="mailto:payma@payma.co.kr">payma@payma.co.kr</a>
+                                        </p>
+                                        <p>Some Images by Freepik</p>
+                                    </div>
+                                </address>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="cards">
+                        <ul class="detail">
+                            <li class="detail__list job">
+                                <div class="detail__top">
+                                    <div class="detail__name">
+                                        <span class="icon-svg detail__icon" data-icon-name="person_search" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/person_search_icon.svg');"></span>
+                                        <div class="detail__title">구인구직</div>
+                                    </div>
+                                    <button class="detail-close-btn" type="button">
+                                        <div>창 닫기</div>
+                                        <span class="icon-svg" data-icon-name="close_small" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/close_small_icon.svg');"></span>
+                                    </button>
+                                </div>
+                                <div class="detail__box">
+                                    <div class="detail__sub">
+                                        <h3>돌봄 일자리를 찾고 연결하는 서비스</h3>
+                                        <p>내 주변 돌봄 일자리를 쉽고 빠르게 찾아보세요.</p>
+                                    </div>
+                                    <div class="detail__img">
+                                        <img src="/img/sso/user/main_card_03.webp" alt="구인구직 일러스트"/>
+                                    </div>
+                                </div>
+                                <div class="detail__bottom">
+                                    <a onclick="temp()" class="detail__subbtn">
+                                        <div class="detail__subbtn-tit">구인구직 바로가기</div>
+                                        <span class="icon-svg detail__subicon" data-icon-name="arrow_forward_ios" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/arrow_forward_ios_icon.svg');"></span>
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="detail__list shop">
+                                <div class="detail__top">
+                                    <div class="detail__name">
+                                        <span class="icon-svg detail__icon" data-icon-name="shopping_cart" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/shopping_cart_icon.svg');"></span>
+                                        <div class="detail__title">쇼핑</div>
+                                    </div>
+                                    <button class="detail-close-btn" type="button">
+                                        <div>창 닫기</div>
+                                        <span class="icon-svg" data-icon-name="close_small" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/close_small_icon.svg');"></span>
+                                    </button>
+                                </div>
+                                <div class="detail__box">
+                                    <div class="detail__sub">
+                                        <h3>돌봄 종사자를 위한 전용 쇼핑몰</h3>
+                                        <p>다양한 상품을 합리적인 가격으로 편리하게 만나보세요.</p>
+                                    </div>
+                                    <div class="detail__img">
+                                        <img src="/img/sso/user/main_card_04.webp" alt="쇼핑 일러스트"/>
+                                    </div>
+                                </div>
+                                <div class="detail__bottom">
+                                    <a onclick="goToStore('/store/user/main')" class="detail__subbtn">
+                                        <div class="detail__subbtn-tit">쇼핑몰 바로가기</div>
+                                        <span class="icon-svg detail__subicon" data-icon-name="arrow_forward_ios" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/arrow_forward_ios_icon.svg');"></span>
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="detail__list comu">
+                                <div class="detail__top">
+                                    <div class="detail__name">
+                                        <span class="icon-svg detail__icon" data-icon-name="groups" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/groups_icon.svg');"></span>
+                                        <div class="detail__title">커뮤니티</div>
+                                    </div>
+                                    <button class="detail-close-btn" type="button">
+                                        <div>창 닫기</div>
+                                        <span class="icon-svg" data-icon-name="close_small" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/close_small_icon.svg');"></span>
+                                    </button>
+                                </div>
+                                <div class="detail__box">
+                                    <div class="detail__sub">
+                                        <h3>돌봄 종사자들이 함께 소통하는 공간</h3>
+                                        <p>다른 돌봄 선생님들과 정보와 경험을 나눠보세요.</p>
+                                    </div>
+                                    <div class="detail__img">
+                                        <img src="/img/sso/user/main_card_02.webp" alt="커뮤니티 일러스트"/>
+                                    </div>
+                                </div>
+                                <div class="detail__bottom">
+                                    <a onclick="temp()" class="detail__subbtn">
+                                        <div class="detail__subbtn-tit">커뮤니티 바로가기</div>
+                                        <span class="icon-svg detail__subicon" data-icon-name="arrow_forward_ios" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/arrow_forward_ios_icon.svg');"></span>
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="detail__list card">
+                                <div class="detail__top">
+                                    <div class="detail__name">
+                                        <span class="icon-svg detail__icon" data-icon-name="credit_card" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/credit_card_icon.svg');"></span>
+                                        <div class="detail__title">카드</div>
+                                    </div>
+                                    <button class="detail-close-btn" type="button">
+                                        <div>창 닫기</div>
+                                        <span class="icon-svg" data-icon-name="close_small" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/close_small_icon.svg');"></span>
+                                    </button>
+                                </div>
+                                <div class="detail__box">
+                                    <div class="detail__sub">
+                                        <h3>돌봄 종사자를 위한 카드 혜택</h3>
+                                        <p>
+                                            돌봄 종사자를 위한 전용 카드를 발급하고 생활에 필요한 다양한
+                                            혜택을 받아보세요. </p>
+                                    </div>
+                                    <div class="detail__img">
+                                        <img src="/img/sso/user/main_card_01.webp" alt="카드 일러스트"/>
+                                    </div>
+                                </div>
+                                <div class="detail__bottom">
+                                    <a onclick="goToMain('/cardPreview')" class="detail__subbtn">
+                                        <div class="detail__subbtn-tit">카드 혜택 보러가기</div>
+                                        <span class="icon-svg detail__subicon" data-icon-name="arrow_forward_ios" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/arrow_forward_ios_icon.svg');"></span>
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="detail__list trip">
+                                <div class="detail__top">
+                                    <div class="detail__name">
+                                          <span class="icon-svg detail__icon" data-icon-name="airplane_ticket" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/airplane_ticket_icon.svg');">
+                                          </span>
+                                        <div class="detail__title">여행 레저</div>
+                                    </div>
+                                    <button class="detail-close-btn" type="button">
+                                        <div>창 닫기</div>
+                                        <span class="icon-svg" data-icon-name="close_small" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/close_small_icon.svg');"></span>
+                                    </button>
+                                </div>
+                                <div class="detail__box">
+                                    <div class="detail__sub">
+                                        <h3>돌봄 종사자를 위한 휴식과 여가 서비스</h3>
+                                        <p>
+                                            돌봄 종사자를 위한 여행과 다양한 레저 혜택을 편리하게
+                                            즐겨보세요. </p>
+                                    </div>
+                                    <div class="detail__img">
+                                        <img src="/img/sso/user/main_card_05.png" alt="여행레저 일러스트"/>
+                                    </div>
+                                </div>
+                                <div class="detail__bottom">
+                                    <a onclick="goToStore('/store/user/product/productList/group/1')" class="detail__subbtn">
+                                        <div class="detail__subbtn-tit">여행 레저 보러가기</div>
+                                        <span class="icon-svg detail__subicon" data-icon-name="arrow_forward_ios" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/arrow_forward_ios_icon.svg');"></span>
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="detail__list insu">
+                                <div class="detail__top">
+                                    <div class="detail__name">
+                                          <span class="icon-svg detail__icon" data-icon-name="heart_check" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/heart_check_icon.svg');">
+                                          </span>
+                                        <div class="detail__title">보험</div>
+                                    </div>
+                                    <button class="detail-close-btn" type="button">
+                                        <div>창 닫기</div>
+                                        <span class="icon-svg" data-icon-name="close_small" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/close_small_icon.svg');"></span>
+                                    </button>
+                                </div>
+                                <div class="detail__box">
+                                    <div class="detail__sub">
+                                        <h3>돌봄 종사자를 위한 맞춤 보험 서비스</h3>
+                                        <p>
+                                            일하면서 생길 수 있는 위험을 미리 대비해보세요. </p>
+                                    </div>
+                                    <div class="detail__img">
+                                        <img src="/img/sso/user/main_card_07.png" alt="보험 일러스트"/>
+                                    </div>
+                                </div>
+                                <div class="detail__bottom">
+                                    <a onclick="goToStore('/store/user/product/productList/group/4')" class="detail__subbtn">
+                                        <div class="detail__subbtn-tit">보험 보러가기</div>
+                                        <span class="icon-svg detail__subicon" data-icon-name="arrow_forward_ios" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/arrow_forward_ios_icon.svg');"></span>
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="detail__list edu">
+                                <div class="detail__top">
+                                    <div class="detail__name">
+                                          <span class="icon-svg detail__icon" data-icon-name="auto_stories" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/auto_stories_icon.svg');">
+                                          </span>
+                                        <div class="detail__title">교육</div>
+                                    </div>
+                                    <button class="detail-close-btn" type="button">
+                                        <div>창 닫기</div>
+                                        <span class="icon-svg" data-icon-name="close_small" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/close_small_icon.svg');"></span>
+                                    </button>
+                                </div>
+                                <div class="detail__box">
+                                    <div class="detail__sub">
+                                        <h3>돌봄 역량을 높이는 교육 서비스</h3>
+                                        <p>
+                                            다양한 교육을 통해 돌봄 전문성을 키워보세요. </p>
+                                    </div>
+                                    <div class="detail__img">
+                                        <img src="/img/sso/user/main_card_06.png" alt="교육 일러스트"/>
+                                    </div>
+                                </div>
+                                <div class="detail__bottom">
+                                    <a onclick="goToStore('/store/user/product/productList/group/3')" class="detail__subbtn">
+                                        <div class="detail__subbtn-tit">교육 강의 보러가기</div>
+                                        <span class="icon-svg detail__subicon" data-icon-name="arrow_forward_ios" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/arrow_forward_ios_icon.svg');"></span>
+                                    </a>
+                                </div>
+                            </li>
+                            <li class="detail__list map">
+                                <div class="detail__top">
+                                    <div class="detail__name">
+                                          <span class="icon-svg detail__icon" data-icon-name="auto_stories" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/dol_map_icon.svg');">
+                                          </span>
+                                        <div class="detail__title">돌봄 지도</div>
+                                    </div>
+                                    <button class="detail-close-btn" type="button">
+                                        <div>창 닫기</div>
+                                        <span class="icon-svg" data-icon-name="close_small" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/close_small_icon.svg');"></span>
+                                    </button>
+                                </div>
+                                <div class="detail__box">
+                                    <div class="detail__sub">
+                                        <h3>돌봄 종사자를 위한 제휴 기관 찾기 서비스</h3>
+                                        <p>요양병원, 제가센터 등 돌봄관련 기관을 찾아보세요.</p>
+                                    </div>
+                                    <div class="detail__img">
+                                        <img src="/img/sso/user/main_card_08.png" alt="돌봄 지도 일러스트"/>
+                                    </div>
+                                </div>
+                                <div class="detail__bottom">
+                                    <a onclick="location.href = '/finder/maps';" class="detail__subbtn">
+                                        <div class="detail__subbtn-tit">기관 찾아 보기</div>
+                                        <span class="icon-svg detail__subicon" data-icon-name="arrow_forward_ios" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/arrow_forward_ios_icon.svg');"></span>
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <ul class="cards__wrap">
+                            <li class="cards__list shop">
+                                <button class="cards__item">
+                                    <span class="icon-svg cards__icon" data-icon-name="shopping_cart" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/shopping_cart_icon.svg');"></span>
+                                    <div class="cards__title">쇼핑</div>
+                                </button>
+                            </li>
+                            <li class="cards__list insu">
+                                <button class="cards__item">
+                                    <span class="icon-svg cards__icon" data-icon-name="heart_check" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/heart_check_icon.svg');"></span>
+                                    <div class="cards__title">보험</div>
+                                </button>
+                            </li>
+                            <li class="cards__list trip">
+                                <button class="cards__item">
+                                    <span class="icon-svg cards__icon" data-icon-name="airplane_ticket" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/airplane_ticket_icon.svg');"></span>
+                                    <div class="cards__title">여행 레저</div>
+                                </button>
+                            </li>
+                            <li class="cards__list map">
+                                <button class="cards__item">
+                                    <span class="icon-svg cards__icon" data-icon-name="auto_stories" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/dol_map_icon.svg');"></span>
+                                    <div class="cards__title">돌봄 지도</div>
+                                </button>
+                            </li>
+                            <li class="cards__list edu">
+                                <button class="cards__item">
+                                    <span class="icon-svg cards__icon" data-icon-name="auto_stories" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/auto_stories_icon.svg');"></span>
+                                    <div class="cards__title">교육</div>
+                                </button>
+                            </li>
+                            <li class="cards__list card">
+                                <button class="cards__item">
+                                    <span class="icon-svg cards__icon" data-icon-name="credit_card" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/credit_card_icon.svg');"></span>
+                                    <div class="cards__title">카드</div>
+                                </button>
+                            </li>
+                            <li class="cards__list job">
+                                <button class="cards__item">
+                                    <span class="icon-svg cards__icon" data-icon-name="person_search" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/person_search_icon.svg');"></span>
+                                    <div class="cards__title">구인구직</div>
+                                </button>
+                            </li>
+                            <li class="cards__list comu">
+                                <button class="cards__item">
+                                    <span class="icon-svg cards__icon" data-icon-name="groups" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/groups_icon.svg');"></span>
+                                    <div class="cards__title">커뮤니티</div>
+                                </button>
+                            </li>
+                            <li class="cards__list doct">
+                                <button class="cards__item is-coming-soon" type="button" aria-disabled="true" data-tooltip="서비스 준비중">
+                                    <span class="icon-svg cards__icon" data-icon-name="local_hospital" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/local_hospital_icon.svg');"></span>
+                                    <div class="cards__title">의료</div>
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="m-footer">
+                    <div class="wrap footer-inner">
+                        <div class="footer-company-info">
+                            <ul class="fci">
+                                <li>페이마 주식회사</li>
+                                <li>대표자 : 이승현</li>
+                            </ul>
+                            <ul class="fci">
+                                <li>사업자등록번호 : 279-86-03330</li>
+                                <li>통신판매업 : 2026-전북익산-0140</li>
+                            </ul>
+                        </div>
+                        <address class="footer-company-info">
+                            <p>54601&#41; 전북특별자치도 익산시 인북로3길 28 301호</p>
+                            <p>TEL : <a href="tel:15660821">1566-0821</a></p>
+                            <p>FAX : 02-702-1235</p>
+                            <p>
+                                E-MAIL :
+                                <a href="mailto:payma@payma.co.kr">payma@payma.co.kr</a>
+                            </p>
+                            <p>Copyright ⓒ 페이마(주). All Rights Reserved.</p>
+                            <a onclick="movePage('/terms')" data-page-target="personal">개인정보처리방침</a>
+                            <a class="cursor-pointer" onclick="movePage('/termsOfUse')" data-page-target="personal">이용약관</a>
+                        </address>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+    </div>
+
+</div>
+<div class="dolbom-modals" th:each="notice, stat : ${noticeInfo}" th:id="'modal-' + ${notice.seq}" hidden>
+    <div class="dolbom-modals__backdrop"></div>
+    <section class="dolbom-modals__dialogs" role="dialog" aria-modal="true" aria-labelledby="dolbom-modals-title">
+
+        <div class="dolbom-modals__body">
+            <div class="modal-html-content" th:utext="${notice.content}"></div>
+            <!--  <img class="dolbom-modals__body--img" src="/img/sso/user/pc_card.jpg"> -->
+        </div>
+        <header class="dolbom-modals__header">
+            <button class="not-today">오늘 하루 보지 않기</button>
+            <button class="dolbom-modals__close" type="button" aria-label="창 닫기">
+                <span>창닫기</span>
+                <span class="dolbom-modals__popclose"></span>
+            </button>
+        </header>
+    </section>
+</div>
+
+</body>
+<script th:inline="javascript">
+    let noticeYn = getCookie('noticeYn');
+        
+    if(noticeYn !== 'N'){
+        $('.dolbom-modals').prop('hidden', false);
+
+        const noticeList = [[${noticeInfo}]];
+        if (noticeList && noticeList.length > 0) {
+            $('.dolbom-modals').prop('hidden', false);
+            $('body').css('overflow', 'hidden');
+        }
+    }
+
+
+
+    $(document).on('click', '.not-today', function () {
+        fn_todaysClosePop()
+        $('.dolbom-modals').prop('hidden', true);
+    });
+
+    $(document).on('click', '.open-modals', function () {
+        $('.dolbom-modals').prop('hidden', false);
+        $('html, body').css('overflow', 'hidden');
+    });
+
+    $(document).on('click', '.dolbom-modals__close, .dolbom-modals__backdrop', function () {
+        closeModal();
+    });
+
+    function closeModal() {
+        $('.dolbom-modals').prop('hidden', true);
+        $('html, body').css('overflow', 'auto');
+    }
+
+    function fn_todaysClosePop(){
+        let today = new Date();
+        let hours = today.getHours()
+        setCookie('noticeYn', 'N', 24 - hours);
+    }
+</script>
+</html>
+가

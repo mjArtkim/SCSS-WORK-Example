@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+    <div th:replace="~{|recruit/include/user/inc_head|}"></div>
+</head>
+<body>
+<section class="min-h">
+    <section>
+        <div class="recruit-header wrap">
+            <div class="header-box">
+                <div th:replace="~{|recruit/include/user/inc_header|}"></div>
+            </div>
+        </div>
+        <section class="jobapply">
+            <div class="jobapply__layout">
+                <aside class="jobapply__sidebar">
+                    <label class="jobapply__sidebar--search">
+                        <span class="jobapply__sidebar--search-icon" aria-hidden="true"></span>
+                        <input class="jobapply__sidebar--search-input" type="text" placeholder="공고, 후보자 검색">
+                    </label>
+                    <div class="jobapply__sidebar--body">
+                        <h2 class="jobapply__sidebar--title">공고 목록</h2>
+                        <ul class="jobapply__sidebar--list">
+                            <li class="jobapply__sidebar--item is-active">
+                                <button type="button">간호 조무사(간호사) 채용</button>
+                            </li>
+                            <li class="jobapply__sidebar--item">
+                                <button type="button">간호 조무사(간호사) 채용</button>
+                            </li>
+                        </ul>
+                    </div>
+                </aside>
+
+                <div class="jobapply__content">
+                    <div class="jobapply__content--head">
+                        <h1 class="jobapply__content--title">간호 조무사(간호사) 채용</h1>
+                    </div>
+
+                    <div class="jobapply__toolbar">
+                        <div class="jobapply__summary">
+                            <button class="jobapply__summary--item is-active" type="button">
+                                <span class="jobapply__summary--label">전체</span>
+                                <strong class="jobapply__summary--count">5</strong>
+                            </button>
+                            <button class="jobapply__summary--item" type="button">
+                                <span class="jobapply__summary--label">미열람</span>
+                                <strong class="jobapply__summary--count">3</strong>
+                            </button>
+                            <button class="jobapply__summary--item" type="button">
+                                <span class="jobapply__summary--label">열람</span>
+                                <strong class="jobapply__summary--count">2</strong>
+                            </button>
+                            <button class="jobapply__summary--item" type="button">
+                                <span class="jobapply__summary--label">스크랩</span>
+                                <strong class="jobapply__summary--count">2</strong>
+                            </button>
+                        </div>
+
+                        <div class="jobapply__toolbar--actions">
+                            <select class="jobapply__toolbar--sort">
+                                <option>지원일순</option>
+                                <option>경력 높은순</option>
+                                <option>경력 낮은순</option>
+                                <option>나이 높은순</option>
+                                <option>나이 낮은순</option>
+                            </select>
+                            <button class="jobapply__toolbar--delete" type="button">
+                                <span>선택 삭제</span>
+                                <span class="jobapply__toolbar--deleteicon" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="jobapply__table">
+                        <div class="jobapply__table--head">
+                            <label class="jobapply__table--check">
+                                <input type="checkbox">
+                                <span></span>
+                            </label>
+                            <div class="jobapply__table--head-title">후보자</div>
+                            <div class="jobapply__table--head-title">지원일</div>
+                            <div class="jobapply__table--head-title">지원일</div>
+                            <div class="jobapply__table--head-title">상태</div>
+                            <div class="jobapply__table--head-title">스크랩</div>
+                        </div>
+
+                        <div class="jobapply__table--body">
+                            <article class="jobapply__table--row" >
+                                <label class="jobapply__table--check">
+                                    <input type="checkbox">
+                                    <span></span>
+                                </label>
+                                <div class="jobapply__table--inner" th:onclick="|movePage('/recruit/user/applicantDetail')|">
+                                    <div class="jobapply__table--candidate">
+                                        <div class="jobapply__table--thumb">
+                                            <img src="/img/recruit/admin/ico_user.png" alt="김옥자 프로필">
+                                        </div>
+                                        <div class="jobapply__table--person">
+                                            <strong class="jobapply__table--name">김옥자</strong>
+                                            <span class="jobapply__table--meta">(여, 만 40)</span>
+                                        </div>
+                                    </div>
+                                    <div class="jobapply__table--resume">
+                                        <p class="jobapply__table--resume-text">경력 4년 5개월</p>
+                                        <p class="jobapply__table--resume-text">페이마주식회사</p>
+                                        <p class="jobapply__table--resume-text">희망 연봉 3,000 ~ 4,000만원</p>
+                                    </div>
+                                    <div class="jobapply__table--date">2026.05.22 지원</div>
+                                    <div class="jobapply__table--status is-unread">미열람</div>
+                                </div>
+                                <button class="jobapply__table--bookmark" type="button" aria-label="스크랩">
+                                    <span class="jobapply__table--bookmarkicon"></span>
+                                </button>
+                            </article>
+
+                            <article class="jobapply__table--row">
+                                <label class="jobapply__table--check">
+                                    <input type="checkbox">
+                                    <span></span>
+                                </label>
+                                <div class="jobapply__table--inner" th:onclick="|movePage('/recruit/user/applicantDetail')|">
+                                    <div class="jobapply__table--candidate">
+                                        <div class="jobapply__table--thumb">
+                                            <img src="/img/recruit/admin/ico_user.png" alt="박옥자 프로필">
+                                        </div>
+                                        <div class="jobapply__table--person">
+                                            <strong class="jobapply__table--name">박옥자</strong>
+                                            <span class="jobapply__table--meta">(여, 만 40)</span>
+                                        </div>
+                                    </div>
+                                    <div class="jobapply__table--resume">
+                                        <p class="jobapply__table--resume-text">신입</p>
+                                        <p class="jobapply__table--resume-text">페이마주식회사</p>
+                                        <p class="jobapply__table--resume-text">희망 연봉 회사내규에 따름</p>
+                                    </div>
+                                    <div class="jobapply__table--date">2026.05.22 지원</div>
+                                    <div class="jobapply__table--status">열람</div>
+                                </div>
+                                <button class="jobapply__table--bookmark" type="button" aria-label="스크랩">
+                                    <span class="jobapply__table--bookmarkicon"></span>
+                                </button>
+                            </article>
+
+                            <article class="jobapply__table--row">
+                                <label class="jobapply__table--check">
+                                    <input type="checkbox">
+                                    <span></span>
+                                </label>
+                                <div class="jobapply__table--inner" th:onclick="|movePage('/recruit/user/applicantDetail')|">
+                                    <div class="jobapply__table--candidate">
+                                        <div class="jobapply__table--thumb">
+                                            <img src="/img/recruit/admin/ico_user.png" alt="남옥자 프로필">
+                                        </div>
+                                        <div class="jobapply__table--person">
+                                            <strong class="jobapply__table--name">남옥자</strong>
+                                            <span class="jobapply__table--meta">(여, 만 40)</span>
+                                        </div>
+                                    </div>
+                                    <div class="jobapply__table--resume">
+                                        <p class="jobapply__table--resume-text">경력 4년 5개월</p>
+                                        <p class="jobapply__table--resume-text">페이마주식회사</p>
+                                        <p class="jobapply__table--resume-text">희망 연봉 3,000 ~ 4,000만원</p>
+                                    </div>
+                                    <div class="jobapply__table--date">2026.05.22 지원</div>
+                                    <div class="jobapply__table--status">열람</div>
+                                </div>
+                                <button class="jobapply__table--bookmark is-active" type="button" aria-label="스크랩됨">
+                                    <span class="jobapply__table--bookmarkicon is-active"></span>
+                                </button>
+                            </article>
+
+                            <article class="jobapply__table--row">
+                                <label class="jobapply__table--check">
+                                    <input type="checkbox">
+                                    <span></span>
+                                </label>
+                                <div class="jobapply__table--inner" th:onclick="|movePage('/recruit/user/applicantDetail')|">
+                                    <div class="jobapply__table--candidate">
+                                        <div class="jobapply__table--thumb">
+                                            <img src="/img/recruit/admin/ico_user.png" alt="박옥자 프로필">
+                                        </div>
+                                        <div class="jobapply__table--person">
+                                            <strong class="jobapply__table--name">박옥자</strong>
+                                            <span class="jobapply__table--meta">(여, 만 40)</span>
+                                        </div>
+                                    </div>
+                                    <div class="jobapply__table--resume">
+                                        <p class="jobapply__table--resume-text">경력 4년 5개월</p>
+                                        <p class="jobapply__table--resume-text">페이마주식회사</p>
+                                        <p class="jobapply__table--resume-text">희망 연봉 3,000 ~ 4,000만원</p>
+                                    </div>
+                                    <div class="jobapply__table--date">2026.05.22 지원</div>
+                                    <div class="jobapply__table--status is-unread">미열람</div>
+                                </div>
+                                <button class="jobapply__table--bookmark" type="button" aria-label="스크랩">
+                                    <span class="jobapply__table--bookmarkicon"></span>
+                                </button>
+                            </article>
+                        </div>
+                    </div>
+
+                    <nav class="jobapply__pagination" aria-label="지원자 목록 페이지 이동">
+                        <button class="jobapply__pagination--arrow" type="button" aria-label="이전 페이지">
+                            <i class="pi pi-angle-left" aria-hidden="true"></i>
+                        </button>
+                        <button class="jobapply__pagination--link is-active" type="button">1</button>
+                        <button class="jobapply__pagination--link" type="button">2</button>
+                        <button class="jobapply__pagination--link" type="button">3</button>
+                        <button class="jobapply__pagination--link" type="button">4</button>
+                        <button class="jobapply__pagination--arrow" type="button" aria-label="다음 페이지">
+                            <i class="pi pi-angle-right" aria-hidden="true"></i>
+                        </button>
+                    </nav>
+                </div>
+            </div>
+        </section>
+    </section>
+    <footer class="min-h__bottom">
+        <div class="footer-box">
+            <div th:replace="~{|recruit/include/user/inc_footer|}"></div>
+        </div>
+    </footer>
+</section>
+</body>
+<script th:inline="javascript"></script>
+</html>

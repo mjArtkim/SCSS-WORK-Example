@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="~{|sso/include/user/inc_head|}"></div>
+</head>
+<body>
+    <div class="app-shell">
+        <div class="app-body">
+            <div class="site-header header-box wrap">
+                <div th:replace="~{|sso/include/user/inc_header|}"></div>
+            </div>
+    <div class="card-test-page wrap">
+        <img src="/img/sso/user/pc_card.png" class="pc_card_view">
+        <img src="/img/sso/user/m_card.png" class="m_card_view">
+    </div>
+            <div class="footer-box">
+                <div th:replace="~{|sso/include/user/inc_footer|}"></div>
+            </div>
+        </div>
+    </div>
+</body>
+<style>
+   .card-test-page {
+       width: 100%;
+       padding: 75px 0 30px;
+   }
+    @media screen and (max-width: 767px) {
+        .pc_card_view {
+            display: none;
+        }
+        .m_card_view {
+            display: block;
+            width: 100%;
+        }
+    }
+
+    @media screen and (min-width: 768px) {
+        .pc_card_view {
+            display: block;
+            width: 100%;
+        }
+        .m_card_view {
+            display: none;
+        }
+    }
+
+</style>
+
+</html>

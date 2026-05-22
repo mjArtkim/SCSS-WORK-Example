@@ -1,0 +1,23 @@
+<div th:fragment="modalFragment" class="dolbom-modal" data-modal="terms" hidden aria-hidden="true">
+  <div class="dolbom-modal__backdrop" data-modal-close="true"></div>
+  <section
+    class="dolbom-modal__dialog"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="dolbom-modal-title"
+  >
+    <header class="dolbom-modal__header">
+      <h3 class="dolbom-modal__title" id="dolbom-modal-title"></h3>
+      <button
+        class="dolbom-modal__close"
+        type="button"
+        data-modal-close="true"
+        aria-label="창 닫기"
+      >
+        <div>창닫기</div>
+        <div class="material-symbols-rounded">close_small</div>
+      </button>
+    </header>
+    <div class="dolbom-modal__body" data-modal-body="true"></div>
+  </section>
+</div>

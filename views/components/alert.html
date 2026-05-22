@@ -1,0 +1,42 @@
+<div class="dolbom-alert" data-alert-root="true" hidden aria-hidden="true">
+  <div class="dolbom-alert__backdrop" data-alert-action="cancel"></div>
+  <section
+    class="dolbom-alert__dialog"
+    role="alertdialog"
+    aria-modal="true"
+    aria-labelledby="dolbom-alert-title"
+    aria-describedby="dolbom-alert-message"
+    tabindex="-1"
+  >
+    <div class="dolbom-alert__content">
+      <h3 class="dolbom-alert__title" id="dolbom-alert-title" data-alert-title>
+<!--        제목여기에-->
+      </h3>
+      <p
+        class="dolbom-alert__message"
+        id="dolbom-alert-message"
+        data-alert-message
+      >
+<!--        내용여기에-->
+      </p>
+    </div>
+    <div class="dolbom-alert__actions" data-alert-actions>
+      <button
+        class="dolbom-alert__button dolbom-alert__button--confirm"
+        type="button"
+        data-alert-action="confirm"
+        data-alert-confirm
+      >
+        확인
+      </button>
+      <button
+        class="dolbom-alert__button dolbom-alert__button--cancel"
+        type="button"
+        data-alert-action="cancel"
+        data-alert-cancel
+      >
+        취소
+      </button>
+    </div>
+  </section>
+</div>

@@ -1,0 +1,875 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+  <head>
+    <div th:replace="~{|recruit/include/user/inc_head|}"></div>
+  </head>
+  <body>
+  <section class="min-h">
+    <section>
+      <div class="recruit-header wrap">
+        <div class="header-box">
+          <div th:replace="~{|recruit/include/user/inc_header|}"></div>
+        </div>
+      </div>
+      <section class="re-my wrap">
+        <div class="re-my-sub">
+          <div class="re-my-sub__tit">
+            <div class="re-my-sub__tit--icon"></div>
+            <div class="re-my-sub__tit--name">MY</div>
+          </div>
+          <div class="re-my-sub__content">
+            <button type="button" class="re-my-sub__btn js-re-my-tab--resume" th:classappend="${myType == 'resume'} ? ' is-active' : ''">
+              <span class="re-my-sub__btn--icon resume"></span>
+              <span class="re-my-sub__btn--name">이력서 관리</span>
+            </button>
+            <button type="button" class="re-my-sub__btn js-re-my-tab--apply" th:classappend="${myType == 'apply'} ? ' is-active' : ''">
+              <span class="re-my-sub__btn--icon apply"></span>
+              <span class="re-my-sub__btn--name">지원내역</span>
+            </button>
+            <button type="button" class="re-my-sub__btn js-re-my-tab--favorite" th:classappend="${myType == 'favorite'} ? ' is-active' : ''">
+              <span class="re-my-sub__btn--icon favorite"></span>
+              <span class="re-my-sub__btn--name">관심공고</span>
+            </button>
+            <button type="button" class="re-my-sub__btn js-re-my-tab--setting" th:classappend="${myType == 'setting'} ? ' is-active' : ''">
+              <span class="re-my-sub__btn--icon setting"></span>
+              <span class="re-my-sub__btn--name">설정</span>
+            </button>
+          </div>
+        </div>
+        <div>
+          <div class="re-my-content js-re-my-panel--resume" th:classappend="${myType == 'resume'} ? ' is-open' : ''">
+            <div class="re-my-content__top">
+              <div class="re-my-content__top--box">
+                <h2 class="re-my-content__tit">이력서 관리</h2>
+                <div class="re-my-content__count">총 <span id="reMyResumeCount"></span>건</div>
+              </div>
+              <button class="re-my-content__btn" type="button" onclick="movePage('/recruit/user/recruitResume')">새 이력서 등록</button>
+            </div>
+              <div class="re-my-content__middle" id="reMyList"></div>
+              <div class="re-my-pagination" id="reMyResumePagination" aria-label="이력서 페이지 이동" hidden></div>
+          </div>
+          <div class="re-my-content js-re-my-panel--apply" th:classappend="${myType == 'apply'} ? ' is-open' : ''">
+            <div class="re-my-content__top">
+              <div class="re-my-content__top--box">
+                <h2>지원내역</h2>
+                <div class="re-my-content__count">총 <span id="reMyApplyCount"></span>건</div>
+              </div>
+              <button class="re-my-content__top--btn">
+                <span class="re-my-content__top--name">선택 삭제</span>
+                <span class="re-my-content__top--icon"></span>
+              </button>
+            </div>
+            <div class="re-my-content__middle">
+              <ul class="re-my-content__lists re-bg-eee">
+                <li class="re-my-content__lists--input">
+                  <label class="re-my-content__lists--check">
+                    <input type="checkbox"/>
+                    <span></span>
+                  </label>
+                </li>
+                <li class="re-my-content__lists--bold">지원일</li>
+                <li class="re-my-content__lists--bold">회사명/공고분야/지원분야</li>
+              <li class="re-my-content__lists--bold">마감일</li>
+              <li class="re-my-content__lists--bold">상태</li>
+              <li class="re-my-content__lists--bold">요청/취소</li>
+            </ul>
+            <div class="re-my-content__middle--box" id="reMyApply"></div>
+            <div class="re-my-pagination" id="reMyApplyPagination" aria-label="지원내역 페이지 이동" hidden></div>
+          </div>
+          </div>
+          <div class="re-my-content js-re-my-panel--favorite" th:classappend="${myType == 'favorite'} ? ' is-open' : ''">
+            <div class="re-my-content__top">
+              <div class="re-my-content__top--box">
+                <h2>관심공고</h2>
+                <div class="re-my-content__count">총 <span id="reMyFavoriteCount"></span>건</div>
+              </div>
+              <button class="re-my-content__top--btn">
+                <span class="re-my-content__top--name">선택 삭제</span>
+                <span class="re-my-content__top--icon"></span>
+              </button>
+            </div>
+            <div class="re-my-content__middle">
+              <ul class="re-my-content__lists re-bg-eee">
+                <li class="re-my-content__lists--input">
+                  <label class="re-my-content__lists--check">
+                    <input type="checkbox"/>
+                    <span></span>
+                  </label>
+                </li>
+                <li class="re-my-content__lists--bold">기업명</li>
+                <li class="re-my-content__lists--bold">공고명</li>
+                <li class="re-my-content__lists--bold">마감일/현황</li>
+              <li class="re-my-content__lists--bold">지원하기</li>
+              <li class="re-my-content__lists--bold re-my-justify-self">스크랩</li>
+            </ul>
+            <div class="re-my-content__middle--box" id="reMyFavorite"></div>
+            <div class="re-my-pagination" id="reMyFavoritePagination" aria-label="관심공고 페이지 이동" hidden></div>
+          </div>
+          </div>
+          <div class="re-my-content js-re-my-panel--setting" th:classappend="${myType == 'setting'} ? ' is-open' : ''">
+            <div class="re-my-content__infopage" data-setting-view="menu">
+              <div class="my-info-page">
+                <h2 class="my-info-page__title">내 정보 관리</h2>
+                <div class="my-info-page__box">
+                  <nav class="my-info-page__menu" aria-label="내 정보 설정">
+                    <button class="my-info-page__menu-item" type="button">
+                      <span>계정정보 설정</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </button>
+                    <button class="my-info-page__menu-item" type="button">
+                      <span>SNS 계정 연동 관리</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </button>
+                    <button class="my-info-page__menu-item" type="button" data-setting-action="open-mail">
+                      <span>메일 수신설정</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </button>
+                    <button class="my-info-page__menu-item" type="button" >
+                      <span>로그아웃</span>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </button>
+                  </nav>
+                  <button class="my-info-page__leave" type="button">
+                    계정 탈퇴하기
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="re-my-content__infopage" data-setting-view="mail" hidden>
+              <div class="my-info-page">
+                <h2 class="my-info-page__title">메일 수신 설정</h2>
+                <div class="my-info-page__box">
+                  <button class="re-my-content__setting-back" type="button" data-setting-action="back-to-menu">
+                    <span class="re-my-content__setting-back-label">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                        <path d="M15 6L9 12L15 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                      <span>내 정보 관리</span>
+                    </span>
+                  </button>
+                  <div class="mo-mail-txt">토글을 통해 메일을 수신/거부 할 수 있습니다.</div>
+                  <ul class="mo-notice-style">
+                    <li class="mo-notice-style__box" role="listitem">
+                      <div class="mo-notice-style__tit">
+                        <div class="mo-notice-style__setting-tit">메일 전체</div>
+                      </div>
+                      <label class="mo-notice-style__switch">
+                        <span class="sound-only">메일 전체</span>
+                        <input type="checkbox"/>
+                        <span class="mo-notice-style__switch-track" aria-hidden="true"></span>
+                      </label>
+                    </li>
+                    <li class="mo-notice-style__box" role="listitem">
+                      <div class="mo-notice-style__tit">
+                        <div class="mo-notice-style__setting-tit">내 이력서 조회 메일</div>
+                      </div>
+                      <label class="mo-notice-style__switch">
+                        <span class="sound-only">내 이력서 조회 메일</span>
+                        <input type="checkbox"/>
+                        <span class="mo-notice-style__switch-track" aria-hidden="true"></span>
+                      </label>
+                    </li>
+                    <li class="mo-notice-style__box" role="listitem">
+                      <div class="mo-notice-style__tit">
+                        <div class="mo-notice-style__setting-tit">즐겨찾기 메일</div>
+                      </div>
+                      <label class="mo-notice-style__switch">
+                        <span class="sound-only">즐겨찾기 메일</span>
+                        <input type="checkbox"/>
+                        <span class="mo-notice-style__switch-track" aria-hidden="true"></span>
+                      </label>
+                    </li>
+                    <li class="mo-notice-style__box" role="listitem">
+                      <div class="mo-notice-style__tit">
+                        <div class="mo-notice-style__setting-tit">공지 이벤트 메일</div>
+                      </div>
+                      <label class="mo-notice-style__switch">
+                        <span class="sound-only">공지 이벤트 메일</span>
+                        <input type="checkbox"/>
+                        <span class="mo-notice-style__switch-track" aria-hidden="true"></span>
+                      </label>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="re-apply-sheet">
+          <div class="re-apply-sheet__backdrop"></div>
+          <div class="re-apply-sheet__flex">
+            <div class="re-apply-sheet__dialog" >
+              <div class="re-apply-sheet__head">
+                <h2 class="re-apply-sheet__title">입사지원</h2>
+                <button class="re-apply-sheet__close" type="button" aria-label="닫기">
+                  <span></span>
+                </button>
+              </div>
+              <div id="reMySheet"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </section>
+    <footer class="min-h__bottom">
+      <div class="footer-box">
+        <div th:replace="~{|recruit/include/user/inc_footer|}"></div>
+      </div>
+    </footer>
+  </section>
+  </body>
+<script th:inline="javascript">
+
+  $(function () {
+    fn_getMy();
+    fn_getApply();
+    fn_getFavorite();
+    fn_getSheet();
+
+    $('.re-my-sub__btn').on('click', function () {
+      const target = fn_getClassTarget($(this), 'js-re-my-tab--');
+      $('.re-my-sub__btn').removeClass('is-active');
+      $(this).addClass('is-active');
+      $('.re-my-content').removeClass('is-open');
+      $(`.js-re-my-panel--${target}`).addClass('is-open');
+      if (target === 'setting') {
+        fn_setSettingView('menu');
+      }
+    });
+  });
+
+  $(function () {
+    $(document)
+            .on('click', '.re-my-content__more', function (e) {
+              e.preventDefault();
+              e.stopPropagation();
+
+              const $actions = $(this).closest('.re-my-content__actions');
+              const isOpen = $actions.hasClass('is-open');
+
+              fn_closeMyMenus();
+
+              if (!isOpen) {
+                $actions.addClass('is-open');
+                $(this).attr('aria-expanded', 'true');
+              }
+            })
+
+            .on('click', '.re-my-content__menu-item', function () {
+              fn_closeMyMenus();
+            })
+
+            .on('click', function (e) {
+              if (!$(e.target).closest('.re-my-content__actions').length) {
+                fn_closeMyMenus();
+              }
+            })
+            .on('click', '[data-setting-action="open-mail"]', function () {
+              fn_setSettingView('mail');
+            })
+            .on('click', '[data-setting-action="back-to-menu"]', function () {
+              fn_setSettingView('menu');
+            })
+            .on('click', '.re-my-pagination__button', function () {
+              if ($(this).is(':disabled')) {
+                return;
+              }
+
+              const panelName = $(this).data('pageGroup');
+              const pageAction = $(this).data('pageAction');
+              const pageNumber = Number($(this).data('page'));
+              fn_getMy(pageNumber);
+              fn_handleMyPagination(panelName, pageAction, pageNumber);
+            })
+            .on('click', '.re-my-content__lists--apply-btn', function () {
+              $('.re-apply-sheet').show();
+            })
+
+            .on('click', '.re-apply-sheet__close, .re-apply-sheet__backdrop', function () {
+              $('.re-apply-sheet').hide();
+            });
+  });
+  function fn_closeMyMenus() {
+    $('.re-my-content__actions').removeClass('is-open');
+    $('.re-my-content__more').attr('aria-expanded', 'false');
+  }
+
+  function fn_getClassTarget($element, prefix) {
+    const classNames = ($element.attr('class') || '').split(/\s+/);
+    const targetClass = classNames.find(function (className) {
+      return className.indexOf(prefix) === 0;
+    });
+
+    return targetClass ? targetClass.slice(prefix.length) : '';
+  }
+
+  function fn_setSettingView(viewName) {
+    const $settingPanel = $('.js-re-my-panel--setting');
+    $settingPanel.find('[data-setting-view]').attr('hidden', true);
+    $settingPanel.find(`[data-setting-view="${viewName}"]`).removeAttr('hidden');
+  }
+
+  const RE_MY_PAGE_SIZE = 5;
+  const RE_MY_VISIBLE_PAGE_COUNT = 5;
+  const reMyPanelState = {
+    resume: {
+      items: [],
+      page: 1,
+      bodySelector: '#reMyList',
+      paginationSelector: '#reMyResumePagination',
+      countSelector: '#reMyResumeCount',
+      emptyMessage: '아직 등록된 이력서가 없습니다.<br> 이력서를 등록해주세요.',
+      renderItems: fn_renderResumeCards
+    },
+    apply: {
+      items: [],
+      page: 1,
+      bodySelector: '#reMyApply',
+      paginationSelector: '#reMyApplyPagination',
+      countSelector: '#reMyApplyCount',
+      emptyMessage: '등록된 관심기업이 없습니다.<br> 000님께 딱 맞는 공고를 확인해 보세요',
+      renderItems: fn_renderApplyRows
+    },
+    favorite: {
+      items: [],
+      page: 1,
+      bodySelector: '#reMyFavorite',
+      paginationSelector: '#reMyFavoritePagination',
+      countSelector: '#reMyFavoriteCount',
+      emptyMessage: '등록된 관심기업이 없습니다.<br> 000님께 딱 맞는 공고를 확인해 보세요',
+      renderItems: fn_renderFavoriteRows
+    }
+  };
+
+  function fn_renderResumeCards(items) {
+    return $.map(items, function (item) {
+      return fn_buildResumeCard(item, true);
+    }).join('');
+  }
+
+  function fn_renderApplyRows(items) {
+    return $.map(items, function (item) {
+      return `<article class="re-my-content__lists re-bord-eee">
+                <div class="re-my-content__lists--input">
+                  <label class="re-my-content__lists--check">
+                    <input type="checkbox"/>
+                    <span></span>
+                  </label>
+                </div>
+                <div class="re-my-content__lists--date">
+                  <div>${item.date}</div>
+                  <div>지원</div>
+                </div>
+                <div class="re-my-content__lists--apply">
+                  <div>${item.title}</div>
+                  <div>${item.subTitle}</div>
+                </div>
+                <div class="re-my-content__lists--end">~${item.endDate}&#40;${item.dayName}&#41;</div>
+                <div class="re-my-content__lists--status">
+                  <div>${item.status}</div>
+                  <div>${item.openClose}</div>
+                </div>
+                <div class="re-my-content__lists--btn">
+                  <button>지원취소</button>
+                </div>
+              </article>`;
+    }).join('');
+  }
+
+  function fn_renderFavoriteRows(items) {
+    return $.map(items, function (item) {
+      return `<article class="re-my-content__lists re-bord-eee">
+                <div class="re-my-content__lists--input">
+                  <label class="re-my-content__lists--check">
+                    <input type="checkbox"/>
+                    <span></span>
+                  </label>
+                </div>
+                <div class="re-my-content__lists--end">~${item.endDate}&#40;${item.dayName}&#41;</div>
+                <div class="re-my-content__lists--apply">
+                  <div>${item.title}</div>
+                  <div>${item.address} | ${item.career} | ${item.study} </div>
+                </div>
+                <div class="re-my-content__lists--date">
+                  <div>${item.date}</div>
+                  <div>${item.status}</div>
+                </div>
+                <div class="re-my-content__lists--apply-btn">
+                  <button>지원하기</button>
+                </div>
+                <div class="re-my-content__lists--scrab">
+                  <button></button>
+                </div>
+              </article>`;
+    }).join('');
+  }
+
+
+  function fn_buildMyMenu(resumeSeq, isPrimary) {
+    return `<div class="re-my-content__actions">
+                  <button class="re-my-content__more" type="button" aria-label="이력서 더보기" aria-expanded="false">
+                    <span></span>
+                  </button>
+                  <div class="re-my-content__menu" role="menu" aria-label="이력서 작업 메뉴">
+                    <button class="re-my-content__menu-item" type="button" role="menuitem" onclick="fn_resumeUpdate(${resumeSeq})">이력서 수정하기</button>
+                    <button class="re-my-content__menu-item" type="button" role="menuitem" onclick="fn_resumeDelete(${resumeSeq})">이력서 삭제하기</button>
+                    <button class="re-my-content__menu-item" type="button" role="menuitem">이력서 복사하기</button>
+                    <button class="re-my-content__menu-item" type="button" role="menuitem" onclick="fn_updatePrimary(${resumeSeq},'${isPrimary}')">${isPrimary === 'Y' ? "대표이력서 해제" : "대표이력서 등록"} </button>
+                  </div>
+                </div>`;
+  }
+  function fn_buildResumeCard(item, useMenu) {
+    return `<article class="re-my-content__list">
+              <div class="re-my-content__list--top">
+                <div class="re-my-content__list--info" data-seq="${item.resumeSeq}">
+                  <div class="re-my-content__list--txt">${item.date}</div>
+                  <div class="re-my-content__list--txt">${item.time}</div>
+                  <div class="re-my-content__list--txt">${item.statusText}</div>
+                  <div class="re-my-content__list--badge">${item.isPrimaryText}</div>
+                </div>
+              ${useMenu ? fn_buildMyMenu(item.resumeSeq, item.isPrimary) : ''}
+            </div>
+              <div class="re-my-content__list--bottom">
+                <div class="re-my-content__list--tit">${item.title}</div>
+                <div class="re-my-content__list--flex">
+                  <button class="re-my-content__list--edit">수정</button>
+                  <button class="re-my-content__list--edit">복사</button>
+                </div>
+              </div>
+          </article>`;
+  }
+  function fn_getMy(pageIndex){
+    const idx = pageIndex || 1;
+    $.ajax({
+      url : '/recruit/user/ajax/getUserResumeList',
+      type : 'post',
+      data : JSON.stringify({
+            "PAGE_INDEX": idx,
+            "pageRow": 10 
+      }),
+      contentType : 'application/json',
+      beforeSend: function() {
+          $('.loading').show();
+      },
+      success : function(res) {
+        let testJson = {
+          date : '0000-00-00',
+          time : '00:00',
+          status : '수정',
+          title : '이력서 제목 여기에 들어가는데 길어지면 어떻게될지'
+        };
+
+        let list = [];
+
+        if (res.list && res.list.length > 0) {
+          list = res.list.map(item => {
+              const dtSplit = item.regDt ? item.regDt.split(' ') : ['', ''];
+              const date = dtSplit[0];
+              const time = dtSplit[1] ? dtSplit[1].slice(0, 5) : '';
+              const publicStatus = item.publicYn === 'Y' ? '공개' : '비공개';
+              const isPrimaryText = item.primaryYn === 'Y' ? '대표' : '';
+              return {
+                  ...item, 
+                  resumeSeq : item.resumeSeq,
+                  date: date,                  
+                  time: time,
+                  statusText: publicStatus,
+                  isPrimary: item.primaryYn,
+                  isPrimaryText: isPrimaryText,
+                  title: item.resumeTitle     
+              };
+          });
+        }
+
+        const panelState = reMyPanelState['resume'];
+        panelState.page = idx;
+
+        fn_setMyPanelData('resume', list, res.total);
+      },
+      error: function(xhr, status, error) {
+        returnErrorCode(xhr, status, error) ;
+      },
+      complete: function() {
+        $('.loading').hide();
+      }
+    });
+  }
+  function fn_getApply(){
+    $.ajax({
+      url : '/recruit/user/test',
+      type : 'post',
+      data : JSON.stringify({}),
+      contentType : 'application/json',
+      success : function() {
+        let testJson = {
+          date : '0000-00-00',
+          title : '회사명이 이곳에 들어가게됩니다.',
+          subTitle : '공고분야가 이곳에 들어가게 됩니다.',
+          endDate : '00.00',
+          dayName : '화',
+          status : '지원완료',
+          openClose : '미열람',
+        };
+        let list = [];
+        for(let i = 0; i < 10; i += 1){
+          list.push(testJson)
+        }
+        fn_setMyPanelData('apply', list);
+      }
+    });
+  }
+
+  function fn_getFavorite(){
+    $.ajax({
+      url : '/recruit/user/test',
+      type : 'post',
+      data : JSON.stringify({}),
+      contentType : 'application/json',
+      success : function() {
+        let testJson = {
+          date : '0000-00-00',
+          title : '회사명이 이곳에 들어가게됩니다.',
+          endDate : '00.00',
+          dayName : '화',
+          status : '미지원',
+          address : '서울시 강동구',
+          career : '신입, 경력',
+          study : '학력무관',
+        };
+        let list = [];
+        for(let i = 0; i < 10; i += 1){
+          list.push(testJson)
+        }
+        fn_setMyPanelData('favorite', list);
+      }
+    });
+  }
+  function fn_getSheet(){
+    $.ajax({
+      url : '/recruit/user/test',
+      type : 'post',
+      data : JSON.stringify({}),
+      contentType : 'application/json',
+      success : function() {
+        let body = $('#reMySheet');
+        body.empty();
+
+        let sheetData = {
+          title: '[정규직/돌봄서비스]',
+          subTitle : '돌봄 서비스 도와주실분 채용합니다.',
+          department: '요양보호사(노인요양사)'
+        };
+        let resume = {
+          date : '0000-00-00',
+          time : '00:00',
+          status : '수정',
+          title : '이력서 제목 여기에 들어가는데 길어지면 어떻게될지'
+        };
+        let article = `<div class="re-apply-sheet__body">
+                      <div class="re-apply-sheet__category">${sheetData.title}</div>
+                      <div class="re-apply-sheet__job-title">${sheetData.subTitle}</div>
+
+                      <div class="re-apply-sheet__field">
+                        <div class="re-apply-sheet__label">지원부문</div>
+                        <div class="re-apply-sheet__value">${sheetData.department}</div>
+                      </div>
+
+                      <div class="re-apply-sheet__field">
+                        <div class="re-apply-sheet__label">이력서</div>
+                        <div class="re-apply-sheet__summary">
+                          <span>보유 이력서 총 1개</span>
+                          <span class="re-apply-sheet__summary-arrow" aria-hidden="true"></span>
+                        </div>
+
+                        <div class="re-apply-sheet__resume">
+                            ${fn_buildResumeCard(resume, true)}
+                        </div>
+                      </div>
+                    </div>
+
+                    <button class="re-apply-sheet__submit" type="button">지원하기</button>`;
+        body.append(article);
+      }
+    });
+  }
+  function fn_setMyPanelData(panelName, list, total) {
+    const panelState = reMyPanelState[panelName];
+
+    if (!panelState) {
+      return;
+    }
+    panelState.totalCount = total || (list ? list.length : 0);
+    panelState.items = Array.isArray(list) ? list : [];
+    // panelState.page = 1;
+    fn_renderMyPanel(panelName);
+  }
+
+  function fn_renderMyPanel(panelName) {
+    const panelState = reMyPanelState[panelName];
+
+    if (!panelState) {
+      return;
+    }
+
+    const $body = $(panelState.bodySelector);
+    const $pagination = $(panelState.paginationSelector);
+    // const totalCount = panelState.items.length;
+    const totalCount = panelState.totalCount || 0;
+
+    $(panelState.countSelector).text(totalCount);
+    $body.empty();
+
+    if (totalCount === 0) {
+      $body.append(`<div class="re-my__empty">${panelState.emptyMessage}</div>`);
+      $pagination.empty().attr('hidden', true);
+      return;
+    }
+
+    const totalPages = fn_getMyTotalPages(panelName);
+    panelState.page = Math.min(Math.max(panelState.page, 1), totalPages);
+
+
+    const startIndex = (panelState.page - 1) * RE_MY_PAGE_SIZE;
+    // const pageItems = panelState.items.slice(startIndex, startIndex + RE_MY_PAGE_SIZE);
+    const pageItems = panelState.items;
+
+    $body.append(panelState.renderItems(pageItems));
+
+    fn_renderMyPagination(panelName);
+  }
+
+  function fn_getMyTotalPages(panelName) {
+    const panelState = reMyPanelState[panelName];
+    /*
+    if (!panelState || panelState.items.length === 0) {
+      return 1;
+    }
+
+    return Math.ceil(panelState.items.length / RE_MY_PAGE_SIZE);
+    */
+    const totalCount = panelState.totalCount || 0;
+    if (!panelState || totalCount === 0) {
+      return 1;
+    }
+    return Math.ceil(totalCount / 10);
+  }
+
+  function fn_renderMyPagination(panelName) {
+    const panelState = reMyPanelState[panelName];
+
+    if (!panelState) {
+      return;
+    }
+
+    const $pagination = $(panelState.paginationSelector);
+    const totalPages = fn_getMyTotalPages(panelName);
+    const currentPage = panelState.page;
+
+    $pagination.empty();
+
+    if (totalPages <= 1) {
+      $pagination.attr('hidden', true);
+      return;
+    }
+
+    let startPage = Math.max(1, currentPage - Math.floor(RE_MY_VISIBLE_PAGE_COUNT / 2));
+    let endPage = startPage + RE_MY_VISIBLE_PAGE_COUNT - 1;
+
+    if (endPage > totalPages) {
+      endPage = totalPages;
+      startPage = Math.max(1, endPage - RE_MY_VISIBLE_PAGE_COUNT + 1);
+    }
+
+    const showFirstPage = startPage > 1;
+    const showLastPage = endPage < totalPages;
+
+    let article = `
+      <button
+        class="re-my-pagination__button${currentPage === 1 ? ' is-disabled' : ''}"
+        type="button"
+        data-page-group="${panelName}"
+        data-page-action="prev"
+        ${currentPage === 1 ? 'disabled' : ''}
+      >이전</button>`;
+
+    if (showFirstPage) {
+      article += `
+        <button
+          class="re-my-pagination__button${currentPage === 1 ? ' is-active' : ''}"
+          type="button"
+          data-page-group="${panelName}"
+          data-page-action="page"
+          data-page="1"
+          ${currentPage === 1 ? 'aria-current="page"' : ''}
+        >1</button>`;
+    }
+
+    if (startPage > 2) {
+      article += `
+        <button
+          class="re-my-pagination__button re-my-pagination__button--ellipsis"
+          type="button"
+          data-page-group="${panelName}"
+          data-page-action="first"
+        >...</button>`;
+    }
+
+    for (let i = startPage; i <= endPage; i += 1) {
+      article += `
+        <button
+          class="re-my-pagination__button${i === currentPage ? ' is-active' : ''}"
+          type="button"
+          data-page-group="${panelName}"
+          data-page-action="page"
+          data-page="${i}"
+          ${i === currentPage ? 'aria-current="page"' : ''}
+        >${i}</button>`;
+    }
+
+    if (endPage < totalPages - 1) {
+      article += `
+        <button
+          class="re-my-pagination__button re-my-pagination__button--ellipsis"
+          type="button"
+          data-page-group="${panelName}"
+          data-page-action="last"
+        >...</button>`;
+    }
+
+    if (showLastPage) {
+      article += `
+        <button
+          class="re-my-pagination__button${currentPage === totalPages ? ' is-active' : ''}"
+          type="button"
+          data-page-group="${panelName}"
+          data-page-action="page"
+          data-page="${totalPages}"
+          ${currentPage === totalPages ? 'aria-current="page"' : ''}
+        >${totalPages}</button>`;
+    }
+
+    article += `
+      <button
+        class="re-my-pagination__button${currentPage === totalPages ? ' is-disabled' : ''}"
+        type="button"
+        data-page-group="${panelName}"
+        data-page-action="next"
+        ${currentPage === totalPages ? 'disabled' : ''}
+      >다음</button>`;
+
+    $pagination.append(article).removeAttr('hidden');
+  }
+
+  function fn_handleMyPagination(panelName, pageAction, pageNumber) {
+    const panelState = reMyPanelState[panelName];
+
+    if (!panelState) {
+      return;
+    }
+
+    const totalPages = fn_getMyTotalPages(panelName);
+    let nextPage = panelState.page;
+
+    if (pageAction === 'prev') {
+      nextPage -= 1;
+    } else if (pageAction === 'next') {
+      nextPage += 1;
+    } else if (pageAction === 'first') {
+      nextPage = 1;
+    } else if (pageAction === 'last') {
+      nextPage = totalPages;
+    } else if (pageAction === 'page') {
+      nextPage = pageNumber;
+    }
+
+  // panelState.page = Math.min(Math.max(nextPage, 1), totalPages);
+  //    fn_renderMyPanel(panelName);
+
+    nextPage = Math.min(Math.max(nextPage, 1), totalPages);
+  
+    panelState.page = nextPage;
+
+    if (panelName === 'resume') {
+      fn_getMy(nextPage);
+    } else {
+      fn_renderMyPanel(panelName);
+    }
+
+  }
+
+  function fn_resumeDelete(seq){
+    if (!confirm("이력서를 삭제하시겠습니까?")) return;
+    $.ajax({
+      url : '/recruit/user/ajax/deleteResume',
+      type : 'post',
+      data: JSON.stringify({
+            "resumeSeq": seq
+      }),
+      contentType : 'application/json',
+      beforeSend: function() {
+          $('.loading').show();
+      },
+      success : function(res) {
+        openAlert("이력서 삭제 결과", res.resultMsg, "확인", false, "", ()=>{
+          fn_getMy();
+        })
+      },
+      error: function(xhr, status, error) {
+        returnErrorCode(xhr, status, error) ;
+      },
+      complete: function() {
+          $('.loading').hide();
+      }
+    });
+  }
+  function fn_updatePrimary(seq, isPrimary){
+    const isRegistering = (isPrimary !== 'Y');
+    const confirmMsg = isRegistering 
+        ? "이 이력서를 대표 이력서로 설정하시겠습니까?" 
+        : "대표 이력서 설정을 해제하시겠습니까?";
+
+    if (!confirm(confirmMsg)) return;
+    $.ajax({
+      url : '/recruit/user/ajax/updatePrimary',
+      type : 'post',
+      data: JSON.stringify({
+            "resumeSeq": seq,
+            "primaryYn": isPrimary === 'Y' ? 'N' : 'Y'
+      }),
+      contentType : 'application/json',
+      beforeSend: function() {
+          $('.loading').show();
+      },
+      success : function(res) {
+        openAlert("이력서 상태변경 결과", res.resultMsg, "확인", false, "", ()=>{
+          fn_getMy();
+        })
+      },
+      error: function(xhr, status, error) {
+        returnErrorCode(xhr, status, error) ;
+      },
+      complete: function() {
+          $('.loading').hide();
+      }
+    });
+  }
+  function fn_resumeUpdate(seq){
+    if (seq && seq > 0) {
+      window.location.href = '/recruit/user/callResume/' + seq;
+    }
+    return;
+  }
+</script>
+</html>

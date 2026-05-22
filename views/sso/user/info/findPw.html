@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="~{|sso/include/common/inc_user_head|}"></div>
+</head>
+<body>
+<div class="wrap login">
+    <div th:replace="~{|sso/include/user/inc_user_header|}"></div>
+    <main class="main">
+        <div class="loginWrap">
+            <div class="titleWrap">
+                <div class="title">비밀번호 찾기</div>
+            </div>
+            <div class="login mt30">
+                <ul>
+                    <li>
+                        <div class="inpWrap">
+                            <input type="text" name="id" id="id" placeholder="아이디를 입력해주세요."/>
+                        </div>
+                    </li>
+                    <li class="mt20">
+                        <div class="inpWrap">
+                            <input type="text" name="contact" id="contact" placeholder="휴대폰번호를 입력해주세요." maxlength="11"/>
+                        </div>
+                    </li>
+                </ul>
+                <div class="mt40 loginBtn active1" onclick="fn_findPw();">비밀번호 찾기</div>
+                <div class="mt20 member">
+                    <div class="pointer" onclick="fn_location('/login')">로그인</div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <div th:replace="~{|sso/include/common/inc_user_footer|}"></div>
+</div>
+</body>
+<script th:inline="javascript">
+    const _type = /*[[${type}]]*/ [];
+    $(document).ready(function(){
+        $('#contact').on('input keydown', function(event) {
+            filterNumber(this, event, 'none');
+        });
+    });
+
+    function fn_findPw(){
+
+        const id = $('#id').val().replaceAll(' ','');
+        const contact = $('#contact').val().replaceAll(' ','').replaceAll('-','')
+
+        if(id == ''){
+            confirmModal({'title' : '아이디를 입력해주세요.', 'confirm' : function(){
+                    alertLayerClose();
+                    $('#id').focus();
+                }});
+            return false;
+        }
+
+        if(contact == ''){
+            confirmModal({'title' : '휴대폰번호를 입력해주세요.', 'confirm' : function(){
+                    alertLayerClose();
+                    $('#contact').focus();
+                }});
+            return false;
+        }
+
+        const param = {
+            'id' : id,
+            'contact' : contact
+        }
+        $.ajax({
+            url : '/user/ajax/userFindPw',
+            data : JSON.stringify(param),
+            type : 'POST',
+            contentType : 'application/json',
+            beforeSend : function(xhr) {
+                $('.loading').show();
+            },
+            success : function(data) {
+                if(data.resultCd == 'S'){
+                    let userInfo = data.userInfo;
+                    confirmModal({title : '비밀번호 초기화',content : '새로운 비밀번호가 문자로 전송되었습니다.'})
+                    $('.modalSubTit').css('font-size','24px;')
+                }else{
+                    confirmModal({title : '일치하는 등록정보가 없습니다.'})
+                }
+
+            },
+            error : function(jqXHR, textStatus, errorThrown) {
+                confirmModal({title : '오류발생'})
+            },
+            complete:function (){
+                $('.loading').hide();
+            }
+        });
+    }
+
+    $('#contact').keyup(function(e){
+        if(e.keyCode == 13){
+            fn_findPw(e)
+        }
+    })
+
+</script>
+</html>

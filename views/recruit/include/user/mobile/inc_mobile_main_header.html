@@ -1,0 +1,40 @@
+<div class="re-mobile-nav">
+  <div class="re-mobile-nav__box">
+    <button type="button" class="re-mobile-nav__btn" aria-label="이전">
+      <svg width="13" height="25" viewBox="0 0 13 25" fill="none" aria-hidden="true">
+        <path
+            d="M12.5537 24.5104C11.9607 25.1632 11.0045 25.1632 10.4115 24.5104L0.354008 13.4392C-0.118004 12.9197 -0.118004 12.0803 0.354008 11.5608L10.4115 0.489608C11.0045 -0.163203 11.9607 -0.163203 12.5537 0.489608C13.1467 1.14242 13.1467 2.19491 12.5537 2.84772L3.79122 12.5067L12.5658 22.1656C13.1467 22.8051 13.1467 23.8709 12.5537 24.5104Z"
+            fill="currentColor"
+        />
+      </svg>
+    </button>
+    <div class="re-mobile-nav__title">
+      <div th:classappend="${mobileHeaderIcon}"></div>
+      <h2 th:text="${mobileHeaderTitle}"></h2>
+    </div>
+  </div>
+  <div class="re-mobile-nav__box">
+    <button class="re-menu"
+            type="button"
+            aria-expanded="false"
+            onclick="movePage('/recruit/user/mobileAllMenu')" >
+                <span class="re-menu__icon" aria-hidden="true">
+                    <span class="re-menu__line re-menu__line--top"></span>
+                    <span class="re-menu__line re-menu__line--middle"></span>
+                    <span class="re-menu__line re-menu__line--bottom"></span>
+                </span>
+      <div>전체메뉴</div>
+    </button>
+  </div>
+</div>
+<script>
+  $(function () {
+    $(document).off('click.mobileHeaderBack', '.re-mobile-nav__btn').on('click.mobileHeaderBack', '.re-mobile-nav__btn', function () {
+      if (document.referrer && window.history.length > 1) {
+        fn_back();
+        return;
+      }
+      location.href = '/recruit/user/main';
+    });
+  });
+</script>

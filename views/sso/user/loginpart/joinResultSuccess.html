@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="~{|sso/include/user/inc_head|}"></div>
+</head>
+<body data-aos-easing="ease-out" data-aos-duration="700" data-aos-delay="0">
+<div class="app-shell app-shell--auth app-shell--quick-actions-hidden app-shell--join">
+    <div class="app-body">
+        <div class="site-header header-box wrap">
+            <div th:replace="~{|sso/include/user/inc_header|}"></div>
+        </div>
+        <main class="site-content" aria-live="polite">
+            <section class="join-page wrap">
+                <div class="join-page__wrap">
+                    <button
+                            class="join-page__back"
+                            type="button"
+                            data-role="join-back"
+                            aria-label="이전 단계로 이동"
+                            onclick="goBack()"
+                    >
+              <span
+                      class="icon-svg join-page__back-icon"
+                      data-icon-name="chevron_left"
+                      aria-hidden="true"
+                      style="--icon-url: url('/img/sso/user/icons/chevron_left_icon.svg');"
+              ></span>
+                    </button>
+                    <form
+                            class="join-form"
+                            data-form="join"
+                            data-step="8"
+                    >
+                        <section
+                                class="join-form__panel join-form__panel--complete is-active"
+                                data-step-panel="8"
+                        >
+                            <div class="join-form__complete">
+                                <strong class="join-form__complete-title">가입완료</strong>
+                                <p class="join-form__complete-text">
+                                    돌보미의 회원이 되신 것을 환영합니다
+                                </p>
+                                <img
+                                        class="join-form__complete-image"
+                                        src="/img/sso/user/done_img.png"
+                                        alt="환영 인사를 전하는 돌보미 캐릭터"
+                                />
+                                <button
+                                        class="join-form__link-button"
+                                        type="button"
+                                        data-page-target="easy-login"
+                                        onclick="insertSNSLoginKey()"
+                                >
+                                    간편로그인 등록하기
+                                </button>
+                                <button
+                                        class="join-form__button join-form__button--primary"
+                                        type="button"
+                                        data-page-target="main"
+                                        onclick="movePage('/main')"
+                                >
+                                    메인으로 이동하기
+                                </button>
+                            </div>
+                        </section>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </div>
+    <div class="footer-box">
+        <div th:replace="~{|sso/include/user/inc_footer|}"></div>
+    </div>
+</div>
+</body>
+<script th:inline="javascript">
+    function insertSNSLoginKey (){
+        location.href = "/user/myInfo/loginManagement";
+    }
+</script>

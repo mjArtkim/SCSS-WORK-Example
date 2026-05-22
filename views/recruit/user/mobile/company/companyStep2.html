@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+    <div th:replace="~{|recruit/include/user/inc_head|}"></div>
+</head>
+<body class="recruit-body">
+<section class="re-company-recruit re-company-recruit--step2">
+    <div>
+        <div th:replace="~{recruit/include/user/mobile/inc_recruit_head :: recruitHead}"></div>
+    </div>
+
+    <div class="re-company-recruit__content re-s2 js-s2">
+        <section class="re-s2__section js-s2-job-picker">
+            <h2 class="re-s2__title">직무/직업을 검색 또는 선택해주세요</h2>
+            <div class="re-s2__search">
+                <label class="sound-only" for="company-step2-job-input">직무/직업 검색</label>
+                <input id="company-step2-job-input" class="re-s2__search-input js-s2-job-input" type="text" placeholder="직무 직업을 입력해주세요">
+                <button class="re-s2__search-btn js-s2-search" type="button" aria-label="직무 검색">
+                    <span class="re-s2__search-icon" aria-hidden="true"></span>
+                </button>
+            </div>
+
+            <div class="re-s2__keyword-area">
+                <h3 class="re-s2__subtitle">추천 검색어</h3>
+                <div class="re-s2__chips">
+                    <button class="re-s2__chip js-s2-job-chip" type="button" value="요양보호사">요양보호사</button>
+                    <button class="re-s2__chip js-s2-job-chip" type="button" value="활동지원사">활동지원사</button>
+                    <button class="re-s2__chip js-s2-job-chip" type="button" value="생활지원사">생활지원사</button>
+                    <button class="re-s2__chip js-s2-job-chip" type="button" value="간호사">간호사</button>
+                    <button class="re-s2__chip js-s2-job-chip" type="button" value="시설장/센터장">시설장/센터장</button>
+                    <button class="re-s2__chip js-s2-job-chip" type="button" value="사무원">사무원</button>
+                    <button class="re-s2__chip js-s2-job-chip" type="button" value="간호조무사">간호조무사</button>
+                    <button class="re-s2__chip js-s2-job-chip" type="button" value="물리치료사">물리치료사</button>
+                </div>
+            </div>
+        </section>
+
+        <div class="re-s2__flow js-s2-job-flow">
+            <section class="re-s2__section">
+                <h2 class="re-s2__title">직무/직업을 검색 또는 선택해주세요</h2>
+                <div class="re-s2__selected-wrap">
+                    <div class="re-s2__selected-chips js-s2-selected-list"></div>
+                    <button class="re-s2__inline-action js-s2-add-job" type="button">직업/직무 추가</button>
+                </div>
+            </section>
+
+            <section class="re-s2__section">
+                <h2 class="re-s2__title">시설 유형</h2>
+                <div class="re-s2__select-wrap">
+                    <label class="sound-only" for="company-step2-facility">시설 유형 선택</label>
+                    <select id="company-step2-facility" class="re-s2__select js-s2-facility-select" required>
+                        <option value="">선택해주세요</option>
+                        <option value="요양원">요양원</option>
+                        <option value="주간보호센터">주간보호센터</option>
+                        <option value="방문요양">방문요양</option>
+                        <option value="복지관">복지관</option>
+                    </select>
+                    <span class="re-s2__select-arrow" aria-hidden="true"></span>
+                </div>
+            </section>
+
+            <div class="re-s2__details js-s2-detail-fields" hidden>
+                <section class="re-s2__section">
+                    <div class="re-s2__field-group">
+                        <label class="re-s2__label" for="company-step2-field">모집분야</label>
+                        <div class="re-s2__recruit-row">
+                            <div class="re-s2__line-field">
+                                <input id="company-step2-field" class="re-s2__line-input" type="text" placeholder="예) 사회복지사, 간호사">
+                                <button class="re-s2__clear-btn js-s2-clear-btn" type="button" aria-label="모집분야 지우기"></button>
+                            </div>
+                            <div class="re-s2__count-group">
+                                <label class="sound-only" for="company-step2-count">모집 인원</label>
+                                <input id="company-step2-count" class="re-s2__count-input" type="number" min="0" value="0">
+                                <span class="re-s2__count-unit">명 모집</span>
+                                <div class="re-s2__tooltip-wrap">
+                                    <button class="re-s2__tooltip-btn js-s2-tooltip-btn" type="button" aria-controls="step2-tooltip-hire-count" aria-expanded="false" aria-label="모집 인원 안내"></button>
+                                    <div id="step2-tooltip-hire-count" class="re-s2__tooltip js-s2-tooltip" role="tooltip" hidden>
+                                        정확한 인원 예측이 어려운 경우 많은 기업은 OO명으로 기입합니다.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="re-s2__field-group">
+                        <h3 class="re-s2__label">경력</h3>
+                        <div class="re-s2__career-stack">
+                            <div>
+                                <label class="re-s2__check-row">
+                                    <input type="checkbox" name="step2-career-new">
+                                    <span class="re-s2__check-copy">신입 지원가능</span>
+                                </label>
+                            </div>
+
+                            <div class="re-s2__career-card">
+                                <div class="re-s2__career-top">
+                                    <label class="re-s2__check-row">
+                                        <input type="checkbox" name="step2-career-experienced">
+                                        <span class="re-s2__check-copy">경력</span>
+                                    </label>
+                                    <label class="re-s2__check-row">
+                                        <input type="checkbox" name="step2-career-any-year">
+                                        <span class="re-s2__check-copy">경력 연수 무관</span>
+                                    </label>
+                                </div>
+
+                                <div class="re-s2__career-selects">
+                                    <div class="re-s2__mini-select">
+                                        <select>
+                                            <option>1년</option>
+                                            <option>2년</option>
+                                            <option>3년</option>
+                                            <option>5년</option>
+                                        </select>
+                                    </div>
+                                    <div class="re-s2__mini-select">
+                                        <select>
+                                            <option>범위</option>
+                                            <option>이상</option>
+                                            <option>이하</option>
+                                        </select>
+                                    </div>
+                                    <div class="re-s2__mini-select">
+                                        <select>
+                                            <option>1년</option>
+                                            <option>2년</option>
+                                            <option>3년</option>
+                                            <option>5년</option>
+                                        </select>
+                                    </div>
+                                    <div class="re-s2__mini-select">
+                                        <select>
+                                            <option>범위</option>
+                                            <option>이상</option>
+                                            <option>이하</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="re-s2__field-box">
+                        <div class="re-s2__field-group">
+                            <label class="re-s2__label" for="company-step2-duty">주요 업무 <span>*</span></label>
+                            <textarea id="company-step2-duty" class="re-s2__textarea" placeholder="회사의 주요 업무를 작성해주세요."></textarea>
+                        </div>
+                        <button class="re-s2__more-btn js-s2-toggle-extra" type="button">추가입력</button>
+                    </div>
+                </section>
+
+                <div class="re-s2__extra js-s2-extra-fields" hidden>
+                    <section class="re-s2__section">
+                        <div class="re-s2__add-group">
+                            <label class="re-s2__label" for="company-step2-department">근무부서</label>
+                            <input id="company-step2-department" class="re-s2__input" type="text" placeholder="예) 근무부서 또는 근무지역을 입력해주세요.">
+                        </div>
+                        <p class="re-s2__hint">근무부서명이 명확하면 적합한 인재의 지원이 많아집니다.</p>
+                    </section>
+
+                    <section class="re-s2__section">
+                        <div class="re-s2__add-group">
+                            <label class="re-s2__label" for="company-step2-position">직급/직책</label>
+                            <input id="company-step2-position" class="re-s2__input" type="text" placeholder="예) 대리, 과장">
+                        </div>
+                    </section>
+
+                    <section class="re-s2__section">
+                        <div class="re-s2__add-group">
+                            <label class="re-s2__label" for="company-step2-qualification">자격요건</label>
+                            <div class="re-s2__mode-panel js-s2-mode-panel js-s2-mode-panel--qualification is-direct">
+                                <div class="js-s2-mode-direct">
+                                    <textarea id="company-step2-qualification" class="re-s2__textarea re-s2__textarea--compact" placeholder="이곳에 작성해주세요."></textarea>
+                                </div>
+                                <div class="js-s2-mode-select" hidden>
+                                    <div class="re-s2__selection-box">
+                                        <button class="re-s2__selection-row" type="button">
+                                            <span class="re-s2__selection-copy">
+                                                <span class="re-s2__selection-label">전공/학과</span>
+                                                <span class="re-s2__selection-value">선택하기</span>
+                                            </span>
+                                            <span class="re-s2__selection-arrow" aria-hidden="true"></span>
+                                        </button>
+                                        <button class="re-s2__selection-row" type="button">
+                                            <span class="re-s2__selection-copy">
+                                                <span class="re-s2__selection-label">보유역량</span>
+                                                <span class="re-s2__selection-value">선택하기</span>
+                                            </span>
+                                            <span class="re-s2__selection-arrow" aria-hidden="true"></span>
+                                        </button>
+                                        <button class="re-s2__selection-row" type="button">
+                                            <span class="re-s2__selection-copy">
+                                                <span class="re-s2__selection-label">자격증</span>
+                                                <span class="re-s2__selection-value">선택하기</span>
+                                            </span>
+                                            <span class="re-s2__selection-arrow" aria-hidden="true"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="re-s2__mode-toggle js-s2-mode-toggle is-direct" type="button" value="qualification" aria-pressed="false">
+                                <span class="re-s2__mode-toggle-label">항목선택으로 변경</span>
+                                <span class="re-s2__mode-toggle-arrow" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                    </section>
+
+                    <section class="re-s2__section">
+                        <div class="re-s2__field-group">
+                            <label class="re-s2__label" for="company-step2-preferred">우대사항</label>
+                            <div class="re-s2__mode-panel js-s2-mode-panel js-s2-mode-panel--preferred is-direct">
+                                <div class="js-s2-mode-direct">
+                                    <textarea id="company-step2-preferred" class="re-s2__textarea re-s2__textarea--compact" placeholder="이곳에 작성해주세요."></textarea>
+                                </div>
+                                <div class="js-s2-mode-select" hidden>
+                                    <div class="re-s2__selection-box">
+                                        <button class="re-s2__selection-row" type="button">
+                                            <span class="re-s2__selection-copy">
+                                                <span class="re-s2__selection-label">전공/학과</span>
+                                                <span class="re-s2__selection-value">선택하기</span>
+                                            </span>
+                                            <span class="re-s2__selection-arrow" aria-hidden="true"></span>
+                                        </button>
+                                        <button class="re-s2__selection-row" type="button">
+                                            <span class="re-s2__selection-copy">
+                                                <span class="re-s2__selection-label">보유역량</span>
+                                                <span class="re-s2__selection-value">선택하기</span>
+                                            </span>
+                                            <span class="re-s2__selection-arrow" aria-hidden="true"></span>
+                                        </button>
+                                        <button class="re-s2__selection-row" type="button">
+                                            <span class="re-s2__selection-copy">
+                                                <span class="re-s2__selection-label">자격증</span>
+                                                <span class="re-s2__selection-value">선택하기</span>
+                                            </span>
+                                            <span class="re-s2__selection-arrow" aria-hidden="true"></span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="re-s2__mode-toggle js-s2-mode-toggle is-direct" type="button" value="preferred" aria-pressed="false">
+                                <span class="re-s2__mode-toggle-label">항목선택으로 변경</span>
+                                <span class="re-s2__mode-toggle-arrow" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="re-company-recruit__footer">
+        <button class="re-company-recruit__nav re-company-recruit__nav--prev" type="button" aria-label="이전 단계" onclick="movePage('/recruit/user/companyStep')">
+            이전
+        </button>
+        <button class="re-company-recruit__nav re-company-recruit__nav--next" type="button" onclick="movePage('/recruit/user/companyStep3')">다음 단계</button>
+    </div>
+</section>
+
+<script th:inline="javascript">
+    $(function () {
+        const $root = $('.js-s2');
+
+        if (!$root.length) {
+            return;
+        }
+
+        const $jobPicker = $root.find('.js-s2-job-picker');
+        const $jobFlow = $root.find('.js-s2-job-flow');
+        const $detailFields = $root.find('.js-s2-detail-fields');
+        const $extraFields = $root.find('.js-s2-extra-fields');
+        const $selectedList = $root.find('.js-s2-selected-list');
+        const $jobInput = $root.find('.js-s2-job-input');
+        const $facilitySelect = $root.find('.js-s2-facility-select');
+        const $moreButton = $root.find('.js-s2-toggle-extra');
+        const $tooltipButtons = $root.find('.js-s2-tooltip-btn');
+        const state = {
+            jobs: []
+        };
+
+        function fn_step2ToggleHidden($target, isVisible) {
+            $target.prop('hidden', !isVisible);
+        }
+
+        function fn_step2UpdateExtraToggleState(isVisible) {
+            fn_step2ToggleHidden($extraFields, isVisible);
+            $moreButton.text(isVisible ? '접기' : '추가입력');
+            $moreButton.attr('aria-expanded', isVisible ? 'true' : 'false');
+        }
+
+        function fn_step2UpdateFacilityState() {
+            const isSelected = $facilitySelect.val() !== '';
+
+            $facilitySelect.toggleClass('is-selected', isSelected);
+            fn_step2ToggleHidden($detailFields, isSelected);
+
+            if (!isSelected) {
+                fn_step2UpdateExtraToggleState(false);
+            }
+        }
+
+        function fn_step2ResetDependentBlocks() {
+            $facilitySelect.val('');
+            fn_step2UpdateFacilityState();
+        }
+
+        function fn_step2RenderSelectedJobs() {
+            $selectedList.empty();
+
+            $.each(state.jobs, function (index, job) {
+                const $item = $('<button>', {
+                    type: 'button',
+                    class: 're-s2__chip re-s2__chip--selected js-s2-remove-job',
+                    value: job
+                });
+
+                $item.append($('<span>').text(job));
+                $item.append($('<span>', {
+                    class: 're-s2__chip-remove',
+                    'aria-hidden': 'true'
+                }));
+
+                $selectedList.append($item);
+            });
+
+            const hasJobs = state.jobs.length > 0;
+
+            fn_step2ToggleHidden($jobPicker, !hasJobs);
+            fn_step2ToggleHidden($jobFlow, hasJobs);
+
+            if (!hasJobs) {
+                fn_step2ResetDependentBlocks();
+            }
+        }
+
+        function fn_step2AddJob(value) {
+            const job = $.trim(value);
+
+            if (!job || $.inArray(job, state.jobs) !== -1) {
+                return;
+            }
+
+            state.jobs.push(job);
+            $jobInput.val('');
+            fn_step2RenderSelectedJobs();
+        }
+
+        function fn_step2RemoveJob(value) {
+            state.jobs = $.grep(state.jobs, function (job) {
+                return job !== value;
+            });
+            fn_step2RenderSelectedJobs();
+        }
+
+        function fn_step2SetMode(name, mode) {
+            const $modeArea = $root.find('.js-s2-mode-panel--' + name).first();
+            const $modeButton = $root.find('.js-s2-mode-toggle[value="' + name + '"]').first();
+            const $modeLabel = $modeButton.find('.re-s2__mode-toggle-label');
+
+            if (!$modeArea.length || !$modeButton.length || !$modeLabel.length) {
+                return;
+            }
+
+            $modeArea.removeClass('is-direct is-select').addClass('is-' + mode);
+            $modeButton.removeClass('is-direct is-select').addClass('is-' + mode);
+            $modeButton.attr('aria-pressed', mode === 'select' ? 'true' : 'false');
+            $modeLabel.text(mode === 'direct' ? '항목선택으로 변경' : '직접입력으로 변경');
+
+            fn_step2ToggleHidden($modeArea.find('.js-s2-mode-direct').first(), mode === 'direct');
+            fn_step2ToggleHidden($modeArea.find('.js-s2-mode-select').first(), mode === 'select');
+        }
+
+        function fn_step2CloseAllTooltips() {
+            $tooltipButtons.attr('aria-expanded', 'false');
+            $root.find('.js-s2-tooltip').prop('hidden', true);
+        }
+
+        $root.on('click', '.js-s2-job-chip', function () {
+            fn_step2AddJob($(this).val() || $(this).text());
+        });
+
+        $root.on('click', '.js-s2-remove-job', function () {
+            fn_step2RemoveJob($(this).val() || '');
+        });
+
+        $root.on('click', '.js-s2-add-job', function () {
+            fn_step2ToggleHidden($jobPicker, true);
+            $jobInput.trigger('focus');
+        });
+
+        $root.on('click', '.js-s2-search', function () {
+            fn_step2AddJob($jobInput.val());
+        });
+
+        $jobInput.on('keydown', function (event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                fn_step2AddJob($jobInput.val());
+            }
+        });
+
+        $facilitySelect.on('change', fn_step2UpdateFacilityState);
+
+        $moreButton.on('click', function () {
+            fn_step2UpdateExtraToggleState($extraFields.prop('hidden'));
+        });
+
+        $root.on('click', '.js-s2-clear-btn', function () {
+            const $target = $(this).siblings('input, textarea').first().length
+                ? $(this).siblings('input, textarea').first()
+                : $(this).closest('.re-s2__line-field').find('input, textarea').first();
+
+            if ($target.length) {
+                $target.val('').trigger('focus');
+            }
+        });
+
+        $root.on('click', '.js-s2-mode-toggle', function () {
+            const modeName = $(this).val();
+            const nextMode = $(this).hasClass('is-select') ? 'direct' : 'select';
+
+            fn_step2SetMode(modeName, nextMode);
+        });
+
+        $root.on('click', '.js-s2-tooltip-btn', function (event) {
+            const $button = $(this);
+            const $tooltip = $button.siblings('.js-s2-tooltip');
+            const isOpen = $button.attr('aria-expanded') === 'true';
+
+            event.stopPropagation();
+            fn_step2CloseAllTooltips();
+
+            if (!$tooltip.length || isOpen) {
+                return;
+            }
+
+            $button.attr('aria-expanded', 'true');
+            $tooltip.prop('hidden', false);
+        });
+
+        $(document).off('click.companyStep2Tooltip').on('click.companyStep2Tooltip', function (event) {
+            if (!$(event.target).closest('.re-s2__tooltip-wrap').length) {
+                fn_step2CloseAllTooltips();
+            }
+        });
+
+        fn_step2SetMode('qualification', 'direct');
+        fn_step2SetMode('preferred', 'direct');
+        fn_step2RenderSelectedJobs();
+        fn_step2UpdateFacilityState();
+        fn_step2UpdateExtraToggleState(false);
+    });
+</script>
+
+</body>
+</html>

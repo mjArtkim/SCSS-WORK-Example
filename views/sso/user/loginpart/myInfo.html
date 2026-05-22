@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="~{|sso/include/user/inc_head|}"></div>
+</head>
+<body data-aos-easing="ease-out" data-aos-duration="700" data-aos-delay="0">
+<div class="app-shell app-shell--auth app-shell--quick-actions-hidden">
+    <div class="app-body">
+        <div class="site-header header-box wrap">
+            <div th:replace="~{|sso/include/user/inc_header|}"></div>
+        </div>
+        <main class="site-content" aria-live="polite">
+            <section class="my-info-page auth-page wrap">
+                <div class="my-info-page__wrap auth-page__wrap auth-page__wrap--card">
+                    <header class="my-info-page__content-header auth-page__header">
+                        <h2 class="my-info-page__title auth-page__title">내 정보 관리</h2>
+                    </header>
+                    <div class="my-info-page__box">
+                        <nav class="my-info-page__menu auth-list" aria-label="내 정보 관리 메뉴">
+                            <button class="my-info-page__menu-item auth-list__item" type="button" onclick="movePage('/user/myInfo/accountSetting')">
+                                <span>계정정보 설정</span>
+                                <span class="icon-svg my-info-page__menu-icon" data-icon-name="chevron_right" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/chevron_right_icon.svg');"></span>
+                            </button>
+
+                            <button class="my-info-page__menu-item auth-list__item" type="button" onclick="movePage('/user/myInfo/loginManagement')">
+                                <span>SNS 계정 연동 관리</span>
+                                <span class="icon-svg my-info-page__menu-icon" data-icon-name="chevron_right" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/chevron_right_icon.svg');"></span>
+                            </button>
+
+                            <button id="appLoginManage" class="my-info-page__menu-item auth-list__item" type="button" onclick="movePage('/user/myInfo/easyLogin')"
+
+                            >
+                                <span>앱 로그인 관리</span>
+                                <span class="icon-svg my-info-page__menu-icon" data-icon-name="chevron_right" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/chevron_right_icon.svg');"></span>
+                            </button>
+
+                            <button class="my-info-page__menu-item auth-list__item" type="button" data-role="logout-trigger" onclick="movePage('/logout')">
+                                <span>로그아웃</span>
+                                <span class="icon-svg my-info-page__menu-icon" data-icon-name="chevron_right" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/chevron_right_icon.svg');"></span>
+                            </button>
+                        </nav>
+                        <button class="my-info-page__leave" type="button" data-role="withdraw-trigger" onclick="userDelete()">
+                            계정 탈퇴하기
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+    </div>
+    <div class="footer-box">
+        <div th:replace="~{|sso/include/user/inc_footer|}"></div>
+    </div>
+</div>
+</body>
+<script th:inline="javascript">
+    $(document).ready(function () {
+        $("#appLoginManage").hide();
+        const userAgent = window.navigator.userAgent.toLowerCase();
+        const isApp = userAgent.indexOf('android') > -1 || userAgent.indexOf('iphone') > -1;
+        if (isApp) {
+            $("#appLoginManage").show();
+        }
+    });
+
+    function userDelete() {
+        openAlert('계정탈퇴', '돌보미 계정을 탈퇴 하시겠습니까?', '확인', true, '취소', () => {
+            $.ajax({
+                url: '/ajax/user/delete',
+                type: 'POST',
+                success: function (response) {
+                    if (response.resultCd === 'S') {
+                        openAlert('계정탈퇴', "탈퇴가 정상적으로 완료되었습니다.\n그동안 이용해주셔서 감사합니다.", '확인', false, '', () => {
+                            location.href = "/main";
+                        });
+                    } else {
+                        openAlert('계정탈퇴', response.resultMsg || "탈퇴 처리 중 오류가 발생했습니다. \n 고객사에 문의해주세요", '확인', false, '');
+                    }
+                },
+                error: function () {
+                    alert("서버 통신 오류가 발생했습니다.");
+                }
+            });
+        })
+    }
+</script>

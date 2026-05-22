@@ -1,0 +1,159 @@
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 300;src: url(../fonts/NotoSansKR-Light.woff2) format('woff2'),url(../fonts/NotoSansKR-Light.woff) format('woff'),url(../fonts/NotoSansKR-Light.otf) format('opentype');}
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 400;src: url(../fonts/NotoSansKR-Regular.woff2) format('woff2'),url(../fonts/NotoSansKR-Regular.woff) format('woff'),url(../fonts/NotoSansKR-Regular.otf) format('opentype');}
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 500;src: url(../fonts/NotoSansKR-Medium.woff2) format('woff2'),url(../fonts/NotoSansKR-Medium.woff) format('woff'),url(../fonts/NotoSansKR-Medium.otf) format('opentype');}
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 700;src: url(../fonts/NotoSansKR-Bold.woff2) format('woff2'),url(../fonts/NotoSansKR-Bold.woff) format('woff'),url(../fonts/NotoSansKR-Bold.otf) format('opentype');}
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 900;src: url(../fonts/NotoSansKR-Black.woff2) format('woff2'),url(../fonts/NotoSansKR-Black.woff) format('woff'),url(../fonts/NotoSansKR-Black.otf) format('opentype');}
+
+
+*{user-select: none; cursor: pointer; -webkit-tap-highlight-color: transparent;}
+html, body, div, span, applet, object, iframe, table, caption, tbody, tfoot, thead, tr, th, td,
+del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code,
+dl, dt, dd, ol, ul, li, fieldset, form, label, legend {
+    vertical-align: baseline;
+    /*font-family: 'NotoSansCJKkr, Noto Sans KR', sans-serif;*/
+    font-family: 'Noto Sans KR', sans-serif;
+    font-weight: inherit;
+    font-style: inherit;
+    font-size: 100%;
+    outline: 0;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    user-select: none;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+    -webkit-user-select: none; /* Safari */
+}
+
+heade,section, article, footer, aside, main, menu, nav, address{display:block;margin: 0; padding:0;}
+
+html, body {
+    line-height: 1;
+    color: #333;
+    font-size:14px;
+}
+
+body *{
+    font-family: 'Noto Sans KR';
+}
+
+h1,h2,h3,h4,h5,h6{
+    font-weight:normal;
+    font-size:1rem;
+}
+ol, ul {
+    list-style: none;
+}
+/* tables still need cellspacing="0" in the markup */
+table {
+    border-collapse: separate;
+    border-spacing: 0;
+}
+caption, th, td {
+    font-weight: normal;
+    text-align: left;
+}
+/* remove possible quote marks (") from <q> & <blockquote> */
+blockquote:before, blockquote:after, q:before, q:after {
+    content: "";
+}
+blockquote, q {
+    quotes: "" "";
+}
+input::placeholder{color: #ccc}
+
+a{
+    color: inherit;
+    text-decoration:none;
+    display: block;
+}
+
+img{
+    border: 0;
+}
+input[type=text], input[type=password], input[type=number], button, textarea, select, option{
+    box-sizing: border-box; border: 1px solid #999; vertical-align:middle; outline: none; border: 0;
+}
+
+input[type="text"], input[type="text"], input[type="text"], input[type="text"], input[type="text"], textarea{-webkit-border-radius: 0; -weblit-apearance: none;}
+
+input[type="checkbox"]{
+    vertical-align: middle;
+}
+
+
+
+textarea::placeholder{color: #ccc;}
+
+/* input*/
+input[type=text], input[type=password] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+
+}
+
+select{
+    /*ios*/
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+/* IE10 */
+input::-ms-clear { display: none; }
+
+/* input type number 占쏙옙占쏙옙 화占쏙옙표 占쏙옙占쏙옙 */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+
+/* IE Select */
+select::-ms-expand { display: none; }
+
+[hidden], .hidden {display: none !important;}
+
+*.ovh{overflow: hidden;}
+*.fl{float:left;}
+*.fr{float: right;}
+
+.bg{background-size: cover; background-repeat: no-repeat; background-position: center;}
+.ta-center{text-align: center;}
+.ta-right{text-align: right;}
+.mt10{margin-top: 10px !important;}
+.mt20{margin-top: 20px !important;}
+.mt30{margin-top: 30px !important;}
+.mt40{margin-top: 40px !important;}
+.mt60{margin-top: 60px !important;}
+.mt80{margin-top: 80px !important;}
+.mt100{margin-top: 100px !important;}
+.mt120{margin-top: 120px !important;}
+.mt160{margin-top: 160px !important;}
+
+.mr5{margin-right:5px !important;}
+.mr10{margin-right:10px !important;}
+.mr20{margin-right:20px !important;}
+.mr30{margin-right:30px !important;}
+.mr40{margin-right:40px !important;}
+.mr50{margin-right:50px !important;}
+.mr60{margin-right:60px !important;}
+
+.ml10{margin-left:10px !important;}
+.ml20{margin-left:20px !important;}
+.ml30{margin-left:30px !important;}
+.ml40{margin-left:40px !important;}
+.ml50{margin-left:50px !important;}
+.ml60{margin-left:60px !important;}
+.ml70{margin-left:70px !important;}
+.ml80{margin-left:80px !important;}
+.ml90{margin-left:90px !important;}
+.ml100{margin-left:100px !important;}

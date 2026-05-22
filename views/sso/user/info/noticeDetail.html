@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="~{|sso/include/user/inc_head|}"></div>
+</head>
+<body>
+<div class="app-shell">
+    <div class="app-body">
+        <div class="site-header header-box wrap">
+            <div th:replace="~{|sso/include/user/inc_header|}"></div>
+        </div>
+
+        <section class="news-detail page-section">
+            <div class="wrap news-detail__wrap">
+
+                <article class="news-detail__empty" id="notice_empty_area" hidden>
+                    <p class="news-detail__empty-text">게시글을 찾을 수 없습니다.</p>
+                    <button class="news-detail__list-link" data-news-detail-empty-link onclick="goToType('/dolbomNotice', '01')">
+                        목록으로 돌아가기
+                    </button>
+                </article>
+
+                <div id="notice_content_area">
+                    <div class="news-detail__header">
+                        <p class="news-detail__category" id="notice_category"></p>
+                        <h2 class="news-detail__title" id="notice_title"></h2>
+                        <div class="news-detail__meta">
+                            <div class="news-detail__meta-copy">
+                                <span id="notice_detail_date"></span>
+                                <span id="notice_detail_writer"></span>
+                                <span id="notice_detail_view"></span>
+                            </div>
+                            <button class="news-detail__share" type="button" data-news-share onclick="clickShareBtn()">
+                  <span class="icon-svg news-detail__share-icon" data-icon-name="share" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/share_icon.svg');"></span>
+                                <span>공유하기</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <figure class="news-detail__figure">
+                        <img class="news-detail__image" src="" alt="" id="notice_detail_img"/>
+                    </figure>
+
+                    <div class="news-detail__content" id="notice_content"></div>
+
+                    <nav class="news-detail__navigation" aria-label="게시글 이동">
+                        <button id="notice_prev_btn" class="news-detail__nav-link" aria-label="이전 글 보기">
+                          <span class="icon-svg arrow-font" data-icon-name="chevron_left" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/chevron_left_icon.svg');"></span>
+                        </button>
+
+                        <button id="notice_list_btn" class="news-detail__nav-link news-detail__nav-link--list">
+                            <span class="icon-svg list-font" data-icon-name="list" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/list_icon.svg');"></span>
+                            <span>목록보기</span>
+                        </button>
+
+                        <button id="notice_next_btn" class="news-detail__nav-link" aria-label="다음 글 보기">
+                            <span class="icon-svg arrow-font" data-icon-name="chevron_right" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/chevron_right_icon.svg');"></span>
+                        </button>
+                    </nav>
+                </div>
+
+            </div>
+        </section>
+    </div>
+
+    <div class="footer-box">
+        <div th:replace="~{|sso/include/user/inc_footer|}"></div>
+    </div>
+</div>
+</body>
+<script th:inline="javascript">
+
+    $(document).ready(function () {
+        const detailInfo = /*[[${noticeDetailInfo.data}]]*/ {};
+        const newsList = /*[[${newsTotalList}]]*/ {};
+
+        if (detailInfo && detailInfo.seq) {
+            const currentSeq = Number(detailInfo.seq);
+            const fullList = newsList || [];
+            const currentIndex = fullList.findIndex(item => Number(item.seq) === currentSeq);
+            const $prevBtn = $("#notice_prev_btn");
+
+            if (currentIndex <= 0) {
+                $prevBtn.prop('disabled', true).addClass('is-disabled');
+            } else {
+                $prevBtn.on('click', function() {
+                    const prevSeq = fullList[currentIndex - 1].seq;
+                    location.href = `/dolbomNoticeDetail/${prevSeq}`;
+                });
+            }
+
+            const $nextBtn = $("#notice_next_btn");
+            if (currentIndex === -1 || currentIndex >= fullList.length - 1) {
+                $nextBtn.prop('disabled', true).addClass('is-disabled');
+            } else {
+                $nextBtn.on('click', function() {
+                    const nextSeq = fullList[currentIndex + 1].seq;
+                    location.href = `/dolbomNoticeDetail/${nextSeq}`;
+                });
+            }
+
+            const isNews = detailInfo.upper_code === "01";
+            $("#notice_category").text(isNews ? '공지사항' : '뉴스');
+            $("#notice_title").text(detailInfo.title);
+            $("#notice_content").html(detailInfo.content);
+            $("#notice_detail_view").text('조회수 ' + (detailInfo.hit || 0));
+            $("#notice_detail_writer").text('관리자');
+
+            if (detailInfo.reg_dt) $("#notice_detail_date").text(detailInfo.reg_dt.split('T')[0]);
+
+            const imageUrl = detailInfo.file_path || '';
+            if(imageUrl !== '') $("#notice_detail_img").attr('src', imageUrl).attr('alt', detailInfo.title);
+            else $("#notice_detail_img").hide();
+
+           $("#notice_list_btn").off('click').on('click', () => {
+                const listType =  detailInfo.upper_code ? '01' : '02';
+                location.href = `/dolbomNotice/${listType}`;
+           });
+        } else {
+            $("#notice_empty_area").removeAttr('hidden');
+            $("#notice_content_area").attr('hidden', true);
+        }
+    });
+</script>
+
+</html>

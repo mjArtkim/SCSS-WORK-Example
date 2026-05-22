@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <div th:replace="~{|recruit/include/user/inc_head|}"></div>
+</head>
+<body class="recruit-body applicant-page">
+<section class="applicant">
+    <section class="m-only">
+        <div class="header-box">
+            <div th:replace="~{|recruit/include/user/mobile/inc_mobile_main_header|}"></div>
+        </div>
+    </section>
+
+    <div class="applicant__resume">
+        <div class="applicant__resume--head wrap pc-only">
+            <button class="applicant__resume--back" type="button" onclick="movePage('/recruit/user/jobApply')">
+                <span class="applicant__resume--larrow" aria-hidden="true"></span>
+                <span>간호 조무사 (간호사) 채용</span>
+            </button>
+            <div class="applicant__resume--pager">
+                <button type="button">김옥자</button>
+                <button type="button" aria-label="이전 지원자">
+                    <span class="applicant__resume--larrow" aria-hidden="true"></span>
+                </button>
+                <div class="applicant__resume--here">박옥자</div>
+                <button type="button" aria-label="다음 지원자">
+                    <span class="applicant__resume--rarrow" aria-hidden="true"></span>
+                </button>
+                <button type="button">남옥자</button>
+            </div>
+        </div>
+        <div class="applicant__resume--summary pc-only">
+            <div class="applicant__resume--summary-inner wrap">
+                <div class="applicant__resume--headline">
+                    <div class="applicant__resume--person">
+                        <button class="applicant__resume--bookmark" type="button" aria-label="스크랩">
+                            <span class="applicant__resume--bookmarkicon"></span>
+                        </button>
+                        <div>박옥자</div>
+                    </div>
+                    <div>간호 조무사</div>
+                </div>
+                <div class="applicant__resume--meta">
+                    <div class="applicant__resume--meta-item">
+                        <span class="applicant__resume--meta-mobile" aria-hidden="true"></span>
+                        <span>010-0000-0000</span>
+                    </div>
+                    <div class="applicant__resume--meta-item">
+                        <span class="applicant__resume--meta-envelope" aria-hidden="true"></span>
+                        <span>paymaemail@paymaemail.co.kr</span>
+                    </div>
+                    <div class="applicant__resume--meta-item">
+                        <span>경력사항</span>
+                        <span>3년 6개월</span>
+                    </div>
+                    <div class="applicant__resume--meta-item">
+                        <span>2026.05.22(금) 입사지원</span>
+                    </div>
+                </div>
+                <div class="applicant__resume--actions">
+                    <button type="button">
+                        <span class="applicant__resume--print" aria-hidden="true"></span>
+                        <span>인쇄</span>
+                    </button>
+                    <button type="button" aria-label="더보기">
+                        <span class="applicant__resume--more" aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="applicant__small">
+                    <div class="applicant__small--flex">
+                    <button class="applicant__small--btn">삭제</button>
+                    <button class="applicant__small--close"></button>
+                    </div>
+                    <button class="applicant__small--btn">차단</button>
+                    <button class="applicant__small--btn">메일 보내기</button>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="applicant__resume--body wrap">
+            <div class="applicant__panel">
+                <div class="applicant__panel--topline pc-only">
+                    <span>지원분야 : 간호 조무사</span>
+                    <span>입사지원일 : 2026.05.22(금)</span>
+                </div>
+                <div class="applicant__resume--mobile-bg">
+                    <div class="applicant__panel--mtopline m-only">
+                        <div class="applicant__panel--topline">
+                            <span>입사지원일 : 2026.05.22(금)</span>
+                        </div>
+                        <div>
+                            <button class="applicant__resume--bookmark" type="button" aria-label="스크랩">
+                                <span class="applicant__resume--bookmarkicon"></span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="applicant__resume--tit">지원자 이력서 제목이 이곳에 들어갑니다.</div>
+                    <div class="applicant__hero pc-only">
+                        <div class="applicant__hero--photo">
+                            <img src="/img/recruit/user/test_img.png" alt="박옥자 프로필">
+                        </div>
+                        <div class="applicant__hero--content">
+                            <div class="applicant__hero--name-row">
+                                <h3>박옥자</h3>
+                                <span>경력</span>
+                            </div>
+                            <p class="applicant__hero--meta">(여 1986년, 만 40)</p>
+                            <div class="applicant__hero--info">
+                                <div class="applicant__hero--info-item">
+                                    <strong>경력사항</strong>
+                                    <span>3년 6개월</span>
+                                </div>
+                                <div class="applicant__hero--info-item">
+                                    <strong>휴대폰</strong>
+                                    <span>010-0000-0000</span>
+                                </div>
+                                <div class="applicant__hero--info-item applicant__hero--info-item-email">
+                                    <strong>이메일</strong>
+                                    <span>paymaemail@paymaemail.co.kr</span>
+                                </div>
+                            </div>
+                            <div class="applicant__hero--address">
+                                <strong>주소</strong>
+                                <span>(12345) 대한민국 서울시 어디어디 어디구 어디로</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="m-only">
+                        <div class="applicant__hero">
+                            <div class="applicant__hero--photo">
+                                <img src="/img/recruit/user/test_img.png" alt="박옥자 프로필">
+                            </div>
+                            <div class="applicant__hero--content">
+                                <div class="applicant__hero--name-row">
+                                    <h3>박옥자</h3>
+                                    <p class="applicant__hero--meta">(여 1986년, 만 40)</p>
+                                </div>
+                                <div class="applicant__hero--info">
+                                    <div class="applicant__hero--info-item">
+                                        <strong>경력사항</strong>
+                                        <span>3년 6개월</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="applicant__mhero">
+                            <div class="applicant__mhero--info-item">
+                                <span class="applicant__resume--meta-mobile" aria-hidden="true"></span>
+                                <span>010-0000-0000</span>
+                            </div>
+                            <div class="applicant__mhero--info-item applicant__hero--info-item-email">
+                                <span class="applicant__resume--meta-envelope" aria-hidden="true"></span>
+                                <span>paymaemail@paymaemail.co.kr</span>
+                            </div>
+                            <div class="applicant__mhero--address">
+                                <span class="applicant__resume--meta-home" aria-hidden="true"></span>
+                                <span>(12345) 대한민국 서울시 어디어디 어디구 어디로</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="applicant__stats pc-only">
+                    <div class="applicant__stats--item">
+                        <span class="applicant__stats--briefcase" aria-hidden="true"></span>
+                        <span>최근 경력</span>
+                        <span>페이마물산회사</span>
+                    </div>
+                    <div class="applicant__stats--item">
+                        <span>총 경력 | 3년 6개월</span>
+                    </div>
+                    <div class="applicant__stats--item">
+                        <span class="applicant__stats--bill" aria-hidden="true"></span>
+                        <span>희망연봉</span>
+                        <span>0000~0000만원</span>
+                    </div>
+                    <div class="applicant__stats--item">
+                        <span>직전 연봉 | 0000만원</span>
+                    </div>
+                </div>
+
+                <div class="applicant__section">
+                    <div class="applicant__section--head">
+                        <h2>경력</h2>
+                        <span>총 3년 6개월</span>
+                    </div>
+                    <div class="applicant__timeline">
+                        <article class="applicant__timeline--item">
+                            <div class="applicant__timeline--period">
+                                <span>2018.01 ~ 2019.01</span>
+                                <span>1년</span>
+                            </div>
+                            <div class="applicant__timeline--content">
+                                <div class="applicant__timeline--heading">
+                                    <strong>페이마 주식회사</strong>
+                                    <span>인사기획 인력운영 | 인사팀</span>
+                                </div>
+                                <p class="applicant__timeline--copy">Lorem ipsum dolor sit amet consectetur. Sed amet nisi nibh tempus et integervenenatis. Arcu amet maecenas sit tincidunt. Fames consequat sed nulla enim sed etiam volutpat ridiculus. Arcu nulla ullamcorper ultrices auctor Lorem ipsum dolor sit amet consectetur.</p>
+                                <div class="applicant__timeline--meta">
+                                    <span>연봉 | 0000만원</span>
+                                    <span>근무지역 | 서울</span>
+                                    <span>퇴사사유 | 업직종 전환</span>
+                                </div>
+                            </div>
+                        </article>
+                        <article class="applicant__timeline--item">
+                            <div class="applicant__timeline--period">
+                                <span>2018.01 ~ 2019.02</span>
+                                <span>1년</span>
+                            </div>
+                            <div class="applicant__timeline--content">
+                                <div class="applicant__timeline--heading">
+                                    <strong>페이마 주식회사</strong>
+                                    <span>인사기획 인력운영 | 인사팀</span>
+                                </div>
+                                <p class="applicant__timeline--copy">Lorem ipsum dolor sit amet consectetur. Sed amet nisi nibh tempus et integervenenatis. Arcu amet maecenas sit tincidunt. Fames consequat sed nulla enim sed etiam volutpat ridiculus. Arcu nulla ullamcorper ultrices auctor Lorem ipsum dolor sit amet consectetur.</p>
+                                <div class="applicant__timeline--meta">
+                                    <span>연봉 | 0000만원</span>
+                                    <span>근무지역 | 서울</span>
+                                    <span>퇴사사유 | 업직종 전환</span>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+
+                <div class="applicant__section">
+                    <div class="applicant__section--head">
+                        <h2>학력</h2>
+                        <span>대학교(4년) 졸업</span>
+                    </div>
+                    <div class="applicant__records">
+                        <div class="applicant__records--item">
+                            <div class="applicant__records--period">
+                                <span>2010.03 ~ 2013.02</span>
+                                <span>졸업</span>
+                            </div>
+                            <div class="applicant__records--content">
+                                <strong>관악고등학교</strong>
+                                <span>인문학계열</span>
+                            </div>
+                        </div>
+                        <div class="applicant__records--item">
+                            <div class="applicant__records--period">
+                                <span>2013.03 ~ 2015.02</span>
+                                <span>자퇴</span>
+                            </div>
+                            <div class="applicant__records--content applicant__records--content-grid">
+                                <div>
+                                    <strong>페이마 대학교 (4년제)</strong>
+                                    <span>인문학계열</span>
+                                </div>
+                                <div>
+                                    <span>학점 | 3.9/4.5</span>
+                                    <span>지역 | 전북</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="applicant__records--item">
+                            <div class="applicant__records--period">
+                                <span>2015.03 ~ 2017.02</span>
+                                <span>편입/졸업</span>
+                            </div>
+                            <div class="applicant__records--content applicant__records--content-grid">
+                                <div>
+                                    <strong>돌보미 대학교 (4년제)</strong>
+                                    <span>인문학계열</span>
+                                </div>
+                                <div>
+                                    <span>학점 | 3.9/4.5</span>
+                                    <span>지역 | 서울</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="applicant__section">
+                    <div class="applicant__section--head">
+                        <h2>자격/어학/수상</h2>
+                    </div>
+                    <div class="applicant__table">
+                        <div class="applicant__table--row">
+                            <span>2025.11</span>
+                            <div>
+                                <strong>ACP Illustrator</strong>
+                                <span>Adobe</span>
+                                <span>최종합격</span>
+                            </div>
+                        </div>
+                        <div class="applicant__table--row">
+                            <span>2025.11</span>
+                            <div>
+                                <strong>ACP Illustrator</strong>
+                                <span>Adobe</span>
+                                <span>최종합격</span>
+                            </div>
+                        </div>
+                        <div class="applicant__table--row">
+                            <span>2025.11</span>
+                            <div>
+                                <strong>ACP Illustrator</strong>
+                                <span>Adobe</span>
+                                <span>최종합격</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="applicant__section">
+                    <div class="applicant__section--head">
+                        <h2>교육/활동</h2>
+                    </div>
+                    <div class="applicant__activity">
+                        <div class="applicant__activity--period">
+                            <span>2018.01 ~ 2019.01</span>
+                        </div>
+                        <div class="applicant__activity--content">
+                            <div class="applicant__activity--heading">
+                                <strong>페이마 고등학교</strong>
+                                <span>활동</span>
+                            </div>
+                            <p>Lorem ipsum dolor sit amet consectetur. Sed amet nisi nibh tempus et integervenenatis. Arcu amet maecenas sit tincidunt. Fames consequat sed nulla enim sed etiam volutpat ridiculus.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="applicant__section">
+                    <div class="applicant__section--head">
+                        <h2>자기소개서</h2>
+                    </div>
+                    <div class="applicant__narrative">
+                        <div class="applicant__narrative--item">
+                            <strong>자기소개서</strong>
+                            <p>Lorem ipsum dolor sit amet consectetur. Sed amet nisi nibh tempus et integervenenatis. Arcu amet maecenas sit tincidunt. Fames consequat sed nulla enim sed etiam volutpat ridiculus. Arcu nulla ullamcorper ultrices auctor Lorem ipsum dolor sit amet consectetur.</p>
+                        </div>
+                        <div class="applicant__narrative--item">
+                            <strong>장단점</strong>
+                            <p>Lorem ipsum dolor sit amet consectetur. Sed amet nisi nibh tempus et integervenenatis. Arcu amet maecenas sit tincidunt. Fames consequat sed nulla enim sed etiam volutpat ridiculus. Arcu nulla ullamcorper ultrices auctor Lorem ipsum dolor sit amet consectetur.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="applicant__confirm">
+                    <p>위의 모든 기재사항은 사실과 다름이 없음을 확인합니다.</p>
+                    <p>2026년 00월 00일 (금) / 작성자 : 박옥자</p>
+                </div>
+            </div>
+
+            <div class="applicant__notice">
+                <p>위조된 문서를 등록하여 취업활동에 이용시 법적 책임을 지게 될 수 있습니다.</p>
+                <p>(주)사람인은 구직자가 등록한 문서에 대해 보증하거나 별도의 책임을 지지 않으며 첨부된 문서를 신뢰하여 발생한 법적 분쟁에 책임을 지지 않습니다. (개인회원약관 제16조 관련)</p>
+                <p>또한 구인/구직 목적 외 목적으로 이용 시 이력서 삭제 혹은 비공개 조치될 수 있습니다.</p>
+            </div>
+        </div>
+    </div>
+    <div class="applicant__mobile--actions m-only">
+        <button class="applicant__mobile--actions-cancel" type="button">이전</button>
+        <a class="applicant__mobile--actions-call" href="tel:01000000000">휴대폰 연락</a>
+    </div>
+</section>
+<footer class="applicant__site-footer">
+    <div class="footer-box">
+        <div th:replace="~{|recruit/include/user/inc_footer|}"></div>
+    </div>
+</footer>
+
+</body>
+<script th:inline="javascript">
+    $(document).on('click', '.applicant__resume--actions [aria-label="더보기"]', function (e) {
+        e.stopPropagation();
+
+        $('.applicant__small').toggleClass('is-show');
+    });
+
+    $(document).on('click', '.applicant__small--close', function () {
+        $('.applicant__small').removeClass('is-show');
+    });
+
+    $(document).on('click', function (e) {
+        if (!$(e.target).closest('.applicant__small, .applicant__resume--actions').length) {
+            $('.applicant__small').removeClass('is-show');
+        }
+    });
+</script>
+</html>

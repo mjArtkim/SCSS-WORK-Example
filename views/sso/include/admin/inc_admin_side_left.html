@@ -1,0 +1,93 @@
+<div class="sidebar">
+    <aside th:with="URL=${cURL}">
+        <div class="storeInfo">
+            <span class="store">Admin</span>
+            <span class="id"></span>
+        </div>
+        <ul class="leftMenu admin">
+        </ul>
+    </aside>
+</div>
+<script th:inline="javascript">
+    let _id = /*[[${session.ssoAdminLoginMap.id}]]*/ [];
+    let adminMenuList = /*[[${session.adminMenuList}]]*/ [];
+    let URL = window.location.pathname;
+    let isActive = false;
+    let menuStr = '';
+    $.each(adminMenuList, function(index, item) {
+        let subMenuStr = '';
+        if (item.dept == 1) {
+            isActive = false;
+            $.each(adminMenuList, function (innerIndex, innerItem) {
+                if (innerItem.upperSeq == item.seq && innerItem.sideMenuUseYn == 'Y') {
+                    isActive = isActive || (innerItem.url == URL)
+                    subMenuStr += `<li onclick="location.href='${innerItem.url}'"><span class="subTit${innerItem.url == URL?' on':''}">${innerItem.name}</span></li>`
+                }
+            })
+            menuStr += '<li><span class="accordionTitle'+ (isActive?' active':'') +'">' + item.name;
+            menuStr += '<span class="accIcon'+ (isActive?' anime':'') +'"></span></span>';
+            menuStr += '<ul class="subMenu'+ (isActive?' show':'') + '">';
+            menuStr +=  subMenuStr;
+            menuStr += '</ul></li>';
+        }
+    })
+    $('.leftMenu').html(menuStr);
+    $('.id').html(_id);
+</script>
+<script>
+
+    //Lnb
+    var accordionBtn = document.querySelectorAll('.accordionTitle');
+    var allTexts = document.querySelectorAll('.subMenu');
+    var accIcon = document.querySelectorAll('.accIcon');
+
+    accordionBtn.forEach(function (el) {
+        el.addEventListener('click', toggleAccordion)
+    });
+
+    function toggleAccordion(el) {
+        var targetText = el.currentTarget.nextElementSibling.classList;
+        var targetAccIcon = el.currentTarget.children[0];
+        var target = el.currentTarget;
+
+        if (targetText.contains('show')) {
+            targetText.remove('show');
+            targetAccIcon.classList.remove('anime');
+            target.classList.remove('active');
+        }
+        else {
+            accordionBtn.forEach(function (el) {
+                el.classList.remove('active');
+
+                allTexts.forEach(function (el) {
+                    el.classList.remove('show');
+                })
+
+                accIcon.forEach(function (el) {
+                    el.classList.remove('anime');
+                })
+
+            })
+            targetText.add('show');
+            target.classList.add('active');
+            targetAccIcon.classList.add('anime');
+        }
+    }
+
+    //LNB 2depth
+    var allSubmenu= document.querySelectorAll('.subTit');
+
+    allSubmenu.forEach(function (el) {
+        el.addEventListener('click', toggleSubmenu)
+    });
+
+    function toggleSubmenu(el) {
+        var target = el.currentTarget;
+        allSubmenu.forEach(function (el) {
+            el.classList.remove('on');
+        })
+        target.classList.add('on');
+    }
+
+
+</script>

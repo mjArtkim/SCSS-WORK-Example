@@ -1,0 +1,1739 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+  <div th:replace="~{|recruit/include/user/inc_head|}"></div>
+</head>
+<body>
+<section class="min-h">
+  <section>
+    <div class="header-box">
+      <div th:replace="~{|recruit/include/user/mobile/inc_mobile_main_header|}"></div>
+    </div>
+  </section>
+  <section class="mo-my">
+    <div class="mo-my__top">
+      <button type="button" class="mo-my__top--btn is-active" data-target="resume-section-basic">기본정보</button>
+      <button type="button" class="mo-my__top--btn" data-target="resume-section-education">학력</button>
+      <button type="button" class="mo-my__top--btn" data-target="resume-section-career">경력</button>
+      <button type="button" class="mo-my__top--btn" data-target="resume-section-introduction">자기소개서</button>
+      <button type="button" class="mo-my__top--btn" data-target="resume-section-hopeWork">희망조건</button>
+    </div>
+  </section>
+    <div class="wrap">
+      <section class="re-resume">
+        <div class="re-resume__layout">
+          <div id="resume-section-basic" class="re-resume__content">
+            <h2 class="re-resume__page-title">기본정보</h2>
+            <div class="re-resume__block">
+              <label class="re-resume__field-label" for="resumeTitle">이력서 제목 <span>*</span></label>
+              <input id="resumeTitle" class="re-resume__input" type="text" placeholder="이력서 제목을 입력해주세요.">
+            </div>
+            <section class="re-resume__block">
+              <h3 class="re-resume__section-title">기본정보</h3>
+              <div class="re-resume__basic-top">
+                <div class="re-resume__photo-group">
+                  <div id="resume-photo-preview" class="re-resume__photo-box" role="button" tabindex="0" aria-label="사진 등록">
+                    <span id="resume-photo-placeholder">사진을<br>등록해주세요</span>
+                  </div>
+                  <input id="resume-photo-file" type="file" accept="image/jpeg,image/png,image/webp" hidden>
+                  <input id="resume-photo-file-name" type="hidden">
+                  <div class="re-resume__photo-actions">
+                    <button id="resume-photo-delete" type="button" class="re-resume__small-btn is-muted" disabled>삭제</button>
+                    <button id="resume-photo-upload" type="button" class="re-resume__small-btn is-point">등록</button>
+                  </div>
+                </div>
+                <div>
+                  <div class="re-resume__field">
+                    <label class="re-resume__field-label" for="resumeName">이름 <span>*</span></label>
+                    <input id="resumeName" class="re-resume__input--disabled" type="text" value="홍길동" disabled>
+                  </div>
+                  <div class="re-resume__field">
+                    <label class="re-resume__field-label" for="resumeBirth">생년월일 <span>*</span></label>
+                    <input id="resumeBirth" class="re-resume__input--disabled" type="text" value="0000.00.00" disabled>
+                  </div>
+                </div>
+              </div>
+              <div class="re-resume__field-grid">
+                <div class="re-resume__field">
+                  <label class="re-resume__field-label">성별 <span>*</span></label>
+                  <div class="re-resume__toggle">
+                    <div class="re-resume__toggle-btn is-active">남자</div>
+                    <div class="re-resume__toggle-btn">여자</div>
+                  </div>
+                </div>
+                <div class="re-resume__field">
+                  <label class="re-resume__field-label">내외국인 <span>*</span></label>
+                  <div class="re-resume__toggle">
+                    <div class="re-resume__toggle-btn is-active">내국인</div>
+                    <div class="re-resume__toggle-btn">외국인</div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="re-resume__field-grid">
+                <div class="re-resume__field">
+                  <label class="re-resume__field-label" for="resumeEmail">이메일 <span>*</span></label>
+                  <input id="resumeEmail" class="re-resume__input" type="email" value="payma@payma.co.kr">
+                </div>
+
+                <div class="re-resume__field">
+                  <label class="re-resume__field-label" for="resumePhone">휴대폰번호 <span>*</span></label>
+                  <input id="resumePhone" class="re-resume__input" type="text" value="01000000000">
+                </div>
+
+                <div class="re-resume__field is-full">
+                  <label class="re-resume__field-label" for="resumeAddress">주소 <span>*</span></label>
+                  <input id="resumeAddress" class="re-resume__input" type="text" value="전라북도 구미시 홍길동 경수대로">
+                </div>
+              </div>
+            </section>
+
+            <section class="re-resume__block" id="resume-section-education">
+              <div class="re-resume__section-head">
+                <h3 class="re-resume__section-title">학력 <span>*</span></h3>
+                <button type="button" class="re-resume__add-btn">
+                  <span>추가</span>
+                  <span class="re-resume__add-icon" aria-hidden="true"></span>
+                </button>
+              </div>
+              <ul class="re-resume__lists re-resume__add-list">
+                <li class="re-resume-add">
+                  <input type="text" placeholder="학교명" class="re-resume-add__input">
+                  <div class="re-resume-add__box">
+                    <div class="re-resume-add__box--date">
+                      <input type="text" placeholder="재학기간 (예. 201802)" class="re-resume-add__input">
+                      <div class="re-resume-add__select-wrap">
+                        <select class="re-resume-add__box--select">
+                          <option value="" disabled selected>상태</option>
+                          <option>입학</option>
+                          <option>편입</option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="re-resume-add__box--date">
+                      <input type="text" placeholder="재학기간 (예. 201802)" class="re-resume-add__input">
+                      <div class="re-resume-add__select-wrap">
+                        <select class="re-resume-add__box--select">
+                          <option value="" disabled selected>현재 상태</option>
+                          <option>수료</option>
+                          <option>재학중</option>
+                          <option>졸업</option>
+                          <option>휴학중</option>
+                          <option>중퇴</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="re-resume-add__box--date">
+                    <div class="re-resume-add__select-wrap">
+                      <select class="re-resume-add__box--select">
+                        <option value="" disabled selected>학교 구분</option>
+                        <option>중학교</option>
+                        <option>고등학교</option>
+                        <option>대학(2,3년)</option>
+                        <option>대학(4년)</option>
+                        <option>대학원</option>
+                      </select>
+                    </div>
+                    <input type="text" placeholder="소재지" class="re-resume-add__input">
+                  </div>
+                  <div class="re-resume-add__box">
+                    <div class="re-resume-add__box--date">
+                      <div class="re-resume-add__select-wrap">
+                        <select class="re-resume-add__box--select">
+                          <option value="" disabled selected>계열선택</option>
+                          <option>어문학계열</option>
+                          <option>인문과학계열</option>
+                          <option>사회과학계열</option>
+                          <option>자연과학계열</option>
+                          <option>공학계열</option>
+                          <option>의/약학계열</option>
+                          <option>사범계열</option>
+                          <option>농/수산/해양계열</option>
+                          <option>가정학계열</option>
+                          <option>예/체능계열</option>
+                          <option>신학계열</option>
+                          <option>예/체능계열</option>
+                          <option>상경계열</option>
+                          <option>해당무</option>
+                        </select>
+                      </div>
+                      <input type="text" placeholder="재학기간 (예. 201802)" class="re-resume-add__input">
+                    </div>
+                    <div class="re-resume-add__box--date">
+                      <div class="re-resume-add__select-wrap">
+                        <select class="re-resume-add__box--select">
+                          <option value="" disabled selected>학위</option>
+                          <option>전문(학사)</option>
+                          <option>석사</option>
+                          <option>박사</option>
+                        </select>
+                      </div>
+                      <div class="re-resume-add__box--total">
+                        <input type="text" placeholder="평점">
+                        <input type="text" placeholder="총점">
+                      </div>
+                    </div>
+                  </div>
+                  <button type="button" class="re-resume-add__btn">전공추가</button>
+                  <div class="re-resume-add__box--confirm">
+                    <button type="button" class="re-resume-add__box--cancel">취소</button>
+                    <button type="button" class="re-resume-add__box--save">저장</button>
+                  </div>
+                </li>
+              </ul>
+              <ul class="re-resume__lists re-resume__done-list"></ul>
+              <div class="re-resume__textarea re-resume__empty">학력을 추가해주세요.</div>
+            </section>
+            <section class="re-resume__block" id="resume-section-career">
+              <div class="re-resume__section-head">
+                <h3 class="re-resume__section-title">경력 <span>*</span></h3>
+                <button type="button" class="re-resume__add-btn">
+                  <span>추가</span>
+                  <span class="re-resume__add-icon" aria-hidden="true"></span>
+                </button>
+              </div>
+              <ul class="re-resume__lists re-resume__add-list">
+                <li class="re-resume-add">
+                  <div class="mo-add-condition__check-list">
+                    <label class="mo-add-condition__check">
+                      <input type="checkbox"/>
+                      <span>신입</span>
+                    </label>
+                    <label class="mo-add-condition__check">
+                      <input type="checkbox"/>
+                      <span>경력</span>
+                    </label>
+                    <label class="mo-add-condition__check">
+                      <input type="checkbox"/>
+                      <span>재직중</span>
+                    </label>
+                  </div>
+                  <input type="text" placeholder="회사명" class="re-resume-add__input">
+                  <div class="re-resume-add__box">
+                    <button type="button" class="re-resume-add__work re-resume-add__work--career-jobtype">
+                      <span>직종선택</span>
+                    </button>
+                    <input type="hidden" class="re-resume-add__work-value">
+                    <div class="re-resume-add__box--date">
+                      <input type="text" placeholder="근무 부서" class="re-resume-add__input">
+                      <div class="re-resume-add__select-wrap">
+                        <select class="re-resume-add__box--select">
+                          <option value="" disabled selected>근무 형태</option>
+                          <option>정규직</option>
+                          <option>위촉직</option>
+                          <option>계약직</option>
+                          <option>시간&#40;선택&#41;제</option>
+                          <option>교육생&#40;연수생&#41;</option>
+                          <option>대체인력</option>
+                          <option>병역특례</option>
+                          <option>인턴</option>
+                          <option>파견직</option>
+                          <option>알바</option>
+                          <option>프리랜서</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="re-resume-add__box">
+                    <div class="re-resume-add__box--date">
+                      <input type="text" placeholder="근무기간 (예. 201802)" class="re-resume-add__input">
+                      <input type="text" placeholder="근무기간 (예. 201802)" class="re-resume-add__input">
+                    </div>
+                    <div class="re-resume-add__box--date">
+                    <div class="re-resume-add__select-wrap">
+                      <select class="re-resume-add__box--select">
+                        <option value="" disabled selected>근무 지역</option>
+                        <option>서울</option>
+                        <option>강원</option>
+                        <option>경기</option>
+                        <option>전북</option>
+                        <option>전남</option>
+                        <option>경북</option>
+                        <option>경남</option>
+                        <option>광주</option>
+                        <option>대구</option>
+                        <option>대전</option>
+                        <option>부산</option>
+                        <option>울산</option>
+                        <option>인천</option>
+                        <option>충남</option>
+                        <option>충북</option>
+                        <option>세종</option>
+                        <option>제주</option>
+                        <option>전국</option>
+                        <option>기타</option>
+                      </select>
+                    </div>
+                    <div class="re-resume-add__in-money">
+                      <input type="text" placeholder="연봉" class="re-resume-add__money">
+                      <span>만원</span>
+                    </div>
+                    </div>
+                  </div>
+                  <textarea placeholder="업무내용을 자세히 입력해주세요" class="re-resume-add__textarea"></textarea>
+                  <div class="re-resume-add__select-wrap">
+                    <select class="re-resume-add__box--select">
+                      <option value="" disabled selected>퇴사 사유</option>
+                      <option>업직종 전환</option>
+                      <option>근무조건</option>
+                      <option>경영악화</option>
+                      <option>계약만료</option>
+                      <option>출산/육아</option>
+                      <option>학업</option>
+                      <option>유학</option>
+                      <option>개인사정</option>
+                      <option>직접입력</option>
+                    </select>
+                  </div>
+                  <div class="re-resume-add__box--confirm">
+                    <button type="button" class="re-resume-add__box--cancel">취소</button>
+                    <button type="button" class="re-resume-add__box--save">저장</button>
+                  </div>
+                </li>
+              </ul>
+              <ul class="re-resume__lists re-resume__done-list"></ul>
+              <div class="re-resume__textarea re-resume__empty">경력을 추가해주세요</div>
+            </section>
+
+            <section class="re-resume__block" id="resume-section-certificate">
+              <div class="re-resume__section-head">
+                <div class="re-resume__section-meta">
+                  <h3 class="re-resume__section-title">자격/어학/수상</h3>
+                  <p class="re-resume__section-caption">작성된 이력서에는 가장 먼저 등록한 순으로 보여집니다.</p>
+                </div>
+                <button type="button" class="re-resume__add-btn">
+                  <span>추가</span>
+                  <span class="re-resume__add-icon" aria-hidden="true"></span>
+                </button>
+              </div>
+              <ul class="re-resume__lists re-resume__add-list">
+                <li class="re-resume-add">
+                  <div class="re-resume-add__box">
+                    <div class="re-resume-add__box--date">
+                      <input type="text" placeholder="자격증명" class="re-resume-add__input">
+                      <input type="text" placeholder="발행처" class="re-resume-add__input">
+                    </div>
+                    <div class="re-resume-add__box--date">
+                      <input type="text" placeholder="취득일자 (예. 201802)" class="re-resume-add__input">
+                      <div class="re-resume-add__select-wrap">
+                        <select class="re-resume-add__box--select">
+                          <option value="" disabled selected>합격 구분</option>
+                          <option>최종합격</option>
+                          <option>필기합격</option>
+                          <option>실기합격</option>
+                          <option>1차합격</option>
+                          <option>2차합격</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="re-resume-add__box--confirm">
+                    <button type="button" class="re-resume-add__box--cancel">취소</button>
+                    <button type="button" class="re-resume-add__box--save">저장</button>
+                  </div>
+                </li>
+              </ul>
+              <ul class="re-resume__lists re-resume__done-list"></ul>
+              <div class="re-resume__textarea re-resume__empty">자격/어학/수상을 추가해주세요</div>
+            </section>
+
+            <section class="re-resume__block" id="resume-section-activity">
+              <div class="re-resume__section-head">
+                <h3 class="re-resume__section-title">교육/활동</h3>
+                <button type="button" class="re-resume__add-btn">
+                  <span>추가</span>
+                  <span class="re-resume__add-icon" aria-hidden="true"></span>
+                </button>
+              </div>
+              <ul class="re-resume__lists re-resume__add-list">
+                <li class="re-resume-add">
+                  <div class="re-resume-add__box">
+                    <div class="re-resume-add__box--date">
+                      <input type="text" placeholder="과정명" class="re-resume-add__input">
+                      <input type="text" placeholder="교육기관" class="re-resume-add__input">
+                    </div>
+                    <div class="re-resume-add__box--date">
+                      <input type="text" placeholder="교육시작기간 (예. 201802)" class="re-resume-add__input">
+                      <input type="text" placeholder="교육종료기간 (예. 201802)" class="re-resume-add__input">
+                    </div>
+                  </div>
+                  <textarea placeholder="교육내용을 자세히 입력해주세요" class="re-resume-add__textarea"></textarea>
+                  <div class="re-resume-add__box--confirm">
+                    <button type="button" class="re-resume-add__box--cancel">취소</button>
+                    <button type="button" class="re-resume-add__box--save">저장</button>
+                  </div>
+                </li>
+              </ul>
+              <ul class="re-resume__lists re-resume__done-list"></ul>
+              <div class="re-resume__textarea re-resume__empty">교육/활동을 추가해주세요</div>
+            </section>
+
+            <section class="re-resume__block" id="resume-section-introduction">
+              <div class="re-resume__section-head">
+                <h3 class="re-resume__section-title">자기소개서</h3>
+                <button type="button" class="re-resume__add-btn">
+                  <span>추가</span>
+                  <span class="re-resume__add-icon" aria-hidden="true"></span>
+                </button>
+              </div>
+              <ul class="re-resume__lists re-resume__add-list">
+                <li class="re-resume-add">
+                  <input type="text" placeholder="제목" class="re-resume-add__input">
+                  <textarea placeholder="내용을 입력해주세요" class="re-resume-add__textarea"></textarea>
+                  <div class="re-resume-add__box--confirm">
+                    <button type="button" class="re-resume-add__box--cancel">취소</button>
+                    <button type="button" class="re-resume-add__box--save">저장</button>
+                  </div>
+                </li>
+              </ul>
+              <ul class="re-resume__lists re-resume__done-list"></ul>
+              <div class="re-resume__textarea re-resume__empty">자기소개서를 추가해주세요</div>
+            </section>
+
+            <section class="re-resume__block" id="resume-section-hopeWork">
+              <div class="re-resume__section-head">
+                <h3 class="re-resume__section-title">희망근무조건</h3>
+                <button type="button" class="re-resume__edit-btn" aria-label="희망근무조건 수정">
+                  <span class="re-resume__edit-icon" aria-hidden="true"></span>
+                </button>
+              </div>
+              <ul class="re-resume__lists re-resume__add-list">
+                <li class="re-resume-add">
+                  <div>
+                    <div class="re-resume-add__hope">
+                      <div>근무지역 &#40;최대 5개&#41;</div>
+                      <div class="re-resume-add__box--eidt">
+                        <div class="re-resume-add__select-wrap">
+                          <select id="hope-work-area-depth1" class="re-resume-add__box--select">
+                            <option value="" disabled selected>지역선택</option>
+                            <option>최종합격</option>
+                            <option>필기합격</option>
+                            <option>실기합격</option>
+                            <option>1차합격</option>
+                            <option>2차합격</option>
+                          </select>
+                        </div>
+                        <div class="re-resume-add__select-wrap">
+                          <select id="hope-work-area-depth2" class="re-resume-add__box--select">
+                            <option value="" disabled selected>상세지역선택</option>
+                            <option>최종합격</option>
+                            <option>필기합격</option>
+                            <option>실기합격</option>
+                            <option>1차합격</option>
+                            <option>2차합격</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <ul id="hope-work-area-list" class="re-resume-add__here"></ul>
+                  </div>
+                  <div>
+                    <div class="re-resume-add__hope">
+                      <div>직종 &#40;최대 5개&#41;</div>
+                      <div class="re-resume-add__in-money re-resume-add__in-money--jobtype">
+                        <input id="hope-work-jobtype-input" type="text" placeholder="희망 직종을 선택하세요" class="re-resume-add__money" readonly>
+                        <button id="hope-work-jobtype-add" type="button">전체보기</button>
+                      </div>
+                    </div>
+                    <ul id="hope-work-jobtype-list" class="re-resume-add__here"></ul>
+                  </div>
+                  <div>
+                    <div class="re-resume-add__hope">
+                      <div>근무형태 &#40;최대 3개&#41;</div>
+                      <div class="mo-add-condition__check-list">
+                        <label class="mo-add-condition__check">
+                          <input type="checkbox"/>
+                          <span>정규직</span>
+                        </label>
+                        <label class="mo-add-condition__check">
+                          <input type="checkbox"/>
+                          <span>계약직</span>
+                        </label>
+                        <label class="mo-add-condition__check">
+                          <input type="checkbox"/>
+                          <span>파견직</span>
+                        </label>
+                        <label class="mo-add-condition__check">
+                          <input type="checkbox"/>
+                          <span>아르바이트</span>
+                        </label>
+                        <label class="mo-add-condition__check">
+                          <input type="checkbox"/>
+                          <span>인턴</span>
+                        </label>
+                        <label class="mo-add-condition__check">
+                          <input type="checkbox"/>
+                          <span>대체인력</span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div class="re-resume-add__hope">
+                      <div class="re-resume-add__box">
+                        <div class="re-resume-add__box--eidt">
+                          <div>희망연봉</div>
+                          <div class="re-resume-add__label">
+                            <label>
+                              <input type="checkbox">
+                              비공개
+                            </label>
+                            <div class="tooltip-wrap">
+                              <button type="button" class="tooltip-btn"></button>
+                              <div class="label-tooltip">
+                                비공개 설정을 하시면 기업에는 희망연봉정보가 ‘협의 후 결정’으로 노출됩니다.
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="re-resume-add__select-wrap">
+                        <select class="re-resume-add__box--select">
+                          <option value="" disabled selected>연봉선택</option>
+                          <option>2,588 ~ 3,000만원</option>
+                          <option>3,000 ~ 3,500만원</option>
+                          <option>3,500 ~ 4,000만원</option>
+                          <option>4,000 ~ 5,000만원</option>
+                          <option>5,000 ~ 6,000만원</option>
+                          <option>6,000 ~ 7,000만원</option>
+                          <option>7,000 ~ 8,000만원</option>
+                          <option>8,000 ~ 9,000만원</option>
+                          <option>9,000 ~ 1억원</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="re-resume-add__box--confirm">
+                    <button type="button" class="re-resume-add__box--cancel">취소</button>
+                    <button type="button" class="re-resume-add__box--save">저장</button>
+                  </div>
+                </li>
+              </ul>
+              <ul class="re-resume__lists re-resume__done-list"></ul>
+              <div class="re-resume__textarea re-resume__empty">희망 근무 조건을 추가해주세요</div>
+            </section>
+            <div class="re-resume__bottom-actions">
+              <button type="button" class="re-resume__bottom-btn re-resume__bottom-btn--ghost">임시저장</button>
+              <button type="button" class="re-resume__bottom-btn re-resume__bottom-btn--disabled re-resume__bottom-btn--wide">이력서등록</button>
+            </div>
+            <div id="hope-work-jobtype-modal" class="re-resume-jobtype-modal" hidden>
+              <div class="re-resume-jobtype-modal__dim" data-role="close"></div>
+              <div class="re-resume-jobtype-modal__dialog" role="dialog" aria-modal="true" aria-labelledby="hope-work-jobtype-modal-title" tabindex="-1">
+                <div class="re-resume-jobtype-modal__head">
+                  <strong id="hope-work-jobtype-modal-title" class="re-resume-jobtype-modal__title">직종 선택</strong>
+                  <button type="button" class="re-resume-jobtype-modal__close" data-role="close" aria-label="닫기"></button>
+                </div>
+                <div class="re-resume-jobtype-modal__body">
+                  <div class="re-resume-jobtype-modal__section">
+                    <div class="re-resume-jobtype-modal__label">직무 선택</div>
+                    <div id="hope-work-jobtype-category-list" class="re-resume-jobtype-modal__category-list"></div>
+                  </div>
+                  <div class="re-resume-jobtype-modal__section">
+                    <div class="re-resume-jobtype-modal__label">세부 직종 선택</div>
+                    <div id="hope-work-jobtype-detail-list" class="re-resume-jobtype-modal__detail-list"></div>
+                  </div>
+                </div>
+                <div class="re-resume-jobtype-modal__selected">
+                  <div class="re-resume-jobtype-modal__selected-label">선택 항목</div>
+                  <div id="hope-work-jobtype-selected" class="re-resume-jobtype-modal__selected-value">직무와 세부 직종을 선택해주세요.</div>
+                </div>
+                <div class="re-resume-jobtype-modal__foot">
+                  <button type="button" class="re-resume-jobtype-modal__action re-resume-jobtype-modal__action--ghost" data-role="close">취소</button>
+                  <button id="hope-work-jobtype-confirm" type="button" class="re-resume-jobtype-modal__action re-resume-jobtype-modal__action--primary">선택하기</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  <div class="m-only">
+    <div th:replace="~{|recruit/include/user/mobile/inc_bnb|}"></div>
+  </div>
+</section>
+<script th:inline="javascript">
+  let g_resumeData = {};
+  let g_openSection = {};
+  let g_editItemId = {};
+  const g_jobTypeCatalog = [
+    { name: '돌봄 직무', details: ['요양보호사', '활동지원사', '생활지원사'] },
+    { name: '의료/간호 직무', details: ['간호사', '간호조무사'] },
+    { name: '복지/운영 직무', details: ['사회복지사', '시설장/센터장', '사무원'] },
+    { name: '치료/재활 직무', details: ['물리치료사', '작업치료사', '언어치료사'] }
+  ];
+  let g_jobTypeModalContext = '';
+  let g_selectedJobTypeCategory = '';
+  let g_selectedHopeWorkJobTypeList = [];
+  let g_selectedCareerJobType = '';
+  let g_resumePhotoFile = null;
+  let g_resumePhotoPreviewUrl = '';
+
+  $(function () {
+    $('.mo-my__top--btn').on('click', function (event) {
+      event.preventDefault();
+
+      let targetId = $(this).data('target') || '';
+      let $target = $('#' + targetId);
+      let headerOffset = $('.header-box:visible').first().outerHeight() || 0;
+      let scrollTop = 0;
+
+      if (!$target.length) {
+        return;
+      }
+
+      $('.mo-my__top--btn').removeClass('is-active');
+      $(this).addClass('is-active');
+
+      if (this.scrollIntoView) {
+        this.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+      }
+
+      scrollTop = Math.max($target.offset().top - headerOffset - 12, 0);
+
+      $('html, body').stop().animate({
+        scrollTop: scrollTop
+      }, 300);
+    });
+
+    fn_bindResumePhotoEvent();
+    $('.re-resume__add-list').hide();
+    $('.re-resume__done-list').hide();
+    $('.re-resume__empty').hide();
+
+    fn_bindResumeEvent();
+    fn_getResume();
+  });
+
+  function fn_bindResumePhotoEvent() {
+    $(document).on('click', '#resume-photo-upload, #resume-photo-preview', function (event) {
+      event.preventDefault();
+      $('#resume-photo-file').trigger('click');
+    });
+
+    $(document).on('keydown', '#resume-photo-preview', function (event) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        $('#resume-photo-file').trigger('click');
+      }
+    });
+
+    $(document).on('click', '#resume-photo-delete', function (event) {
+      event.preventDefault();
+      fn_resetResumePhoto();
+    });
+
+    $(document).on('click', '#resume-photo-file', function () {
+      $(this).val('');
+    });
+
+    $(document).on('change', '#resume-photo-file', function () {
+      let file = this.files && this.files[0] ? this.files[0] : null;
+
+      if (!file) {
+        return;
+      }
+
+      fn_handleResumePhotoChange(file);
+    });
+
+    $(window).off('beforeunload.resumePhoto').on('beforeunload.resumePhoto', function () {
+      fn_revokeResumePhotoPreviewUrl();
+    });
+
+    fn_setResumePhotoState();
+  }
+
+  function fn_handleResumePhotoChange(file) {
+    let allowedTypeList = ['image/jpeg', 'image/png', 'image/webp'];
+    let maxFileSize = 5 * 1024 * 1024;
+
+    if ($.inArray(file.type, allowedTypeList) === -1) {
+      alert('JPG, PNG, WEBP 형식의 이미지만 등록할 수 있습니다.');
+      $('#resume-photo-file').val('');
+      return;
+    }
+
+    if (file.size > maxFileSize) {
+      alert('사진은 5MB 이하 파일만 등록할 수 있습니다.');
+      $('#resume-photo-file').val('');
+      return;
+    }
+
+    fn_revokeResumePhotoPreviewUrl();
+
+    g_resumePhotoFile = file;
+    g_resumePhotoPreviewUrl = URL.createObjectURL(file);
+
+    $('#resume-photo-file-name').val(file.name || '');
+    fn_setResumePhotoState();
+  }
+
+  function fn_setResumePhotoState() {
+    let $preview = $('#resume-photo-preview');
+    let $placeholder = $('#resume-photo-placeholder');
+    let $deleteButton = $('#resume-photo-delete');
+    let $uploadButton = $('#resume-photo-upload');
+    let hasPhoto = !!g_resumePhotoFile && !!g_resumePhotoPreviewUrl;
+
+    $preview.toggleClass('is-filled', hasPhoto);
+    $preview.css('background-image', hasPhoto ? 'url("' + g_resumePhotoPreviewUrl + '")' : 'none');
+    $placeholder.toggle(!hasPhoto);
+    $deleteButton.prop('disabled', !hasPhoto);
+    $uploadButton.text(hasPhoto ? '변경' : '등록');
+  }
+
+  function fn_resetResumePhoto() {
+    g_resumePhotoFile = null;
+    fn_revokeResumePhotoPreviewUrl();
+
+    $('#resume-photo-file').val('');
+    $('#resume-photo-file-name').val('');
+    fn_setResumePhotoState();
+  }
+
+  function fn_revokeResumePhotoPreviewUrl() {
+    if (!g_resumePhotoPreviewUrl) {
+      return;
+    }
+
+    URL.revokeObjectURL(g_resumePhotoPreviewUrl);
+    g_resumePhotoPreviewUrl = '';
+  }
+
+  function fn_getResume() {
+    $.ajax({
+      url: '/recruit/user/test',
+      type: 'post',
+      data: JSON.stringify({}),
+      contentType: 'application/json',
+      success: function (data) {
+        let mockData = fn_getMockResumeData();
+        g_resumeData = data && Object.keys(data).length ? $.extend(true, {}, mockData, data) : mockData;
+        fn_setResumeItemId();
+        fn_drawResume();
+      },
+      error: function () {
+        g_resumeData = fn_getMockResumeData();
+        fn_setResumeItemId();
+        fn_drawResume();
+      }
+    });
+  }
+
+  function fn_getMockResumeData() {
+    return {
+      education: [{
+        id: 'education-1',
+        schoolName: '관악고등학교',
+        startDate: '201003',
+        status: '입학',
+        endDate: '201302',
+        currentStatus: '졸업',
+        schoolType: '고등학교',
+        location: '서울',
+        majorType: '인문학계열',
+        majorName: '',
+        degree: '',
+        score: '',
+        totalScore: '',
+        summary: '2010.03 ~ 2013.02 졸업 | 인문학계열'
+      }],
+      career: [{
+        id: 'career-1',
+        companyName: '회사이름여기에',
+        isNew: false,
+        isCareer: true,
+        isWorking: false,
+        jobType: '돌봄 직무 > 요양보호사',
+        department: '근무 부서',
+        workType: '정규직',
+        startDate: '201801',
+        endDate: '201901',
+        period: '2018.01 ~ 2019.01 | 1년',
+        summary: '돌봄 직무 > 요양보호사 | 근무 부서 | 정규직',
+        description: 'Lorem ipsum dolor sit amet consectetu. Sed amet nisi nibh tempus et integervenenatis. Arcu amet maecenas sit tincidunt. Fames consequat sed nulla enim sed etiam volutpat ridiculus. Arcunulla ullamcorper ultrices auctor Lorem ipsum dolor sit amet consectetu',
+        salaryValue: '0000',
+        salary: '0000 만원',
+        workArea: '서울',
+        leaveReason: '업직종 전환'
+      }],
+      certificate: [{
+        id: 'certificate-1',
+        name: 'ACP Illustrator',
+        issuer: 'Adobe',
+        acquiredDate: '202511',
+        passType: '최종합격',
+        summary: '최종합격 | 2025.11'
+      }],
+      activity: [{
+        id: 'activity-1',
+        title: '페이마 고등학교',
+        organization: '교육기관',
+        startDate: '201801',
+        endDate: '201901',
+        period: '2018.01 ~ 2019.01',
+        description: 'Lorem ipsum dolor sit amet consectetu. Sed amet nisi nibh tempus et integervenenatis. Arcu amet maecenas sit tincidunt. Fames consequat sed nulla enim sed etiam volutpat ridiculus. Arcunulla ullamcorper ultrices auctor Lorem ipsum dolor sit amet consectetu'
+      }],
+      introduction: [{
+        id: 'introduction-1',
+        title: '자기소개서',
+        content: 'Lorem ipsum dolor sit amet consectetu. Sed amet nisi nibh tempus et integervenenatis. Arcu amet maecenas sit tincidunt. Fames consequat sed nulla enim sed etiam volutpat ridiculus. Arcunulla ullamcorper ultrices auctor Lorem ipsum dolor sit amet consectetu'
+      }],
+      hopeWork: [{
+        id: 'hopeWork-1',
+        title: '희망 근무 조건 작성 내역',
+        workAreaList: ['서울>전지역', '경기>전지역'],
+        workArea: '서울>전지역, 경기>전지역',
+        jobTypeList: ['돌봄 직무 > 요양보호사', '복지/운영 직무 > 사회복지사', '치료/재활 직무 > 물리치료사'],
+        jobType: '돌봄 직무 > 요양보호사, 복지/운영 직무 > 사회복지사, 치료/재활 직무 > 물리치료사',
+        workTypeList: ['정규직', '프리랜서', '파견직'],
+        workType: '정규직, 프리랜서, 파견직',
+        isSalaryPrivate: false,
+        salary: '4,000 ~ 5000만원'
+      }]
+    };
+  }
+
+  function fn_bindResumeEvent() {
+    $(document).on('click', '.re-resume__add-btn', function (event) {
+      event.preventDefault();
+      let sectionKey = fn_getSectionKey($(this));
+      g_editItemId[sectionKey] = '';
+      fn_resetSectionForm(sectionKey);
+      g_openSection[sectionKey] = true;
+      fn_drawResumeSection(sectionKey);
+    });
+
+    $(document).on('click', '.re-resume__edit-btn, .re-resume__item-edit-btn', function (event) {
+      event.preventDefault();
+
+      let sectionKey = fn_getSectionKey($(this));
+      let itemId = '';
+      let item = null;
+
+      if ($(this).hasClass('re-resume__item-edit-btn')) {
+        itemId = ($(this).closest('.re-resume-done').attr('id') || '').replace('resume-item-', '');
+      } else {
+        item = (g_resumeData[sectionKey] || [])[0] || null;
+        itemId = item ? item.id : '';
+      }
+
+      item = item || fn_getResumeItem(sectionKey, itemId);
+
+      g_editItemId[sectionKey] = itemId;
+      fn_resetSectionForm(sectionKey);
+      fn_setSectionFormData(sectionKey, item);
+      g_openSection[sectionKey] = true;
+      fn_drawResumeSection(sectionKey);
+    });
+
+    $(document).on('change', '#hope-work-area-depth1', function () {
+      $('#hope-work-area-depth2').prop('selectedIndex', 0);
+    });
+
+    $(document).on('change', '#hope-work-area-depth2', function () {
+      fn_addHopeWorkArea();
+    });
+
+    $(document).on('click', '#resume-section-hopeWork .re-resume-add__in-money--jobtype', function (event) {
+      event.preventDefault();
+      fn_openJobTypeModal('hopeWork');
+    });
+
+    $(document).on('click', '#resume-section-career .re-resume-add__work--career-jobtype', function (event) {
+      event.preventDefault();
+      fn_openJobTypeModal('career');
+    });
+
+    $(document).on('keydown', '#hope-work-jobtype-input', function (event) {
+      if (event.key === 'Enter' || event.key === ' ') {
+        event.preventDefault();
+        fn_openJobTypeModal('hopeWork');
+      }
+    });
+
+    $(document).on('click', '#hope-work-jobtype-modal [data-role="close"]', function (event) {
+      event.preventDefault();
+      fn_closeJobTypeModal();
+    });
+
+    $(document).on('click', '#hope-work-jobtype-category-list .re-resume-jobtype-modal__option', function (event) {
+      event.preventDefault();
+      g_selectedJobTypeCategory = $(this).data('category') || '';
+      fn_renderJobTypeModal();
+    });
+
+    $(document).on('click', '#hope-work-jobtype-detail-list .re-resume-jobtype-modal__option', function (event) {
+      let detail = $(this).data('detail') || '';
+      let selectedText = g_selectedJobTypeCategory + ' > ' + detail;
+
+      event.preventDefault();
+
+      if (!g_selectedJobTypeCategory || !detail) {
+        return;
+      }
+
+      if (g_jobTypeModalContext === 'career') {
+        g_selectedCareerJobType = selectedText;
+      } else {
+        let selectedIndex = $.inArray(selectedText, g_selectedHopeWorkJobTypeList);
+
+        if (selectedIndex > -1) {
+          g_selectedHopeWorkJobTypeList.splice(selectedIndex, 1);
+        } else {
+          if (g_selectedHopeWorkJobTypeList.length >= 5) {
+            alert('직종은 최대 5개까지 선택할 수 있습니다.');
+            return;
+          }
+
+          g_selectedHopeWorkJobTypeList.push(selectedText);
+        }
+      }
+
+      fn_renderJobTypeModal();
+    });
+
+    $(document).on('click', '#hope-work-jobtype-confirm', function (event) {
+      event.preventDefault();
+
+      if (g_jobTypeModalContext === 'career') {
+        if (!g_selectedCareerJobType) {
+          alert('직무와 세부 직종을 선택해주세요.');
+          return;
+        }
+
+        fn_setCareerJobTypeValue($('#resume-section-career .re-resume__add-list'), g_selectedCareerJobType);
+      } else {
+        fn_renderSelectList($('#hope-work-jobtype-list'), g_selectedHopeWorkJobTypeList);
+        $('#hope-work-jobtype-input').val('');
+      }
+
+      fn_closeJobTypeModal();
+    });
+
+    $(document).on('keydown', '#hope-work-jobtype-modal', function (event) {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        fn_closeJobTypeModal();
+      }
+    });
+
+    $(document).on('change', '#resume-section-hopeWork .mo-add-condition__check input', function () {
+      let checkedCount = $('#resume-section-hopeWork .mo-add-condition__check input:checked').length;
+
+      if (checkedCount > 3) {
+        $(this).prop('checked', false);
+        alert('근무형태는 최대 3개까지 선택할 수 있습니다.');
+      }
+    });
+
+    $(document).on('click', '.re-resume-add__here button', function (event) {
+      event.preventDefault();
+      $(this).closest('li').remove();
+    });
+
+    $(document).on('click', '.re-resume-add__box--cancel', function (event) {
+      event.preventDefault();
+      let sectionKey = fn_getSectionKey($(this));
+      g_editItemId[sectionKey] = '';
+      fn_resetSectionForm(sectionKey);
+      g_openSection[sectionKey] = false;
+      fn_drawResumeSection(sectionKey);
+    });
+
+    $(document).on('click', '.re-resume-add__box--save', function (event) {
+      event.preventDefault();
+      let sectionKey = fn_getSectionKey($(this));
+      let item = fn_getSectionFormData(sectionKey);
+      let editItemId = g_editItemId[sectionKey] || '';
+
+      item.id = editItemId || fn_makeItemId(sectionKey);
+      let param = { sectionKey: sectionKey, item: item };
+
+      $.ajax({
+        url: /*[[@{/recruit/user/test/save}]]*/ '/recruit/user/test/save',
+        type: 'post',
+        data: JSON.stringify(param),
+        contentType: 'application/json',
+        complete: function () {
+          if (sectionKey === 'hopeWork') {
+            g_resumeData[sectionKey] = [item];
+          } else {
+            if (!g_resumeData[sectionKey]) {
+              g_resumeData[sectionKey] = [];
+            }
+
+            if (editItemId) {
+              g_resumeData[sectionKey] = $.map(g_resumeData[sectionKey], function (resumeItem) {
+                if (String(resumeItem.id) === String(editItemId)) {
+                  return item;
+                }
+
+                return resumeItem;
+              });
+            } else {
+              g_resumeData[sectionKey].push(item);
+            }
+          }
+
+          g_editItemId[sectionKey] = '';
+          fn_resetSectionForm(sectionKey);
+          g_openSection[sectionKey] = false;
+          fn_drawResumeSection(sectionKey);
+        }
+      });
+    });
+
+    $(document).on('click', '.re-resume__item-delete-btn', function (event) {
+      event.preventDefault();
+
+      let sectionKey = fn_getSectionKey($(this));
+      let itemId = ($(this).closest('.re-resume-done').attr('id') || '').replace('resume-item-', '');
+      let param = { sectionKey: sectionKey, itemId: itemId };
+
+      $.ajax({
+        url: /*[[@{/recruit/user/test/delete}]]*/ '/recruit/user/test/delete',
+        type: 'post',
+        data: JSON.stringify(param),
+        contentType: 'application/json',
+        complete: function () {
+          if (!g_resumeData[sectionKey]) {
+            g_resumeData[sectionKey] = [];
+          }
+
+          g_resumeData[sectionKey] = $.grep(g_resumeData[sectionKey], function (item) {
+            return String(item.id) !== String(itemId);
+          });
+
+          if (String(g_editItemId[sectionKey] || '') === String(itemId)) {
+            g_editItemId[sectionKey] = '';
+            fn_resetSectionForm(sectionKey);
+          }
+
+          fn_drawResumeSection(sectionKey);
+        }
+      });
+    });
+  }
+
+  function fn_drawResume() {
+    $.each(['education', 'career', 'certificate', 'activity', 'introduction', 'hopeWork'], function (_, sectionKey) {
+      fn_drawResumeSection(sectionKey);
+    });
+  }
+
+  function fn_addHopeWorkArea() {
+    let areaText = fn_getSelectText($('#hope-work-area-depth1'), '');
+    let detailText = fn_getSelectText($('#hope-work-area-depth2'), '');
+    let addText = '';
+    let list = fn_getListArray($('#hope-work-area-list').find('li > div'));
+
+    if (!areaText || !detailText) {
+      return;
+    }
+
+    addText = areaText + ' > ' + detailText;
+
+    if ($.inArray(addText, list) > -1) {
+      $('#hope-work-area-depth2').prop('selectedIndex', 0);
+      return;
+    }
+
+    if (list.length >= 5) {
+      alert('근무지역은 최대 5개까지 추가할 수 있습니다.');
+      $('#hope-work-area-depth2').prop('selectedIndex', 0);
+      return;
+    }
+
+    $('#hope-work-area-list').append(`
+            <li>
+                <div>${addText}</div>
+                <button type="button"><span class="re-resume-done__box--close"></span></button>
+            </li>
+        `);
+
+    $('#hope-work-area-depth1').prop('selectedIndex', 0);
+    $('#hope-work-area-depth2').prop('selectedIndex', 0);
+  }
+
+  function fn_getJobTypeCategoryNames() {
+    return $.map(g_jobTypeCatalog, function (item) {
+      return item.name;
+    });
+  }
+
+  function fn_getJobTypeDetailList(category) {
+    let detailList = [];
+
+    $.each(g_jobTypeCatalog, function (_, item) {
+      if (item.name === category) {
+        detailList = item.details || [];
+        return false;
+      }
+    });
+
+    return detailList;
+  }
+
+  function fn_openJobTypeModal(context) {
+    let $modal = $('#hope-work-jobtype-modal');
+    let categoryList = fn_getJobTypeCategoryNames();
+    let currentValueList = [];
+
+    if (!categoryList.length) {
+      return;
+    }
+
+    g_jobTypeModalContext = context;
+    g_selectedCareerJobType = '';
+    g_selectedHopeWorkJobTypeList = [];
+
+    if (context === 'career') {
+      g_selectedCareerJobType = fn_getCareerJobTypeValue($('#resume-section-career .re-resume__add-list'));
+      currentValueList = g_selectedCareerJobType.split(' > ');
+    } else {
+      let currentList = fn_getListArray($('#hope-work-jobtype-list').find('li > div'));
+      g_selectedHopeWorkJobTypeList = currentList.slice();
+      currentValueList = (currentList[currentList.length - 1] || '').split(' > ');
+    }
+
+    if (currentValueList.length === 2 && $.inArray(currentValueList[0], categoryList) > -1) {
+      g_selectedJobTypeCategory = currentValueList[0];
+    } else {
+      g_selectedJobTypeCategory = categoryList[0];
+    }
+
+    fn_renderJobTypeModal();
+
+    $modal.prop('hidden', false).addClass('is-open');
+    $modal.find('.re-resume-jobtype-modal__dialog').trigger('focus');
+  }
+
+  function fn_closeJobTypeModal() {
+    $('#hope-work-jobtype-modal').prop('hidden', true).removeClass('is-open');
+    if (g_jobTypeModalContext === 'career') {
+      $('#resume-section-career .re-resume-add__work--career-jobtype').trigger('focus');
+    } else {
+      $('#hope-work-jobtype-input').trigger('focus');
+    }
+  }
+
+  function fn_renderJobTypeModal() {
+    let categoryHtml = '';
+    let detailHtml = '';
+    let detailList = fn_getJobTypeDetailList(g_selectedJobTypeCategory);
+    let selectedCount = g_selectedHopeWorkJobTypeList.length;
+    let isMultiSelect = g_jobTypeModalContext === 'hopeWork';
+
+    $.each(fn_getJobTypeCategoryNames(), function (_, category) {
+      categoryHtml += `
+                <button type="button" class="re-resume-jobtype-modal__option ${g_selectedJobTypeCategory === category ? 'is-active' : ''}" data-category="${category}">
+                    ${category}
+                </button>
+            `;
+    });
+
+    $.each(detailList, function (_, detail) {
+      let selectedText = g_selectedJobTypeCategory + ' > ' + detail;
+      let isActive = isMultiSelect
+          ? $.inArray(selectedText, g_selectedHopeWorkJobTypeList) > -1
+          : g_selectedCareerJobType === selectedText;
+
+      detailHtml += `
+                <button type="button" class="re-resume-jobtype-modal__option ${isActive ? 'is-active' : ''}" data-detail="${detail}">
+                    ${detail}
+                </button>
+            `;
+    });
+
+    $('#hope-work-jobtype-category-list').empty().append(categoryHtml);
+    $('#hope-work-jobtype-detail-list').empty().append(detailHtml);
+    $('#hope-work-jobtype-modal-title').text(isMultiSelect ? '희망 직종 선택' : '경력 직종 선택');
+    $('#hope-work-jobtype-modal .re-resume-jobtype-modal__selected-label').text(
+        isMultiSelect ? '선택 항목 (' + selectedCount + '/5)' : '선택 항목'
+    );
+    $('#hope-work-jobtype-selected').text(fn_getJobTypeSelectedText());
+  }
+
+  function fn_getJobTypeSelectedText() {
+    if (g_jobTypeModalContext === 'career') {
+      return g_selectedCareerJobType || '직무와 세부 직종을 선택해주세요.';
+    }
+
+    if (!g_selectedHopeWorkJobTypeList.length) {
+      return '직무와 세부 직종을 선택해주세요.';
+    }
+
+    return g_selectedHopeWorkJobTypeList.join(', ');
+  }
+
+  function fn_drawResumeSection(sectionKey) {
+    let $section = $('#resume-section-' + sectionKey);
+    let list = g_resumeData[sectionKey] || [];
+    let displayList = list;
+    let article = '';
+    let editItemId = g_editItemId[sectionKey] || '';
+
+    if (g_openSection[sectionKey] && editItemId) {
+      displayList = $.grep(list, function (item) {
+        return String(item.id) !== String(editItemId);
+      });
+    }
+
+    $.each(displayList, function (_, item) {
+      article += fn_getResumeHtml(sectionKey, item);
+    });
+
+    $section.find('.re-resume__done-list').empty().append(article).toggle(displayList.length > 0);
+    $section.find('.re-resume__add-list').toggle(!!g_openSection[sectionKey]);
+    $section.find('.re-resume__empty').toggle(!g_openSection[sectionKey] && list.length === 0);
+    fn_updateSectionEditState(sectionKey);
+  }
+
+  function fn_getResumeHtml(sectionKey, item) {
+    if (sectionKey === 'education') {
+      return `
+                <li class="re-resume-done" id="resume-item-${item.id}">
+                    <div class="re-resume-done__box">
+                        <div class="re-resume-done__box--tit">${item.schoolName || ''}</div>
+                        <div class="re-resume-done__box--btn">
+                            <button type="button" class="re-resume__item-edit-btn"><span class="re-resume-done__box--edit"></span></button>
+                            <button type="button" class="re-resume__item-delete-btn"><span class="re-resume-done__box--close"></span></button>
+                        </div>
+                    </div>
+                    <div class="re-resume-done__bottom">${item.summary || ''}</div>
+                </li>
+            `;
+    }
+
+    if (sectionKey === 'career') {
+      return `
+                <li class="re-resume-done" id="resume-item-${item.id}">
+                    <div class="re-resume-done__box">
+                        <div class="re-resume-done__inner">
+                            <div class="re-resume-done__box--tit">${item.companyName || ''}</div>
+                        </div>
+                        <div class="re-resume-done__box--btn">
+                            <button type="button" class="re-resume__item-edit-btn"><span class="re-resume-done__box--edit"></span></button>
+                            <button type="button" class="re-resume__item-delete-btn"><span class="re-resume-done__box--close"></span></button>
+                        </div>
+                    </div>
+
+                    <ul class="re-resume-done__textbox">
+                        <li>${item.period || ''}</li>
+                        <li>${item.summary || ''}</li>
+                        <li>${item.description || ''}</li>
+                        <li class="re-resume-done__motext">
+                            <div>연봉 | ${item.salary || ''}</div>
+                            <div>근무지역 | ${item.workArea || ''}</div>
+                            <div>퇴사사유 | ${item.leaveReason || ''}</div>
+                        </li>
+                    </ul>
+                </li>
+            `;
+    }
+
+    if (sectionKey === 'certificate') {
+      return `
+                <li class="re-resume-done" id="resume-item-${item.id}">
+                    <div class="re-resume-done__box">
+                        <div class="re-resume-done__inner">
+                            <div class="re-resume-done__box--tit">${item.name || ''}</div>
+                            <div class="re-resume-done__box--date">${item.issuer || ''}</div>
+                        </div>
+                        <div class="re-resume-done__box--btn">
+                            <button type="button" class="re-resume__item-edit-btn"><span class="re-resume-done__box--edit"></span></button>
+                            <button type="button" class="re-resume__item-delete-btn"><span class="re-resume-done__box--close"></span></button>
+                        </div>
+                    </div>
+                    <div class="re-resume-done__bottom">${item.summary || ''}</div>
+                </li>
+            `;
+    }
+
+    if (sectionKey === 'activity') {
+      return `
+                <li class="re-resume-done" id="resume-item-${item.id}">
+                    <div class="re-resume-done__box">
+                        <div class="re-resume-done__inner">
+                            <div class="re-resume-done__box--tit">${item.title || ''}</div>
+                        </div>
+                        <div class="re-resume-done__box--btn">
+                            <button type="button" class="re-resume__item-edit-btn"><span class="re-resume-done__box--edit"></span></button>
+                            <button type="button" class="re-resume__item-delete-btn"><span class="re-resume-done__box--close"></span></button>
+                        </div>
+                    </div>
+                    <div class="re-resume-done__box--date">${item.period || ''}</div>
+
+                    <div class="re-resume-done__bottom">${item.description || ''}</div>
+                </li>
+            `;
+    }
+
+    if (sectionKey === 'introduction') {
+      return `
+                <li class="re-resume-done" id="resume-item-${item.id}">
+                    <div class="re-resume-done__box">
+                        <div class="re-resume-done__box--tit">${item.title || ''}</div>
+                        <div class="re-resume-done__box--btn">
+                            <button type="button" class="re-resume__item-edit-btn"><span class="re-resume-done__box--edit"></span></button>
+                            <button type="button" class="re-resume__item-delete-btn"><span class="re-resume-done__box--close"></span></button>
+                        </div>
+                    </div>
+                    <div class="re-resume-done__bottom">${item.content || ''}</div>
+                </li>
+            `;
+    }
+
+    if (sectionKey === 'hopeWork') {
+      return `
+                <li class="re-resume-done" id="resume-item-${item.id}">
+                    <div class="re-resume-done__box">
+                        <div class="re-resume-done__inner">
+                            <div class="re-resume-done__box--tit">${item.title || '희망 근무 조건 작성 내역'}</div>
+                        </div>
+                        <div class="re-resume-done__box--btn">
+                            <button type="button" class="re-resume__item-edit-btn"><span class="re-resume-done__box--edit"></span></button>
+                        </div>
+                    </div>
+                    <div class="re-resume-done__hope">
+                        <div class="re-resume-done__hope--inner">
+                            <div class="re-resume-done__hope--tit">근무지역</div>
+                            <div>${item.workArea || ''}</div>
+                        </div>
+                        <div class="re-resume-done__hope--inner">
+                            <div class="re-resume-done__hope--tit">직종</div>
+                            <div>${item.jobType || ''}</div>
+                        </div>
+                        <div class="re-resume-done__hope--inner">
+                            <div class="re-resume-done__hope--tit">근무형태</div>
+                            <div>${item.workType || ''}</div>
+                        </div>
+                        <div class="re-resume-done__hope--inner">
+                            <div class="re-resume-done__hope--tit">희망연봉</div>
+                            <div>${item.salary || ''}</div>
+                        </div>
+                    </div>
+                </li>
+            `;
+    }
+
+    return '';
+  }
+
+  function fn_setResumeItemId() {
+    $.each(g_resumeData, function (sectionKey, list) {
+      if (!$.isArray(list)) {
+        return true;
+      }
+
+      $.each(list, function (_, item) {
+        item.id = item.id || fn_makeItemId(sectionKey);
+      });
+    });
+  }
+
+  function fn_makeItemId(sectionKey) {
+    return sectionKey + '-' + new Date().getTime() + '-' + Math.floor(Math.random() * 1000);
+  }
+
+  function fn_getResumeItem(sectionKey, itemId) {
+    let list = g_resumeData[sectionKey] || [];
+    let result = null;
+
+    $.each(list, function (_, item) {
+      if (String(item.id) === String(itemId)) {
+        result = item;
+        return false;
+      }
+    });
+
+    return result;
+  }
+
+  function fn_getSectionFormData(sectionKey) {
+    let $form = $('#resume-section-' + sectionKey).find('.re-resume__add-list');
+    let $inputs = $form.find('input[type="text"]');
+    let $selects = $form.find('select');
+    let $textarea = $form.find('textarea');
+
+    if (sectionKey === 'education') {
+      return {
+        schoolName: fn_getValue($inputs.eq(0), '학교명'),
+        startDate: fn_getValue($inputs.eq(1), ''),
+        status: fn_getSelectText($selects.eq(0), ''),
+        endDate: fn_getValue($inputs.eq(2), ''),
+        currentStatus: fn_getSelectText($selects.eq(1), ''),
+        schoolType: fn_getSelectText($selects.eq(2), ''),
+        location: fn_getValue($inputs.eq(3), ''),
+        majorType: fn_getSelectText($selects.eq(3), ''),
+        majorName: fn_getValue($inputs.eq(4), ''),
+        degree: fn_getSelectText($selects.eq(4), ''),
+        score: fn_getValue($inputs.eq(5), ''),
+        totalScore: fn_getValue($inputs.eq(6), ''),
+        summary: fn_makeSummary([
+          fn_makePeriod($inputs.eq(1).val(), $inputs.eq(2).val(), '2010.03 ~ 2013.02'),
+          fn_getSelectText($selects.eq(1), '졸업'),
+          fn_getSelectText($selects.eq(3), '인문학계열')
+        ])
+      };
+    }
+
+    if (sectionKey === 'career') {
+      let careerJobType = fn_getCareerJobTypeValue($form);
+
+      return {
+        isNew: $form.find('.mo-add-condition__check input').eq(0).is(':checked'),
+        isCareer: $form.find('.mo-add-condition__check input').eq(1).is(':checked'),
+        isWorking: $form.find('.mo-add-condition__check input').eq(2).is(':checked'),
+        companyName: fn_getValue($inputs.eq(0), '회사명'),
+        jobType: careerJobType,
+        department: fn_getValue($inputs.eq(1), '근무 부서'),
+        workType: fn_getSelectText($selects.eq(0), '정규직'),
+        startDate: fn_getValue($inputs.eq(2), ''),
+        endDate: fn_getValue($inputs.eq(3), ''),
+        period: fn_makePeriod($inputs.eq(2).val(), $inputs.eq(3).val(), '2018.01 ~ 2019.01 | 1년'),
+        summary: fn_makeSummary([
+          careerJobType,
+          fn_getValue($inputs.eq(1), '근무 부서'),
+          fn_getSelectText($selects.eq(0), '정규직')
+        ]),
+        description: fn_getValue($textarea.eq(0), '업무내용을 자세히 입력해주세요'),
+        salaryValue: fn_getValue($inputs.eq(4), '0000'),
+        salary: fn_getValue($inputs.eq(4), '0000') + ' 만원',
+        workArea: fn_getSelectText($selects.eq(1), '서울'),
+        leaveReason: fn_getSelectText($selects.eq(2), '업직종 전환')
+      };
+    }
+
+    if (sectionKey === 'certificate') {
+      return {
+        name: fn_getValue($inputs.eq(0), '자격증명'),
+        issuer: fn_getValue($inputs.eq(1), '발행처'),
+        acquiredDate: fn_getValue($inputs.eq(2), ''),
+        passType: fn_getSelectText($selects.eq(0), '최종합격'),
+        summary: fn_makeSummary([
+          fn_getSelectText($selects.eq(0), '최종합격'),
+          fn_formatMonth($inputs.eq(2).val(), '2025.11')
+        ])
+      };
+    }
+
+    if (sectionKey === 'activity') {
+      return {
+        title: fn_getValue($inputs.eq(0), '과정명'),
+        organization: fn_getValue($inputs.eq(1), '교육기관'),
+        startDate: fn_getValue($inputs.eq(2), ''),
+        endDate: fn_getValue($inputs.eq(3), ''),
+        period: fn_makePeriod($inputs.eq(2).val(), $inputs.eq(3).val(), '2018.01 ~ 2019.01'),
+        description: fn_getValue($textarea.eq(0), '교육내용을 자세히 입력해주세요')
+      };
+    }
+
+    if (sectionKey === 'introduction') {
+      return {
+        title: fn_getValue($inputs.eq(0), '제목'),
+        content: fn_getValue($textarea.eq(0), '내용을 입력해주세요')
+      };
+    }
+
+    if (sectionKey === 'hopeWork') {
+      let workAreaList = fn_getListArray($form.find('.re-resume-add__here').eq(0).find('li > div'));
+      let jobTypeList = fn_getListArray($form.find('.re-resume-add__here').eq(1).find('li > div'));
+      let workTypeList = fn_getCheckedArray($form.find('.mo-add-condition__check input:checked'));
+      let isSalaryPrivate = $form.find('.re-resume-add__label input[type="checkbox"]').is(':checked');
+
+      return {
+        title: '희망 근무 조건 작성 내역',
+        workAreaList: workAreaList,
+        workArea: workAreaList.length ? workAreaList.join(', ') : '서울>전지역, 경기>전지역',
+        jobTypeList: jobTypeList,
+        jobType: jobTypeList.length ? jobTypeList.join(', ') : '의료/간호 직무 > 간호조무사, 의료/간호 직무 > 간호사, 돌봄 직무 > 요양보호사, 복지/운영 직무 > 사회복지사',
+        workTypeList: workTypeList,
+        workType: workTypeList.length ? workTypeList.join(', ') : '정규직, 프리랜서, 파견직',
+        isSalaryPrivate: isSalaryPrivate,
+        salary: isSalaryPrivate
+            ? '협의 후 결정'
+            : fn_getSelectText($selects.last(), '4,000 ~ 5000만원')
+      };
+    }
+
+    return {};
+  }
+
+  function fn_setSectionFormData(sectionKey, item) {
+    let $form = $('#resume-section-' + sectionKey).find('.re-resume__add-list');
+    let $inputs = $form.find('input[type="text"]');
+    let $selects = $form.find('select');
+    let $textarea = $form.find('textarea');
+
+    if (!item) {
+      return;
+    }
+
+    if (sectionKey === 'education') {
+      $inputs.eq(0).val(item.schoolName || '');
+      $inputs.eq(1).val(item.startDate || '');
+      $inputs.eq(2).val(item.endDate || '');
+      $inputs.eq(3).val(item.location || '');
+      $inputs.eq(4).val(item.majorName || '');
+      $inputs.eq(5).val(item.score || '');
+      $inputs.eq(6).val(item.totalScore || '');
+
+      fn_setSelectText($selects.eq(0), item.status);
+      fn_setSelectText($selects.eq(1), item.currentStatus);
+      fn_setSelectText($selects.eq(2), item.schoolType);
+      fn_setSelectText($selects.eq(3), item.majorType);
+      fn_setSelectText($selects.eq(4), item.degree);
+      return;
+    }
+
+    if (sectionKey === 'career') {
+      let $checks = $form.find('.mo-add-condition__check input');
+
+      $checks.eq(0).prop('checked', !!item.isNew);
+      $checks.eq(1).prop('checked', !!item.isCareer);
+      $checks.eq(2).prop('checked', !!item.isWorking);
+      $inputs.eq(0).val(item.companyName || '');
+      $inputs.eq(1).val(item.department || '');
+      $inputs.eq(2).val(item.startDate || '');
+      $inputs.eq(3).val(item.endDate || '');
+      $inputs.eq(4).val(item.salaryValue || '');
+      $textarea.eq(0).val(item.description || '');
+      fn_setCareerJobTypeValue($form, item.jobType || '');
+
+      fn_setSelectText($selects.eq(0), item.workType);
+      fn_setSelectText($selects.eq(1), item.workArea);
+      fn_setSelectText($selects.eq(2), item.leaveReason);
+      return;
+    }
+
+    if (sectionKey === 'certificate') {
+      $inputs.eq(0).val(item.name || '');
+      $inputs.eq(1).val(item.issuer || '');
+      $inputs.eq(2).val(item.acquiredDate || '');
+      fn_setSelectText($selects.eq(0), item.passType);
+      return;
+    }
+
+    if (sectionKey === 'activity') {
+      $inputs.eq(0).val(item.title || '');
+      $inputs.eq(1).val(item.organization || '');
+      $inputs.eq(2).val(item.startDate || '');
+      $inputs.eq(3).val(item.endDate || '');
+      $textarea.eq(0).val(item.description || '');
+      return;
+    }
+
+    if (sectionKey === 'introduction') {
+      $inputs.eq(0).val(item.title || '');
+      $textarea.eq(0).val(item.content || '');
+      return;
+    }
+
+    if (sectionKey === 'hopeWork') {
+      fn_renderSelectList($form.find('.re-resume-add__here').eq(0), item.workAreaList || []);
+      fn_renderSelectList($form.find('.re-resume-add__here').eq(1), item.jobTypeList || []);
+      $form.find('#hope-work-jobtype-input').val('');
+      fn_setCheckedValues($form.find('.mo-add-condition__check input'), item.workTypeList || []);
+      $form.find('.re-resume-add__label input[type="checkbox"]').prop('checked', !!item.isSalaryPrivate);
+      fn_setSelectText($selects.last(), item.salary);
+    }
+  }
+
+  function fn_resetSectionForm(sectionKey) {
+    let $form = $('#resume-section-' + sectionKey).find('.re-resume__add-list');
+
+    $form.find('input[type="text"]').val('');
+    $form.find('textarea').val('');
+    $form.find('input[type="checkbox"]').prop('checked', false);
+    $form.find('select').each(function () {
+      $(this).prop('selectedIndex', 0);
+    });
+
+    if (sectionKey === 'hopeWork') {
+      fn_renderSelectList($form.find('.re-resume-add__here').eq(0), []);
+      fn_renderSelectList($form.find('.re-resume-add__here').eq(1), []);
+    }
+
+    if (sectionKey === 'career') {
+      fn_setCareerJobTypeValue($form, '');
+    }
+  }
+
+  function fn_updateSectionEditState(sectionKey) {
+    let $section = $('#resume-section-' + sectionKey);
+    let isEditing = !!g_editItemId[sectionKey];
+    let $title = $section.find('.re-resume__section-title').first();
+    let $badge = $title.find('.re-resume__edit-state');
+    let $saveButton = $section.find('.re-resume-add__box--save').first();
+    let $cancelButton = $section.find('.re-resume-add__box--cancel').first();
+
+    if ($section.length === 0) {
+      return;
+    }
+
+    if ($badge.length === 0 && $title.length) {
+      $badge = $('<span class="re-resume__edit-state">수정 중</span>');
+      $title.append($badge);
+    }
+
+    $section.toggleClass('is-editing', isEditing);
+    $badge.toggle(isEditing);
+
+    if ($saveButton.length) {
+      $saveButton.text(isEditing ? '수정하기' : '저장');
+    }
+
+    if ($cancelButton.length) {
+      $cancelButton.text(isEditing ? '수정취소' : '취소');
+    }
+  }
+
+  function fn_getCareerJobTypeValue($target) {
+    return fn_normalizeSingleJobType($target.find('.re-resume-add__work-value').val() || '');
+  }
+
+  function fn_setCareerJobTypeValue($target, value) {
+    let selectedValue = fn_normalizeSingleJobType(value || '');
+    let $button = $target.find('.re-resume-add__work--career-jobtype').first();
+    let $label = $button.find('span').first();
+
+    $target.find('.re-resume-add__work-value').val(selectedValue);
+    $button.toggleClass('is-selected', !!selectedValue);
+    $label.text(selectedValue || '직종선택');
+  }
+
+  function fn_normalizeSingleJobType(value) {
+    let valueList = $.map(String(value || '').split(','), function (item) {
+      let text = $.trim(item);
+      return text ? text : null;
+    });
+
+    return valueList[0] || '';
+  }
+
+  function fn_getSectionKey($target) {
+    return ($target.closest('.re-resume__block').attr('id') || '').replace('resume-section-', '');
+  }
+
+  function fn_getValue($target, defaultValue) {
+    let value = $.trim($target.val() || '');
+    return value || defaultValue || '';
+  }
+
+  function fn_getSelectText($target, defaultValue) {
+    let value = $.trim($target.find('option:selected').text() || '');
+
+    if (!value || value.indexOf('선택') > -1 || value.indexOf('상태') > -1) {
+      return defaultValue || '';
+    }
+
+    return value;
+  }
+
+  function fn_makeSummary(list) {
+    let textList = [];
+
+    $.each(list, function (_, item) {
+      if ($.trim(item || '') !== '') {
+        textList.push(item);
+      }
+    });
+
+    return textList.join(' | ');
+  }
+
+  function fn_makePeriod(startDate, endDate, defaultValue) {
+    if (!startDate || !endDate) {
+      return defaultValue || '';
+    }
+
+    return fn_formatMonth(startDate, startDate) + ' ~ ' + fn_formatMonth(endDate, endDate);
+  }
+
+  function fn_formatMonth(value, defaultValue) {
+    let text = $.trim(value || '');
+
+    if (/^\d{6}$/.test(text)) {
+      return text.substring(0, 4) + '.' + text.substring(4, 6);
+    }
+
+    return text || defaultValue || '';
+  }
+
+  function fn_getListArray($targets) {
+    let textList = [];
+
+    $targets.each(function () {
+      let value = $.trim($(this).text());
+
+      if (value) {
+        textList.push(value);
+      }
+    });
+
+    return textList;
+  }
+
+  function fn_getCheckedArray($targets) {
+    let textList = [];
+
+    $targets.each(function () {
+      let value = $.trim($(this).siblings('span').text());
+
+      if (value) {
+        textList.push(value);
+      }
+    });
+
+    return textList;
+  }
+
+  function fn_setSelectText($target, value) {
+    let isSelected = false;
+
+    $target.find('option').each(function () {
+      if ($.trim($(this).text()) === $.trim(value || '')) {
+        $(this).prop('selected', true);
+        isSelected = true;
+        return false;
+      }
+    });
+
+    if (!isSelected) {
+      $target.prop('selectedIndex', 0);
+    }
+  }
+
+  function fn_setCheckedValues($targets, values) {
+    let valueList = values || [];
+
+    $targets.each(function () {
+      let text = $.trim($(this).siblings('span').text());
+      $(this).prop('checked', $.inArray(text, valueList) > -1);
+    });
+  }
+
+  function fn_renderSelectList($target, list) {
+    let article = '';
+
+    $.each(list || [], function (_, item) {
+      article += `
+                <li>
+                    <div>${item}</div>
+                    <button type="button"><span class="re-resume-done__box--close"></span></button>
+                </li>
+            `;
+    });
+
+    $target.empty().append(article);
+  }
+</script>
+</body>
+</html>

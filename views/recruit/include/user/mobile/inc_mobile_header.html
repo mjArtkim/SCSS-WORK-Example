@@ -1,0 +1,60 @@
+<div class="re-mobile-nav">
+  <div class="re-mobile-nav__box">
+    <button type="button" class="re-mobile-nav__btn" aria-label="이전">
+      <svg width="13" height="25" viewBox="0 0 13 25" fill="none" aria-hidden="true">
+        <path
+          d="M12.5537 24.5104C11.9607 25.1632 11.0045 25.1632 10.4115 24.5104L0.354008 13.4392C-0.118004 12.9197 -0.118004 12.0803 0.354008 11.5608L10.4115 0.489608C11.0045 -0.163203 11.9607 -0.163203 12.5537 0.489608C13.1467 1.14242 13.1467 2.19491 12.5537 2.84772L3.79122 12.5067L12.5658 22.1656C13.1467 22.8051 13.1467 23.8709 12.5537 24.5104Z"
+          fill="currentColor"
+        />
+      </svg>
+    </button>
+    <h2 class="menu-h2" th:text="${mobileHeaderTitle}"></h2>
+  </div>
+  <div class="re-mobile-nav__box">
+    <button th:if="${mobileHeaderType == 'allmenu'}" class="notice-panel__setting" type="button" onclick="movePage('/recruit/user/mobileNotice')" >
+      <svg width="21" height="26" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M1 17C0.716667 17 0.479167 16.9042 0.2875 16.7125C0.0958333 16.5208 0 16.2833 0 16C0 15.7167 0.0958333 15.4792 0.2875 15.2875C0.479167 15.0958 0.716667 15 1 15H2V8C2 6.61667 2.41667 5.3875 3.25 4.3125C4.08333 3.2375 5.16667 2.53333 6.5 2.2V1.5C6.5 1.08333 6.64583 0.729167 6.9375 0.4375C7.22917 0.145833 7.58333 0 8 0C8.41667 0 8.77083 0.145833 9.0625 0.4375C9.35417 0.729167 9.5 1.08333 9.5 1.5V2.2C10.8333 2.53333 11.9167 3.2375 12.75 4.3125C13.5833 5.3875 14 6.61667 14 8V15H15C15.2833 15 15.5208 15.0958 15.7125 15.2875C15.9042 15.4792 16 15.7167 16 16C16 16.2833 15.9042 16.5208 15.7125 16.7125C15.5208 16.9042 15.2833 17 15 17H1ZM8 20C7.45 20 6.97917 19.8042 6.5875 19.4125C6.19583 19.0208 6 18.55 6 18H10C10 18.55 9.80417 19.0208 9.4125 19.4125C9.02083 19.8042 8.55 20 8 20ZM4 15H12V8C12 6.9 11.6083 5.95833 10.825 5.175C10.0417 4.39167 9.1 4 8 4C6.9 4 5.95833 4.39167 5.175 5.175C4.39167 5.95833 4 6.9 4 8V15Z" fill="currentColor"/>
+      </svg>
+      <span>알림</span>
+    </button>
+    <div th:hidden="${mobileHeaderType != 'AddCodition' and mobileHeaderType != 'AddCondition'}" >
+      <button type="button" class="notice-panel__setting-flex"onclick="fn_mobileHeaderReset()">
+        <span>초기화</span>
+        <span class="notice-panel__icon reset"></span>
+      </button>
+    </div>
+    <button th:if="${!#strings.isEmpty(mobileHeaderType) and mobileHeaderType != 'usersetting' and mobileHeaderType != 'AddCodition' and mobileHeaderType != 'AddCondition'}" type="button" class="notice-panel__setting" aria-label="설정" th:data-type="${mobileHeaderType}" onclick="fn_movePage(this)">
+      <span class="notice-panel__icon setting"></span>
+      <span>설정</span>
+    </button>
+    <button th:if="${mobileHeaderType == 'usersetting'}" class="notice-panel__setting" type="button" onclick="movePage('/recruit/user/main')" >
+      <span class="notice-panel__icon home"></span>
+      <span>홈</span>
+    </button>
+  </div>
+</div>
+<script th:inline="javascript">
+  $(function () {
+    $(document).off('click.mobileHeaderBack', '.re-mobile-nav__btn').on('click.mobileHeaderBack', '.re-mobile-nav__btn', function () {
+      if (document.referrer && window.history.length > 1) {
+        fn_back();
+        return;
+      }
+      location.href = '/recruit/user/main';
+    });
+  });
+  function fn_movePage(e){
+    let type = $(e).data('type')
+    if(type == 'notice') movePage('/recruit/user/mobileNoticeSetting');
+    if(type == 'allmenu') movePage('/recruit/user/mobileUserSetting');
+  }
+  function fn_mobileHeaderReset() {
+    if (typeof fn_resetAddDetail === 'function') {
+      fn_resetAddDetail();
+      return;
+    }
+    if (typeof fn_resetSearchCondition === 'function') {
+      fn_resetSearchCondition();
+    }
+  }
+</script>

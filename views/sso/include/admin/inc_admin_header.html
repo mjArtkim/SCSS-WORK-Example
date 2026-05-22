@@ -1,0 +1,122 @@
+<div class="loading" hidden="hidden">
+    <div class="loadingBox">
+        <div class="spinnerBox"></div>
+    </div>
+</div>
+<header class="header">
+    <h1>Admin System</h1>
+    <ul class="util">
+        <li>
+            <span class="myInfo" onclick="fn_changeAdminPw();">비밀번호변경</span>
+        </li>
+        <li onclick="fn_logout();">로그아웃</li>
+    </ul>
+    <div id="popLayerPW" class="popOverlay popClose">
+        <div class="popWrap">
+            <div class="popInner">
+                <span class="btnPopClose" onclick="popLayerClose();">닫기</span>
+                <h2>상태변경</h2>
+                <div class="popCnt type3 popGoodsOpt">
+                    <div class="popItemCon">
+                        <div class="goodsColumn">
+                            <h4>기존 비밀번호</h4>
+                            <div class="wdh_full">
+                                <div class="dateBox">
+                                    <div class="calWrap mt10">
+                                        <div class="inpWrap wdh_full">
+                                            <input id="beforePw" type="password" class="popInfo wdh_full">
+                                            <input id="pushSeq" type="hidden">
+                                            <input id="pushType" type="hidden">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="goodsColumn v2">
+                            <h4 class="flexBox">변경할 비밀번호</h4>
+                            <div class="wdh_full">
+                                <div class="inpWrap mt10">
+                                    <div class="inpWrap wdh_full">
+                                        <input id="afterPw" type="password" class="popInfo wdh_full">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="btnWrap">
+                            <button class="btnType btnSize44 btnLineG3" onclick="popLayerClose();">닫기</button>
+                            <button class="btnType btnSize44 btnColorP2" id="pushBtn" onclick="fn_updatePw();">변경</button>
+                        </div>
+                    </div>
+                </div><!-- popCnt -->
+            </div>
+        </div>
+    </div>
+</header>
+
+<script th:inline="javascript">
+    let _idCode = /*[[${session.companyIdCode}]]*/ [];
+    function fn_changeAdminPw() {
+        $('#popLayerPW').removeClass('popClose');
+    }
+
+    function fn_updatePw(){
+        let param = {
+            'pw':$('#beforePw').val().trim(),
+            "newPw":$('#afterPw').val().trim()
+        }
+        if(param.beforePw == ''){
+            confirmModal({'title' : '기존 비밀번호가 입력되지 않았습니다.'});
+            return false;
+        }
+        if(param.afterPw == ''){
+            confirmModal({'title' : '변경할 비밀번호가 입력되지 않았습니다.'});
+            return false;
+        }
+        $.ajax({
+            url : "/sso/admin/ajax/updateAdminPw",
+            data : JSON.stringify(param),
+            type : 'POST',
+            contentType : 'application/json',
+            beforeSend : function(xhr) {
+                $('.loading').show();
+            },
+            success : function(data) {
+                let resultCd = data.resultCd;
+                if(resultCd == 'S'){
+                    confirmModal({'title' : '변경되었습니다.'});
+                    popLayerClose();
+                }else{
+                    confirmModal({'title' : '정보를 정확하게 입력해주세요.'});
+                }
+            },
+            error : function(jqXHR, textStatus, errorThrown) {
+                confirmModal({'title' : '오류발생'});
+            },
+            complete : function (){
+                $('.loading').hide();
+            }
+        })
+    }
+
+    function fn_logout(){
+        confirmModal({'title' : '로그아웃 하시겠습니까?', 'cancelUse':true, 'confirm':function(){
+            alertLayerClose();
+            let param = {}
+            $.ajax({
+                url : "/sso/admin/ajax/logout",
+                data : JSON.stringify(param),
+                type : 'POST',
+                contentType : 'application/json',
+                success : function(data) {
+                    confirmModal({'title' : '로그아웃 되었습니다.', 'confirm':function (){
+                            alertLayerClose();
+                            location.href = '/sso/admin/login';
+                        }});
+                },
+                error : function(jqXHR, textStatus, errorThrown) {
+                    confirmModal({'title' : '오류발생'});
+                }
+            })
+        }});
+    }
+</script>

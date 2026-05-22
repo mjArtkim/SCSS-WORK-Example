@@ -1,0 +1,2132 @@
+@charset "utf-8";
+@use "variables" as *;
+@use "mixins" as *;
+
+.login-page {
+  &__change-user {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-radius: $radius;
+    background-color: #f5f5f5;
+    margin: rem(20) 0;
+    &--btn {
+      @include flex-center(row, rem(5));
+      min-height: rem(50);
+      padding: 0 rem(20);
+      border: 1px solid transparent;
+      border-radius: $radius;
+      color: $color-grey;
+      font-size: rem(16);
+      transition:
+              background-color 0.2s ease,
+              color 0.2s ease,
+              border-color 0.2s ease,
+              box-shadow 0.2s ease,
+              transform 0.12s ease;
+
+      &.is-active,
+      &[aria-selected="true"] {
+        color: $color-main;
+        background-color: $color-white;
+        border: 2px solid $color-main;
+      }
+
+      &:focus-visible {
+        color: $color-main;
+      }
+
+      &:active {
+        color: $color-main;
+        transform: translateY(rem(1));
+      }
+
+      @media (hover: hover) and (pointer: fine) {
+        &:hover {
+          color: $color-main;
+        }
+      }
+    }
+  }
+  &__easy {
+    text-align: center;
+    margin: rem(10) 0 rem(20);
+    color: $color-grey;
+  }
+  .login-form {
+    &__label {
+      margin-top: rem(20);
+    }
+    &__group {
+      display: flex;
+      flex-direction: column;
+      gap: rem(20);
+    }
+    &__box {
+      position: relative;
+      .login-pw-view {
+        position: absolute;
+        right: 10px;
+        bottom: 5px;
+        transform: translateY(-50%);
+
+        .login-from-vis {
+          display: block;
+          width: 22px;
+          height: 20px;
+          background: url('/img/sso/user/icons/visibility_off_icon.svg') no-repeat center center / contain;
+        }
+
+        .login-from-vis .is-visible .login-from-vis {
+          background-image: url('/img/sso/user/icons/visibility_icon.svg')
+        }
+      }
+    }
+    &__input {
+      width: 100%;
+      height: rem(50);
+      border-radius: $radius;
+      border: 1px solid #aaa;
+      padding: 0 rem(20);
+      transition:
+              border-color 0.2s ease,
+              background-color 0.2s ease,
+              color 0.2s ease,
+              box-shadow 0.2s ease;
+      &::placeholder {
+        color: #aaa;
+        font-weight: 300;
+      }
+      &:focus-visible {
+        @include auth-focus-frame($color-text);
+      }
+    }
+    &__assist {
+      position: absolute;
+      right: 0;
+      font-size: rem(12);
+      font-weight: 300;
+      color: $color-main;
+      &--error {
+        color: #d92d20;
+      }
+    }
+
+
+    &__check {
+      display: flex;
+      align-items: center;
+      gap: rem(10);
+      margin: rem(20) 0 rem(30);
+      width: 150px;
+      height: 44px;
+      cursor: pointer;
+      span {
+        color: $color-grey;
+        &:focus-visible {
+          color: $color-main;
+        }
+        &:active {
+          color: $color-main;
+        }
+        @media (hover: hover) and (pointer: fine) {
+          &:hover {
+            color: $color-main;
+          }
+        }
+      }
+      [type="checkbox"] {
+        position: relative;
+        appearance: none;
+        @include size(rem(20), rem(20));
+        border: 1px solid #aaa;
+        border-radius: rem(5);
+        cursor: pointer;
+        transition:
+                border-color 0.2s ease,
+                background-color 0.2s ease,
+                box-shadow 0.2s ease;
+        &:focus-visible {
+          @include btn-focus-frame($color-main, $color-white);
+        }
+        &:active {
+          @include btn-focus-frame($color-main, $color-white);
+        }
+        @media (hover: hover) and (pointer: fine) {
+          &:hover {
+            @include btn-focus-frame($color-main, $color-white);
+          }
+        }
+        &:checked {
+          border: none;
+          background-color: $color-main;
+        }
+        &:checked::after {
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: rem(7);
+          height: rem(12);
+          border: solid #fff;
+          border-width: 0 2px 2px 0;
+          border-radius: rem(1);
+          transform: translate(-50%, -60%) rotate(45deg);
+        }
+        &:checked + span {
+          color: $color-main;
+        }
+      }
+    }
+    &__actions {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: rem(10);
+    }
+    &__submit {
+      @include size(100%, 50px);
+      text-align: center;
+      background-color: $color-main;
+      color: $color-white;
+      border-radius: $radius;
+      &:focus-visible {
+        color: $color-main;
+        background-color: $color-white;
+        border: 2px solid $color-main;
+        box-shadow: $shadow;
+      }
+
+      &:active {
+        color: $color-main;
+        background-color: $color-white;
+        border: 2px solid $color-main;
+        box-shadow: $shadow;
+      }
+
+      @media (hover: hover) and (pointer: fine) {
+        &:hover {
+          color: $color-main;
+          background-color: $color-white;
+          border: 2px solid $color-main;
+          box-shadow: $shadow;
+        }
+      }
+    }
+
+    &__links {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: rem(20);
+      margin-top: rem(30);
+      font-size: rem(15);
+    }
+    &__finds {
+      display: flex;
+      align-items: center;
+      gap: rem(20);
+      flex-wrap: wrap;
+    }
+    &__findbox {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: rem(45);
+      border: 2px solid transparent;
+      border-radius: $radius;
+      color: $color-grey;
+      text-decoration: underline;
+      text-underline-offset: rem(5);
+      &:focus-visible {
+        color: $color-main;
+      }
+      &:active {
+        color: $color-main;
+      }
+      @media (hover: hover) and (pointer: fine) {
+        &:hover {
+          color: $color-main;
+        }
+      }
+    }
+    &__signup {
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      min-height: rem(45);
+      color: $color-grey;
+      font-weight: 600;
+      flex-shrink: 0;
+      &:focus-visible {
+        color: $color-main;
+      }
+      &:active {
+        color: $color-main;
+      }
+      @media (hover: hover) and (pointer: fine) {
+        &:hover {
+          color: $color-main;
+        }
+      }
+    }
+    &__divider {
+      display: flex;
+      align-items: center;
+      gap: rem(20);
+      margin: rem(30) 0;
+      color: $color-grey;
+    }
+    &__divider-line {
+      flex: 1;
+      height: 1px;
+      background-color: $color-grey;
+    }
+    &__divider-text {
+      flex-shrink: 0;
+      line-height: 1;
+    }
+    &__snsbox {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: rem(30);
+      margin-top: rem(10);
+      button {
+        img {
+          border-radius: 50%;
+          &:active {
+            transform: scale(0.95);
+            opacity: 0.85;
+          }
+          &:focus-visible {
+            outline: rem(2) solid rgba($color-main, 0.35);
+            outline-offset: rem(2);
+          }
+          @media (hover: hover) and (pointer: fine) {
+            &:hover {
+              box-shadow: $shadow;
+            }
+          }
+        }
+      }
+    }
+  }
+  &__finger {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &[hidden] {
+      display: none;
+    }
+  }
+  &__fingerbtn {
+    margin: rem(20) 0;
+    height: 44px;
+    color: $color-grey;
+
+    &:focus-visible {
+      color: $color-main;
+    }
+    &:active {
+      color: $color-main;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        color: $color-main;
+      }
+    }
+  }
+  @media screen and (max-width: 767px) {
+  }
+  @media screen and (min-width: 768px) {
+    margin: rem(20) auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    &__wrap {
+      width: 450px;
+      border-radius: $radius;
+      box-shadow: $shadow;
+      padding: rem(30);
+    }
+    &__title {
+      font-size: rem(30);
+      margin-top: 0;
+    }
+  }
+  &__social {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: rem(20);
+  }
+  &__title {
+    padding: rem(30) 0;
+  }
+  &__social-button {
+    display: block;
+    width: rem(50);
+    height: rem(50);
+    padding: 0;
+    border: 0;
+    background: transparent;
+    overflow: hidden;
+    border-radius: 50%;
+    transition:
+      transform 0.2s ease,
+      box-shadow 0.2s ease;
+    &:focus-visible {
+      outline: rem(3) solid rgba($color-main, 0.24);
+      outline-offset: rem(4);
+    }
+
+    &:active {
+      transform: scale(0.985);
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        box-shadow: $shadow;
+      }
+    }
+
+    img {
+      height: rem(50);
+      object-fit: cover;
+    }
+  }
+
+  &__note {
+    width: 100%;
+    height: rem(48);
+    margin: rem(40) 0 0;
+    text-align: center;
+    font-size: rem(14);
+    font-weight: 500;
+    color: $color-grey;
+
+    &:focus-visible {
+      color: $color-main;
+      outline: rem(3) solid rgba($color-main, 0.24);
+      outline-offset: rem(4);
+    }
+
+    &:active {
+      color: $color-main;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        color: $color-main;
+      }
+    }
+  }
+
+  &__finger {
+    display: flex;
+    justify-content: center;
+    margin-top: rem(24);
+
+    &[hidden] {
+      display: none;
+    }
+  }
+
+  &__fingerbtn {
+    min-height: rem(44);
+    color: $color-grey;
+
+    &:focus-visible,
+    &:active {
+      color: $color-main;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        color: $color-main;
+      }
+    }
+  }
+  @media screen and (min-width: 768px) {
+    &__title {
+      padding-top: 0;
+      padding-bottom: rem(10);
+    }
+  }
+}
+.login-input-wrapper {
+  width: 100%;
+  input {
+    width: 100%;
+    height: rem(50);
+    border-radius: $radius;
+    border: 1px solid #ddd;
+    padding: rem(10);
+  }
+}
+// Login Management Page
+.login-management-page {
+  &__provider {
+    display: flex;
+    align-items: center;
+    gap: rem(10);
+    min-width: 0;
+  }
+
+  &__provider-badge {
+    @include flex-center;
+    width: rem(48);
+    height: rem(48);
+    border-radius: 50%;
+    overflow: hidden;
+    flex-shrink: 0;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__provider-text {
+    display: flex;
+    flex-direction: column;
+    gap: rem(5);
+    min-width: 0;
+
+    span {
+      font-size: rem(14);
+      color: $color-grey;
+    }
+  }
+
+  &__link-button {
+    flex-shrink: 0;
+    color: $color-grey;
+    height: rem(50);
+
+    &:focus-visible,
+    &:active {
+      color: $color-main;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        color: $color-main;
+      }
+    }
+  }
+}
+
+// account settings page
+.account-settings-page {
+  &__inline {
+    display: flex;
+    gap: rem(10);
+  }
+
+  &__input--phone {
+    flex: 1;
+    min-width: 0;
+  }
+}
+
+// My Info Page
+.my-info-page {
+  &__box {
+    height: 450px;
+    padding-top: rem(30);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  &__menu-item {
+    width: 100%;
+    padding: rem(10);
+    color: $color-text;
+    font-size: rem(18);
+    font-weight: 500;
+
+    &:focus-visible {
+      outline: 2px solid rgba($color-main, 0.28);
+      outline-offset: 2px;
+    }
+
+    &:focus-visible,
+    &:active {
+      color: $color-main;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        color: $color-main;
+      }
+
+      span:hover {
+        color: $color-main;
+      }
+    }
+  }
+
+  &__menu-icon {
+    font-size: rem(20);
+    color: $color-light-grey;
+  }
+
+  &__leave {
+    height: rem(50);
+    color: $color-light-grey;
+    font-size: rem(14);
+
+    &:focus-visible,
+    &:active {
+      outline: none;
+      text-decoration: underline;
+      text-underline-offset: rem(3);
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        color: $color-main;
+      }
+    }
+  }
+}
+
+// Easy Login Page
+.easy-login-page {
+  &__setting-label {
+    font-size: rem(16);
+    font-weight: 500;
+    color: $color-text;
+    letter-spacing: -0.02em;
+  }
+
+  &__switch {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+
+    input {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      cursor: pointer;
+
+      &:focus-visible + .easy-login-page__switch-track {
+        box-shadow: 0 0 0 rem(3) rgba($color-main, 0.14);
+      }
+    }
+  }
+
+  &__switch-track {
+    position: relative;
+    display: inline-block;
+    width: rem(84);
+    height: rem(44);
+    border: 1px solid #ddd;
+    border-radius: rem(999);
+    background: #d8d8d8;
+
+    &::after {
+      content: "";
+      position: absolute;
+      top: rem(4);
+      left: rem(4);
+      width: rem(34);
+      height: rem(34);
+      border-radius: 50%;
+      background: $color-white;
+      box-shadow: 0 rem(2) rem(8) rgba($color-black, 0.14);
+      transition: transform 0.2s ease;
+    }
+  }
+
+  &__switch input:checked + &__switch-track {
+    border-color: $color-main;
+    background: $color-main;
+
+    &::after {
+      transform: translateX(rem(39));
+    }
+  }
+}
+// join
+
+
+.join-page {
+  width: 100%;
+  min-height: 100%;
+
+  &__wrap {
+    position: relative;
+    width: 100%;
+    padding: 0 rem(30);
+    background: $color-white;
+  }
+
+  &__back {
+    display: none;
+    position: absolute;
+    top: rem(40);
+    left: rem(30);
+    z-index: 5;
+    color: $color-grey;
+
+    &:focus-visible {
+      outline: 2px solid rgba($color-main, 0.28);
+      outline-offset: 2px;
+      border-radius: 50%;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        color: $color-main;
+      }
+    }
+  }
+
+  &__back-icon {
+    font-size: rem(24);
+  }
+
+  .join-form {
+    width: 100%;
+    min-height: 100dvh;
+
+    &__panel {
+      display: none;
+      min-height: 100dvh;
+      padding-top: 80px;
+      flex-direction: column;
+      &.is-active {
+        display: flex;
+      }
+
+      &.is-sheet-background {
+        opacity: 0.35;
+        pointer-events: none;
+        user-select: none;
+      }
+    }
+
+    &__body {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+    }
+
+    &__header {
+      display: flex;
+      flex-direction: column;
+      gap: rem(30);
+    }
+
+    &__title {
+      font-size: rem(24);
+      font-weight: 700;
+      color: $color-text;
+      word-break: keep-all;
+    }
+
+    &__description {
+      color: $color-grey;
+    }
+
+    &__mascot {
+      width: min(100%, rem(188));
+      object-fit: contain;
+    }
+
+    &__figure {
+      display: flex;
+      flex: 1;
+      align-items: center;
+      justify-content: center;
+      padding: rem(30) 0 rem(20);
+    }
+
+    &__field-list {
+      display: flex;
+      flex-direction: column;
+      gap: rem(12);
+      margin-top: rem(22);
+    }
+
+    &__field {
+      display: flex;
+      flex-direction: column;
+      gap: rem(6);
+    }
+
+    &__label {
+      font-size: rem(11);
+      font-weight: 500;
+      color: #666;
+    }
+
+    &__input,
+    &__select,
+    &__identity-input {
+      @include size(100%, rem(48));
+      border: 1px solid #cfcfcf;
+      border-radius: rem(8);
+      background: $color-white;
+      padding: 0 rem(14);
+      font-size: 16px;
+      color: $color-text;
+      cursor: pointer;
+      transition:
+              border-color 0.2s ease,
+              box-shadow 0.2s ease;
+
+      &::placeholder {
+        color: #aaa;
+      }
+
+      &:focus-visible {
+        border-color: $color-main;
+        box-shadow: 0 0 0 rem(3) rgba($color-main, 0.12);
+        outline: none;
+      }
+
+      &[readonly] {
+        color: $color-grey;
+        background: $color-white;
+      }
+    }
+
+    &__select-wrap {
+      position: relative;
+      display: block;
+    }
+
+    &__select {
+      appearance: none;
+      padding-right: rem(44);
+    }
+
+    &__select-icon {
+      position: absolute;
+      top: 50%;
+      right: rem(16);
+      color: $color-grey;
+      font-size: rem(18);
+      transform: translateY(-50%) rotate(90deg);
+      pointer-events: none;
+    }
+
+    &__text-button {
+      padding: rem(6) 0 0;
+      font-size: rem(14);
+      color: $color-grey;
+      text-decoration: underline;
+      text-underline-offset: rem(2);
+      align-self: center;
+
+      &:focus-visible,
+      &:active {
+        color: $color-main;
+      }
+      @media (hover: hover) and (pointer: fine) {
+        &:hover {
+          color: $color-main;
+        }
+      }
+    }
+
+    &__identity-box {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto auto;
+      align-items: center;
+      gap: rem(10);
+      min-height: rem(48);
+      padding: 0 rem(12) 0 rem(14);
+      border: 1px solid #ccc;
+      border-radius: rem(8);
+      background: $color-white;
+    }
+
+    &__identity-input {
+      height: auto;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+
+      &:focus-visible {
+        border: 0;
+        box-shadow: none;
+      }
+    }
+
+    &__identity-divider {
+      width: rem(10);
+      height: rem(2);
+      border-radius: rem(999);
+      background: $color-light-grey;
+    }
+
+    &__gender {
+      display: flex;
+      align-items: center;
+      gap: rem(10);
+      min-width: 0;
+    }
+
+    &__gender-digit {
+      width: rem(18);
+      min-width: rem(18);
+      height: auto;
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
+      text-align: center;
+      font-size: rem(18);
+      font-weight: 600;
+      letter-spacing: 0;
+      color: $color-black;
+
+      &:focus-visible {
+        border: 0;
+        box-shadow: none;
+        outline: none;
+      }
+    }
+
+    &__gender-mask {
+      display: flex;
+      align-items: center;
+      gap: rem(6);
+    }
+
+    &__gender-dot {
+      @include size(rem(8), rem(8));
+      border-radius: 50%;
+      background: $color-black;
+      flex-shrink: 0;
+    }
+
+    &__footer {
+      margin-top: auto;
+      padding-top: rem(30);
+      padding-bottom: calc(env(safe-area-inset-bottom, 0px) + rem(30));
+    }
+
+    &__button {
+      @include size(100%, rem(50));
+      border-radius: $radius;
+      font-size: rem(16);
+      font-weight: 500;
+      transition:
+              background-color 0.2s ease,
+              color 0.2s ease,
+              transform 0.2s ease,
+              box-shadow 0.2s ease;
+
+      &--primary {
+        background: $color-main;
+        color: $color-white;
+      }
+
+      &:disabled {
+        background: $color-light-grey;
+        color: rgba($color-white, 0.88);
+        cursor: not-allowed;
+      }
+
+      &:not(:disabled):focus-visible {
+        box-shadow: 0 0 0 rem(3) rgba($color-main, 0.18);
+        outline: none;
+      }
+
+      &:not(:disabled):active {
+        transform: translateY(1px);
+      }
+      &:active {
+        transform: scale(0.985);
+      }
+
+      @media (hover: hover) and (pointer: fine) {
+        &:hover {
+          box-shadow: 0 rem(10) rem(24) rgba(15, 23, 42, 0.12);
+        }
+      }
+    }
+
+    &__sheet {
+      position: fixed;
+      inset: 0;
+      z-index: 15;
+      display: none;
+
+      &.is-active {
+        display: block;
+      }
+    }
+
+    &__sheet-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba($color-black, 0.46);
+    }
+
+    &__sheet-dialog {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      width: 100%;
+      padding: rem(20) rem(20) calc(env(safe-area-inset-bottom, 0px) + rem(12));
+      border-radius: $radius $radius 0 0;
+      background: $color-white;
+      transform: translateX(-50%);
+      box-shadow: 0 rem(-12) rem(24) rgba($color-black, 0.12);
+    }
+
+    &__sheet-title {
+      font-size: rem(20);
+      font-weight: 700;
+    }
+
+    &__sheet-list {
+      display: flex;
+      flex-direction: column;
+      gap: rem(10);
+    }
+
+    &__agreement-card {
+      display: flex;
+      flex-direction: column;
+      gap: rem(10);
+      padding-top: rem(14);
+      border-top: 1px solid $color-light-grey;
+    }
+
+    &__agreement {
+      display: flex;
+      align-items: center;
+      height: rem(50);
+      gap: rem(10);
+      color: $color-grey;
+      cursor: pointer;
+
+      em {
+        color: $color-main;
+        font-style: normal;
+      }
+
+      input[type="checkbox"] {
+        position: relative;
+        flex-shrink: 0;
+        appearance: none;
+        @include size(rem(22), rem(22));
+        margin-top: rem(1);
+        border: 1px solid $color-light-grey;
+        border-radius: 50%;
+        background: $color-white;
+        cursor: pointer;
+
+        &:checked {
+          border-color: $color-main;
+          background: $color-main;
+        }
+
+        &:checked::after {
+          content: "";
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          width: rem(6);
+          height: rem(10);
+          border: solid $color-white;
+          border-width: 0 2px 2px 0;
+          transform: translate(-50%, -60%) rotate(45deg);
+        }
+
+        &:focus-visible {
+          outline: 2px solid rgba($color-main, 0.22);
+          outline-offset: 2px;
+        }
+      }
+    }
+
+    &__detail-button {
+      @include size(100%, rem(50));
+      border: 1px solid rgba($color-main, 0.75);
+      border-radius: $radius;
+      background: $color-white;
+      color: $color-main;
+      font-weight: 500;
+      transition:
+              transform 0.2s ease,
+              box-shadow 0.2s ease;
+      &:focus-visible {
+        box-shadow: 0 0 0 rem(3) rgba($color-main, 0.12);
+        outline: none;
+      }
+      &:active {
+        transform: scale(0.985);
+      }
+
+      @media (hover: hover) and (pointer: fine) {
+        &:hover {
+          box-shadow: 0 rem(10) rem(24) rgba(15, 23, 42, 0.12);
+        }
+      }
+    }
+
+    &__button--confirm {
+      margin-top: rem(18);
+    }
+
+    &__code-box {
+      position: relative;
+    }
+
+    &__input--code {
+      padding-right: rem(72);
+    }
+
+    &__timer {
+      position: absolute;
+      top: 50%;
+      right: rem(14);
+      font-size: rem(12);
+      font-weight: 500;
+      color: $color-grey;
+      transform: translateY(-50%);
+    }
+
+    &__panel--complete {
+      justify-content: center;
+      padding-top: rem(40);
+      padding-bottom: rem(24);
+    }
+
+    &__complete {
+      @include flex-center(column, rem(14));
+      flex: 1;
+      text-align: center;
+    }
+
+    &__complete-title {
+      font-size: rem(30);
+      font-weight: 700;
+      line-height: 1.3;
+    }
+
+    &__complete-text {
+      font-size: rem(14);
+      color: $color-grey;
+    }
+
+    &__complete-image {
+      width: min(100%, rem(180));
+      margin: rem(10) auto rem(34);
+      object-fit: contain;
+    }
+
+    &__link-button {
+      font-size: rem(14);
+      color: $color-grey;
+      text-decoration: underline;
+      text-underline-offset: rem(2);
+      margin-bottom: rem(10);
+
+      &:focus-visible,
+      &:active {
+        color: $color-main;
+      }
+      @media (hover: hover) and (pointer: fine) {
+        &:hover {
+          color: $color-main;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 768px) {
+  .join-page {
+    min-height: auto;
+    padding-top: rem(90);
+    &__wrap {
+      max-width: rem(420);
+      padding: rem(30);
+      margin: auto;
+      border-radius: $radius;
+      background-color: $color-white;
+      box-shadow: $login-shadow;
+    }
+
+    .join-form {
+      min-height: 100%;
+
+      &__panel {
+        min-height: 100%;
+        padding-top: 50px;
+      }
+
+      &__sheet-dialog {
+        width: min(100%, rem(420));
+      }
+      &__footer {
+        padding-top: rem(50);
+        padding-bottom: calc(env(safe-area-inset-bottom, 0px) + rem(0));
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .app-shell--join {
+    .site-header, {
+      display: none;
+    }
+  }
+  .join-page {
+    min-height: 100dvh;
+    &__wrap {
+      max-width: none;
+      min-height: 100dvh;
+    }
+    &__back {
+      @include flex-center;
+    }
+  }
+}
+
+//findinfo
+.find-info-page {
+  min-height: 100%;
+  padding: rem(90) rem(30) rem(30);
+
+  &__wrap {
+    display: flex;
+    flex-direction: column;
+    gap: rem(24);
+  }
+
+  &__header {
+    display: flex;
+    flex-direction: column;
+    gap: rem(10);
+  }
+
+  &__eyebrow {
+    font-size: rem(12);
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: $color-main;
+  }
+
+  &__title {
+    font-size: rem(24);
+    font-weight: 700;
+    color: $color-text;
+  }
+
+  &__description {
+    font-size: rem(14);
+    line-height: 1.7;
+    color: $color-grey;
+    word-break: keep-all;
+  }
+}
+
+.find-info-tabs {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  padding: rem(6);
+  border-radius:$radius;
+  background-color: #f5f5f5;
+
+  &__button {
+    @include flex-center(row, rem(8));
+    min-height: rem(50);
+    padding: 0 rem(20);
+    border: 1px solid transparent;
+    border-radius: $radius;
+    color: $color-grey;
+    font-size: rem(16);
+    transition:
+            background-color 0.2s ease,
+            color 0.2s ease,
+            border-color 0.2s ease,
+            box-shadow 0.2s ease,
+            transform 0.12s ease;
+
+    &.is-active,
+    &[aria-selected="true"] {
+      color: $color-main;
+      background-color: $color-white;
+      border: 2px solid $color-main;
+    }
+
+    &:focus-visible {
+      color: $color-main;
+    }
+
+    &:active {
+      color: $color-main;
+      transform: translateY(rem(1));
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        color: $color-main;
+      }
+    }
+  }
+}
+
+.find-info-panel {
+  display: block;
+
+  &[hidden] {
+    display: none;
+  }
+}
+
+.find-info-form {
+  display: flex;
+  flex-direction: column;
+  gap: rem(10);
+
+  &__intro {
+    display: flex;
+    flex-direction: column;
+    gap: rem(8);
+  }
+
+  &__title {
+    font-size: rem(20);
+    font-weight: 700;
+    color: $color-text;
+  }
+
+  &__copy {
+    font-size: rem(14);
+    line-height: 1.7;
+    color: $color-grey;
+    word-break: keep-all;
+  }
+
+  &__group {
+    display: flex;
+    flex-direction: column;
+    gap: rem(10);
+    padding: rem(10) 0;
+  }
+
+  &__label {
+    font-size: rem(15);
+    font-weight: 600;
+    color: $color-text;
+  }
+
+  &__box {
+    position: relative;
+  }
+
+  &__input {
+    width: 100%;
+    height: rem(54);
+    padding: 0 rem(18);
+    border: 1px solid #d3d3d3;
+    border-radius: $radius;
+    background-color: $color-white;
+    color: $color-text;
+    transition:
+            border-color 0.2s ease,
+            background-color 0.2s ease,
+            color 0.2s ease,
+            box-shadow 0.2s ease;
+
+    &::placeholder {
+      color: #a6a6a6;
+      font-weight: 300;
+    }
+
+    &:focus-visible {
+      @include auth-focus-frame($color-text);
+    }
+
+    &[aria-invalid="true"] {
+      border-color: $color-main;
+    }
+  }
+
+  &__assist {
+    margin-top: rem(8);
+    font-size: rem(12);
+    line-height: 1.5;
+    color: $color-grey;
+
+    &--error {
+      color: $color-main;
+    }
+  }
+
+  &__feedback {
+    padding: rem(14) rem(16);
+    border-radius: $radius;
+    background-color: rgba($color-main, 0.08);
+    color: $color-main;
+    font-size: rem(13);
+    line-height: 1.6;
+    word-break: keep-all;
+  }
+
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    gap: rem(10);
+  }
+
+  &__submit {
+    @include size(100%, rem(54));
+    border-radius: $radius;
+    background-color: $color-main;
+    color: $color-white;
+    font-size: rem(16);
+    font-weight: 600;
+    @include btn-focusable;
+  }
+
+  &__link {
+    @include flex-center;
+    @include size(100%, rem(50));
+    border: 1px solid rgba($color-main, 0.45);
+    border-radius: $radius;
+    color: $color-main;
+    font-size: rem(15);
+    font-weight: 600;
+    @include auth-focusable;
+
+    &:focus-visible {
+      @include auth-focus-frame;
+    }
+
+    &:active {
+      @include auth-focus-frame;
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        @include auth-focus-frame;
+      }
+    }
+  }
+}
+@media screen and (min-width: 768px) {
+  .find-info-page {
+    width: min(100%, rem(560));
+    padding: 0;
+
+    &__wrap {
+      width: 100%;
+      padding: rem(36);
+      border-radius: rem(24);
+      background-color: rgba($color-white, 0.98);
+      box-shadow: $shadow;
+    }
+
+    &__description {
+      font-size: rem(15);
+    }
+  }
+
+  .find-info-form {
+    &__actions {
+      flex-direction: row;
+    }
+
+    &__submit,
+    &__link {
+      width: 50%;
+    }
+  }
+}
+
+//personal
+.personal-page {
+  height: 100%;
+  padding: rem(100) rem(30) rem(30);
+  @media screen and (min-width: 768px) {
+    margin: rem(10) auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  h2 {
+    font-size: rem(20);
+    font-weight: 600;
+  }
+  ul {
+    li {
+      margin: rem(5);
+    }
+  }
+}
+.re-login {
+  margin: auto;
+  padding: rem(30);
+  &__inner {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: rem(20);
+    height: 100%;
+  }
+  &__tit {
+    font-size: rem(30);
+    font-weight: 700;
+    padding-bottom: rem(30);
+  }
+  &__depth {
+    width: 100%;
+    max-width: 450px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: rem(10);
+    &--tit {
+      font-size: rem(20);
+      font-weight: 500;
+    }
+    &--box {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: rem(20);
+    }
+    &--btn {
+      min-width: 340px;
+      display: grid;
+      grid-template-columns: 30% 70%;
+      align-items: center;
+      -webkit-border-radius: $radius;
+      -moz-border-radius: $radius;
+      border-radius: $radius;
+      box-shadow: $shadow;
+      padding: rem(30);
+      gap: rem(30);
+      border: 1px solid #eee;
+      @media (hover: hover) and (pointer: fine) {
+        &:hover {
+          border-color: $color-mainlight;
+        }
+      }
+    }
+    &--txt {
+      text-align: left;
+      line-height: 1.8;
+      h3 {
+        padding-bottom: 10px;
+      }
+    }
+    &--user, &--company {
+      width: rem(90);
+      height: rem(90);
+      border-radius: 50%;
+      background-repeat: no-repeat;
+      background-position: 50% 50%;
+      background-size: cover;
+    }
+    &--user {
+      background-image: url('/img/recruit/personal.png');
+    }
+    &--company {
+      background-image: url('/img/recruit/company.png');
+    }
+  }
+  &__group {
+    width: 100%;
+    &--lable {width: 100%;}
+  }
+  &__from {
+    position: relative;
+    width: 100%;
+    margin-top: rem(10);
+    &--id {
+      width: 100%;
+      height: 50px;
+      border: 1px solid #ddd;
+      padding: 0 rem(50) 0 rem(15);
+      -webkit-border-radius: $radius;
+      -moz-border-radius: $radius;
+      border-radius: $radius;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      &[aria-invalid='true'] {
+        border-color: $color-main;
+        box-shadow: 0 0 0 rem(3) rgba($color-main, 0.12);
+      }
+    }
+    &--btn {
+      position: absolute;
+      right: rem(8);
+      top: rem(25);
+      width: rem(40);
+      height: rem(50);
+      transform: translateY(-50%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      @media (hover: hover) and (pointer: fine) {
+        &:hover {
+          .re-login__from--vis {background-image: url('/img/recruit/user/icon/visibility_icon.svg')}
+        }
+      }
+      &.is-visible {
+        .re-login__from--vis {background-image: url('/img/recruit/user/icon/visibility_icon.svg')}
+      }
+      &:focus-visible {
+        outline: rem(3) solid rgba($color-main, 0.2);
+        outline-offset: rem(2);
+        border-radius: rem(8);
+      }
+    }
+    &--vis {
+      display: block;
+      width: 22px;
+      height: 20px;
+      background: url('/img/recruit/user/icon/visibility_off_icon.svg') no-repeat center center / contain;
+    }
+    &--assist {
+      min-height: rem(18);
+      margin-top: rem(8);
+      padding: 0 rem(4);
+      font-size: rem(13);
+      line-height: 1.4;
+      color: $color-grey;
+      visibility: hidden;
+      &.is-visible {
+        visibility: visible;
+      }
+      &.is-error {
+        color: $color-main;
+      }
+    }
+  }
+  &__options {
+    width: 100%;
+    .re-login__options {
+      &--check {
+        display: inline-flex;
+        align-items: center;
+        gap: rem(10);
+        cursor: pointer;
+        user-select: none;
+        input[type='checkbox'] {
+          appearance: none;
+          -webkit-appearance: none;
+          width: rem(20);
+          height: rem(20);
+          border: rem(2) solid #c9d3e0;
+          border-radius: rem(6);
+          background: #fff;
+          position: relative;
+          transition: all 0.2s ease;
+          cursor: pointer;
+          flex-shrink: 0;
+          @media (hover: hover) and (pointer: fine) {
+            &:hover {
+              border-color: $color-main;
+            }
+          }
+          &:checked {
+            background: $color-main;
+            border-color: $color-main;
+          }
+          &:checked::after {
+            content: '';
+            position: absolute;
+            left: rem(6);
+            top: rem(2.5);
+            width: rem(5);
+            height: rem(10);
+            border: solid #fff;
+            border-width: 0 rem(2) rem(2) 0;
+            transform: rotate(45deg);
+          }
+          &:focus-visible {
+            outline: rem(3) solid rgba(0, 123, 255, 0.2);
+            outline-offset: rem(2);
+          }
+        }
+        span {
+          font-size: rem(16);
+          color: $color-grey;
+        }
+      }
+    }
+  }
+  &__actions {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: rem(20);
+    &--submit, &--signup {
+      height: 50px;
+      border-radius: $radius;
+      font-size: rem(16);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      will-change: transform;
+    }
+    &--submit {
+      background-color: $color-main;
+      color: $color-white;
+    }
+    &--signup {
+      border: 1px solid $color-main;
+      color: $color-main;
+      background-color: $color-white;
+    }
+    @media (hover: hover) and (pointer: fine) {
+      &--submit,
+      &--signup {
+        &:hover {
+          transform: translateY(rem(-2));
+          box-shadow: $shadow;
+        }
+        &:active {
+          transform: translateY(rem(1)) scale(0.99);
+          box-shadow: none;
+        }
+      }
+    }
+  }
+  &__feedback {
+    width: 100%;
+    min-height: rem(20);
+    font-size: rem(14);
+    line-height: 1.4;
+    color: $color-grey;
+    visibility: hidden;
+    &.is-visible {
+      visibility: visible;
+    }
+    &.is-error {
+      color: $color-main;
+    }
+  }
+  &__find {
+    display: flex;
+    align-items: center;
+    gap: rem(30);
+    button {
+      color: $color-light-grey;
+      text-decoration: underline;
+      line-height: 1.8;
+      @media (hover: hover) and (pointer: fine) {
+        &:hover {
+          color: $color-mainlight;
+        }
+      }
+    }
+  }
+  .re-join {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: rem(40);
+    &__steps {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr) auto minmax(0, 1fr);
+      align-items: center;
+      gap: rem(20);
+      padding: rem(20);
+      border-radius: $radius;
+      background-color: #eee;
+    }
+    &__step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: rem(10);
+      color: #ddd;
+      text-align: center;
+      &--active {
+        color: $color-main;
+        .re-join__step-icon {
+          background-color: $color-main;
+          &.re-join__step-icon--terms {
+            background-image: url('/img/recruit/user/icon/assignment_icon.svg');
+          }
+          &.re-join__step-icon--profile {
+            background-image: url('/img/recruit/user/icon/edit_square_active_icon.svg');
+          }
+        }
+      }
+    }
+    &__step-icon {
+      width: rem(38);
+      height: rem(38);
+      border-radius: 50%;
+      background-color: $color-white;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: rem(20) rem(20);
+      flex-shrink: 0;
+      &--terms {
+        background-image: url('/img/recruit/user/icon/assignment_active_icon.svg');
+      }
+      &--profile {
+        background-image: url('/img/recruit/user/icon/edit_square_icon.svg');
+      }
+      &--done {
+        background-image: url('/img/recruit/user/icon/check_icon.svg');
+      }
+    }
+    &__step-label {
+      font-size: rem(14);
+      white-space: nowrap;
+      font-weight: 400;
+    }
+    &__step-arrow {
+      width: rem(20);
+      height: rem(20);
+      border-top: rem(2) solid $color-light-grey;
+      border-right: rem(2) solid $color-light-grey;
+      transform: rotate(45deg);
+      justify-self: center;
+    }
+    &__terms {
+      display: flex;
+      flex-direction: column;
+      gap: rem(20);
+    }
+    &__item {
+      display: flex;
+      flex-direction: column;
+      gap: rem(30);
+    }
+    &__check {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: rem(18);
+      cursor: pointer;
+      &--headline {
+        .re-join__check-copy {
+          font-size: rem(16);
+          font-weight: 700;
+        }
+      }
+    }
+    &__check-input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+      &:checked + .re-join__check-icon {
+        border-color: $color-main;
+        background-color: $color-main;
+        &::after {
+          opacity: 1;
+          transform: translate(-50%, -58%) rotate(45deg) scale(1);
+        }
+      }
+    }
+    &__check-icon {
+      position: relative;
+      width: rem(22);
+      height: rem(22);
+      border: rem(1) solid $color-light-grey;
+      border-radius: 50%;
+      background-color: $color-white;
+      flex-shrink: 0;
+      transition: border-color 0.2s ease, background-color 0.2s ease;
+      &::after {
+        content: '';
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: rem(6);
+        height: rem(12);
+        border-right: rem(2) solid $color-white;
+        border-bottom: rem(2) solid $color-white;
+        opacity: 0;
+        transform: translate(-50%, -58%) rotate(45deg) scale(0.7);
+        transition: opacity 0.2s ease, transform 0.2s ease;
+      }
+    }
+    &__check-copy {
+      font-size: rem(16);
+      font-weight: 400;
+      color: $color-text;
+      em {
+        color: $color-main;
+        font-style: normal;
+        font-weight: 400;
+      }
+    }
+    &__divider {
+      width: 100%;
+      height: rem(1);
+      background-color: #cccccc;
+    }
+    &__view,
+    &__submit {
+      width: 100%;
+      height: rem(50);
+      border-radius: $radius;
+      font-size: rem(16);
+      font-weight: 400;
+    }
+    &__view {
+      border: 1px solid $color-main;
+      color: $color-main;
+      background-color: $color-white;
+      @media (hover: hover) and (pointer: fine) {
+        &:hover {
+          border-color: $color-mainlight;
+          color: $color-mainlight;
+        }
+      }
+    }
+    &__submit {
+      background-color: #707070;
+      color: $color-white;
+      transition: background-color 0.2s ease, transform 0.18s ease, box-shadow 0.18s ease;
+      &:disabled {
+        cursor: not-allowed;
+      }
+      &:not(:disabled) {
+        background-color: $color-main;
+      }
+      @media (hover: hover) and (pointer: fine) {
+        &:not(:disabled):hover {
+          transform: translateY(rem(-2));
+          box-shadow: $shadow;
+        }
+        &:not(:disabled):active {
+          transform: translateY(rem(1)) scale(0.99);
+          box-shadow: none;
+        }
+      }
+    }
+  }
+  .re-company-join {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: rem(20);
+    &__required {
+      padding-right: rem(4);
+      color: $color-main;
+      font-size: rem(16);
+      text-align: right;
+      span {
+        font-weight: 700;
+      }
+    }
+    &__form {
+      display: flex;
+      flex-direction: column;
+      gap: rem(20);
+      padding-top: rem(20);
+      border-top: rem(1) solid #cccccc;
+    }
+    &__title {
+      font-size: rem(20);
+      font-weight: 600;
+      color: $color-text;
+    }
+    &__group {
+      padding-top: rem(18);
+      border-top: rem(1) solid #d9d9d9;
+      &:first-of-type {
+        padding-top: 0;
+        border-top: 0;
+      }
+    }
+    &__label {
+      display: inline-block;
+      color: $color-text;
+      font-size: rem(16);
+      font-weight: 500;
+      margin-bottom: rem(10);
+      span {
+        color: $color-main;
+      }
+    }
+    &__hint {
+      display: inline-block;
+      margin-left: rem(6);
+      color: $color-grey;
+      font-size: rem(13);
+    }
+    &__row,
+    &__password {
+      margin-top: rem(10);
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: rem(10);
+      align-items: center;
+    }
+    &__password {
+      position: relative;
+      grid-template-columns: minmax(0, 1fr);
+    }
+    &__input {
+      width: 100%;
+      height: rem(50);
+      padding: 0 rem(18);
+      border: rem(1) solid #ddd;
+      border-radius: $radius;
+      background-color: $color-white;
+      color: $color-text;
+      font-size: rem(16);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      &::placeholder {
+        color: $color-light-grey;
+      }
+      &:focus {
+        outline: none;
+        border-color: $color-main;
+        box-shadow: 0 0 0 rem(3) rgba($color-main, 0.08);
+      }
+      &--password {
+        margin-top: 0;
+        padding-right: rem(54);
+      }
+    }
+    &__disinput{
+      width: 100%;
+      height: rem(50);
+      padding: 0 rem(18);
+      border: rem(1) solid #ddd;
+      border-radius: $radius;
+      background-color: #f5f5f5;
+      color: $color-grey;
+      font-size: rem(16);
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    }
+    &__row &__input {
+      margin-top: 0;
+    }
+    &__action {
+      min-width: rem(118);
+      height: rem(50);
+      padding: 0 rem(20);
+      border-radius: $radius;
+      background-color: #b5b5b5;
+      color: $color-white;
+      font-size: rem(16);
+      font-weight: 400;
+      transition: background-color 0.2s ease, transform 0.18s ease;
+      &:disabled {
+        cursor: not-allowed;
+      }
+      &:not(:disabled) {
+        background-color: $color-main;
+      }
+      &--point {
+        background-color: $color-main;
+      }
+    }
+    &__toggle {
+      position: absolute;
+      right: rem(14);
+      top: 50%;
+      width: rem(28);
+      height: rem(28);
+      transform: translateY(-50%);
+      background: url('/img/recruit/user/icon/visibility_off_icon.svg') no-repeat center / contain;
+      &.is-visible {
+        background-image: url('/img/recruit/user/icon/visibility_icon.svg');
+      }
+    }
+    &__upload {
+      width: 100%;
+      height: rem(50);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: rem(10);
+      margin-top: rem(10);
+      padding: 0 rem(20);
+      border: rem(1) solid $color-main;
+      border-radius: $radius;
+      background-color: $color-white;
+      color: $color-grey;
+      font-size: rem(16);
+      font-weight: 400;
+      &.is-filled {
+        color: $color-text;
+      }
+    }
+    &__upload-icon {
+      width: rem(18);
+      height: rem(18);
+      background: url('/img/recruit/user/icon/file_icon.svg') no-repeat center / contain;
+      flex-shrink: 0;
+    }
+    &__actions {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: rem(15);
+      margin-top: rem(6);
+    }
+    &__actions-btn {
+      height: rem(50);
+      border-radius: $radius;
+      color: $color-white;
+      font-size: rem(16);
+      font-weight: 400;
+      &--prev {
+        background-color: $color-light-grey;
+      }
+      &--submit {
+        background-color: $color-main;
+      }
+    }
+    &__zipcode {
+      margin: rem(10) 0;
+    }
+  }
+  &__done {
+    width: 100%;
+    max-width: 450px;
+    min-height: rem(400);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: rem(50);
+    &--tit {
+      padding-top: rem(20);
+      font-size: rem(24);
+      font-weight: 700;
+      text-align: center;
+    }
+    text-align: center;
+    &--txt {}
+    &--img {
+      width: 250px;
+      height: 250px;
+      img {
+        width: 100%;
+      }
+    }
+    &--btn {
+      width: 100%;
+      max-width: rem(220);
+      height: rem(50);
+      background-color: $color-main;
+      color: $color-white;
+      border-radius: $radius;
+    }
+  }
+}

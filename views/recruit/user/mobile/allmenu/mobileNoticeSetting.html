@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+  <head>
+    <div th:replace="~{|recruit/include/user/inc_head|}"></div>
+  </head>
+  <body>
+    <section>
+      <div class="header-box">
+        <div th:replace="~{|recruit/include/user/mobile/inc_mobile_header|}"></div>
+      </div>
+    </section>
+    <section>
+      <ul class="mo-notice-style">
+        <li class="mo-notice-style__box" role="listitem">
+          <div class="mo-notice-style__tit">
+            <div class="mo-notice-style__setting-tit">입사지원 접수/열람/발표알림</div>
+            <div class="mo-notice-style__setting-txt">입사지원한 이력서가 접수/열람될 경우 알림</div>
+          </div>
+          <label class="mo-notice-style__switch">
+            <span class="sound-only">입사지원 접수/열람/발표알림</span>
+            <input type="checkbox"/>
+            <span class="mo-notice-style__switch-track" aria-hidden="true"></span>
+          </label>
+        </li>
+        <li class="mo-notice-style__box" role="listitem">
+          <div class="mo-notice-style__tit">
+            <div class="mo-notice-style__setting-tit">나의 검색 알림</div>
+            <div class="mo-notice-style__setting-txt">검색조건 저장 시 조건에 맞는 채용정보 알림</div>
+          </div>
+          <label class="mo-notice-style__switch">
+            <span class="sound-only">나의 검색 알림</span>
+            <input type="checkbox"/>
+            <span class="mo-notice-style__switch-track" aria-hidden="true"></span>
+          </label>
+        </li>
+        <li class="mo-notice-style__box" role="listitem">
+          <div class="mo-notice-style__tit">
+            <div class="mo-notice-style__setting-tit">즐겨찾기 채용정보 알림</div>
+            <div class="mo-notice-style__setting-txt">즐겨찾기한 채용정보 관련 알림</div>
+          </div>
+          <label class="mo-notice-style__switch">
+            <span class="sound-only">즐겨찾기 채용정보 알림</span>
+            <input type="checkbox"/>
+            <span class="mo-notice-style__switch-track" aria-hidden="true"></span>
+          </label>
+        </li>
+        <li class="mo-notice-style__box" role="listitem">
+          <div class="mo-notice-style__tit">
+            <div class="mo-notice-style__setting-tit">활동알림</div>
+          </div>
+          <label class="mo-notice-style__switch">
+            <span class="sound-only">활동 알림</span>
+            <input type="checkbox"/>
+            <span class="mo-notice-style__switch-track" aria-hidden="true"></span>
+          </label>
+        </li>
+        <li class="mo-notice-style__box" role="listitem">
+          <div class="mo-notice-style__tit">
+            <div class="mo-notice-style__setting-tit">메시지 알림</div>
+            <div class="mo-notice-style__setting-txt">돌보미 구인구직 메시지, 읽지 않은 메시지</div>
+          </div>
+          <label class="mo-notice-style__switch">
+            <span class="sound-only">메시지 알림</span>
+            <input type="checkbox"/>
+            <span class="mo-notice-style__switch-track" aria-hidden="true"></span>
+          </label>
+        </li>
+        <li class="mo-notice-style__box" role="listitem">
+          <div class="mo-notice-style__tit">
+            <div class="mo-notice-style__setting-tit">공지/혜택, 이벤트 알림</div>
+            <div class="mo-notice-style__setting-txt">구인구직, 마케팅 정보 등 소식 알림</div>
+          </div>
+          <label class="mo-notice-style__switch">
+            <span class="sound-only">공지/혜택, 이벤트 알림</span>
+            <input type="checkbox"/>
+            <span class="mo-notice-style__switch-track" aria-hidden="true"></span>
+          </label>
+        </li>
+        <li class="mo-notice-style__box" role="listitem">
+          <div class="mo-notice-style__tit">
+            <div class="mo-notice-style__setting-tit">소리알림</div>
+            <div class="mo-notice-style__setting-txt">알림 도착 시 소리로 알림</div>
+          </div>
+          <label class="mo-notice-style__switch">
+            <span class="sound-only">소리 알림</span>
+            <input type="checkbox"/>
+            <span class="mo-notice-style__switch-track" aria-hidden="true"></span>
+          </label>
+        </li>
+      </ul>
+    </section>
+  </body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="~{|sso/include/user/inc_head|}"></div>
+</head>
+<body data-aos-easing="ease-out" data-aos-duration="700" data-aos-delay="0">
+<div class="app-shell app-shell--auth app-shell--quick-actions-hidden app-shell--join">
+    <div class="app-body">
+        <div class="site-header header-box wrap join-header-wrap">
+            <div th:replace="~{|sso/include/user/inc_header|}"></div>
+        </div>
+        <main class="site-content" aria-live="polite">
+            <section class="join-page wrap">
+                <div class="join-page__wrap">
+                    <button class="join-page__back" type="button" data-role="join-back" aria-label="이전 단계로 이동" onclick="goBack()">
+                        <span class="icon-svg join-page__back-icon" data-icon-name="chevron_left" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/chevron_left_icon.svg');"></span>
+                    </button>
+                    <form class="join-form" data-form="join" data-step="5">
+                        <section class="join-form__panel join-form__panel--intro is-active" data-step-panel="5">
+                            <div class="join-form__body">
+                                <header class="join-form__header">
+                                    <h2 class="join-form__title">빈 항목을 입력해주세요</h2>
+                                </header>
+                                <div class="join-form__field-list">
+
+                                    <label class="join-form__field">
+                                        <span class="join-form__label">이름</span>
+                                        <input id="input-name" class="join-form__input" type="text" data-sync-field="name" th:value="${userName}" readonly/>
+                                    </label>
+                                    <label class="join-form__field">
+                                        <span class="join-form__label">휴대폰 번호</span>
+                                        <input class="join-form__input" type="tel" inputmode="numeric" data-sync-field="phone" data-format="phone" maxlength="15" th:value="${celNo}" readonly/>
+                                    </label>
+                                    <label class="join-form__field">
+                                        <span class="join-form__label">이메일</span>
+                                        <input id="input-email" class="join-form__input input-email" type="email" data-sync-field="email" placeholder="example@mail.com"/>
+                                        <span class="error-msg" style="color: red; display: none;"></span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="join-form__footer">
+                                <button class="join-form__button join-form__button--primary join-form__button--confirm" type="button" data-role="join-next" onclick="handleJoinNext()">
+                                    확인
+                                </button>
+                            </div>
+                        </section>
+                    </form>
+                </div>
+            </section>
+        </main>
+    </div>
+    <div class="footer-box">
+        <div th:replace="~{|sso/include/user/inc_footer|}"></div>
+    </div>
+</div>
+</body>
+<script th:inline="javascript">
+
+    $(document).ready(function () {
+        $(".join-header-wrap").show();
+        const userAgent = window.navigator.userAgent.toLowerCase();
+        const isApp = userAgent.indexOf('android') > -1 || userAgent.indexOf('iphone') > -1;
+
+        if (isApp) {
+            $(".join-header-wrap").hide();
+        }
+
+        $('[data-sync-field="email"]').on('blur', function () {
+            const emailVal = $(this).val().trim();
+            const result = validateEmail(emailVal);
+            displayEmailError(result.isValid, result.msg);
+        });
+    });
+
+    let isSubmitting = false;
+
+    function handleJoinNext() {
+        if (isSubmitting) return;
+        const nameValue = $("#input-name").val().trim();
+        const emailValue = $("#input-email").val().trim();
+        const param = {
+            "loginType": "ci",
+            "userName": nameValue,
+            "email": emailValue
+        };
+
+        $.ajax({
+            url: '/join/result',
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(param),
+            success: function (resp) {
+                if (resp.resultCd === 'S') {
+                    location.href = '/user/myInfo/joinResultSuccess'
+                } else if (resp.resultCd === 'DUP') {
+                    openAlert("중복 회원가입", resp.resultMsg, '확인', false, '', () => {
+                        location.href = '/login'
+                    });
+                } else if (resp.resultCd === 'F') {
+                    openAlert("가입 오류", resp.resultMsg, '확인', false, '', () => {
+                        location.href = '/main';
+                    });
+                } else if (resp.resultCd === 'LF') {
+                    openAlert("로그인 오류", resp.resultMsg, '확인', false, '', () => {
+                        location.href = '/login';
+                    });
+                } else {
+                    location.href = '/error';
+                }
+            },
+            error: function (err) {
+                console.error("에러 발생", err);
+                alert("통신 중 오류가 발생했습니다.");
+            },
+            complete: function () {
+                isSubmitting = false;
+            }
+        });
+    }
+</script>

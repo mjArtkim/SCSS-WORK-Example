@@ -1,0 +1,82 @@
+<div id="mobile-bnb-quick" class="mobile-bnb-quick" inert>
+  <button type="button" class="mobile-bnb-quick__btn" onclick="goBack()" aria-label="뒤로가기">
+    <span class="mobile-bnb-quick__icon mobile-bnb-quick__icon--back" aria-hidden="true"></span>
+    <span class="mobile-bnb-quick__label">뒤로</span>
+  </button>
+  <button type="button" class="mobile-bnb-quick__btn" onclick="fn_mobileScrollTop()" aria-label="맨 위로 이동">
+    <span class="mobile-bnb-quick__icon mobile-bnb-quick__icon--top" aria-hidden="true"></span>
+    <span class="mobile-bnb-quick__label">TOP</span>
+  </button>
+</div>
+<ul class="mobile-bnb">
+  <li class="mobile-bnb__list">
+    <button class="mobile-bnb__btn" type="button" onclick="movePage('/recruit/user/main')"  th:classappend="${activeMenu == 'home'} ? ' is-active'">
+      <span class="mobile-bnb__icon home"></span>
+      <span class="mobile-bnb__txt">홈</span>
+    </button>
+  </li>
+<!--  <li class="mobile-bnb__list">-->
+<!--    <button class="mobile-bnb__btn" type="button" onclick="movePage('/recruit/user/mobileInfo?type=region')"  th:classappend="${activeMenu == 'info'} ? ' is-active'">-->
+<!--      <span class="mobile-bnb__icon info"></span>-->
+<!--      <span class="mobile-bnb__txt">채용</span>-->
+<!--    </button>-->
+<!--  </li>-->
+  <li class="mobile-bnb__list">
+    <button class="mobile-bnb__btn" type="button" onclick="movePage('/recruit/user/companyStep')"  th:classappend="${activeMenu == 'companystep'} ? ' is-active'">
+      <span class="mobile-bnb__icon info"></span>
+      <span class="mobile-bnb__txt">공고등록</span>
+    </button>
+  </li>
+  <li class="mobile-bnb__list">
+    <button type="button" class="mobile-bnb__btn">
+      <span class="mobile-bnb__icon group"></span>
+      <span class="mobile-bnb__txt">커뮤니티</span>
+    </button>
+  </li>
+  <li class="mobile-bnb__list">
+    <button type="button" class="mobile-bnb__btn" onclick="movePage('/recruit/user/notice')">
+      <span class="mobile-bnb__icon anounce"></span>
+      <span class="mobile-bnb__txt">공지사항</span>
+    </button>
+  </li>
+  <li class="mobile-bnb__list">
+    <button type="button" class="mobile-bnb__btn" onclick="movePage('/recruit/user/mobileMy')" th:classappend="${activeMenu == 'my'} ? ' is-active'">
+      <span class="mobile-bnb__icon my"></span>
+      <span class="mobile-bnb__txt">MY</span>
+    </button>
+  </li>
+</ul>
+<script th:inline="javascript">
+  function fn_mobileScrollTop() {
+    $('html, body').stop().animate({
+      scrollTop: 0
+    }, 300);
+  }
+
+  $(function () {
+    const $quick = $('#mobile-bnb-quick');
+    const visibleScrollTop = 120;
+
+    if (!$quick.length) {
+      return;
+    }
+    const fn_toggleMobileBnbQuick = function () {
+      const isVisible = $(window).scrollTop() > visibleScrollTop;
+      const activeElement = document.activeElement;
+
+      if (!isVisible && activeElement && $quick.has(activeElement).length) {
+        activeElement.blur();
+      }
+
+      $quick.toggleClass('is-visible', isVisible);
+
+      if (isVisible) {
+        $quick.removeAttr('inert');
+      } else {
+        $quick.attr('inert', '');
+      }
+    };
+    $(window).off('scroll.mobileBnbQuick').on('scroll.mobileBnbQuick', fn_toggleMobileBnbQuick);
+    fn_toggleMobileBnbQuick();
+  });
+</script>

@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="~{|sso/include/user/inc_head|}"></div>
+</head>
+<body>
+<div class="app-shell">
+    <div class="app-body">
+        <div class="site-header header-box wrap">
+            <div th:replace="~{|sso/include/user/inc_header|}"></div>
+        </div>
+        <main class="site-content" aria-live="polite">
+            <section class="news-page page-section">
+                <div class="wrap news-page__wrap">
+                    <div class="news-page__top">
+                        <div class="news-page__header">
+                            <h2 class="news-page__title" data-news-title></h2>
+                        </div>
+                        <div class="news-page__tabs" data-news-tabs aria-label="게시판 분류"></div>
+                        <template data-news-tab-template>
+                            <button class="news-page__tab" type="button" data-tab="" data-seq="" aria-pressed="false">
+                                <span data-news-tab-label></span>
+                            </button>
+                        </template>
+                    </div>
+
+                    <div class="news-page__search-box" onsubmit="return false;">
+                        <form class="news-page__search">
+                            <label class="sound-only" for="searchType">카테고리 선택</label>
+                            <div class="news-page__search-category">
+                                <select class="news-page__search-select" id="searchType" name="news-category"></select>
+                                <span class="icon-svg news-page__search-select-icon" data-icon-name="chevron_right" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/chevron_right_icon.svg')"></span>
+                            </div>
+                            <span class="news-page__search-divider" aria-hidden="true"></span>
+                            <label class="sound-only" for="searchKeyword">게시물 검색</label>
+                            <input class="news-page__search-input" id="searchKeyword" type="search" name="news-search" placeholder="제목을 입력하세요." autocomplete="off"/>
+                            <button class="news-page__search-button" type="button" aria-label="검색" onclick="clickSearchBtn()">
+                                <span class="icon-svg news-page__search-icon" data-icon-name="search" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/search_icon.svg')"></span>
+                            </button>
+                        </form>
+                        <div class="news-page__date-box">
+                            <div class="news-page__date-types">
+                                <select id="dayType" class="news-page__types-select">
+                                    <option value="all">전체</option>
+                                    <option value="1w">1주일</option>
+                                    <option value="1m">1개월</option>
+                                    <option value="3m">3개월</option>
+                                    <option value="6m">6개월</option>
+                                    <option value="1y">1년</option>
+                                </select>
+                                <span class="icon-svg news-page__types-icon" data-icon-name="chevron_right" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/chevron_right_icon.svg')"></span>
+                            </div>
+                            <div class="news-page__date-filter">
+                                <label class="news-page__date-field" for="str_date">
+                                    <span class="sound-only">시작일</span>
+                                    <input id="str_date" class="news-page__date-input" type="date" data-news-date-start/>
+                                </label>
+                                <span class="news-page__date-separator">~</span>
+                                <label class="news-page__date-field" for="end_date">
+                                    <span class="sound-only">종료일</span>
+                                    <input id="end_date" class="news-page__date-input" type="date" data-news-date-end/>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="news-page__reset-box">
+                            <button class="news-page__reset" onclick="clickResetBtn()">
+                                <div class="reset-icon"></div>
+                                <div>검색 초기화</div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="news-page__list" data-news-list data-aos="fade-up" data-aos-delay="200" data-aos-easing="ease-in-sine"></div>
+
+                    <nav class="news-page__pagination" data-news-pagination aria-label="게시물 페이지 이동"></nav>
+                </div>
+            </section>
+
+            <template data-news-card-template>
+                <article class="news-card">
+                    <div class="news-card__link" data-news-card-link onclick="newsDetail(this)" style="cursor: pointer" data-seq="">
+                        <div class="news-card__category" data-news-card-category></div>
+                        <h3 class="news-card__title" data-news-card-title></h3>
+                        <p class="news-card__summary" data-news-card-summary></p>
+                        <div class="news-card__meta">
+                            <span class="news-card__date" data-news-card-date></span>
+                            <span class="news-card__more">
+                                        <button type="button" class="btn-detail-view" data-seq="">자세히 보기</button>
+                                    </span>
+                        </div>
+                    </div>
+                </article>
+            </template>
+
+            <template data-news-empty-template>
+                <div class="news-card--empty">
+                    <p class="news-card__empty">해당 분류에 등록된 게시물이 없습니다.</p>
+                </div>
+            </template>
+        </main>
+    </div>
+    <div class="footer-box">
+        <div th:replace="~{|sso/include/user/inc_footer|}"></div>
+    </div>
+</div>
+</body>
+<script th:inline="javascript">
+
+    const itemsPerPage = 6;
+    let total = 0;
+    let currentPage = 1;
+    let selectCategory = '';
+
+    function clickResetBtn() {
+        $("#searchKeyword").val('');
+        $('#dayType').val('all');
+        setPeriodDates('all');
+        currentPage = 1;
+        getNoticeData({type: 'init'});
+    }
+
+    function clickSearchBtn() {
+        const searchMap = {};
+        const searchKeyword = $("#searchKeyword").val();
+        const selectedCode = $("#searchType").val();
+        let targetSeq = $(`.news-page__tab[data-tab="${selectedCode}"]`).data('seq');
+        if (!selectedCode) {
+            targetSeq = $('[data-tab].is-active').data('seq');
+        }
+
+        if(!searchKeyword){
+            /*getNoticeData({type:'init'})*/
+            getNoticeData({
+                type: 'clickTab',
+                categorySeq: targetSeq
+            });
+        }else{
+            searchMap.type = "search";
+            searchMap.searchType = "title";
+            searchMap.searchKeyword = searchKeyword;
+            searchMap.categorySeq = targetSeq;
+            getNoticeData(searchMap);
+        }
+    }
+
+    function setPeriodDates(period){
+        const today = new Date();
+        let startDate = new Date();
+        if (period === 'all') {
+            $('#str_date').val('').prop('disabled', true);
+            $('#end_date').val('').prop('disabled', true);
+            $('#str_date, #end_date').prop('disabled', false);
+            return;
+        }
+
+        $('#str_date, #end_date').prop('disabled', false);
+
+        switch (period) {
+            case '1w':
+                startDate.setDate(today.getDate() - 7);
+                break;
+            case '1m':
+                startDate.setMonth(today.getMonth() - 1);
+                break;
+            case '3m':
+                startDate.setMonth(today.getMonth() - 3);
+                break;
+            case '6m':
+                startDate.setMonth(today.getMonth() - 6);
+                break;
+            case '1y':
+                startDate.setFullYear(today.getFullYear() - 1);
+                break;
+        }
+
+        const strDateStr = formatDateInput(startDate);
+        const endDateStr = formatDateInput(today);
+
+        $('#str_date').val(strDateStr);
+        $('#end_date').val(endDateStr);
+
+        getNoticeData({
+            type: 'search',
+            strDate: strDateStr,
+            endDate: endDateStr
+        });
+    }
+
+    function renderPagination(){
+        const container = document.querySelector('[data-news-pagination]');
+        if (!container) return;
+        container.innerHTML = '';
+        const totalPages = Math.ceil(total / itemsPerPage);
+        /* if (totalPages <= 1) return;*/
+
+        const isPrevDisabled = (currentPage === 1);
+        let html = `<button class="news-page__page-button news-page__page-button--arrow ${isPrevDisabled ? 'is-disabled' : ''}"
+                        type="button" data-news-page="${currentPage - 1}" ${isPrevDisabled ? 'disabled' : ''}>
+                        <span class="icon-svg news-page__page-icon" style="--icon-url: url('/img/sso/user/icons/chevron_left_icon.svg');"></span>
+                    </button>`;
+
+        for (let i = 1; i <= totalPages; i++) {
+            const isActive = (i === currentPage);
+            html += `<button class="news-page__page-button news-page__page-button--number ${isActive ? 'is-active' : ''}"
+                             type="button" data-news-page="${i}" ${isActive ? 'aria-current="page"' : ''}>${i}</button>`;
+        }
+
+        const isNextDisabled = (currentPage === totalPages);
+        html += `<button class="news-page__page-button news-page__page-button--arrow ${isNextDisabled ? 'is-disabled' : ''}"
+                        type="button" data-news-page="${currentPage + 1}" ${isNextDisabled ? 'disabled' : ''}>
+                        <span class="icon-svg news-page__page-icon" style="--icon-url: url('/img/sso/user/icons/chevron_right_icon.svg');"></span>
+                    </button>`;
+
+        container.innerHTML = html;
+
+        container.querySelectorAll('.news-page__page-button').forEach((btn) => {
+            btn.addEventListener('click', function () {
+                if (this.classList.contains('is-active') || this.hasAttribute('disabled')) return;
+                currentPage = parseInt(this.getAttribute('data-news-page'));
+                getNoticeData({type:'init'})
+                window.scrollTo({top: 0, behavior: 'smooth'});
+            });
+        });
+    }
+
+    function renderList(list){
+        const container = document.querySelector('[data-news-list]');
+        const cardTemplate = document.querySelector('[data-news-card-template]');
+
+        if (!container || !cardTemplate) return;
+
+        container.innerHTML = '';
+
+        const start = (currentPage - 1) * itemsPerPage;
+        const end = start + itemsPerPage;
+        const pagedList = list.slice(start, end);
+
+        if (pagedList.length === 0) {
+            const empty = document.querySelector('[data-news-empty-template]');
+            if (empty) container.appendChild(empty.content.cloneNode(true));
+            document.querySelector('[data-news-pagination]').innerHTML = '';
+            return;
+        }
+
+        pagedList.forEach((item) => {
+            const clone = cardTemplate.content.cloneNode(true);
+            const summaryEl = clone.querySelector('[data-news-card-summary]');
+
+            const rawContent = item.content || '';
+            const plainText = rawContent.replace(/<[^>]*>?/gm, '').trim();
+            const hasImage = /<img[^>]*>/g.test(rawContent);
+
+            let summaryText =
+                plainText || (hasImage ? '🖼️ 사진이 포함된 게시글입니다.' : '내용이 없는 게시글입니다.');
+
+            summaryEl.textContent = summaryText.length > 15
+                ? summaryText.substring(0, 15) + "..."
+                : summaryText;
+            summaryEl.title = summaryText;
+
+            clone.querySelector('[data-news-card-category]').textContent = item.category_name;
+            clone.querySelector('[data-news-card-title]').textContent = item.title;
+
+            const detailBtn = clone.querySelector('.btn-detail-view');
+            if (detailBtn) {
+                detailBtn.setAttribute('data-seq', item.seq);
+            }
+
+            const cardLink = clone.querySelector('[data-news-card-link]');
+            if (cardLink) {
+                cardLink.setAttribute('data-seq', item.seq); // 이 부분이 누락되었습니다!
+            }
+
+            if (item.reg_dt) {
+                const date = new Date(item.reg_dt);
+                clone.querySelector('[data-news-card-date]').textContent =
+                    `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}`;
+            }
+            container.appendChild(clone);
+        });
+
+        renderPagination();
+    }
+
+    const template = document.querySelector('[data-news-tab-template]');
+    const container = document.querySelector('[data-news-tabs]');
+    const selectContainer = document.querySelector('#searchType');
+    function renderTab(list){
+
+        if(!container || !template) return;
+
+        container.innerHTML = '';
+        if(selectContainer){
+            selectContainer.innerHTML = '<option value="">전체</option>';
+        }
+
+        list.forEach((item)=>{
+            const isMain = (String(item.dept) === '1');
+
+            // tab 생성
+            const displayName = isMain ? '전체' : item.name;
+            const clone = template.content.cloneNode(true);
+            const button = clone.querySelector('[data-tab]');
+            const label = clone.querySelector('[data-news-tab-label]');
+
+            label.textContent = displayName;
+            button.setAttribute('data-tab', item.code);
+            button.setAttribute('data-seq', item.seq);
+            if(isMain){
+                button.setAttribute('aria-pressed', true);
+                button.classList.add('is-active');
+            }
+            container.appendChild(clone);
+
+            // select 옵션 추가
+            if(selectContainer && !isMain){
+                const option = document.createElement('option');
+                option.value = item.code;
+                option.textContent = item.name;
+                selectContainer.appendChild(option);
+            }
+        })
+    }
+
+    $(container).off('click').on('click', '[data-tab]', function () {
+        const selectedCode = $(this).data('tab');
+        const selectedSeq = $(this).data('seq');
+        const isMain = (String(selectedCode).length === 2);
+
+        $('[data-tab]').removeClass('is-active').attr('aria-pressed', 'false');
+        $(this).addClass('is-active').attr('aria-pressed', 'true');
+
+        const param = { 'type': 'clickTab' };
+
+        if (isMain) {
+            param.categorySeq = null;
+            $("#searchType").val("");
+        } else {
+            param.categorySeq = selectedSeq;
+            $("#searchType").val(selectedCode);
+        }
+
+        getNoticeData(param);
+    })
+
+    function getNoticeData(info){
+        const code = window.location.pathname.split('/').pop();
+        const param = {
+            "code": code
+        }
+        if(info.type === 'search'){
+            param.searchType = info.searchType;
+            param.searchKeyword = info.searchKeyword;
+            if(info.strDate) param.strDate = info.strDate;
+            if(info.endDate) param.endDate = info.endDate;
+        }
+        if(info.type === 'clickTab'){
+            param.searchKeyword = 'category';
+            param.category = info.categorySeq;
+        }
+        if(selectCategory === '') selectCategory = code;
+        $.ajax({
+            url : '/ajax/dolbomNotice',
+            data : JSON.stringify(param),
+            type : 'POST',
+            contentType : 'application/json',
+            beforeSend: function (xhr) {
+                $('.loading').show();
+            },
+            success: function (data) {
+                total = data.total || 0;
+
+                const categoryInfo = data.categoryInfo;
+                const titleEle = document.querySelector('[data-news-title]');
+                if(titleEle && categoryInfo){
+                    titleEle.textContent = categoryInfo[0].name.includes('공지') ? '돌보미 공지' : '돌보미 뉴스';
+                }
+
+                if(info.type === 'init'){
+                    renderTab(categoryInfo);
+                }
+
+                renderList(data.list || []);
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                openAlert('오류', '데이터를 불러오지 못했습니다.\n다시시도해주세요.', '닫기', false)
+            },
+            complete: function () {
+                $('.loading').hide();
+            },
+        })
+    }
+
+    function newsDetail(info){
+        const selectedSeq = info.getAttribute('data-seq');
+        location.href = `/dolbomNoticeDetail/${selectedSeq}`;
+    }
+
+    $(document).ready(function () {
+        getNoticeData({type:'init'})
+
+        $('#dayType').on('change', function () {
+            setPeriodDates($(this).val());
+        });
+
+        $('#searchType').on('change', function () {
+            $("#searchKeyword").val('');
+            selectCategory = $(this).val();
+        });
+    })
+
+</script>
+</html>

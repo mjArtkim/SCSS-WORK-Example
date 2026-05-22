@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>잘못된 접근입니다.</title>
+    <div th:replace="~{|recruit/include/admin/inc_admin_head|}"></div>
+</head>
+<body>
+<div class="wrapper">
+    <div class="errorBox">
+        <img src="/img/recruit/admin/common/ico_error_pc.png" alt="">
+        <h1>서비스에 접속할 수 없습니다.</h1>
+        <p>
+            지금 서비스에 접속할 수 없습니다.<br>
+            잠시 후 다시 확인해주세요.
+        </p>
+        <div class="btnWrap">
+            <button class="btnType btnSize44 btnColorP2" onclick="history.back();">이전 페이지로 이동</button>
+        </div>
+    </div>
+</div>
+</body>
+</html>

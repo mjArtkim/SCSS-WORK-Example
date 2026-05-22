@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <div th:replace="~{|recruit/include/admin/inc_admin_head|}"></div>
+
+    <link href="/bootstrap-3.4.1/css/bootstrap.css" rel="stylesheet">
+    <script src="/bootstrap-3.4.1/js/bootstrap.js"></script>
+    <link href="/summernote-0.9.0/summernote-lite.min.css" rel="stylesheet">
+    <script src="/summernote-0.9.0/summernote-lite.min.js"></script>
+    <style>
+        .container {
+            width: auto !important;
+        }
+    </style>
+</head>
+<body id="page-top">
+<div class="wrapper goodList">
+    <div th:replace="~{|recruit/include/admin/inc_admin_header|}"></div>
+
+    <div class="container">
+        <div th:replace="~{|recruit/include/admin/inc_admin_side_left|}"></div>
+        <div class="contents">
+            <div class="inner">
+                <div class="tabWrap">
+                    <div class="tabCon">
+                        <div class="tab">
+                            <div class="headerArea flexBox">
+                                <h2>공고 상세보기</h2>
+                                <div class="link"></div>
+                            </div>
+                            <div class="jobPostingWrap item">
+                                <div class="itemCon show">
+                                    <div class="postingTitle">
+                                        <div class="titleMain">
+                                            <input id="postingId" type="hidden" th:value="${data.seq}"/>
+                                            <span th:text="${data.title}"></span>
+                                        </div>
+                                        <div class="titleMeta">
+                                         <span class="status"
+                                               th:classappend="${data.job_status == '1' ? 'recruiting' : 'closed'}"
+                                               th:text="${data.job_status == '1' ? '진행중' : '종료'}"></span>
+                                            <span>회사&nbsp;:&nbsp;<strong th:text="${data.center_name}"></strong></span>
+                                            <span>모집인원&nbsp;:&nbsp;<strong th:text="${data.apply_method}"></strong>&nbsp;명</span>
+                                            <span th:text="'지원자 : ' + ${data.application_cnt}+' 명'"></span>
+                                            <span th:text="'조회수 : ' + ${data.view_cnt}+' 명'"></span>
+                                            <span>
+                                                <strong class="boldRed" th:text="'신고횟수 : ' + ${data.flag_cnt}+' 회'"></strong>
+                                            </span>
+                                            <span class="metaDate"
+                                                  th:text="'등록일 : ' + ${data['regDt']}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="postingJobInfo">
+                                        <table class="postingJobTable">
+                                            <tr>
+                                                <th>고용형태</th>
+                                                <td>
+                                                    <span th:text="${employmentType}"></span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>경력여부</th>
+                                                <td>
+                                                    <span th:text="${experienceType}"></span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>근무 형태</th>
+                                                <td>
+                                                    <span th:text="${workDaysType}"></span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>급여 | 급여상세</th>
+                                                <td>
+                                                    <span class="salary" th:text="${data.salary_detail}"></span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>내용</th>
+                                                <td><span th:text="${data.content}"></span></td>
+                                            </tr>
+                                            <tr>
+                                                <th>접수방법<br/>제출 서류 종류</th>
+                                                <td>
+                                                    <span th:text="${applyMethodType}"></span>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>주소</th>
+                                                <td><span th:text="${data.work_location}"></span>&nbsp;<span
+                                                        th:text="${data.work_location_detail}"></span></td>
+                                            </tr>
+                                            <tr class="deadlineRow">
+                                                <th>마감일</th>
+                                                <td>
+                                                    <strong class="boldRed"
+                                                            th:text="${data['closeDt'] != null ? data['closeDt'] : '채용시 마감'}">
+                                                    </strong>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <th>담당자 정보</th>
+                                                <td>
+                                                    <div>이름 : <span th:text="${data.contact_name}"></span></div>
+                                                    <div>번호 : <span th:text="${data.contact_phone}"></span></div>
+                                                    <div>메일 : <span th:text="${data.contact_email}"></span></div>
+                                                </td>
+                                            </tr>
+                                        </table>
+
+                                    </div>
+                                    <div class="jobpostingBtnWrap btnWrap">
+                                        <div class="btnLeft">
+                                            <button class="btnType btnSize44 btnColorB3" onclick="fn_printBtn()" id="">
+                                                인쇄하기
+                                            </button>
+                                            <button class="btnType btnSize44 btnColorB3" onclick="fn_linkCopyBtn()"
+                                                    id="">링크복사
+                                            </button>
+                                            <!-- 신고가 1회 이상일 때만 표시 -->
+                                            <button class="btnType btnSize44 btnColorR3"
+                                                    th:if="${data['flag_cnt'] > 0}"
+                                                    onclick="fn_deletePosting()">
+                                                삭제
+                                            </button>
+                                        </div>
+                                        <div class="btnRight">
+                                            <button class="btnType btnSize44 btnColorP2" onclick="fn_backBtn()" id="">
+                                                뒤로가기
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script th:inline="javascript">
+    $('.loading').hide();
+
+    $('#summernote').summernote({
+        height: 450
+    });
+
+    const fn_backBtn = () => {
+        history.back();
+    }
+
+    const fn_linkCopyBtn = () => {
+        const url = window.location.href;
+
+        navigator.clipboard.writeText(url).then(function () {
+            alert("링크가 복사되었습니다.");
+        }).catch(function () {
+            alert("링크 복사에 실패했습니다.");
+        });
+    }
+
+    const fn_printBtn = () => {
+        window.print();
+    }
+
+    function fn_deletePosting(){
+        confirmModal({title:"해당 공고를 삭제하시겠습니까?", 'confirm' : function(){
+                const seq = $('#postingId').val();
+                const url = `/recruit/admin/center/jobpostingList`;
+
+                const param = {
+                    seq: seq
+                };
+
+                $.ajax({
+                    url: "/recruit/admin/center/ajax/updateJobPosting",
+                    data: JSON.stringify(param),
+                    type: 'POST',
+                    contentType: 'application/json',
+                    beforeSend: function (xhr) {
+                        $('.loading').show();
+                    },
+                    success: function (data) {
+                       location.href = url;
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        confirmModal({title: jqXHR.statusText});
+                    },
+                    complete: function () {
+                        $('.loading').hide();
+                        location.href = url;
+                    }
+                })
+            }})
+        }
+</script>
+</html>

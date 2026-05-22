@@ -1,0 +1,163 @@
+@charset "utf-8";
+@use "variables" as *;
+@use "mixins" as *;
+
+@mixin auth-page-shell($padding-bottom: rem(70)) {
+  width: 100%;
+  min-height: 100%;
+  padding: rem(90) rem(20) $padding-bottom;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin auth-page-wrap($max-width: rem(340), $centered: false) {
+  width: 100%;
+  max-width: $max-width;
+
+  @if $centered {
+    margin: 0 auto;
+  }
+}
+
+@mixin auth-page-card($max-width: rem(420), $padding: rem(30), $centered: false) {
+  max-width: $max-width;
+  padding: $padding;
+  border-radius: $radius;
+  background-color: $color-white;
+  box-shadow: $login-shadow;
+
+  @if $centered {
+    margin: 0 auto;
+  }
+}
+
+@mixin auth-page-title($margin: null, $font-size: rem(24)) {
+  @if $margin != null {
+    margin: $margin;
+  }
+  font-size: $font-size;
+  font-weight: 700;
+}
+
+@mixin auth-page-description($spacing: rem(10), $spacing-property: margin-top) {
+  #{$spacing-property}: $spacing;
+  font-size: rem(14);
+  color: $color-grey;
+  word-break: keep-all;
+}
+
+@mixin auth-primary-button($height: rem(46), $radius-value: rem(10)) {
+  width: 100%;
+  height: $height;
+  border-radius: $radius-value;
+  background: $color-main;
+  color: $color-white;
+  font-size: rem(16);
+  font-weight: 500;
+  @include btn-focusable;
+}
+
+@mixin auth-form-field(
+  $gap: rem(10),
+  $padding: rem(20) 0,
+  $border-color: #dddddd
+) {
+  display: flex;
+  flex-direction: column;
+  gap: $gap;
+  padding: $padding;
+  border-bottom: 1px solid $border-color;
+}
+
+@mixin auth-field-label {
+  font-size: rem(14);
+  font-weight: 500;
+  color: $color-text;
+}
+
+@mixin auth-text-input(
+  $height: rem(46),
+  $padding: 0 rem(10),
+  $radius-value: $radius
+) {
+  width: 100%;
+  height: $height;
+  padding: $padding;
+  border: 1px solid $color-light-grey;
+  border-radius: $radius-value;
+  color: $color-text;
+  font-size: rem(16);
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease;
+
+  &:focus-visible {
+    @include btn-focus-frame($color-main, $color-white);
+  }
+
+  &:active {
+    @include btn-focus-frame($color-main, $color-white);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      @include btn-focus-frame($color-main, $color-white);
+    }
+  }
+  &[readonly] {
+    background-color: #f5f5f5;
+    color: #666;
+    cursor: default;
+  }
+
+  &[readonly]:focus-visible,
+  &[readonly]:active,
+  &[readonly]:hover {
+    border-color: $color-light-grey;
+    box-shadow: none;
+    outline: none;
+  }
+}
+
+@mixin auth-button-row(
+  $padding-top: rem(24),
+  $gap: rem(10),
+  $justify: space-between
+) {
+  display: flex;
+  justify-content: $justify;
+  gap: $gap;
+  padding-top: $padding-top;
+}
+
+@mixin auth-split-button($height: rem(46), $radius-value: $radius) {
+  flex: 1;
+  height: $height;
+  border-radius: $radius-value;
+  font-size: rem(16);
+  font-weight: 500;
+  @include btn-focusable;
+}
+
+@mixin auth-bordered-list($margin-top: null, $border-color: #dddddd) {
+  @if $margin-top != null {
+    margin-top: $margin-top;
+  }
+
+  border-top: 1px solid $border-color;
+}
+
+@mixin auth-bordered-item(
+  $min-height: rem(60),
+  $padding: rem(10) 0,
+  $gap: 0,
+  $border-color: #dddddd
+) {
+  @include flex-just(space-between, $gap);
+  min-height: $min-height;
+  padding: $padding;
+  border-bottom: 1px solid $border-color;
+}

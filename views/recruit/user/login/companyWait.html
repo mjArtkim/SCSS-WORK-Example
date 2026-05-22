@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <div th:replace="~{|recruit/include/user/inc_head|}"></div>
+</head>
+<body class="recruit-body">
+<section class="min-h">
+    <section>
+        <div class="recruit-header wrap">
+            <div class="header-box">
+                <div th:replace="~{|recruit/include/user/inc_header|}"></div>
+            </div>
+        </div>
+        <div class="wrap">
+            <div class="re-login">
+                <div class="re-login__inner">
+                    <div class="re-login__done">
+                        <div class="re-login__done--tit">기업 승인을 기다리는 중입니다.</div>
+                        <div class="re-login__done--txt">관리자 확인 후 완료됩니다.</div>
+                        <div class="re-login__done--img">
+                            <img src="/img/recruit/user/before_active.png" alt="가입대기" />
+                        </div>
+                        <button type="button" onclick="movePage('/recruit/user/main')" class="re-login__done--btn">메인화면으로 이동하기</button>
+                        <div class="re-login__done--txt">*보통 1~2일 이내 처리 됩니다.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="min-h__bottom">
+        <div class="footer-box">
+            <div th:replace="~{|recruit/include/user/inc_footer|}"></div>
+        </div>
+    </footer>
+    <div class="m-only">
+        <div th:replace="~{|recruit/include/user/mobile/inc_bnb|}"></div>
+    </div>
+</section>
+<script th:inline="javascript">
+
+</script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="~{|sso/include/user/inc_head|}"></div>
+
+    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+
+    <script src="/js/common/auth.js"></script>
+</head>
+<body>
+<div class="app-shell app-shell--auth app-shell--quick-actions-hidden app-shell--join">
+    <div class="app-body">
+        <div class="site-header header-box wrap join-header-wrap">
+            <div th:replace="~{|sso/include/user/inc_header|}"></div>
+        </div>
+        <div class="site-content">
+            <div class="re-login wrap">
+                <div class="re-login__inner">
+                    <div class="re-login__done">
+                        <div class="re-login__done--tit">기업 회원 가입승인을 기다리는 중입니다.</div>
+                        <div class="re-login__done--txt">관리자 확인 후 가입이 완료됩니다.</div>
+                        <div class="re-login__done--img">
+                            <img src="/img/recruit/user/before_active.png" alt="가입대기" />
+                        </div>
+                        <button type="button" onclick="movePage('/main')" class="re-login__done--btn">메인화면으로 이동하기</button>
+                        <div class="re-login__done--txt">*보통 1~2일 이내 처리 됩니다.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="footer-box">
+            <div th:replace="~{|sso/include/user/inc_footer|}"></div>
+        </div>
+        <input type="hidden" id="serverSnsResultCd" th:value="${snsResultCd}">
+        <input type="hidden" id="serverMsg" th:value="${msg}">
+        </div>
+</body>
+</html>

@@ -1,0 +1,133 @@
+@charset "utf-8";
+
+@font-face {
+    font-family: "A2z";
+    src: url("/fonts/user/a2z-Thin.woff2") format("woff2");
+    font-weight: 100;
+    font-display: swap;
+}
+@font-face {
+    font-family: "A2z";
+    src: url("/fonts/user/a2z-ExtraLight.woff2") format("woff2");
+    font-weight: 200;
+    font-display: swap;
+}
+@font-face {
+    font-family: "A2z";
+    src: url("/fonts/user/a2z-Light.woff2") format("woff2");
+    font-weight: 300;
+    font-display: swap;
+}
+@font-face {
+    font-family: "A2z";
+    src: url("/fonts/user/a2z-Regular.woff2") format("woff2");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+@font-face {
+    font-family: "A2z";
+    src: url("/fonts/user/a2z-Medium.woff2") format("woff2");
+    font-weight: 500;
+    font-display: swap;
+}
+@font-face {
+    font-family: "A2z";
+    src: url("/fonts/user/a2z-SemiBold.woff2") format("woff2");
+    font-weight: 600;
+    font-display: swap;
+}
+@font-face {
+    font-family: "A2z";
+    src: url("/fonts/user/a2z-Bold.woff2") format("woff2");
+    font-weight: 700;
+    font-style: bold;
+    font-display: swap;
+}
+@font-face {
+    font-family: "A2z";
+    src: url("/fonts/user/a2z-ExtraBold.woff2") format("woff2");
+    font-weight: 800;
+    font-display: swap;
+}
+@font-face {
+    font-family: "A2z";
+    src: url("/fonts/user/a2z-Black.woff2") format("woff2");
+    font-weight: 900;
+    font-display: swap;
+}
+html {
+    font-size: clamp(9.1px, 2.45vw, 10.1px);
+}
+body {
+    position: relative;
+    font-family: "A2z", sans-serif;
+    font-size: 1.6rem;
+    color: #333;
+    line-height: 1.6;
+    min-height: 100vh;
+    min-height: 100dvh;
+}
+.wrap {
+    width: 100%;
+    max-width: 1280px;
+    margin: auto;
+}
+.min-h {
+    height: 100vh;
+    display: grid;
+}
+.min-h__bottom {
+    align-self: end;
+}
+@media screen and (min-width: 768px) {
+    .wrap {
+        min-width: 120rem;
+    }
+}
+
+.sound-only {
+    position: absolute;
+    left: -9999em;
+    top: -9999em;
+}
+
+.clearfix:after {
+    content: "";
+    display: block;
+    clear: both;
+}
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    color: #333;
+    font-family: "A2z", sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: #333;
+}
+
+ol,
+ul {
+    list-style-type: none;
+}
+
+button {
+    border: 0;
+    background-color: transparent;
+    cursor: pointer;
+}

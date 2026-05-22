@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+    <div th:replace="~{|recruit/include/user/inc_head|}"></div>
+</head>
+<body>
+<section>
+    <div class="header-box">
+        <div th:replace="~{|recruit/include/user/mobile/inc_mobile_header|}"></div>
+    </div>
+</section>
+<section class="search-box">
+    <form class="re-search" action="#" method="get">
+        <div class="re-search__field">
+            <label class="sound-only" for="recruitKeyword">검색어</label>
+            <input class="re-search__input" id="recruitKeyword" type="search" name="keyword" placeholder="센터명, 포지션을 검색해보세요." autocomplete="off"  autocorrect="off" autocapitalize="off" spellcheck="false">
+            <button type="button" class="re-search__clear" aria-label="검색어 삭제">
+                <div></div>
+            </button>
+        </div>
+        <button class="re-search__btn" type="submit" aria-label="search">
+            <div class="re-search__icon"></div>
+        </button>
+        <div class="search-in">
+            <div class="search-in__box">
+                <div class="search-in__top">
+                    <div>최근 검색</div>
+                    <button>전체 삭제</button>
+                </div>
+                <div class="search-in__in-middle" id="searchHere"></div>
+            </div>
+            <div class="search-in__box">
+                <div class="search-in__top">
+                    <div>지정한 조건 검색하기</div>
+                    <button>전체 삭제</button>
+                </div>
+                <!--                <div class="search-in__middle">지정한 조건이 없습니다.</div>-->
+                <div class="search-in__in-middle">
+                    <button class="recent-btn">
+                        <div class="recent-btn__flex"><div>전북</div>&#62;<div>김제시</div></div>
+                        <div class="recent-btn__close"></div>
+                    </button>
+                </div>
+            </div>
+            <div class="search-in__bottom">
+                <button class="add-condition" type="button"  onclick=movePage('/recruit/user/mobileAddCodition')>조건 추가하기</button>
+            </div>
+        </div>
+    </form>
+</section>
+
+<script th:inline="javascript">
+    const $search = $('.re-search');
+    $search.each(function () {
+        const $wrap = $(this);
+        const $input = $wrap.find('.re-search__input');
+        const $clear = $wrap.find('.re-search__clear');
+        const $searchIn = $wrap.find('.search-in');
+        $input.on('input', function () {
+            $clear.toggleClass('is-show', this.value.length > 0);
+        });
+        $clear.on('click', function () {
+            $input.val('').focus();
+            $clear.removeClass('is-show');
+        });
+        $input.on('focus', function () {
+            $searchIn.show();
+        });
+    });
+
+    fn_getCondition()
+    function fn_getCondition(){
+        $.ajax({
+            url : '/recruit/user/test',
+            type : 'post',
+            dataType : 'json',
+            success : function(data) {
+                const body = $('#searchHere');
+                body.empty();
+
+                const list = [];
+                for (let i = 0; i < 10; i++) {
+                    list.push({ title: 'title' + (i + 1) });
+                }
+
+                if (list.length === 0) {
+                    body.append('<div class="search-in__middle">최근 검색하신 정보가 없습니다.</div>');
+                    return;
+                }
+
+                let searchBtn = '';
+                $.each(list, function (index, item){
+                    searchBtn += `
+                            <button class="recent-btn" type="button">
+                                <div>${item.title}</div>
+                                <div class="recent-btn__close"></div>
+                            </button>
+                      `;
+                });
+
+                body.append(searchBtn);
+            }
+        });
+    }
+</script>
+</body>
+</html>

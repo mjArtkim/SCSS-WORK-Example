@@ -1,0 +1,188 @@
+<header class="gnb">
+    <div class="gnb__box">
+        <a data-page-target="main" class="gnb__tit" onclick='goToMain("/main")'>
+            <img src="/img/sso/user/mian_logo.webp" alt="돌보미 메인 로고"/>
+        </a>
+        <nav class="gnb__inner" aria-label="Primary">
+            <div class="gnb__all">
+                <button th:if="${(session.isLogin == null or session.isLogin == false) and session.userLoginMap == null}" class="login" type="button" onclick='movePage("/login")' data-page-target="login">
+                    <span class="icon-svg" data-icon-name="account_circle" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/account_circle_icon.svg');"></span>
+                    <div>로그인</div>
+                </button>
+                <button th:if="${(session.isLogin != null and session.isLogin == true) or session.userLoginMap != null}" class="login" type="button" onclick='goToMain("/user/myInfo")'>
+                    <span class="icon-svg" data-icon-name="logout" style="--icon-url: url('/img/sso/user/icons/account_circle_icon.svg');"></span>
+                    <div>마이페이지</div>
+                </button>
+                <button class="menu" type="button" onclick="fn_openAllMenu();" aria-expanded="false">
+                    <span class="menu__icon" aria-hidden="true">
+                        <span class="menu__line menu__line--top"></span>
+                        <span class="menu__line menu__line--middle"></span>
+                        <span class="menu__line menu__line--bottom"></span>
+                    </span>
+                    <div>전체메뉴</div>
+                </button>
+            </div>
+            <div class="panel" aria-hidden="true">
+                <div class="panel__left">
+                    <ul class="panel__list">
+                        <li class="panel__title">주요 서비스</li>
+                        <li class="panel__item">
+                            <a onclick="temp()" class="panel__link">
+                                <span class="icon-svg panel__icon" data-icon-name="person_search" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/person_search_icon.svg');"></span>
+                                <div class="panel__text">구인구직</div>
+                            </a>
+                        </li>
+                        <li class="panel__item">
+                            <a onclick="goToStore('/store/user/main')" class="panel__link">
+                                <span class="icon-svg panel__icon" data-icon-name="shopping_cart" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/shopping_cart_icon.svg');"></span>
+                                <div class="panel__text">쇼핑</div>
+                            </a>
+                        </li>
+                        <li class="panel__item">
+                            <a onclick="temp()" class="panel__link">
+                                <span class="icon-svg panel__icon" data-icon-name="groups" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/groups_icon.svg');"></span>
+                                <div class="panel__text">커뮤니티</div>
+                            </a>
+                        </li>
+                        <li class="panel__item">
+                            <a onclick="goToMain('/cardPreview')" class="panel__link">
+                                <span class="icon-svg panel__icon" data-icon-name="credit_card" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/credit_card_icon.svg');"></span>
+                                <div class="panel__text">카드</div>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="panel__list">
+                        <li class="panel__title">생활혜택</li>
+                        <li class="panel__item">
+                            <a onclick="goToStore('/store/user/product/productList/group/1')" class="panel__link">
+                                <span class="icon-svg panel__icon" data-icon-name="airplane_ticket" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/airplane_ticket_icon.svg');"></span>
+                                <div class="panel__text">여행 레저</div>
+                            </a>
+                        </li>
+                        <li class="panel__item">
+                            <a onclick="goToStore('/store/user/product/productList/group/4')" class="panel__link">
+                                <span class="icon-svg panel__icon" data-icon-name="heart_check" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/heart_check_icon.svg');"></span>
+                                <div class="panel__text">보험</div>
+                            </a>
+                        </li>
+                        <li class="panel__item">
+                            <a onclick="location.href = '/finder/maps';" class="panel__link">
+                                <span class="icon-svg panel__icon" data-icon-name="map" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/dol_map_icon.svg');"></span>
+                                <div class="panel__text">돌봄 지도</div>
+                            </a>
+                        </li>
+                        <li class="panel__item">
+                            <a onclick="goToStore('/store/user/product/productList/group/3')" class="panel__link">
+                                <span class="icon-svg panel__icon" data-icon-name="auto_stories" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/auto_stories_icon.svg');"></span>
+                                <div class="panel__text">교육</div>
+                            </a>
+                        </li>
+                        <li class="panel__item">
+                            <a href="#" class="panel__link cta-none" data-tooltip="서비스 준비중입니다.">
+                                <span class="icon-svg panel__icon" data-icon-name="local_hospital" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/local_hospital_icon.svg');"></span>
+                                <div class="panel__text">의료</div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="panel__right">
+                    <ul class="panel__list">
+                        <li class="panel__title">정보</li>
+                        <li class="panel__item">
+                            <a class="panel__link" onclick="goToMain('/intro')">
+                                <span class="panel__icons" aria-hidden="true"></span>
+                                <div class="panel__text">돌보미 소개</div>
+                            </a>
+                        </li>
+                        <li class="panel__item">
+                            <a class="panel__link" onclick="goToMain('/dolbomNotice/02')">
+                                <span class="icon-svg panel__icon" data-icon-name="newsmode" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/newsmode_icon.svg');"></span>
+                                <div class="panel__text">뉴스</div>
+                            </a>
+                        </li>
+                        <li class="panel__item">
+                            <a class="panel__link" onclick="goToMain('/dolbomNotice/01')">
+                                <span class="icon-svg panel__icon" data-icon-name="campaign" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/campaign_icon.svg');"></span>
+                                <div class="panel__text">공지</div>
+                            </a>
+                        </li>
+                        <li class="panel__item">
+                            <a class="panel__link" onclick="goToMain('/faqPage')">
+                                <span class="icon-svg panel__icon" data-icon-name="campaign" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/question_icon.svg');"></span>
+                                <div class="panel__text">FAQ</div>
+                            </a>
+                        </li>
+                        <li class="panel__item">
+                            <a href="tel:1566-0821" id="cs-center-btn" aria-label="고객센터 전화하기" class="panel__link">
+                                <span class="icon-svg panel__icon" data-icon-name="call" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/call_icon.svg');"></span>
+                                <div class="panel__text">
+                                    <div>고객센터</div>
+                                    <div>1566-0821</div>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                    <button id="menu-close-btn" class="gnb-close-btn" type="button">
+                        <div>창 닫기</div>
+                        <span class="icon-svg" data-icon-name="close_small" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/close_small_icon.svg');"></span>
+                    </button>
+                </div>
+            </div>
+        </nav>
+    </div>
+</header>
+<script th:inline="javascript">
+    let session = /*[[${session}]]*/ [];
+    let companyInfo = /*[[${companyInfo}]]*/ [];
+
+    function goToMain(path) {
+        let mainUrl = /*[[${companyInfo['url']}]]*/ '';
+        location.href = location.protocol + "//" + mainUrl + path;
+    }
+
+    function goToStore(path) {
+        let storeUrl = /*[[${companyInfo['store_url']}]]*/ '';
+        location.href = location.protocol + "//" + storeUrl + path;
+    }
+
+    function fn_openAllMenu() {
+        const isOpen = $("body").toggleClass("is-gnb-open").hasClass("is-gnb-open");
+
+        $(".gnb .panel")
+            .toggleClass("is-gnb-open", isOpen)
+            .attr("aria-hidden", String(!isOpen));
+        $(".gnb .menu").attr("aria-expanded", String(isOpen));
+    }
+
+    $(function () {
+        $("#menu-close-btn").on("click", function (e) {
+            e.preventDefault();
+            $("body").removeClass("is-gnb-open");
+            $(".gnb .panel")
+                .removeClass("is-gnb-open")
+                .attr("aria-hidden", "true");
+            $(".gnb .menu").attr("aria-expanded", "false");
+        });
+
+        $("#cs-center-btn").on("click", function (e) {
+            if (!e) return;
+            const phoneNumber = "1566-0821";
+            const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+            if (isMobile) {
+                return true;
+            } else {
+                e.preventDefault();
+                navigator.clipboard.writeText(phoneNumber).then(() => {
+                    openAlert("번호 복사", "고객센터 번호가 복사되었습니다.\n필요한 곳에 붙여넣기(Ctrl+V) 하세요.", "확인", false, "", () => {
+                    });
+                }).catch(err => {
+                    alert("고객센터 번호: " + phoneNumber);
+                });
+
+                return false;
+            }
+        });
+    });
+
+
+</script>

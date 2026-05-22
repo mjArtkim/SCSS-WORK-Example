@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+    <head>
+        <div th:replace="~{|recruit/include/user/inc_head|}"></div>
+    </head>
+    <body>
+        <section>
+            <div class="header-box">
+                <div th:replace="~{|recruit/include/user/mobile/inc_mobile_header|}"></div>
+            </div>
+        </section>
+        <section class="my-info-page">
+<!--            <h2 class="my-info-page__title">내 정보 관리</h2>-->
+            <h2 class="my-info-page__title">기업 정보 관리</h2>
+            <div class="my-info-page__box">
+                <nav class="my-info-page__menu" aria-label="내 정보 설정">
+                    <button class="my-info-page__menu-item" type="button">
+                        <span>계정정보 설정</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <button class="my-info-page__menu-item" type="button" onclick="movePage('/recruit/user/companyIdSet')">
+                        <span>기업 계정정보 설정</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <button class="my-info-page__menu-item" type="button">
+                        <span>SNS 계정 연동 관리</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <button class="my-info-page__menu-item" type="button">
+                        <span>앱 로그인 관리</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <button class="my-info-page__menu-item" type="button" onclick="movePage('/recruit/user/mobileMailSet')">
+                        <span>메일 수신설정</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                    <button class="my-info-page__menu-item" type="button" >
+                        <span>로그아웃</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </nav>
+                <button class="my-info-page__leave" type="button">
+                    계정 탈퇴하기
+                </button>
+            </div>
+        </section>
+    </body>
+</html>

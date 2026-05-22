@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="~{|sso/include/user/inc_head|}"></div>
+</head>
+<body>
+    <div class="app-shell app-shell--auth app-shell--quick-actions-hidden">
+        <div class="app-body">
+            <div class="site-header header-box wrap">
+                <div th:replace="~{|sso/include/user/inc_header|}"></div>
+            </div>
+            <main class="site-content" aria-live="polite">
+                <section class="find-info-page wrap">
+                <div class="find-info-page__wrap">
+                    <header class="find-info-page__header">
+                        <p class="find-info-page__eyebrow">ACCOUNT SUPPORT</p>
+                        <h2 class="find-info-page__title" id="find-info-default">아이디 / 비밀번호 찾기</h2>
+                        <h2 class="find-info-page__title" id="find-info-result" hidden>계정 정보</h2>
+                        <p class="find-info-page__description" id="header-desc">
+                            가입 시 등록한 정보를 입력해 주세요.
+                        </p>
+                    </header>
+
+                    <!-- findInfo default -->
+                    <div id="step-input-container">
+                        <div class="find-info-tabs" role="tablist" aria-label="아이디 비밀번호 찾기 메뉴">
+                            <button
+                                class="find-info-tabs__button"
+                                type="button"
+                                role="tab"
+                                id="find-id-tab"
+                                aria-controls="find-id-panel"
+                                th:aria-selected="${target == 'find-id'}"
+                                th:tabindex="${target == 'find-id' ? 0 : -1}"
+                                th:classappend="${target == 'find-id' ? 'is-active' : ''}"
+                                data-role="find-tab"
+                                data-target="find-id"
+                            >
+                                아이디 찾기
+                            </button>
+                            <button
+                                class="find-info-tabs__button"
+                                type="button"
+                                role="tab"
+                                id="find-password-tab"
+                                aria-controls="find-password-panel"
+                                th:aria-selected="${target == 'find-password'}"
+                                th:tabindex="${target == 'find-password' ? 0 : -1}"
+                                th:classappend="${target == 'find-password' ? 'is-active' : ''}"
+                                data-target="find-password"
+                                data-role="find-tab"
+                                tabindex="-1"
+                            >
+                                비밀번호 찾기
+                            </button>
+                        </div>
+                        <section
+                            class="find-info-panel"
+                            id="find-id-panel"
+                            role="tabpanel"
+                            aria-labelledby="find-id-tab"
+                            data-panel="find-id"
+                            th:hidden="${target != 'find-id'}"
+                        >
+                            <form
+                                class="find-info-form"
+                                action="/find-id"
+                                method="post"
+                                novalidate
+                                data-form="find-id"
+                            >
+                                <div class="find-info-form__group" data-field="name">
+                                    <label class="find-info-form__label" for="find-name">이름</label>
+                                    <div class="find-info-form__box">
+                                        <input
+                                            class="find-info-form__input"
+                                            id="find-name"
+                                            name="findName"
+                                            type="text"
+                                            placeholder="이름을 입력해 주세요"
+                                            autocomplete="name"
+                                            aria-describedby="find-name-help"
+                                            data-role="find-name"
+                                        />
+                                        <p class="find-info-form__assist" id="find-name-help"></p>
+                                    </div>
+                                </div>
+
+                                <div class="find-info-form__group" data-field="mobile">
+                                    <label class="find-info-form__label" for="find-id-mobile">
+                                        휴대폰 번호
+                                    </label>
+                                    <div class="find-info-form__box">
+                                        <input
+                                            class="find-info-form__input"
+                                            id="find-id-mobile"
+                                            name="findMobile"
+                                            type="tel"
+                                            placeholder="'-' 없이 숫자만 입력해 주세요"
+                                            autocomplete="tel"
+                                            inputmode="numeric"
+                                            maxlength="11"
+                                            aria-describedby="find-id-mobile-help"
+                                            data-role="find-mobile"
+                                            data-mobile-field="true"
+                                        />
+                                        <p class="find-info-form__assist" id="find-id-mobile-help"></p>
+                                    </div>
+                                </div>
+
+                                <p
+                                    class="find-info-form__feedback"
+                                    data-role="form-feedback"
+                                    aria-live="polite"
+                                    hidden
+                                ></p>
+
+                                <div class="find-info-form__actions">
+                                    <button class="find-info-form__submit" type="button"
+                                            onclick="findInfo('id')">
+                                        아이디 찾기
+                                    </button>
+                                    <a
+                                        class="find-info-form__link"
+                                        onclick="movePage(`/login`)"
+                                        data-page-target="login"
+                                    >
+                                        로그인으로 돌아가기
+                                    </a>
+                                </div>
+                            </form>
+                        </section>
+                        <section
+                            class="find-info-panel"
+                            id="find-password-panel"
+                            role="tabpanel"
+                            aria-labelledby="find-password-tab"
+                            data-panel="find-password"
+                            th:hidden="${target != 'find-password'}"
+                        >
+                        <form
+                            class="find-info-form"
+                            action="/find-password"
+                            method="post"
+                            novalidate
+                            data-form="find-password"
+                        >
+                            <div class="find-info-form__group" data-field="loginId">
+                                <label class="find-info-form__label" for="find-password-id">
+                                    아이디
+                                </label>
+                                <div class="find-info-form__box">
+                                    <input
+                                        class="find-info-form__input"
+                                        id="find-password-id"
+                                        name="findPasswordId"
+                                        type="text"
+                                        placeholder="아이디를 입력해 주세요"
+                                        autocomplete="username"
+                                        aria-describedby="find-password-id-help"
+                                        data-role="find-password-id"
+                                    />
+                                    <p class="find-info-form__assist" id="find-password-id-help"></p>
+                                </div>
+                            </div>
+
+                            <div class="find-info-form__group" data-field="mobile">
+                                <label class="find-info-form__label" for="find-password-mobile">
+                                    휴대폰 번호
+                                </label>
+                                <div class="find-info-form__box">
+                                    <input
+                                        class="find-info-form__input"
+                                        id="find-password-mobile"
+                                        name="findPasswordMobile"
+                                        type="tel"
+                                        placeholder="'-' 없이 숫자만 입력해 주세요"
+                                        autocomplete="tel"
+                                        inputmode="numeric"
+                                        maxlength="11"
+                                        aria-describedby="find-password-mobile-help"
+                                        data-role="find-password-mobile"
+                                        data-mobile-field="true"
+                                />
+                                <p class="find-info-form__assist" id="find-password-mobile-help"></p>
+                                </div>
+                            </div>
+
+                            <p class="find-info-form__feedback" data-role="form-feedback" aria-live="polite" hidden></p>
+                            <div class="find-info-form__actions">
+                                <button class="find-info-form__submit" type="button" onclick="findInfo('pw')">
+                                    비밀번호 찾기
+                                </button>
+                                <a class="find-info-form__link" onclick="movePage('/login')" data-page-target="login">
+                                    로그인으로 돌아가기
+                                </a>
+                            </div>
+                        </form>
+                    </section>
+                    </div>
+                    <!-- findInfo result -->
+                    <section class="find-info-panel" id="result-section">
+                    </section>
+                </div>
+                </section>
+            </main>
+        </div>
+
+        <div class="footer-box">
+            <div th:replace="~{|sso/include/user/inc_footer|}"></div>
+        </div>
+        <input type="hidden" id="serverSnsResultCd" th:value="${snsResultCd}">
+        <input type="hidden" id="serverMsg" th:value="${msg}">
+    </div>
+</body>
+<script th:inline="javascript">
+
+    let savedUserSeq;
+
+    const tabs = document.querySelectorAll('.find-info-tabs__button');
+    const panels = document.querySelectorAll('.find-info-panel');
+
+    tabs.forEach(tab => {
+        tab.addEventListener('click', function () {
+            const target = this.getAttribute('data-target');
+
+            updateUI(target);
+
+            const newUrl = `${window.location.pathname}?target=${target}`;
+            window.history.replaceState({path: newUrl}, '', newUrl);
+        });
+    });
+
+    const showResultStep = (type,data) => {
+        document.getElementById("find-info-default").hidden = true;
+        document.getElementById("find-info-result").hidden = false;
+        document.getElementById("header-desc").hidden = true;
+
+        document.getElementById('step-input-container').hidden = true;
+        const resultContainer = document.getElementById('result-section');
+        resultContainer.hidden = false;
+
+        if (type === 'id') {
+            resultContainer.innerHTML = `
+            <div class="find-info-form__group find-result-input" data-field="loginId">
+                <label class="find-info-form__label">가입하신 아이디 :</label>
+                <div class="find-info-form__box">
+                    <input
+                        class="find-info-form__input"
+                        type="text"
+                        value="${data.value}"
+                        readonly
+                    />
+                </div>
+            </div>
+            <div class="find-info-form__actions find-result-btn">
+                <button class="find-info-form__submit" type="button" onclick="location.href='/login'">
+                    로그인 페이지 이동
+                </button>
+            </div>
+        `;
+        } else if (type === 'pw') {
+            resultContainer.innerHTML = `
+           <form class="find-info-form" id="reset-password-form" novalidate>
+                <div class="find-info-form__group find-result-input">
+                    <label class="find-info-form__label find-result-pw__label" for="new-password">새 비밀번호</label>
+                    <div class="find-info-form__box find-result-pw">
+                        <input
+                            class="find-info-form__input"
+                            id="new-password"
+                            type="password"
+                            placeholder="새로운 비밀번호를 입력해 주세요"
+                        />
+                    </div>
+                </div>
+                <div class="find-info-form__group find-result-input">
+                    <label class="find-info-form__label find-result-pw__label" for="new-password-confirm">비밀번호 확인</label>
+                    <div class="find-info-form__box find-result-pw">
+                        <input
+                            class="find-info-form__input"
+                            id="new-password-confirm"
+                            type="password"
+                            placeholder="비밀번호를 한 번 더 입력해 주세요"
+                        />
+                    </div>
+                </div>
+                <div class="find-info-form__actions find-result-btn">
+                    <button class="find-info-form__submit" type="button" onclick="handlePasswordReset()">
+                        새로운 비밀번호 저장
+                    </button>
+                </div>
+            </form>
+        `;
+        }
+
+    }
+
+    const updateUI = (target) => {
+        tabs.forEach(t => {
+            const isActive = t.getAttribute('data-target') === target;
+            t.setAttribute('aria-selected', isActive);
+            t.classList.toggle('is-active', isActive);
+            t.setAttribute('tabindex', isActive ? '0' : '-1');
+        });
+
+        panels.forEach(panel => {
+            panel.hidden = (panel.getAttribute('data-panel') !== target);
+        });
+    }
+
+    const findInfo = (target) => {
+
+        const param = {
+            "target": target,
+            "contact": target === "id" ? $("#find-id-mobile").val() : $("#find-password-mobile").val(),
+            "name": $("#find-name").val(),
+            "id": $("#find-password-id").val(),
+            "type": target === "id" ? "findId" : "findPw"
+        }
+        $.ajax({
+            url: "/user/ajax/findInfo",
+            data: JSON.stringify(param),
+            type: 'POST',
+            contentType: 'application/json',
+            beforeSend: function (xhr) {
+                $('.loading').show();
+            },
+            success: function (data) {
+               if(data.resultCd === 'S'){
+                    if(target === "pw"){
+                        savedUserSeq =data.value
+                    }
+                    showResultStep(target,data)
+
+                }else {
+                    callFailAlert();
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                dolbomAlert({title: '오류발생'});
+            },
+            complete: function () {
+                $('.loading').hide();
+            }
+        });
+    }
+
+    const handlePasswordReset = () => {
+
+        const newPw = $("#new-password").val()
+        const pwConfirm = $("#new-password-confirm").val()
+
+        if(newPw !== pwConfirm){
+            dolbomAlert({title:"비밀번호 입력 오류", content:"비밀번호 확인값이 다릅니다.", usedCancel: false})
+            return;
+        }else{
+            const param = {
+                "seq" : savedUserSeq,
+                "newPw" : newPw
+            }
+            $.ajax({
+                url: "/user/ajax/postUpdatePw",
+                data: JSON.stringify(param),
+                type: 'POST',
+                contentType: 'application/json',
+                beforeSend: function (xhr) {
+                    $('.loading').show();
+                },
+                success: function (data) {
+                    if(data.resultCd === 'S'){
+                        dolbomAlert(
+                            {
+                                title: data.msg,
+                                content: "비밀번호가 변경되었습니다.",
+                                usedCancel: false,
+                                confirmFunction : function() {
+                                    location.href = "/login";
+                                }
+                            }
+                        )
+                    }else {
+                        callFailAlert();
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    dolbomAlert({title: '오류발생'});
+                },
+                complete: function () {
+                    $('.loading').hide();
+                }
+            });
+        }
+    }
+
+    const callFailAlert = () => {
+        dolbomAlert(
+            {
+                title: data.msg,
+                content: "입력하신 정보의 회원을 찾을 수 없습니다.\n고객센터에 문의하세요",
+                usedCancel: false,
+
+            }
+        )
+    }
+
+
+</script>

@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+    <div th:replace="~{|recruit/include/user/inc_head|}"></div>
+</head>
+<body class="recruit-body">
+<section class="re-company-recruit re-company-recruit--step3">
+    <div>
+        <div th:replace="~{recruit/include/user/mobile/inc_recruit_head :: recruitHead}"></div>
+    </div>
+
+
+    <div class="re-company-recruit__content re-s3 js-s3">
+        <section class="re-s3__section">
+            <h2 class="re-s3__title">고용형태</h2>
+
+            <div class="re-s3__employment-list">
+                <div class="re-s3__employment-group js-s3-primary-selected"></div>
+
+                <div class="re-s3__employment-group js-s3-primary-unselected">
+                    <article class="re-s3__employment-card re-s3__employment-card--primary">
+                        <label class="re-s3__employment-toggle" for="company-step3-regular">
+                            <input id="company-step3-regular" class="re-s3__employment-input" type="checkbox" value="정규직">
+                            <span class="re-s3__employment-box" aria-hidden="true"></span>
+                            <span class="re-s3__employment-name">정규직</span>
+                        </label>
+                        <div class="re-s3__employment-detail" hidden>
+                            <div class="re-s3__under-field">
+                                <label class="sound-only" for="company-step3-regular-probation">수습기간 입력</label>
+                                <input id="company-step3-regular-probation" class="re-s3__under-input" type="number" min="0" placeholder="수습기간이 있을 경우 개월수 입력">
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="re-s3__employment-card re-s3__employment-card--primary">
+                        <label class="re-s3__employment-toggle" for="company-step3-contract">
+                            <input id="company-step3-contract" class="re-s3__employment-input" type="checkbox" value="계약직">
+                            <span class="re-s3__employment-box" aria-hidden="true"></span>
+                            <span class="re-s3__employment-name">계약직</span>
+                        </label>
+                        <div class="re-s3__employment-detail" hidden>
+                            <div class="re-s3__under-field">
+                                <label class="sound-only" for="company-step3-contract-period">계약기간 입력</label>
+                                <input id="company-step3-contract-period" class="re-s3__under-input" type="number" min="0" placeholder="계약기간이 있을 경우 개월수 입력">
+                            </div>
+
+                            <div class="re-s3__detail-check">
+                                <label class="re-s3__check-row" for="company-step3-contract-convert">
+                                    <input id="company-step3-contract-convert" type="checkbox">
+                                    <span class="re-s3__checkbox" aria-hidden="true"></span>
+                                    <span class="re-s3__check-copy">정규직 전환 가능</span>
+                                </label>
+                            </div>
+
+                            <div class="re-s3__choice-list">
+                                <button class="re-s3__choice-btn re-s3__choice-btn--contract" type="button" value="fixed-term" aria-pressed="false">기간제 계약직</button>
+                                <button class="re-s3__choice-btn re-s3__choice-btn--contract" type="button" value="permanent" aria-pressed="false">무기계약직</button>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="re-s3__employment-card re-s3__employment-card--primary">
+                        <label class="re-s3__employment-toggle" for="company-step3-dispatch">
+                            <input id="company-step3-dispatch" class="re-s3__employment-input" type="checkbox" value="파견직">
+                            <span class="re-s3__employment-box" aria-hidden="true"></span>
+                            <span class="re-s3__employment-name">파견직</span>
+                        </label>
+                        <div class="re-s3__employment-detail" hidden>
+                            <div class="re-s3__under-field">
+                                <label class="sound-only" for="company-step3-dispatch-period">계약기간 입력</label>
+                                <input id="company-step3-dispatch-period" class="re-s3__under-input" type="number" min="0" placeholder="계약기간이 있을 경우 개월수 입력">
+                            </div>
+
+                            <div class="re-s3__detail-check">
+                                <label class="re-s3__check-row" for="company-step3-dispatch-convert">
+                                    <input id="company-step3-dispatch-convert" type="checkbox">
+                                    <span class="re-s3__checkbox" aria-hidden="true"></span>
+                                    <span class="re-s3__check-copy">정규직 전환 가능</span>
+                                </label>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="re-s3__employment-card re-s3__employment-card--primary">
+                        <label class="re-s3__employment-toggle" for="company-step3-part-time">
+                            <input id="company-step3-part-time" class="re-s3__employment-input" type="checkbox" value="아르바이트">
+                            <span class="re-s3__employment-box" aria-hidden="true"></span>
+                            <span class="re-s3__employment-name">아르바이트</span>
+                        </label>
+                    </article>
+
+                    <article class="re-s3__employment-card re-s3__employment-card--primary">
+                        <label class="re-s3__employment-toggle" for="company-step3-intern">
+                            <input id="company-step3-intern" class="re-s3__employment-input" type="checkbox" value="인턴직">
+                            <span class="re-s3__employment-box" aria-hidden="true"></span>
+                            <span class="re-s3__employment-name">인턴직</span>
+                        </label>
+                        <div class="re-s3__employment-detail" hidden>
+                            <div class="re-s3__under-field">
+                                <label class="sound-only" for="company-step3-intern-period">계약기간 입력</label>
+                                <input id="company-step3-intern-period" class="re-s3__under-input" type="number" min="0" placeholder="계약기간이 있을 경우 개월수 입력">
+                            </div>
+
+                            <div class="re-s3__detail-check">
+                                <label class="re-s3__check-row" for="company-step3-intern-convert">
+                                    <input id="company-step3-intern-convert" type="checkbox">
+                                    <span class="re-s3__checkbox" aria-hidden="true"></span>
+                                    <span class="re-s3__check-copy">정규직 전환 가능</span>
+                                </label>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="re-s3__employment-card re-s3__employment-card--primary">
+                        <label class="re-s3__employment-toggle" for="company-step3-substitute">
+                            <input id="company-step3-substitute" class="re-s3__employment-input" type="checkbox" value="대체인력">
+                            <span class="re-s3__employment-box" aria-hidden="true"></span>
+                            <span class="re-s3__employment-name">대체인력</span>
+                        </label>
+                    </article>
+                </div>
+            </div>
+
+            <button class="re-s3__more-btn js-s3-toggle-extra" type="button">다른 고용형태 찾기</button>
+
+            <div class="re-s3__employment-list re-s3__employment-list--extra js-s3-extra-list" hidden>
+                <article class="re-s3__employment-card re-s3__employment-card--extra">
+                    <label class="re-s3__employment-toggle" for="company-step3-commission">
+                        <input id="company-step3-commission" class="re-s3__employment-input" type="checkbox" value="위촉직">
+                        <span class="re-s3__employment-box" aria-hidden="true"></span>
+                        <span class="re-s3__employment-name">위촉직</span>
+                    </label>
+                </article>
+
+                <article class="re-s3__employment-card re-s3__employment-card--extra">
+                    <label class="re-s3__employment-toggle" for="company-step3-extra-part-time">
+                        <input id="company-step3-extra-part-time" class="re-s3__employment-input" type="checkbox" value="파트타임">
+                        <span class="re-s3__employment-box" aria-hidden="true"></span>
+                        <span class="re-s3__employment-name">파트타임</span>
+                    </label>
+                </article>
+
+                <article class="re-s3__employment-card re-s3__employment-card--extra">
+                    <label class="re-s3__employment-toggle" for="company-step3-full-time">
+                        <input id="company-step3-full-time" class="re-s3__employment-input" type="checkbox" value="전임">
+                        <span class="re-s3__employment-box" aria-hidden="true"></span>
+                        <span class="re-s3__employment-name">전임</span>
+                    </label>
+                </article>
+
+                <article class="re-s3__employment-card re-s3__employment-card--extra">
+                    <label class="re-s3__employment-toggle" for="company-step3-trainee">
+                        <input id="company-step3-trainee" class="re-s3__employment-input" type="checkbox" value="교육생">
+                        <span class="re-s3__employment-box" aria-hidden="true"></span>
+                        <span class="re-s3__employment-name">교육생</span>
+                    </label>
+                    <div class="re-s3__employment-detail" hidden>
+                        <p class="re-s3__info-copy">교육 후 고교등록기업으로 채용이 진행 되지 않는 일반 교육생 공고는 등록이 불가하오니 고객센터로 문의하시기 바랍니다.</p>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <div class="re-s3__conditions js-s3-conditions" hidden>
+            <section class="re-s3__section re-s3__section--summary">
+                <h2 class="re-s3__title">근무형태</h2>
+                <div class="re-s3__summary-list js-s3-summary-list"></div>
+            </section>
+
+            <div class="re-s3__notice">
+                <p>다수의 근무형태 등록 시 근무형태별 급여 조건을 명시하지 않으시는 경우, 공고 강제 마감 및 공고 등록이 제한 될 수 있습니다.</p>
+            </div>
+
+            <section class="re-s3__section">
+                <h2 class="re-s3__title">급여</h2>
+
+                <div class="re-s3__field-row">
+                    <div class="re-s3__select-wrap">
+                        <label class="sound-only" for="company-step3-salary-type">급여 유형</label>
+                        <select id="company-step3-salary-type" class="re-s3__select js-s3-salary-type">
+                            <option value="annual">연봉</option>
+                            <option value="monthly">월급</option>
+                            <option value="daily">일급</option>
+                            <option value="hourly">시급</option>
+                        </select>
+                    </div>
+
+                    <div class="re-s3__amount-field js-s3-salary-amount-wrap">
+                        <label class="sound-only" for="company-step3-salary-amount">급여 금액</label>
+                        <input id="company-step3-salary-amount" class="re-s3__amount-input js-s3-salary-amount" type="number" min="0" value="0">
+                        <span class="re-s3__amount-unit js-s3-salary-unit">만원</span>
+                    </div>
+                </div>
+
+                <h3 class="re-s3__title re-s3__title--sub">근무시간</h3>
+
+                <div class="re-s3__line-field js-s3-week-hours-wrap">
+                    <span class="re-s3__line-prefix">주</span>
+                    <label class="sound-only" for="company-step3-week-hours">주당 근무시간</label>
+                    <input id="company-step3-week-hours" class="re-s3__line-input js-s3-week-hours" type="number" min="0">
+                    <span class="re-s3__line-suffix">시간</span>
+                </div>
+
+                <div class="re-s3__checkline">
+                    <label class="re-s3__check-row" for="company-step3-salary-negotiable">
+                        <input id="company-step3-salary-negotiable" class="js-s3-salary-negotiable" type="checkbox">
+                        <span class="re-s3__checkbox" aria-hidden="true"></span>
+                        <span class="re-s3__check-copy">면접 후 결정</span>
+                    </label>
+                </div>
+            </section>
+
+            <div class="re-s3__notice re-s3__notice--guide">
+                <p>2026년 최저시급 10,320원, 주 40시간 기준 최저연봉 약 25,882,560원 입니다.</p>
+                <strong>최저임금제도 안내</strong>
+                <p>2026년 최저임금에 부합한 급여를 입력해주세요.<br>위 최저임금은 기본 소정 근로 시간 기준의 급여이므로, 그 외 수당 발생시 추가 지급되어야 합니다.</p>
+            </div>
+
+            <section class="re-s3__section">
+                <h2 class="re-s3__title">근무조건</h2>
+                <div class="re-s3__weekday-list">
+                    <button class="re-s3__weekday-btn" type="button" value="월">월</button>
+                    <button class="re-s3__weekday-btn" type="button" value="화">화</button>
+                    <button class="re-s3__weekday-btn" type="button" value="수">수</button>
+                    <button class="re-s3__weekday-btn" type="button" value="목">목</button>
+                    <button class="re-s3__weekday-btn" type="button" value="금">금</button>
+                    <button class="re-s3__weekday-btn" type="button" value="토">토</button>
+                    <button class="re-s3__weekday-btn" type="button" value="일">일</button>
+                </div>
+
+                <button class="re-s3__time-trigger js-s3-time-trigger" type="button" aria-expanded="false">
+                    <span class="re-s3__time-value js-s3-time-display">오전 00:00 ~ 오후 00:00</span>
+                    <span class="re-s3__time-icon" aria-hidden="true"></span>
+                </button>
+
+                <div class="re-s3__time-editor js-s3-time-editor" hidden>
+                    <label class="re-s3__time-field" for="company-step3-start-time">
+                        <span class="re-s3__time-label">시작</span>
+                        <input id="company-step3-start-time" class="re-s3__time-input js-s3-start-time" type="time">
+                    </label>
+                    <label class="re-s3__time-field" for="company-step3-end-time">
+                        <span class="re-s3__time-label">종료</span>
+                        <input id="company-step3-end-time" class="re-s3__time-input js-s3-end-time" type="time">
+                    </label>
+                </div>
+
+                <div class="re-s3__checkline">
+                    <label class="re-s3__check-row" for="company-step3-time-negotiable">
+                        <input id="company-step3-time-negotiable" class="js-s3-time-negotiable" type="checkbox">
+                        <span class="re-s3__checkbox" aria-hidden="true"></span>
+                        <span class="re-s3__check-copy">면접 후 결정</span>
+                    </label>
+                </div>
+            </section>
+        </div>
+    </div>
+
+    <div class="re-company-recruit__footer">
+        <button class="re-company-recruit__nav re-company-recruit__nav--prev" type="button" aria-label="이전 단계" onclick="movePage('/recruit/user/companyStep2')">
+            이전
+        </button>
+        <button class="re-company-recruit__nav re-company-recruit__nav--next" type="button" onclick="movePage('/recruit/user/companyStep4')">다음 단계</button>
+    </div>
+</section>
+
+<script th:inline="javascript">
+    $(function () {
+        const $root = $('.js-s3');
+
+        if (!$root.length) {
+            return;
+        }
+
+        const $conditions = $root.find('.js-s3-conditions');
+        const $extraList = $root.find('.js-s3-extra-list');
+        const $summaryList = $root.find('.js-s3-summary-list');
+        const $moreButton = $root.find('.js-s3-toggle-extra');
+        const $primarySelected = $root.find('.js-s3-primary-selected');
+        const $primaryUnselected = $root.find('.js-s3-primary-unselected');
+        const $employmentInputs = $root.find('.re-s3__employment-input');
+        const $primaryCards = $root.find('.re-s3__employment-card--primary');
+        const $salaryType = $root.find('.js-s3-salary-type');
+        const $salaryUnit = $root.find('.js-s3-salary-unit');
+        const $salaryAmount = $root.find('.js-s3-salary-amount');
+        const $salaryAmountWrap = $root.find('.js-s3-salary-amount-wrap');
+        const $weekHours = $root.find('.js-s3-week-hours');
+        const $weekHoursWrap = $root.find('.js-s3-week-hours-wrap');
+        const $salaryNegotiable = $root.find('.js-s3-salary-negotiable');
+        const $dayButtons = $root.find('.re-s3__weekday-btn');
+        const $timeToggleButton = $root.find('.js-s3-time-trigger');
+        const $timeEditor = $root.find('.js-s3-time-editor');
+        const $timeDisplay = $root.find('.js-s3-time-display');
+        const $startTime = $root.find('.js-s3-start-time');
+        const $endTime = $root.find('.js-s3-end-time');
+        const $timeNegotiable = $root.find('.js-s3-time-negotiable');
+
+        const salaryUnitMap = {
+            annual: '만원',
+            monthly: '만원',
+            daily: '원',
+            hourly: '원'
+        };
+
+        function fn_step3ToggleHidden($target, isVisible) {
+            $target.prop('hidden', !isVisible);
+        }
+
+        function fn_step3GetSelectedInputs() {
+            return $employmentInputs.filter(':checked');
+        }
+
+        function fn_step3GetSelectedExtraInputs() {
+            return fn_step3GetSelectedInputs().filter(function () {
+                return $(this).closest('.re-s3__employment-card').hasClass('re-s3__employment-card--extra');
+            });
+        }
+
+        function fn_step3ReorderPrimaryCards() {
+            $primaryCards.each(function () {
+                const $card = $(this);
+                const $input = $card.find('.re-s3__employment-input');
+
+                if ($input.is(':checked')) {
+                    $card.appendTo($primarySelected);
+                    return;
+                }
+
+                $card.appendTo($primaryUnselected);
+            });
+        }
+
+        function fn_step3RenderSummary() {
+            $summaryList.empty();
+
+            fn_step3GetSelectedInputs().each(function () {
+                const $input = $(this);
+                const inputId = $input.attr('id') || '';
+                const label = $.trim($input.closest('.re-s3__employment-toggle').find('.re-s3__employment-name').text());
+                const $chip = $('<button>', {
+                    type: 'button',
+                    class: 're-s3__summary-chip',
+                    value: inputId
+                });
+
+                $chip.append($('<span>').text(label));
+                $chip.append($('<span>', {
+                    class: 're-s3__summary-remove',
+                    'aria-hidden': 'true'
+                }));
+
+                $summaryList.append($chip);
+            });
+        }
+
+        function fn_step3UpdateEmploymentCards() {
+            $employmentInputs.each(function () {
+                const $input = $(this);
+                const $card = $input.closest('.re-s3__employment-card');
+                const $detail = $card.find('.re-s3__employment-detail').first();
+                const isChecked = $input.is(':checked');
+
+                $card.toggleClass('is-selected', isChecked);
+                fn_step3ToggleHidden($detail, isChecked);
+            });
+
+            fn_step3ReorderPrimaryCards();
+        }
+
+        function fn_step3UpdateConditionsVisibility() {
+            const hasSelectedEmployment = fn_step3GetSelectedInputs().length > 0;
+            const hasSelectedExtra = fn_step3GetSelectedExtraInputs().length > 0;
+            const isExtraOpen = !$extraList.prop('hidden');
+
+            fn_step3ToggleHidden($conditions, hasSelectedEmployment);
+            fn_step3ToggleHidden($extraList, isExtraOpen || hasSelectedExtra);
+            $moreButton.toggleClass('is-active', isExtraOpen || hasSelectedExtra);
+            fn_step3RenderSummary();
+        }
+
+        function fn_step3UpdateSalaryUnit() {
+            $salaryUnit.text(salaryUnitMap[$salaryType.val()] || '만원');
+        }
+
+        function fn_step3UpdateSalaryNegotiable() {
+            const isDisabled = $salaryNegotiable.is(':checked');
+
+            $salaryType.prop('disabled', isDisabled);
+            $salaryAmountWrap.toggleClass('is-disabled', isDisabled);
+            $weekHoursWrap.toggleClass('is-disabled', isDisabled);
+            $salaryAmount.prop('disabled', isDisabled);
+            $weekHours.prop('disabled', isDisabled);
+        }
+
+        function fn_step3FormatTimeLabel(value, fallbackPeriod) {
+            if (!value) {
+                return fallbackPeriod + ' 00:00';
+            }
+
+            const timeParts = value.split(':');
+            const hour = Number(timeParts[0]);
+            const minute = timeParts[1] || '00';
+            const isAfternoon = hour >= 12;
+            const displayHour = String(hour % 12 || 12).padStart(2, '0');
+
+            return (isAfternoon ? '오후' : '오전') + ' ' + displayHour + ':' + minute;
+        }
+
+        function fn_step3UpdateTimeDisplay() {
+            const startLabel = fn_step3FormatTimeLabel($startTime.val(), '오전');
+            const endLabel = fn_step3FormatTimeLabel($endTime.val(), '오후');
+            const isFilled = Boolean($startTime.val() || $endTime.val());
+
+            $timeDisplay.text(startLabel + ' ~ ' + endLabel);
+            $timeToggleButton.toggleClass('is-filled', isFilled);
+        }
+
+        function fn_step3UpdateTimeNegotiable() {
+            const isDisabled = $timeNegotiable.is(':checked');
+
+            $dayButtons.prop('disabled', isDisabled);
+            $timeToggleButton.prop('disabled', isDisabled).toggleClass('is-disabled', isDisabled);
+            $startTime.prop('disabled', isDisabled);
+            $endTime.prop('disabled', isDisabled);
+
+            if (isDisabled) {
+                fn_step3ToggleHidden($timeEditor, false);
+                $timeToggleButton.attr('aria-expanded', 'false');
+            }
+        }
+
+        $employmentInputs.on('change', function () {
+            fn_step3UpdateEmploymentCards();
+            fn_step3UpdateConditionsVisibility();
+        });
+
+        $moreButton.on('click', function () {
+            const shouldOpen = $extraList.prop('hidden');
+
+            if (!shouldOpen && fn_step3GetSelectedExtraInputs().length > 0) {
+                return;
+            }
+
+            fn_step3ToggleHidden($extraList, shouldOpen);
+            $moreButton.toggleClass('is-active', shouldOpen);
+        });
+
+        $summaryList.on('click', '.re-s3__summary-chip', function () {
+            const targetId = $(this).val();
+
+            if (!targetId) {
+                return;
+            }
+
+            $('#' + targetId).prop('checked', false).trigger('change');
+        });
+
+        $root.on('click', '.re-s3__choice-btn', function () {
+            const $button = $(this);
+            const $choiceList = $button.closest('.re-s3__choice-list');
+
+            $choiceList.find('.re-s3__choice-btn')
+                .removeClass('is-selected')
+                .attr('aria-pressed', 'false');
+
+            $button.addClass('is-selected').attr('aria-pressed', 'true');
+        });
+
+        $dayButtons.on('click', function () {
+            if ($(this).prop('disabled')) {
+                return;
+            }
+
+            $(this).toggleClass('is-selected');
+        });
+
+        $salaryType.on('change', fn_step3UpdateSalaryUnit);
+        $salaryNegotiable.on('change', fn_step3UpdateSalaryNegotiable);
+
+        $timeToggleButton.on('click', function () {
+            const shouldOpen = $timeEditor.prop('hidden');
+
+            if ($timeToggleButton.prop('disabled')) {
+                return;
+            }
+
+            fn_step3ToggleHidden($timeEditor, shouldOpen);
+            $timeToggleButton.attr('aria-expanded', shouldOpen ? 'true' : 'false');
+        });
+
+        $startTime.add($endTime).on('input', fn_step3UpdateTimeDisplay);
+        $timeNegotiable.on('change', fn_step3UpdateTimeNegotiable);
+
+        fn_step3UpdateEmploymentCards();
+        fn_step3UpdateConditionsVisibility();
+        fn_step3UpdateSalaryUnit();
+        fn_step3UpdateSalaryNegotiable();
+        fn_step3UpdateTimeDisplay();
+        fn_step3UpdateTimeNegotiable();
+    });
+</script>
+
+</body>
+</html>

@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+
+  <div th:replace="~{|recruit/include/user/inc_head|}"></div>
+</head>
+<body>
+<section class="min-h">
+  <section>
+    <div class="recruit-header wrap">
+      <div class="header-box">
+        <div th:replace="~{|recruit/include/user/inc_header|}"></div>
+      </div>
+    </div>
+    <div class="wrap">
+      <section class="re-resume re-resume--job-posting js-job-posting">
+        <div class="re-resume__layout">
+          <div class="re-resume__content">
+            <h2 class="re-resume__page-title">공고등록</h2>
+            <div class="re-resume__posting-flex">
+              <button class="re-resume__posting-flex--back" onclick="goBack()">
+                <span class="re-resume__posting-flex--arrow"></span>
+                <span class="re-resume__posting-flex--text" >이전 페이지로 돌아가기</span>
+              </button>
+              <button class="re-resume__posting-flex--reset">
+                <span class="re-resume__posting-flex--text">공고 초기화</span>
+                <span class="re-resume__posting-flex--rotate"></span>
+              </button>
+            </div>
+            <textarea class="re-resume__editer">
+              TEXT EDITER SPACE
+            </textarea>
+
+          </div>
+          <aside class="re-resume__aside">
+            <div class="re-resume__sticky">
+              <button type="button" class="re-resume__side-btn re-resume__side-btn--ghost">임시저장</button>
+              <button type="button" class="re-resume__side-btn re-resume__side-btn--primary">공고등록</button>
+            </div>
+          </aside>
+        </div>
+      </section>
+    </div>
+  </section>
+  <footer class="min-h__bottom">
+    <div class="footer-box">
+      <div th:replace="~{|recruit/include/user/inc_footer|}"></div>
+    </div>
+  </footer>
+</section>
+<script th:inline="javascript"></script>
+</body>
+</html>

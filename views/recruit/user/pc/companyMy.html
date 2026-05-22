@@ -1,0 +1,330 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+    <div th:replace="~{|recruit/include/user/inc_head|}"></div>
+</head>
+<body>
+<section class="min-h">
+    <section>
+        <div class="recruit-header wrap">
+            <div class="header-box">
+                <div th:replace="~{|recruit/include/user/inc_header|}"></div>
+            </div>
+        </div>
+        <section class="re-my wrap">
+            <div class="re-my-sub">
+                <div class="re-my-sub__tit">
+                    <div class="re-my-sub__tit--icon"></div>
+                    <div class="re-my-sub__tit--name">MY</div>
+                </div>
+                <div class="re-my-sub__content">
+                    <button class="re-my-sub__btn js-re-my-tab--resume" th:classappend="${myType == 'jobposting'} ? ' is-active' : ''">
+                        <span class="re-my-sub__btn--icon resume"></span>
+                        <span class="re-my-sub__btn--name">공고등록</span>
+                    </button>
+                    <button class="re-my-sub__btn js-re-my-tab--apply" th:classappend="${myType == 'jobapply'} ? ' is-active' : ''">
+                        <span class="re-my-sub__btn--icon apply"></span>
+                        <span class="re-my-sub__btn--name">공고/지원자</span>
+                    </button>
+                    <button class="re-my-sub__btn js-re-my-tab--favorite" th:classappend="${myType == 'company'} ? ' is-active' : ''">
+                        <span class="re-my-sub__btn--icon favorite"></span>
+                        <span class="re-my-sub__btn--name">기업인증</span>
+                    </button>
+                    <button class="re-my-sub__btn js-re-my-tab--setting" th:classappend="${myType == 'setting'} ? ' is-active' : ''">
+                        <span class="re-my-sub__btn--icon setting"></span>
+                        <span class="re-my-sub__btn--name">설정</span>
+                    </button>
+                </div>
+            </div>
+            <div>
+                <div class="re-my-content js-re-my-panel--resume" th:classappend="${myType == 'jobposting'} ? ' is-open' : ''">
+                    <div class="re-my-content__top">
+                        <div class="re-my-content__top--box">
+                            <h2 class="re-my-content__tit">공고등록</h2>
+                        </div>
+                    </div>
+                    <div class="re-my-content__combox">
+                        <div class="re-my-content__combox--textbox">
+                            <div class="re-my-content__combox--tit">안녕하세요, 기업회원 님</div>
+                            <div class="re-my-content__combox--txt">
+                                <p>돌봄 종사자 350만명을</p>
+                                <p>대상으로 공고를 게재해 보세요.</p>
+                            </div>
+                        </div>
+                        <div class="re-my-content__combox--btnbox">
+                            <button class="re-my-content__job-btn" type="button" onclick="movePage('/recruit/user/jobPosting')">신규 공고 등록</button>
+                            <button class="re-my-content__move-apply" onclick="movePage('/recruit/user/companyMy?type=jobapply')">공고 복사 등록</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="re-my-content js-re-my-panel--apply" th:classappend="${myType == 'jobapply'} ? ' is-open' : ''">
+                    <div class="re-my-content__top">
+                        <div class="re-my-content__top--box">
+                            <h2>공고/지원자 관리</h2>
+                        </div>
+                    </div>
+                    <div class="re-my-content__middle re-my-content__middle--apply">
+                        <div class="re-my-content__apply-head">
+                            <div class="re-my-content__apply-summary" aria-label="공고 현황">
+                                <button class="re-my-content__apply-summary--item is-active" type="button">
+                                    <span class="re-my-content__apply-summary--label">전체</span>
+                                    <strong class="re-my-content__apply-summary--count">5</strong>
+                                </button>
+                                <button class="re-my-content__apply-summary--item" type="button">
+                                    <span class="re-my-content__apply-summary--label">진행중</span>
+                                    <strong class="re-my-content__apply-summary--count">3</strong>
+                                </button>
+                                <button class="re-my-content__apply-summary--item" type="button">
+                                    <span class="re-my-content__apply-summary--label">종료</span>
+                                    <strong class="re-my-content__apply-summary--count">2</strong>
+                                </button>
+                            </div>
+                            <div class="re-my-content__apply-sort" aria-label="공고 정렬">
+                                <button class="re-my-content__apply-sort--btn is-active" type="button">등록순</button>
+                                <button class="re-my-content__apply-sort--btn" type="button">마감일순</button>
+                            </div>
+                        </div>
+                        <div class="re-my-content__apply-list">
+                            <article class="re-my-content__apply-card re-my-content__apply-card--ended">
+                                <div class="re-my-content__apply-card--top">
+                                    <span class="re-my-content__apply-card--badge re-my-content__apply-card--badge-ended">종료</span>
+                                    <div class="re-my-content__apply-card--titlebox">
+                                        <strong class="re-my-content__apply-card--title">간호조무사 (간호사) 채용</strong>
+                                        <span class="re-my-content__apply-card--date">26.02.04 ~ 23.03.06</span>
+                                    </div>
+                                </div>
+                                <div class="re-my-content__apply-card--actions">
+                                    <button class="re-my-content__apply-card--action" type="button">공고 확인</button>
+                                    <button class="re-my-content__apply-card--action" type="button" onclick="movePage('/recruit/user/jobApply')">지원자 00명</button>
+                                    <button class="re-my-content__apply-card--action" type="button">미열람 00명</button>
+                                    <button class="re-my-content__apply-card--action" type="button">공고 복사</button>
+                                    <button class="re-my-content__apply-card--action" type="button">열람 00명</button>
+                                    <button class="re-my-content__apply-card--action re-my-content__apply-card--action-danger" type="button">공고 삭제</button>
+                                </div>
+                                <button class="re-my-content__apply-card--select re-my-content__apply-card--select-disabled" type="button" aria-disabled="true">
+                                    <span>공고 상태 변경</span>
+                                </button>
+                            </article>
+                            <article class="re-my-content__apply-card re-my-content__apply-card--ongoing">
+                                <div class="re-my-content__apply-card--top">
+                                    <span class="re-my-content__apply-card--badge re-my-content__apply-card--badge-ongoing">진행중</span>
+                                    <div class="re-my-content__apply-card--titlebox">
+                                        <strong class="re-my-content__apply-card--title">간호조무사 (간호사) 채용</strong>
+                                        <span class="re-my-content__apply-card--date">26.02.04 ~ 23.03.06</span>
+                                    </div>
+                                </div>
+                                <div class="re-my-content__apply-card--actions">
+                                    <button class="re-my-content__apply-card--action" type="button">공고 확인</button>
+                                    <button class="re-my-content__apply-card--action" type="button" onclick="movePage('/recruit/user/jobApply')">지원자 00명</button>
+                                    <button class="re-my-content__apply-card--action" type="button">미열람 00명</button>
+                                    <button class="re-my-content__apply-card--action" type="button">공고 복사</button>
+                                    <button class="re-my-content__apply-card--action" type="button">열람 00명</button>
+                                    <button class="re-my-content__apply-card--action re-my-content__apply-card--action-danger" type="button">공고 삭제</button>
+                                </div>
+                                <button class="re-my-content__apply-card--select" type="button">
+                                    <span>공고 상태 변경</span>
+                                </button>
+                            </article>
+                        </div>
+                        <div class="re-my-pagination" id="reMyApplyPagination" aria-label="지원내역 페이지 이동" hidden></div>
+                    </div>
+                </div>
+                <div class="re-my-content js-re-my-panel--favorite" th:classappend="${myType == 'company'} ? ' is-open' : ''">
+                    <div class="re-my-content__infopage">
+                        <div class="my-info-page">
+                            <h2 class="my-info-page__title">기업인증</h2>
+                            <div class="my-info-page__inner">
+                                <div class="my-info-page__inner--tit">기업회원 인증 중입니다.</div>
+                                <div class="my-info-page__inner--box">
+                                    <p class="my-info-page__inner--subtit">인증이 완료되면 <br/>구인구직 서비스를 이용하실 수 있습니다.</p>
+                                    <p class="my-info-page__inner--txt">기업정보 도용 및 허위 정보로 인한 피해 예방을 위해
+                                        직업안정법 시행령 제 28조에 따라 기업을 검증하여야 합니다.</p>
+
+                                    <p class="my-info-page__inner--txt">직업소개사업자는 구인공고를 게재하는 자를 검정하여야 하는
+                                    바 유/무료 직업소개사업자 및 파견 사업자는 공고 게재 사전에
+                                    구인을 진행하는 기업으로부터 사업자등록증 등 서류를 수취하여 검증하여야 합니다.</p>
+
+                                    <p class="my-info-page__inner--txt">공고등록, 이력서 열람을 이용하기 위해서는 반드시 필수로
+                                        시업인증을 받으셔야 합니다.</p>
+
+                                    <p class="my-info-page__inner--txt">기업인증을 위해 신청일 기준 90일 이내의 사업자등록증명원을
+                                        필수로 제추해야 합니다.</p>
+                                </div>
+                                <div class="my-info-page__inner--box">
+                                    <div class="my-info-page__inner--q">기업인증이 되지 않으시고 계신가요?</div>
+                                    <div class="my-info-page__inner--a">해당 부분 <strong>고객센터(1566-0821)</strong>로 연락 주시거나
+                                        <strong>이메일 문의 (payma@payma.co.kr)</strong> 부탁드립니다.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="re-my-content js-re-my-panel--setting" th:classappend="${myType == 'setting'} ? ' is-open' : ''">
+                    <div class="re-my-content__infopage js-setting-view--menu">
+                        <div class="my-info-page">
+                            <h2 class="my-info-page__title">내 정보 관리</h2>
+                            <div class="my-info-page__box">
+                                <nav class="my-info-page__menu" aria-label="내 정보 설정">
+                                    <button class="my-info-page__menu-item" type="button">
+                                        <span>계정정보 설정</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                            <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </button>
+                                    <button class="my-info-page__menu-item" type="button">
+                                        <span>기업 계정정보 설정</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                            <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </button>
+                                    <button class="my-info-page__menu-item" type="button">
+                                        <span>SNS 계정 연동 관리</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                            <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </button>
+                                    <button class="my-info-page__menu-item js-setting-action--open-mail" type="button">
+                                        <span>메일 수신설정</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                            <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </button>
+                                    <button class="my-info-page__menu-item" type="button" >
+                                        <span>로그아웃</span>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                            <path d="M9 6L15 12L9 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </button>
+                                </nav>
+                                <button class="my-info-page__leave" type="button">
+                                    계정 탈퇴하기
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="re-my-content__infopage js-setting-view--mail" hidden>
+                        <div class="my-info-page">
+                            <h2 class="my-info-page__title">메일 수신 설정</h2>
+                            <div class="my-info-page__box">
+                                <button class="re-my-content__setting-back js-setting-action--back-to-menu" type="button">
+                                    <span class="re-my-content__setting-back-label">
+                                      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                        <path d="M15 6L9 12L15 18" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                      </svg>
+                                      <span>내 정보 관리</span>
+                                    </span>
+                                </button>
+                                <div class="mo-mail-txt">토글을 통해 메일을 수신/거부 할 수 있습니다.</div>
+                                <ul class="mo-notice-style">
+                                    <li class="mo-notice-style__box" role="listitem">
+                                        <div class="mo-notice-style__tit">
+                                            <div class="mo-notice-style__setting-tit">메일 전체</div>
+                                        </div>
+                                        <label class="mo-notice-style__switch">
+                                            <span class="sound-only">메일 전체</span>
+                                            <input type="checkbox"/>
+                                            <span class="mo-notice-style__switch-track" aria-hidden="true"></span>
+                                        </label>
+                                    </li>
+                                    <li class="mo-notice-style__box" role="listitem">
+                                        <div class="mo-notice-style__tit">
+                                            <div class="mo-notice-style__setting-tit">내 이력서 조회 메일</div>
+                                        </div>
+                                        <label class="mo-notice-style__switch">
+                                            <span class="sound-only">내 이력서 조회 메일</span>
+                                            <input type="checkbox"/>
+                                            <span class="mo-notice-style__switch-track" aria-hidden="true"></span>
+                                        </label>
+                                    </li>
+                                    <li class="mo-notice-style__box" role="listitem">
+                                        <div class="mo-notice-style__tit">
+                                            <div class="mo-notice-style__setting-tit">즐겨찾기 메일</div>
+                                        </div>
+                                        <label class="mo-notice-style__switch">
+                                            <span class="sound-only">즐겨찾기 메일</span>
+                                            <input type="checkbox"/>
+                                            <span class="mo-notice-style__switch-track" aria-hidden="true"></span>
+                                        </label>
+                                    </li>
+                                    <li class="mo-notice-style__box" role="listitem">
+                                        <div class="mo-notice-style__tit">
+                                            <div class="mo-notice-style__setting-tit">공지 이벤트 메일</div>
+                                        </div>
+                                        <label class="mo-notice-style__switch">
+                                            <span class="sound-only">공지 이벤트 메일</span>
+                                            <input type="checkbox"/>
+                                            <span class="mo-notice-style__switch-track" aria-hidden="true"></span>
+                                        </label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="re-apply-sheet">
+                <div class="re-apply-sheet__backdrop"></div>
+                <div class="re-apply-sheet__flex">
+                    <div class="re-apply-sheet__dialog" >
+                        <div class="re-apply-sheet__head">
+                            <h2 class="re-apply-sheet__title">입사지원</h2>
+                            <button class="re-apply-sheet__close" type="button" aria-label="닫기">
+                                <span></span>
+                            </button>
+                        </div>
+                        <div id="reMySheet"></div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </section>
+    <footer class="min-h__bottom">
+        <div class="footer-box">
+            <div th:replace="~{|recruit/include/user/inc_footer|}"></div>
+        </div>
+    </footer>
+</section>
+</body>
+<script th:inline="javascript">
+    $(function () {
+        $('.re-my-sub__btn').on('click', function () {
+            const target = fn_getClassTarget($(this), 'js-re-my-tab--');
+            $('.re-my-sub__btn').removeClass('is-active');
+            $(this).addClass('is-active');
+            $('.re-my-content').removeClass('is-open');
+            $(`.js-re-my-panel--${target}`).addClass('is-open');
+            if (target === 'setting') {
+                fn_setSettingView('menu');
+            }
+        });
+        
+        $(document)
+            .on('click', '.js-setting-action--open-mail', function () {
+                fn_setSettingView('mail');
+            })
+            .on('click', '.js-setting-action--back-to-menu', function () {
+                fn_setSettingView('menu');
+            });
+    });
+
+    function fn_getClassTarget($element, prefix) {
+        const classNames = ($element.attr('class') || '').split(/\s+/);
+        const targetClass = classNames.find(function (className) {
+            return className.indexOf(prefix) === 0;
+        });
+
+        return targetClass ? targetClass.slice(prefix.length) : '';
+    }
+
+    function fn_setSettingView(viewName) {
+        const $settingPanel = $('.js-re-my-panel--setting');
+        $settingPanel.find('.re-my-content__infopage').attr('hidden', true);
+        $settingPanel.find(`.js-setting-view--${viewName}`).removeAttr('hidden');
+    }
+</script>
+</html>

@@ -1,0 +1,22 @@
+<style>
+    .cntTitle{line-height: 40px; font-size: 24px; text-align: center; font-weight: bold; margin: 20px 0; display: none}
+    .hdrWrap{position: fixed; width: 100%; max-width: 390px; height: 60px; top: 0; left: 0; right: 0; margin: auto; background-color: #fff; z-index: 10;}
+    .hdrWrap header{position: relative; height: 100%; padding: 0 20px;}
+    .hdrWrap header nav{height: 100%; width:100%; position: relative;}
+    .hdrWrap header .hdrLeft{position: absolute; top: 0; bottom: 0; left: 0; margin: auto; width: max-content; height: max-content;}
+    .hdrWrap header .hdrLeft img{width: 14px; height: 26px;}
+    .hdrWrap header .hdrTitle{position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: auto; width: 90%; height: max-content; display: block; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;}
+</style>
+
+<div class="hdrWrap">
+    <header>
+        <nav>
+            <div class="hdrLeft" onclick="history.back();">
+                <img src="/img/user/common/icon/hdrLeft.png" alt="">
+            </div>
+            <div class="hdrTitle cntTitle">[[${pageTitle}]]</div>
+        </nav>
+    </header>
+</div>
+
+<div th:replace="~{|sso/include/common/inc_user_text_popup|}"></div>

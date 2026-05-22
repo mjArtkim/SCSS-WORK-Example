@@ -1,0 +1,26 @@
+<div class="text_popup_wrap">
+    <div class="dim"></div>
+    <div class="text_popup">
+        <div class="pop_header">
+            <h3 class="pop_header_text"></h3>
+        </div>
+        <div class="pop_content">
+            <div class="text_title"></div>
+            <div class="text_date"></div>
+            <div class="text_content"></div>
+        </div>
+        <div class="btn_box">
+            <button class="btn bg-main" onclick="textPopupClose()">확인</button>
+        </div>
+        <div class="pop_close_btn">
+            <button class="btn_icon pop_close" onclick="textPopupClose(this)"><span class="blind">취소</span></button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function textPopupClose(e){
+        $('.text_popup_wrap').removeClass('on');
+        $('html, body').css({'overflow-y': 'auto'});
+    }
+</script>

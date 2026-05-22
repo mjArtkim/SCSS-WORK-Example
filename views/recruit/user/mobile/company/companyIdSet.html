@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+  <div th:replace="~{|recruit/include/user/inc_head|}"></div>
+</head>
+<body class="recruit-body">
+<section>
+  <div class="header-box">
+    <div th:with="mobileHeaderTitle='기업 계정 설정'">
+      <div th:replace="~{|recruit/include/user/mobile/inc_mobile_header|}"></div>
+    </div>
+  </div>
+</section>
+
+<section class="mo-company-account">
+  <div class="mo-company-account__inner">
+    <h2 class="mo-company-account__title">계정정보 설정</h2>
+
+    <div class="mo-company-account__edit-item" data-edit-item>
+      <label class="mo-company-account__label" for="company-account-manager">담당자 정보</label>
+      <div class="mo-company-account__row">
+        <input id="company-account-manager"
+               class="mo-company-account__input"
+               type="text"
+               value="홍길동 (payma2036)"
+               readonly
+               data-edit-input>
+        <button class="mo-company-account__action" type="button" data-edit-button>수정</button>
+      </div>
+    </div>
+
+    <div class="mo-company-account__edit-item" data-edit-item>
+      <label class="mo-company-account__label" for="company-account-phone">담당자 연락처</label>
+      <div class="mo-company-account__row">
+        <input id="company-account-phone"
+               class="mo-company-account__input"
+               type="tel"
+               inputmode="numeric"
+               value="000-****-0000"
+               readonly
+               data-edit-input>
+        <button class="mo-company-account__action" type="button" data-edit-button>수정</button>
+      </div>
+    </div>
+
+    <div class="mo-company-account__edit-item" data-edit-item>
+      <label class="mo-company-account__label" for="company-account-email">담당자 이메일</label>
+      <div class="mo-company-account__row">
+        <input id="company-account-email"
+               class="mo-company-account__input"
+               type="email"
+               value="payma@payma.co.kr"
+               readonly
+               data-edit-input>
+        <button class="mo-company-account__action" type="button" data-edit-button>수정</button>
+      </div>
+    </div>
+
+    <p class="mo-company-account__notice">
+      변경할 담당자 번호로 본인인증이 필요하며, 이름 연락처가 함께 변경됩니다.
+    </p>
+
+    <h3 class="mo-company-account__subtitle">기업설정</h3>
+
+    <div class="mo-company-account__info-item">
+      <span class="mo-company-account__label">기업 정보</span>
+      <div class="mo-company-account__box">페이마 주식회사</div>
+    </div>
+
+    <div class="mo-company-account__info-item">
+      <span class="mo-company-account__label">담당자 연락처</span>
+      <div class="mo-company-account__box">279-83-03330</div>
+    </div>
+
+    <div class="mo-company-account__info-item">
+      <span class="mo-company-account__label">기업 인증</span>
+      <div class="mo-company-account__box mo-company-account__box--danger">미인증</div>
+    </div>
+
+    <div class="mo-company-account__info-item">
+      <span class="mo-company-account__label">기업 구분</span>
+      <div class="mo-company-account__box">일반</div>
+    </div>
+  </div>
+</section>
+
+<script th:inline="javascript">
+  $(function () {
+    const $accountPage = $('.mo-company-account');
+
+    if ($accountPage.length === 0) {
+      return;
+    }
+
+    $accountPage.on('click', '[data-edit-button]', function () {
+      const $button = $(this);
+      const $item = $button.closest('[data-edit-item]');
+      const $input = $item.find('[data-edit-input]');
+      const isEditing = $item.hasClass('is-editing');
+
+      if (isEditing) {
+        $input.prop('readonly', true);
+        $item.removeClass('is-editing');
+        $button.text('수정');
+        return;
+      }
+
+      $input.prop('readonly', false);
+      $item.addClass('is-editing');
+      $button.text('저장');
+      $input.trigger('focus');
+
+      if ($input[0] && typeof $input[0].setSelectionRange === 'function') {
+        const valueLength = $input.val().length;
+        $input[0].setSelectionRange(valueLength, valueLength);
+      }
+    });
+  });
+</script>
+</body>
+</html>

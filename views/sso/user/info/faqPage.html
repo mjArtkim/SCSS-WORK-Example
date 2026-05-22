@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="~{|sso/include/user/inc_head|}"></div>
+</head>
+<body>
+<div class="app-shell">
+    <div class="app-body">
+        <div class="site-header header-box wrap">
+            <div th:replace="~{|sso/include/user/inc_header|}"></div>
+        </div>
+        <main class="site-content" aria-live="polite">
+            <section class="faq-page wrap">
+                <div class="faq-page__inner">
+                    <header class="faq-page__header">
+                        <h2 class="faq-page__title">FAQ</h2>
+                    </header>
+                    <div class="faq-page__box">
+                        <form class="faq-page__search js-faq-search-form" role="search">
+                            <label class="sound-only" for="faq-category-select">FAQ 태그 선택</label>
+                            <div class="faq-page__search-category">
+                                <select id="faq-category-select" class="faq-page__search-select js-faq-category-select" name="faq-category"></select>
+                                <span class="icon-svg faq-page__search-select-icon" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/chevron_right_icon.svg');"></span>
+                            </div>
+                            <span class="faq-page__search-divider" aria-hidden="true"></span>
+                            <label class="sound-only" for="faq-search-input">FAQ 검색</label>
+                            <input id="faq-search-input" class="faq-page__search-input js-faq-search-input" type="search" placeholder="내용을 검색해보세요." autocomplete="off" />
+                            <button class="faq-page__search-button" type="submit" aria-label="FAQ 검색">
+                                <span class="icon-svg news-page__search-icon" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/search_icon.svg');"></span>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="faq-page__category-panel js-faq-category-panel">
+                        <div class="faq-page__categories js-faq-categories"></div>
+                    </div>
+
+                    <div class="faq-page__toolbar">
+                        <button class="faq-page__collapse js-faq-collapse" type="button" aria-expanded="true">
+                            <span class="js-faq-collapse-label">접기</span>
+                            <span class="icon-svg faq-page__collapse-icon" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/chevron_right_icon.svg');"></span>
+                        </button>
+                    </div>
+
+                    <div class="faq-page__list js-faq-list"></div>
+
+                    <button class="faq-page__load-more js-faq-load-more" type="button">
+                        <span class="js-faq-load-more-label">더보기</span>
+                        <span class="icon-svg faq-page__load-more-icon" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/chevron_right_icon.svg');"></span>
+                    </button>
+
+                    <template class="js-faq-category-template">
+                        <button class="faq-page__category js-faq-category-button" type="button" value="">
+                            <span class="js-faq-category-label"></span>
+                        </button>
+                    </template>
+
+                    <template class="js-faq-item-template">
+                        <article class="faq-card">
+                            <button class="faq-card__button js-faq-item-toggle" type="button" aria-expanded="false">
+                                <span class="faq-card__title-wrap">
+                                    <span class="faq-card__prefix">Q.</span>
+                                    <span class="faq-card__question js-faq-question"></span>
+                                </span>
+                                <span class="icon-svg faq-card__icon" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/chevron_right_icon.svg');"></span>
+                            </button>
+                            <div class="faq-card__answer js-faq-answer-panel" aria-hidden="true">
+                                <p class="faq-card__answer-text js-faq-answer"></p>
+                            </div>
+                        </article>
+                    </template>
+
+                    <template class="js-faq-empty-template">
+                        <div class="faq-page__empty">
+                            <strong>검색 결과가 없습니다.</strong>
+                            <p>질문/답변 문구를 추가하거나 검색어를 바꿔보세요.</p>
+                        </div>
+                    </template>
+                </div>
+            </section>
+        </main>
+    </div>
+    <div class="footer-box">
+        <div th:replace="~{|sso/include/user/inc_footer|}"></div>
+    </div>
+</div>
+</body>
+<script>
+    "use strict";
+
+    const faqPageSize = 6;
+    const faqCategories = [
+        { key: "all", label: "전체" },
+        { key: "login", label: "로그인 / 회원가입" },
+        { key: "verify", label: "본인인증" },
+        { key: "easy", label: "간편로그인" },
+        { key: "service", label: "서비스 이용" },
+        { key: "card", label: "카드 / 혜택" },
+        { key: "shop", label: "쇼핑" },
+        { key: "recruit", label: "구인구직" },
+        { key: "business", label: "기업회원" },
+        { key: "support", label: "기타 / 고객센터" }
+    ];
+    const faqItems = [
+        {
+            id: "faq-1",
+            categoryKey: "login",
+            question: "회원가입은 어떻게 하나요?",
+            answer: "네이버, 카카오, 구글, 애플 계정을 이용하거나 휴대폰 본인인증을 통해 간편하게 가입할 수 있습니다."
+        },
+        {
+            id: "faq-2",
+            categoryKey: "login",
+            question: "로그인은 어떻게 하나요?",
+            answer: "가입 시 사용한 계정(네이버, 카카오, 구글, 애플, 본인인증)으로 로그인할 수 있습니다."
+        },
+        {
+            id: "faq-3",
+            categoryKey: "login",
+            question: "여러 계정으로 가입할 수 있나요?",
+            answer: "각 계정은 별도의 계정으로 인식됩니다. 하나의 계정 사용을 권장드립니다."
+        },
+        {
+            id: "faq-4",
+            categoryKey: "login",
+            question: "로그인이 안돼요.",
+            answer: "사용하신 로그인 수단이 맞는지 확인 후 다시 시도해 주세요. 문제가 계속될 경우 고객센터로 문의해 주세요."
+        },
+        {
+            id: "faq-5",
+            categoryKey: "verify",
+            question: "휴대폰 본인인증이 안돼요.",
+            answer: "타인 명의 휴대폰, 법인폰 등은 인증이 제한될 수 있습니다. 본인 명의 휴대폰으로 다시 시도해 주세요."
+        },
+        {
+            id: "faq-6",
+            categoryKey: "verify",
+            question: "다른 방법으로 인증할 수 있나요?",
+            answer: "현재는 휴대폰 본인인증만 지원하고 있습니다."
+        },
+        {
+            id: "faq-7",
+            categoryKey: "service",
+            question: "서비스 이용 중 오류가 발생하면 어떻게 하나요?",
+            answer: "서비스 오류 대응 절차는 추후 입력해 주세요. 재로그인, 앱 재실행, 브라우저 변경, 문의 접수 흐름 등을 넣을 수 있습니다."
+        },
+        {
+            id: "faq-8",
+            categoryKey: "easy",
+            question: "PIN번호 또는 생체인증은 무엇인가요?",
+            answer: "로그인 이후 빠르게 접속할 수 있도록 지원하는 간편 로그인 방식입니다."
+        },
+        {
+            id: "faq-9",
+            categoryKey: "easy",
+            question: "PIN번호는 꼭 설정해야 하나요?",
+            answer: "선택 사항이며 설정하지 않아도 기존 로그인 방식으로 이용할 수 있습니다."
+        },
+        {
+            id: "faq-10",
+            categoryKey: "easy",
+            question: "PIN번호를 잊어버렸어요",
+            answer: "기존 로그인 방식으로 로그인 후 다시 설정할 수 있습니다."
+        },
+        {
+            id: "faq-11",
+            categoryKey: "easy",
+            question: "생체인증이 작동하지 않아요",
+            answer: "기기 설정에서 생체인증이 활성화되어 있는지 확인 후 다시 시도해 주세요."
+        }
+    ];
+
+    $(function () {
+        const $root = $(".faq-page");
+
+        if (!$root.length) {
+            return;
+        }
+
+        const state = {
+            searchQuery: "",
+            activeCategoryKey: "all",
+            visibleCount: faqPageSize,
+            expandedItemId: "",
+            allowAutoExpand: true,
+            isCategoryPanelCollapsed: false,
+            staggerRevealStartIndex: -1,
+        };
+
+        const $categorySelect = $root.find(".js-faq-category-select");
+        const $searchInput = $root.find(".js-faq-search-input");
+        const $categoryPanel = $root.find(".js-faq-category-panel");
+        const $categories = $root.find(".js-faq-categories");
+        const $collapseButton = $root.find(".js-faq-collapse");
+        const $collapseLabel = $root.find(".js-faq-collapse-label");
+        const $list = $root.find(".js-faq-list");
+        const $loadMoreButton = $root.find(".js-faq-load-more");
+        const $loadMoreLabel = $root.find(".js-faq-load-more-label");
+        const $categoryTemplate = $root.find(".js-faq-category-template");
+        const $itemTemplate = $root.find(".js-faq-item-template");
+        const $emptyTemplate = $root.find(".js-faq-empty-template");
+
+        bindEvents();
+        render();
+
+        function bindEvents() {
+            $root.off(".dolbomFaq");
+            $root.on("submit.dolbomFaq", ".js-faq-search-form", handleSearchSubmit);
+            $root.on("change.dolbomFaq", ".js-faq-category-select", handleCategorySelectChange);
+            $root.on("input.dolbomFaq", ".js-faq-search-input", handleSearchInput);
+            $root.on("click.dolbomFaq", ".js-faq-category-button", handleCategoryClick);
+            $root.on("click.dolbomFaq", ".js-faq-item-toggle", handleItemToggle);
+            $root.on("click.dolbomFaq", ".js-faq-load-more", handleLoadMoreClick);
+            $root.on("click.dolbomFaq", ".js-faq-collapse", handleCollapseClick);
+        }
+
+        function handleSearchSubmit(event) {
+            event.preventDefault();
+            state.searchQuery = normalizeQuery($searchInput.val());
+            state.visibleCount = faqPageSize;
+            state.allowAutoExpand = true;
+            state.staggerRevealStartIndex = -1;
+            renderList();
+        }
+
+        function handleSearchInput(event) {
+            state.searchQuery = normalizeQuery($(event.currentTarget).val());
+            state.visibleCount = faqPageSize;
+            state.allowAutoExpand = true;
+            state.staggerRevealStartIndex = -1;
+            renderList();
+        }
+
+        function handleCategorySelectChange(event) {
+            const nextCategoryKey = String($(event.currentTarget).val() || "");
+
+            if (!nextCategoryKey || state.activeCategoryKey === nextCategoryKey) {
+                return;
+            }
+
+            state.activeCategoryKey = nextCategoryKey;
+            state.visibleCount = faqPageSize;
+            state.allowAutoExpand = true;
+            state.staggerRevealStartIndex = -1;
+            renderCategories();
+            renderList();
+        }
+
+        function handleCategoryClick(event) {
+            const nextCategoryKey = String($(event.currentTarget).attr("value") || "");
+
+            if (!nextCategoryKey || state.activeCategoryKey === nextCategoryKey) {
+                return;
+            }
+
+            state.activeCategoryKey = nextCategoryKey;
+            state.visibleCount = faqPageSize;
+            state.allowAutoExpand = true;
+            state.staggerRevealStartIndex = -1;
+            renderCategories();
+            renderSearch();
+            renderList();
+        }
+
+        function handleItemToggle(event) {
+            const itemId = String($(event.currentTarget).closest(".faq-card").attr("id") || "");
+
+            if (!itemId) {
+                return;
+            }
+
+            state.expandedItemId = state.expandedItemId === itemId ? "" : itemId;
+            state.allowAutoExpand = false;
+            syncVisibleCardStates();
+        }
+
+        function handleLoadMoreClick() {
+            const filteredItems = getFilteredItems();
+            const isAllVisible = state.visibleCount >= filteredItems.length;
+
+            if (isAllVisible) {
+                state.visibleCount = faqPageSize;
+                state.allowAutoExpand = true;
+                state.staggerRevealStartIndex = -1;
+            } else {
+                state.staggerRevealStartIndex = state.visibleCount;
+                state.visibleCount += faqPageSize;
+            }
+
+            renderList();
+        }
+
+        function handleCollapseClick() {
+            state.isCategoryPanelCollapsed = !state.isCategoryPanelCollapsed;
+            syncCategoryPanelState();
+        }
+
+        function render() {
+            renderSearch();
+            $searchInput.val(state.searchQuery);
+            renderCategories();
+            syncCategoryPanelState();
+            renderList();
+        }
+
+        function renderSearch() {
+            if (!$categorySelect.length) {
+                return;
+            }
+
+            const optionsMarkup = $.map(faqCategories, function (category) {
+                const isSelected = category.key === state.activeCategoryKey ? ' selected="selected"' : "";
+                return `<option value="${category.key}"${isSelected}>${category.label}</option>`;
+            }).join("");
+
+            $categorySelect.html(optionsMarkup);
+            $categorySelect.val(state.activeCategoryKey);
+        }
+
+        function renderCategories() {
+            $categories.empty();
+
+            $.each(faqCategories, function (_, category) {
+                const $button = cloneTemplate($categoryTemplate);
+                const isActive = category.key === state.activeCategoryKey;
+
+                $button.attr("value", category.key);
+                $button.toggleClass("is-active", isActive);
+                $button.attr("aria-pressed", String(isActive));
+                $button.find(".js-faq-category-label").text(category.label);
+                $categories.append($button);
+            });
+        }
+
+        function syncCategoryPanelState() {
+            const isCollapsed = state.isCategoryPanelCollapsed;
+
+            $collapseButton
+                .toggleClass("is-collapsed", isCollapsed)
+                .attr("aria-expanded", String(!isCollapsed));
+
+            if ($collapseLabel.length) {
+                $collapseLabel.text(isCollapsed ? "펼치기" : "접기");
+            }
+
+            $categoryPanel.toggleClass("is-collapsed", isCollapsed);
+        }
+
+        function renderList() {
+            const filteredItems = getFilteredItems();
+            const visibleItems = filteredItems.slice(0, state.visibleCount);
+            const isAllVisible = visibleItems.length >= filteredItems.length;
+            const shouldShowLoadMoreButton =
+                visibleItems.length > 0 && filteredItems.length > faqPageSize;
+            const hasExpandedItem = visibleItems.some(function (item) {
+                return item.id === state.expandedItemId;
+            });
+
+            if (!hasExpandedItem && state.allowAutoExpand) {
+                state.expandedItemId = visibleItems[0] ? visibleItems[0].id : "";
+            }
+
+            if (!hasExpandedItem && !state.allowAutoExpand) {
+                state.expandedItemId = "";
+            }
+
+            $list.empty();
+
+            if (!visibleItems.length) {
+                state.expandedItemId = "";
+                state.staggerRevealStartIndex = -1;
+                $list.append(cloneTemplate($emptyTemplate));
+                $loadMoreButton.prop("hidden", true).removeClass("is-collapsed");
+                return;
+            }
+
+            $.each(visibleItems, function (index, item) {
+                const shouldAnimate =
+                    state.staggerRevealStartIndex > -1 && index >= state.staggerRevealStartIndex;
+
+                $list.append(
+                    createFaqCard(item, {
+                        shouldAnimate: shouldAnimate,
+                        animationOrder: shouldAnimate ? index - state.staggerRevealStartIndex : 0,
+                    }),
+                );
+            });
+
+            syncVisibleCardStates();
+            state.staggerRevealStartIndex = -1;
+
+            $loadMoreButton.prop("hidden", !shouldShowLoadMoreButton);
+            $loadMoreButton.toggleClass("is-collapsed", shouldShowLoadMoreButton && isAllVisible);
+
+            if ($loadMoreLabel.length) {
+                $loadMoreLabel.text(isAllVisible ? "접기" : "더보기");
+            }
+        }
+
+        function createFaqCard(item, options) {
+            const $card = cloneTemplate($itemTemplate);
+            const shouldAnimate = Boolean(options && options.shouldAnimate);
+            const animationOrder = Number((options && options.animationOrder) || 0);
+
+            $card.attr("id", item.id);
+            $card.toggleClass("is-entering", shouldAnimate);
+
+            if (shouldAnimate) {
+                $card.css("--faq-enter-delay", `${animationOrder * 70}ms`);
+            } else {
+                $card.css("--faq-enter-delay", "");
+            }
+
+            $card.find(".js-faq-question").text(item.question);
+            $card.find(".js-faq-answer").text(item.answer);
+            syncFaqCardState($card, item.id === state.expandedItemId);
+
+            return $card;
+        }
+
+        function syncVisibleCardStates() {
+            $list.find(".faq-card").each(function (_, element) {
+                const $card = $(element);
+                const itemId = String($card.attr("id") || "");
+                syncFaqCardState($card, itemId === state.expandedItemId);
+            });
+        }
+
+        function syncFaqCardState($card, isOpen) {
+            const $button = $card.find(".js-faq-item-toggle");
+            const $answerPanel = $card.find(".js-faq-answer-panel");
+
+            $card.toggleClass("is-open", isOpen);
+            $button.attr("aria-expanded", String(isOpen));
+            $answerPanel.attr("aria-hidden", String(!isOpen));
+        }
+
+        function getFilteredItems() {
+            const normalizedQuery = normalizeForSearch(state.searchQuery);
+
+            return $.grep(faqItems, function (item) {
+                const matchesCategory =
+                    state.activeCategoryKey === "all" || item.categoryKey === state.activeCategoryKey;
+                const matchesQuery = !normalizedQuery
+                    ? true
+                    : normalizeForSearch([item.question, item.answer].join(" ")).includes(normalizedQuery);
+
+                return matchesCategory && matchesQuery;
+            });
+        }
+
+        function normalizeQuery(value) {
+            return String(value || "").replace(/\s+/g, " ").trim();
+        }
+
+        function normalizeForSearch(value) {
+            return normalizeQuery(value).toLowerCase();
+        }
+
+        function cloneTemplate($template) {
+            return $($template[0].content.firstElementChild.cloneNode(true));
+        }
+    });
+
+</script>
+</html>

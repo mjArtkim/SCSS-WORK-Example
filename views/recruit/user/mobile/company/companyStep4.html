@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+    <div th:replace="~{|recruit/include/user/inc_head|}"></div>
+</head>
+<body class="recruit-body">
+<section class="re-company-recruit re-company-recruit--step4">
+    <div>
+        <div th:replace="~{recruit/include/user/mobile/inc_recruit_head :: recruitHead}"></div>
+    </div>
+
+    <div class="re-company-recruit__content re-s4 js-s4">
+        <section class="re-s4__section">
+            <h2 class="re-s4__title">접수기간</h2>
+
+            <div class="re-s4__date-row">
+                <div class="re-s4__date-field">
+                    <label class="sound-only" for="company-step4-start-date">접수 시작일</label>
+                    <input id="company-step4-start-date" class="re-s4__date-input js-s4-start-date" type="text" placeholder="YYYY.MM.DD" autocomplete="off" readonly>
+                    <button class="re-s4__date-btn js-s4-open-date" type="button" value="start" aria-label="접수 시작일 선택"></button>
+                </div>
+
+                <span class="re-s4__date-dash" aria-hidden="true">-</span>
+
+                <div class="re-s4__date-field">
+                    <label class="sound-only" for="company-step4-end-date">접수 종료일</label>
+                    <input id="company-step4-end-date" class="re-s4__date-input js-s4-end-date" type="text" placeholder="YYYY.MM.DD" autocomplete="off" readonly>
+                    <button class="re-s4__date-btn js-s4-open-date" type="button" value="end" aria-label="접수 종료일 선택"></button>
+                </div>
+            </div>
+
+            <div class="re-s4__period-list">
+                <button class="re-s4__period-btn js-s4-period" type="button" value="15d">15일</button>
+                <button class="re-s4__period-btn js-s4-period" type="button" value="1m">1개월</button>
+                <button class="re-s4__period-btn js-s4-period" type="button" value="2m">2개월</button>
+            </div>
+        </section>
+
+        <section class="re-s4__section">
+            <h2 class="re-s4__title">접수방법</h2>
+
+            <div class="re-s4__method js-s4-method">
+                <button class="re-s4__method-toggle js-s4-method-toggle" type="button" aria-expanded="false">
+                    <span class="re-s4__method-label js-s4-method-label">구인구직 온라인 접수</span>
+                    <span class="re-s4__method-arrow" aria-hidden="true"></span>
+                </button>
+
+                <div class="re-s4__method-options js-s4-method-options" hidden>
+                    <label class="re-s4__method-option" for="company-step4-method-online">
+                        <input id="company-step4-method-online" class="js-s4-method-input" type="checkbox" value="구인구직 온라인 접수" checked>
+                        <span class="re-s4__checkbox" aria-hidden="true"></span>
+                        <span class="re-s4__method-copy">구인구직 온라인 접수</span>
+                    </label>
+
+                    <label class="re-s4__method-option" for="company-step4-method-email">
+                        <input id="company-step4-method-email" class="js-s4-method-input" type="checkbox" value="E-mail 접수">
+                        <span class="re-s4__checkbox" aria-hidden="true"></span>
+                        <span class="re-s4__method-copy">E-mail 접수</span>
+                    </label>
+
+                    <label class="re-s4__method-option" for="company-step4-method-call">
+                        <input id="company-step4-method-call" class="js-s4-method-input" type="checkbox" value="방문, 전화 접수">
+                        <span class="re-s4__checkbox" aria-hidden="true"></span>
+                        <span class="re-s4__method-copy">방문, 전화 접수</span>
+                    </label>
+                </div>
+            </div>
+        </section>
+
+        <section class="re-s4__section re-s4__section--tight">
+            <div class="re-s4__method-detail-list">
+                <div class="re-s4__static-line js-s4-detail-online">구인구직 이력서</div>
+
+                <div class="re-s4__line-field js-s4-detail-email" hidden>
+                    <label class="sound-only" for="company-step4-method-email-detail">이메일 주소 입력</label>
+                    <input id="company-step4-method-email-detail" class="re-s4__line-input" type="email" placeholder="이메일 주소를 입력해주세요.">
+                </div>
+
+                <div class="re-s4__line-field js-s4-detail-call" hidden>
+                    <label class="sound-only" for="company-step4-method-call-detail">방문 또는 전화 접수 정보 입력</label>
+                    <input id="company-step4-method-call-detail" class="re-s4__line-input" type="text" placeholder="방문 주소 또는 연락처를 입력해주세요.">
+                </div>
+            </div>
+        </section>
+
+        <section class="re-s4__section">
+            <div class="re-s4__field-group">
+                <label class="re-s4__title" for="company-step4-title">채용제목</label>
+                <div class="re-s4__line-field">
+                    <input id="company-step4-title" class="re-s4__line-input" type="text" placeholder="제목을 이곳에 입력해주세요.">
+                </div>
+            </div>
+        </section>
+
+        <section class="re-s4__section re-s4__section--policy">
+            <label class="re-s4__policy-check" for="company-step4-policy">
+                <input id="company-step4-policy" type="checkbox">
+                <span class="re-s4__checkbox" aria-hidden="true"></span>
+                <span class="re-s4__policy-copy">본 기업은 안전한 채용 환경을 조성하고 구직자의 소중한 개인정보를 안전하게 보호하고 지키기 위해 노력합니다. 선택 시 구직자에게 [개인정보 보호를 위해 노력하는 기업]으로 표시됩니다.</span>
+            </label>
+        </section>
+
+        <section class="re-s4__section">
+            <h2 class="re-s4__title">채용절차</h2>
+
+            <div class="re-s4__process-row">
+                <div class="re-s4__process-list js-s4-process-list"></div>
+                <span class="re-s4__process-divider js-s4-process-divider" aria-hidden="true"></span>
+                <button class="re-s4__process-add js-s4-process-add" type="button">
+                    <span class="re-s4__process-add-copy">추가</span>
+                    <span class="re-s4__process-plus" aria-hidden="true"></span>
+                </button>
+            </div>
+        </section>
+    </div>
+
+    <div class="re-company-recruit__footer">
+        <button class="re-company-recruit__nav re-company-recruit__nav--prev" type="button" aria-label="이전 단계" onclick="movePage('/recruit/user/companyStep3')">
+            이전
+        </button>
+        <button class="re-company-recruit__nav re-company-recruit__nav--next" type="button" onclick="movePage('/recruit/user/companyDone')">
+            다음 단계
+        </button>
+    </div>
+</section>
+
+<script th:inline="javascript">
+    $(function () {
+        const $root = $('.js-s4');
+
+        if (!$root.length) {
+            return;
+        }
+
+        const $startDate = $root.find('.js-s4-start-date');
+        const $endDate = $root.find('.js-s4-end-date');
+        const $periodButtons = $root.find('.js-s4-period');
+        const $methodBox = $root.find('.js-s4-method');
+        const $methodToggle = $root.find('.js-s4-method-toggle');
+        const $methodLabel = $root.find('.js-s4-method-label');
+        const $methodOptions = $root.find('.js-s4-method-options');
+        const $methodInputs = $root.find('.js-s4-method-input');
+        const $methodDetailOnline = $root.find('.js-s4-detail-online');
+        const $methodDetailEmail = $root.find('.js-s4-detail-email');
+        const $methodDetailCall = $root.find('.js-s4-detail-call');
+        const $dateButtons = $root.find('.js-s4-open-date');
+        const $processList = $root.find('.js-s4-process-list');
+        const $processDivider = $root.find('.js-s4-process-divider');
+        const $processAdd = $root.find('.js-s4-process-add');
+
+        const processOrder = ['서류합격', '1차면접', '2차면접', '인성면접', '임원면접', '최종합격'];
+        const finalProcessStep = processOrder[processOrder.length - 1];
+        const optionalProcessOrder = processOrder.slice(0, processOrder.length - 1);
+        const selectedProcessSteps = [finalProcessStep];
+
+        function fn_step4GetSelectedMethods() {
+            return $methodInputs.filter(':checked');
+        }
+
+        function fn_step4CloneDate(date) {
+            return new Date(date.getFullYear(), date.getMonth(), date.getDate());
+        }
+
+        function fn_step4FormatDate(date) {
+            return $.datepicker.formatDate('yy.mm.dd', date);
+        }
+
+        function fn_step4ParseDate(value) {
+            if (!value) {
+                return null;
+            }
+
+            try {
+                return $.datepicker.parseDate('yy.mm.dd', value);
+            } catch (error) {
+                return null;
+            }
+        }
+
+        function fn_step4AddDays(date, days) {
+            const nextDate = fn_step4CloneDate(date);
+
+            nextDate.setDate(nextDate.getDate() + days);
+            return nextDate;
+        }
+
+        function fn_step4AddMonths(date, months) {
+            const nextDate = fn_step4CloneDate(date);
+            const originalDay = nextDate.getDate();
+
+            nextDate.setMonth(nextDate.getMonth() + months);
+
+            if (nextDate.getDate() !== originalDay) {
+                nextDate.setDate(0);
+            }
+
+            return nextDate;
+        }
+
+        function fn_step4SyncDateRange() {
+            const startDate = fn_step4ParseDate($startDate.val());
+            const endDate = fn_step4ParseDate($endDate.val());
+
+            $startDate.datepicker('option', 'maxDate', endDate || null);
+            $endDate.datepicker('option', 'minDate', startDate || null);
+        }
+
+        function fn_step4SetPeriodState(activeValue) {
+            $periodButtons.removeClass('is-active');
+
+            if (!activeValue) {
+                return;
+            }
+
+            $periodButtons.filter(function () {
+                return $(this).val() === activeValue;
+            }).addClass('is-active');
+        }
+
+        function fn_step4ApplyPeriod(periodValue) {
+            let startDate = fn_step4ParseDate($startDate.val());
+
+            if (!startDate) {
+                startDate = fn_step4CloneDate(new Date());
+                $startDate.val(fn_step4FormatDate(startDate));
+            }
+
+            let endDate = fn_step4CloneDate(startDate);
+
+            if (periodValue === '15d') {
+                endDate = fn_step4AddDays(startDate, 15);
+            }
+
+            if (periodValue === '1m') {
+                endDate = fn_step4AddMonths(startDate, 1);
+            }
+
+            if (periodValue === '2m') {
+                endDate = fn_step4AddMonths(startDate, 2);
+            }
+
+            $startDate.val(fn_step4FormatDate(startDate));
+            $endDate.val(fn_step4FormatDate(endDate));
+
+            fn_step4SetPeriodState(periodValue);
+            fn_step4SyncDateRange();
+        }
+
+        function fn_step4HandleDateChange(targetType) {
+            const activePeriod = $periodButtons.filter('.is-active').val() || '';
+            const startDate = fn_step4ParseDate($startDate.val());
+            const endDate = fn_step4ParseDate($endDate.val());
+
+            if (targetType === 'start' && activePeriod) {
+                fn_step4ApplyPeriod(activePeriod);
+                return;
+            }
+
+            if (targetType === 'end' && activePeriod) {
+                fn_step4SetPeriodState('');
+            }
+
+            if (startDate && endDate && endDate < startDate) {
+                if (targetType === 'start') {
+                    $endDate.val(fn_step4FormatDate(startDate));
+                } else {
+                    $startDate.val(fn_step4FormatDate(endDate));
+                }
+            }
+
+            fn_step4SyncDateRange();
+        }
+
+        function fn_step4ToggleMethodOptions(isOpen) {
+            $methodBox.toggleClass('is-open', isOpen);
+            $methodOptions.prop('hidden', !isOpen);
+            $methodToggle.attr('aria-expanded', isOpen ? 'true' : 'false');
+        }
+
+        function fn_step4UpdateMethodLabel() {
+            const selectedLabels = fn_step4GetSelectedMethods().map(function () {
+                return $(this).val();
+            }).get();
+
+            if (!selectedLabels.length) {
+                $methodLabel.text('접수방법을 선택해주세요');
+                return;
+            }
+
+            $methodLabel.text(selectedLabels.join(', '));
+        }
+
+        function fn_step4UpdateMethodDetail() {
+            const selectedValues = fn_step4GetSelectedMethods().map(function () {
+                return $(this).val();
+            }).get();
+
+            $methodDetailOnline.prop('hidden', $.inArray('구인구직 온라인 접수', selectedValues) === -1);
+            $methodDetailEmail.prop('hidden', $.inArray('E-mail 접수', selectedValues) === -1);
+            $methodDetailCall.prop('hidden', $.inArray('방문, 전화 접수', selectedValues) === -1);
+        }
+
+        function fn_step4SortProcesses() {
+            selectedProcessSteps.sort(function (leftStep, rightStep) {
+                return $.inArray(leftStep, processOrder) - $.inArray(rightStep, processOrder);
+            });
+        }
+
+        function fn_step4GetNextMissingProcess() {
+            let nextMissingStep = '';
+
+            $.each(optionalProcessOrder, function (_, stepLabel) {
+                if ($.inArray(stepLabel, selectedProcessSteps) === -1) {
+                    nextMissingStep = stepLabel;
+                    return false;
+                }
+            });
+
+            return nextMissingStep;
+        }
+
+        function fn_step4RenderProcesses() {
+            const hasRemainingStep = Boolean(fn_step4GetNextMissingProcess());
+
+            $processList.empty();
+
+            $.each(selectedProcessSteps, function (index, stepLabel) {
+                const $chip = $('<div>', {
+                    class: 're-s4__process-chip'
+                });
+                const $label = $('<span>', {
+                    class: 're-s4__process-label'
+                }).text(stepLabel);
+
+                $chip.append($label);
+
+                if (stepLabel === finalProcessStep) {
+                    $chip.addClass('is-final');
+                } else {
+                    $chip.append($('<button>', {
+                        type: 'button',
+                        class: 're-s4__process-remove js-s4-process-remove',
+                        value: stepLabel,
+                        'aria-label': stepLabel + ' 삭제'
+                    }));
+                }
+
+                $processList.append($chip);
+
+                if (index < selectedProcessSteps.length - 1) {
+                    $processList.append($('<span>', {
+                        class: 're-s4__process-arrow',
+                        'aria-hidden': 'true'
+                    }));
+                }
+            });
+
+            $processAdd.prop('disabled', !hasRemainingStep).toggleClass('is-disabled', !hasRemainingStep);
+            $processDivider.toggleClass('is-disabled', !hasRemainingStep);
+        }
+
+        function fn_step4AddProcessStep() {
+            const nextStep = fn_step4GetNextMissingProcess();
+
+            if (!nextStep) {
+                return;
+            }
+
+            selectedProcessSteps.push(nextStep);
+            fn_step4SortProcesses();
+            fn_step4RenderProcesses();
+        }
+
+        function fn_step4RemoveProcessStep(stepLabel) {
+            const processIndex = $.inArray(stepLabel, selectedProcessSteps);
+
+            if (processIndex === -1 || stepLabel === finalProcessStep) {
+                return;
+            }
+
+            selectedProcessSteps.splice(processIndex, 1);
+            fn_step4RenderProcesses();
+        }
+
+        const datepickerBaseOption = {
+            dateFormat: 'yy.mm.dd',
+            showOtherMonths: true,
+            changeMonth: true,
+            changeYear: true
+        };
+
+        $startDate.datepicker($.extend({}, datepickerBaseOption, {
+            onSelect: function () {
+                fn_step4HandleDateChange('start');
+            }
+        }));
+
+        $endDate.datepicker($.extend({}, datepickerBaseOption, {
+            onSelect: function () {
+                fn_step4HandleDateChange('end');
+            }
+        }));
+
+        $periodButtons.on('click', function () {
+            fn_step4ApplyPeriod($(this).val());
+        });
+
+        $dateButtons.on('click', function () {
+            const $targetInput = $(this).val() === 'start' ? $startDate : $endDate;
+
+            $targetInput.datepicker('show');
+        });
+
+        $startDate.add($endDate).on('click', function () {
+            $(this).datepicker('show');
+        });
+
+        $methodToggle.on('click', function () {
+            fn_step4ToggleMethodOptions($methodOptions.prop('hidden'));
+        });
+
+        $methodInputs.on('change', function () {
+            fn_step4UpdateMethodLabel();
+            fn_step4UpdateMethodDetail();
+        });
+
+        $processAdd.on('click', fn_step4AddProcessStep);
+        $processList.on('click', '.js-s4-process-remove', function () {
+            fn_step4RemoveProcessStep($(this).val());
+        });
+
+        $(document).on('click', function (event) {
+            if (!$(event.target).closest('.js-s4-method').length) {
+                fn_step4ToggleMethodOptions(false);
+            }
+        });
+
+        fn_step4UpdateMethodLabel();
+        fn_step4UpdateMethodDetail();
+        fn_step4SyncDateRange();
+        fn_step4RenderProcesses();
+    });
+</script>
+
+</body>
+</html>

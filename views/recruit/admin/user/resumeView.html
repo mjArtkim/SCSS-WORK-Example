@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <div th:replace="~{|recruit/include/admin/inc_admin_head|}"></div>
+
+    <link href="/bootstrap-3.4.1/css/bootstrap.css" rel="stylesheet">
+    <script src="/bootstrap-3.4.1/js/bootstrap.js"></script>
+    <link href="/summernote-0.9.0/summernote-lite.min.css" rel="stylesheet">
+    <script src="/summernote-0.9.0/summernote-lite.min.js"></script>
+    <style>
+        .container {
+            width: auto !important;
+        }
+    </style>
+</head>
+<body id="page-top">
+<div class="wrapper goodList">
+    <div th:replace="~{|recruit/include/admin/inc_admin_header|}"></div>
+
+    <div class="container">
+        <div th:replace="~{|recruit/include/admin/inc_admin_side_left|}"></div>
+        <div class="contents">
+            <div class="inner">
+                <div class="tabWrap">
+                    <div class="tabCon">
+                        <div class="tab">
+                            <div class="headerArea flexBox">
+                                <h2>이력서 상세보기</h2>
+                                <div class="link"></div>
+                            </div>
+                            <div class="resumeViewWrap item">
+                                <div class="itemCon show">
+                                    <div class="resumeHeader">
+                                        <strong th:text="${data.resume_title}"></strong>
+                                    </div>
+                                    <div class="resumeContent">
+                                        <div class="resumeRow">
+                                            <div class="resumeLabel">희망직군/직무</div>
+                                            <div class="resumeValue" th:text="${data.desired_job_code}"></div>
+                                        </div>
+                                        <div class="resumeRow">
+                                            <div class="resumeLabel">희망근무지</div>
+                                            <div class="resumeValue" th:text="${data.desired_location}"></div>
+                                        </div>
+                                        <div class="resumeRow">
+                                            <div class="resumeLabel">희망고용형태</div>
+                                            <div class="resumeValue" th:text="${desireEmployType}">
+                                            </div>
+                                        </div>
+
+                                        <div class="resumeRow">
+                                            <div class="resumeLabel">희망 연봉</div>
+                                            <div class="resumeValue">
+                                                <span th:text="${desireSalaryType}"></span>
+
+                                                <span th:if="${desireSalaryType == '직접입력'}"
+                                                      th:text="' (' + ${data.desired_salary_detail} + '만원)'"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="resumeRow">
+                                        <div class="resumeLabel">총경력</div>
+                                        <div class="resumeValue"
+                                             th:text="${data.total_experience_month != null ? (data.total_experience_month / 12) + '년 ' + (data.total_experience_month % 12) + '개월' : '-'}">
+                                        </div>
+                                    </div>
+                                    <div class="resumeRow">
+                                        <div class="resumeLabel">자기소개(요약)</div>
+                                        <div class="resumeValue">
+                                            <span th:text="${data.summary}">자기소개 요약</span>
+                                            <div class="resumeIntroBox" th:text="${data.content}"></div>
+                                        </div>
+                                    </div>
+                                    <div class="resumeRow">
+                                        <div class="resumeLabel">포트폴리오 URL</div>
+                                        <div class="resumeValue">
+                                            <a th:if="${!#strings.isEmpty(data['portfolio_url'])}"
+                                               th:href="${data['portfolio_url']}"
+                                               th:text="${data['portfolio_url']}"
+                                               class="resumeLink"
+                                               target="_blank">
+                                            </a>
+                                            <span th:if="${#strings.isEmpty(data['portfolio_url'])}">-</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="resumeFooter">
+                                    <div>
+                                        <strong>이력서 상태</strong>
+                                        <span class="resumeStatus"
+                                              th:classappend="${data.resume_status == 'P'} ? ' publish' : ' temp'">
+                                                                                              [[${data.resume_status == 'PB' ? '게시' : '임시'}]]
+                                                                                        </span>
+                                    </div>
+                                    <div>
+                                        <strong>사용 여부</strong>
+                                        <span class="resumeUse"
+                                              th:classappend="${data.use_yn == 'Y'} ? ' use' : ' unuse'">
+                                                                                              [[${data.use_yn == 'Y' ? '사용' : '미사용'}]]
+                                                                                        </span>
+                                    </div>
+                                    <div><strong>등록일자</strong> <span
+                                            th:text="${data.regDt}"></span>
+                                    </div>
+                                    <div><strong>수정일자</strong> <span
+                                            th:text="${data.modDt != null ? data.modDt : '-'}"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</body>
+<script th:inline="javascript">
+    $('.loading').hide();
+
+
+</script>
+</html>

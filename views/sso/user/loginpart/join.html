@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="~{|sso/include/user/inc_head|}"></div>
+</head>
+<body data-aos-easing="ease-out" data-aos-duration="700" data-aos-delay="0">
+<div class="app-shell app-shell--auth app-shell--quick-actions-hidden app-shell--join">
+    <div class="app-body">
+        <div class="site-header header-box wrap join-header-wrap">
+            <div th:replace="~{|sso/include/user/inc_header|}"></div>
+        </div>
+        <main class="site-content" aria-live="polite">
+
+            <section class="join-page wrap">
+                <div class="join-page__wrap">
+                    <button class="join-page__back" type="button" data-role="join-back" aria-label="이전 단계로 이동" onclick="goBack()">
+              <span class="icon-svg join-page__back-icon" data-icon-name="chevron_left" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/chevron_left_icon.svg');"></span>
+                    </button>
+
+                    <form class="join-form" action="/join" method="post" novalidate data-form="join" data-step="1">
+                        <section class="join-form__panel join-form__panel--intro is-active" data-step-panel="1">
+                            <div class="join-form__body">
+                                <header class="join-form__header">
+                                    <h2 class="join-form__title">
+                                        안전한 돌보미 이용을 위해 본인인증을 진행할게요 </h2>
+                                    <p class="join-form__description">
+                                        신뢰할 수 있는 돌보미 환경을 위해 본인확인이 필요합니다 </p>
+                                </header>
+                                <figure class="join-form__figure">
+                                    <img class="join-form__mascot" src="/img/sso/user/bomi_01.png" alt="신분증을 들고 있는 돌보미 캐릭터"/>
+                                </figure>
+                            </div>
+                            <div class="join-form__footer">
+                                <button class="join-form__button join-form__button--primary" type="button" onclick="checkUserInfo()">
+                                    본인 인증 하기
+                                </button>
+                            </div>
+                        </section>
+                    </form>
+                </div>
+                <div data-include="./components/modal.html"></div>
+            </section>
+
+        </main>
+    </div>
+    <div class="footer-box">
+        <div th:replace="~{|sso/include/user/inc_footer|}"></div>
+    </div>
+
+</div>
+</body>
+<script th:inline="javascript">
+
+    $(document).ready(function () {
+        $(".join-header-wrap").show();
+        const userAgent = window.navigator.userAgent.toLowerCase();
+        const isApp = userAgent.indexOf('android') > -1 || userAgent.indexOf('iphone') > -1;
+        if (isApp) {
+            $(".join-header-wrap").hide();
+        }
+    });
+
+    const checkUserInfo = () => {
+        const param = {};
+        $.ajax({
+            url: "/authentication/oauth2/token",
+            type: 'GET',
+            beforeSend: function (xhr) {
+                $('.loading').show();
+            },
+            success: function (data, textStatus, jqXHR) {
+
+                const width = 450;
+                const height = 600;
+                const left = (window.screen.width / 2) - (width / 2);
+                const top = (window.screen.height / 2) - (height / 2);
+                const windowStatus = `width=${width}, height=${height}, left=${left}, top=${top}, resizable=yes, scrollbars=yes, status=no, titlebar=no`;
+
+                const authWin = window.open("", "bizSirenPopup", windowStatus);
+
+                if (authWin) {
+                    authWin.document.write(data);
+                    authWin.document.close();
+                    /* setTimeout(function() {
+                         if (authWin.document.reqCBAForm) {
+                             authWin.document.reqCBAForm.submit();
+                         }
+                     }, 100);*/
+                } else {
+                    alert("팝업 차단이 설정되어 있습니다. 팝업을 허용해주세요.");
+                }
+
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                confirmModal({title: jqXHR.statusText});
+            },
+            complete: function () {
+                $('.loading').hide();
+            }
+        })
+    }
+</script>
+</html>

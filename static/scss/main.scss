@@ -1,0 +1,891 @@
+@charset "utf-8";
+@use "sass:color";
+@use "variables" as *;
+@use "mixins" as *;
+@use "map";
+
+.main {
+  position: relative;
+  height: 100vh;
+  font-family: $family-base;
+  background-image: url("../../../img/sso/user/main_bg_01.webp");
+  background-position: top right;
+  background-repeat: no-repeat;
+  &--bg-job {
+  background-image: url("../../../img/sso/user/main_bg_01.webp");
+  }
+  &--bg-shop {
+  background-image: url("../../../img/sso/user/main_bg_03.webp");
+  }
+  &--bg-comu {
+  background-image: url("../../../img/sso/user/main_bg_02.webp");
+  }
+  &--bg-card {
+ background-image: url("../../../img/sso/user/main_bg_04.webp");
+  }
+  &--bg-trip {
+    background-image: url("../../../img/sso/user/main_bg_05.webp");
+  }
+  &--bg-edu {
+    background-image: url("../../../img/sso/user/main_bg_07.webp");
+  }
+  &--bg-insu {
+    background-image: url("../../../img/sso/user/main_bg_08.webp");
+  }
+  &--bg-map {
+    background-image: url("../../../img/sso/user/main_bg_09.webp");
+  }
+  &__wrap {
+    position: relative;
+    padding: rem(90) $space-lg $space-lg;
+  }
+  &__left {
+    padding-top: rem(30);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: rem(20);
+  }
+  &__inleft {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  &__title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: rem(32);
+    font-weight: 700;
+  }
+  &__top {
+    display: flex;
+  }
+  &__red {
+    color: $color-main;
+  }
+  &__small {
+  }
+  &__black {
+    padding-left: rem(10);
+  }
+  &__bottom {
+    display: flex;
+  }
+  &__left-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: $color-white;
+    color: $color-main;
+    border: 1px solid $color-main;
+    border-radius: $radius;
+    padding: rem(10) $space-lg;
+    box-shadow: $shadow;
+    cursor: pointer;
+    transition:
+      background-color 0.2s ease,
+      color 0.2s ease,
+      border-color 0.2s ease,
+      transform 0.12s ease,
+      box-shadow 0.12s ease;
+    &:focus-visible {
+      background-color: $color-main;
+      color: $color-white;
+    }
+    &:active {
+      background-color: $color-main;
+      color: $color-white;
+      transform: translateY(rem(2));
+      box-shadow: 0 rem(2) rem(6) 0 rgba($color-black, 0.18);
+    }
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        background-color: $color-main;
+        color: $color-white;
+      }
+    }
+  }
+  .cards {
+    padding-top: $space-lg;
+    &__wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      justify-items: center;
+      gap: rem(20);
+    }
+    &__list {
+      width: 100%;
+      --cards-accent: #{$color-main};
+    }
+    &__item {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      position: relative;
+      display: grid;
+      grid-template-rows: 1fr 1fr;
+      background-color: $color-white;
+      color: var(--cards-accent);
+      box-shadow: $shadow;
+      border-radius: $radius;
+      padding: rem(18);
+      transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.12s ease,
+        box-shadow 0.12s ease;
+      &:focus-visible {
+        background-color: var(--cards-accent);
+        color: $color-white;
+      }
+      &:active {
+        background-color: var(--cards-accent);
+        color: $color-white;
+        transform: translateY(rem(2));
+        box-shadow: 0 rem(2) rem(6) 0 rgba($color-black, 0.18);
+      }
+      @media (hover: hover) and (pointer: fine) {
+        &:hover {
+          background-color: var(--cards-accent);
+          color: $color-white;
+        }
+      }
+      &.is-coming-soon {
+        cursor: not-allowed;
+        &::before,
+        &::after {
+          position: absolute;
+          opacity: 0;
+          visibility: hidden;
+          pointer-events: none;
+          transition:
+            opacity 0.2s ease,
+            visibility 0.2s ease;
+        }
+        &::before {
+          content: "";
+          inset: 0;
+          background-color: rgba($color-black, 0.68);
+          border-radius: inherit;
+        }
+        &::after {
+          content: attr(data-tooltip);
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          color: $color-white;
+          font-size: rem(16);
+          font-weight: 600;
+          white-space: nowrap;
+          z-index: 1;
+        }
+        &:focus-visible,
+        &:active,
+        &.is-tooltip-open {
+          background-color: var(--cards-accent);
+          color: $color-white;
+          &::before,
+          &::after {
+            opacity: 1;
+            visibility: visible;
+          }
+        }
+        @media (hover: hover) and (pointer: fine) {
+          &:hover {
+            background-color: var(--cards-accent);
+            color: $color-white;
+            &::before,
+            &::after {
+              opacity: 1;
+              visibility: visible;
+            }
+          }
+        }
+      }
+    }
+    &__list.is-active .cards__item {
+      background-color: var(--cards-accent);
+      color: $color-white;
+    }
+    &__list.is-active .cards__title {
+      color: $color-white;
+    }
+    &__icon {
+      justify-self: flex-start;
+      font-size: $space-lg;
+      color: currentColor;
+    }
+    &__title {
+      justify-self: end;
+      align-self: self-end;
+      font-size: rem(22);
+      font-family: $family-base;
+      font-weight: 600;
+      color: $color-text;
+    }
+    .job {
+      --cards-accent: #{$color-main};
+      --cards-accent-rgb:
+        #{color.channel($color-main, "red", $space: rgb)},
+        #{color.channel($color-main, "green", $space: rgb)},
+        #{color.channel($color-main, "blue", $space: rgb)};
+    }
+    .shop {
+      --cards-accent: #{$color-shop};
+      --cards-accent-rgb:
+        #{color.channel($color-shop, "red", $space: rgb)},
+        #{color.channel($color-shop, "green", $space: rgb)},
+        #{color.channel($color-shop, "blue", $space: rgb)};
+    }
+    .comu {
+      --cards-accent: #{$color-comu};
+      --cards-accent-rgb:
+        #{color.channel($color-comu, "red", $space: rgb)},
+        #{color.channel($color-comu, "green", $space: rgb)},
+        #{color.channel($color-comu, "blue", $space: rgb)};
+    }
+    .card {
+      --cards-accent: #{$color-card};
+      --cards-accent-rgb:
+        #{color.channel($color-card, "red", $space: rgb)},
+        #{color.channel($color-card, "green", $space: rgb)},
+        #{color.channel($color-card, "blue", $space: rgb)};
+    }
+    .doct {
+      --cards-accent: #{$color-doct};
+      --cards-accent-rgb:
+        #{color.channel($color-doct, "red", $space: rgb)},
+        #{color.channel($color-doct, "green", $space: rgb)},
+        #{color.channel($color-doct, "blue", $space: rgb)};
+    }
+    .insu {
+      --cards-accent: #{$color-insu};
+      --cards-accent-rgb:
+        #{color.channel($color-insu, "red", $space: rgb)},
+        #{color.channel($color-insu, "green", $space: rgb)},
+        #{color.channel($color-insu, "blue", $space: rgb)};
+    }
+    .edu {
+      --cards-accent: #{$color-edu};
+      --cards-accent-rgb:
+        #{color.channel($color-edu, "red", $space: rgb)},
+        #{color.channel($color-edu, "green", $space: rgb)},
+        #{color.channel($color-edu, "blue", $space: rgb)};
+    }
+    .trip {
+      --cards-accent: #{$color-trip};
+      --cards-accent-rgb:
+        #{color.channel($color-trip, "red", $space: rgb)},
+        #{color.channel($color-trip, "green", $space: rgb)},
+        #{color.channel($color-trip, "blue", $space: rgb)};
+    }
+    .map {
+      --cards-accent: #{$color-map};
+      --cards-accent-rgb:
+              #{color.channel($color-map, "red", $space: rgb)},
+              #{color.channel($color-map, "green", $space: rgb)},
+              #{color.channel($color-map, "blue", $space: rgb)};
+    }
+    .detail {
+      position: relative;
+      &__list {
+        display: none;
+        @include size(100%, 100%);
+        padding: $space-md;
+        margin-bottom: $space-md;
+        border: 1px solid rgba(var(--cards-accent-rgb), 0.5);
+        border-radius: $radius;
+        box-shadow: 0 0 rem(10) 0 rgba(var(--cards-accent-rgb), 0.2);
+        background-image:
+        url("../../../img/sso/user/card_back.webp"),
+          linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 1),
+            rgba(var(--cards-accent-rgb), 0.2)
+          );
+        background-position: bottom, center;
+        background-size: cover, cover;
+        background-repeat: no-repeat, no-repeat;
+      }
+      &__top {
+        @include flex-custom(row, center, space-between, 0);
+      }
+      &__name {
+        display: flex;
+        align-items: center;
+        gap: rem(20);
+      }
+      &__icon {
+        font-size: rem(32);
+        color: var(--cards-accent);
+      }
+      &__title {
+        font-size: rem(20);
+        font-weight: 600;
+      }
+      &__img {
+        display: flex;
+        justify-content: center;
+        margin-bottom: rem(30);
+        img {
+          width: 50%;
+        }
+      }
+      &__sub {
+        h3 {
+          padding-top: $space-md;
+          font-size: rem(16);
+          font-weight: 600;
+        }
+        p {
+          padding: $space-md 0;
+          font-size: rem(14);
+        }
+      }
+      &__bottom {
+        text-align: center;
+      }
+      &__subbtn {
+        @include size(100%, auto);
+        @include flex-just(center, rem(20));
+        color: $color-white;
+        background: linear-gradient(
+          100deg,
+          rgba(var(--cards-accent-rgb), 0.5),
+          var(--cards-accent)
+        );
+        padding: rem(11) 0;
+        border-radius: $radius;
+        &:focus-visible {
+          background: linear-gradient(
+            100deg,
+            var(--cards-accent),
+            rgba(var(--cards-accent-rgb), 0.8)
+          );
+          color: $color-white;
+        }
+        &:active {
+          background: linear-gradient(
+            100deg,
+            var(--cards-accent),
+            rgba(var(--cards-accent-rgb), 0.8)
+          );
+          color: $color-white;
+          transform: translateY(rem(2));
+          box-shadow: 0 rem(2) rem(6) 0 rgba($color-black, 0.18);
+        }
+        @media (hover: hover) and (pointer: fine) {
+          &:hover {
+            background: linear-gradient(
+              100deg,
+              var(--cards-accent),
+              rgba(var(--cards-accent-rgb), 0.8)
+            );
+          }
+        }
+      }
+      &__subbtn-tit {
+      }
+      &__subicon {
+        font-size: rem(18);
+      }
+      .detail-close-btn {
+        height: rem(44);
+        display: flex;
+        align-items: center;
+        color: $color-grey;
+        font-size: rem(14);
+        font-weight: 400;
+        @include hover-main;
+        .icon-svg {
+          font-size: rem(14);
+          margin: 0 rem(4) 0;
+        }
+      }
+    }
+  }
+  .footer-company-info {
+    font-style: normal;
+    font-size: rem(12);
+    line-height: 1.8;
+    color: $color-grey;
+
+    a {
+      color: inherit;
+
+      &:focus-visible {
+        color: $color-main;
+      }
+
+      @media (hover: hover) and (pointer: fine) {
+        &:hover {
+          color: $color-main;
+        }
+      }
+    }
+  }
+  @media screen and (max-width: 767px) {
+    &__left {
+      align-items: center;
+    }
+    .pc-only-txt,
+    .main-pc-scroll {
+      display: none;
+    }
+  }
+  @media screen and (min-width: 768px) {
+    max-height: 100vh;
+    overflow: hidden;
+    background-image: url("../../../img/sso/user/main_bg_pc_01.webp");
+    background-position: top;
+    background-size: cover;
+    &--bg-job {
+    background-image: url("../../../img/sso/user/main_bg_pc_01.webp");
+    }
+    &--bg-shop {
+    background-image: url("../../../img/sso/user/main_bg_pc_03.webp");
+    }
+    &--bg-comu {
+    background-image: url("../../../img/sso/user/main_bg_pc_02.webp");
+    }
+    &--bg-card {
+    background-image: url("../../../img/sso/user/main_bg_pc_04.webp");
+    }
+    &--bg-trip {
+      background-image: url("../../../img/sso/user/main_bg_pc_05.webp");
+    }
+    &--bg-insu {
+      background-image: url("../../../img/sso/user/main_bg_pc_08.webp");
+    }
+    &--bg-edu {
+      background-image: url("../../../img/sso/user/main_bg_pc_07.webp");
+    }
+    &--bg-map {
+      background-image: url("../../../img/sso/user/main_bg_pc_09.webp");
+    }
+    &__wrap {
+      display: flex;
+    }
+    &__left {
+      height: calc(100vh - rem(120));
+      width: 50%;
+      display: grid;
+      grid-template-rows: 1.5fr 0.5fr;
+      justify-items: stretch;
+      justify-content: flex-start;
+      .pc-footer {
+        display: flex;
+        flex-direction: column;
+        justify-content: end;
+        height: 100%;
+      }
+    }
+    &__pcscroll {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    &__inleft {
+      height: 100%;
+      align-items: flex-start;
+      .pc-only-txt {
+        font-size: rem(20);
+        padding-bottom: rem(20);
+      }
+    }
+    &__left-btn {
+      font-size: rem(18);
+    }
+    &__top {
+      align-items: end;
+    }
+    &__red {
+      font-size: rem(42);
+    }
+    &__small {
+      padding-bottom: rem(4);
+    }
+    &__black {
+      font-size: rem(42);
+      padding-left: rem(20);
+    }
+    &__bottom {
+      align-items: end;
+    }
+    &__title {
+      align-items: flex-start;
+    }
+    .main-pc-scroll {
+      position: relative;
+      min-width: rem(50);
+      padding-top: rem(62);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: rem(12);
+      font-weight: 500;
+      line-height: 1;
+      color: #aaa;
+      text-align: center;
+      letter-spacing: -0.02em;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: rem(30);
+        height: rem(50);
+        border: 2px solid currentColor;
+        border-radius: rem(999);
+        transform: translateX(-50%);
+        box-sizing: border-box;
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: rem(20);
+        left: 50%;
+        width: rem(6);
+        height: rem(6);
+        background-color: currentColor;
+        border-radius: 50%;
+        transform: translateX(-50%);
+        animation: main-scroll-indicator 1.8s ease-in-out infinite;
+      }
+    }
+
+    .cards {
+      width: 50%;
+      height: calc(100vh - rem(120));
+      overflow: auto;
+      padding: $space-sm;
+      overflow: auto;
+      &__icon {
+        font-size: rem(40);
+      }
+      &__title {
+        font-size: rem(30);
+      }
+      &__item {
+        &.is-coming-soon {
+          &::after {
+            font-size: rem(22);
+          }
+        }
+      }
+      .detail {
+        &__icon {
+          font-size: rem(44);
+        }
+        &__title {
+          font-size: rem(32);
+        }
+        &__box {
+          display: grid;
+          grid-template-columns: 60% 40%;
+          margin: rem(30) 0;
+        }
+        &__sub {
+          h3 {
+            font-size: rem(20);
+          }
+          p {
+            font-size: rem(16);
+          }
+        }
+        &__img {
+          display: inline-block;
+          width: 100%;
+          text-align: center;
+          img {
+            width: 80%;
+            object-fit: cover;
+          }
+        }
+        &__bottom {
+          align-self: end;
+        }
+      }
+    }
+  }
+}
+
+@keyframes main-scroll-indicator {
+  0% {
+    transform: translate(-50%, rem(-14));
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    transform: translate(-50%, rem(10));
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-50%, rem(10));
+    opacity: 0;
+  }
+}
+//intro
+
+
+.intro-page {
+  min-height: 100%;
+  padding-top: rem(90);
+  &__header {
+    padding: rem(30) rem(30) 0;
+    font-size: rem(24);
+    font-weight: 700;
+  }
+  .intro-box {
+    &__inner {
+      display: flex;
+      flex-direction: column;
+      gap: rem(30);
+      padding: rem(30);
+    }
+    &__tit {
+      font-size: rem(20);
+      font-weight: 600;
+      padding-top: rem(10);
+    }
+    &__img {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      img {
+        width: 80%;
+      }
+    }
+  }
+  .intro-boxs {
+    &__inner {
+      display: flex;
+      flex-direction: column;
+      gap: rem(30);
+      padding: rem(30);
+    }
+    &__tit {
+      font-size: rem(20);
+      font-weight: 600;
+      padding-top: rem(10);
+    }
+    &__img {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      img {
+        width: 80%;
+      }
+    }
+    .intro-card {
+      display: flex;
+      flex-direction: column;
+      gap: rem(20) 0;
+
+      &__list {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: rem(20);
+        border: 1px solid rgba(var(--cards-accent-rgb), 0.5);
+        border-radius: $radius;
+        box-shadow: 0 0 rem(10) 0 rgba(var(--cards-accent-rgb), 0.2);
+        background-image: linear-gradient(
+                180deg,
+                rgba(255, 255, 255, 1),
+                rgba(var(--cards-accent-rgb), 0.2)
+        );
+      }
+      &__name {
+        display: flex;
+        align-items: center;
+      }
+      &__img {
+        height: rem(65);
+        margin-right: rem(20);
+        img {
+          height: 100%;
+        }
+      }
+      &__title {
+        font-size: rem(20);
+        font-weight: 600;
+      }
+      &__sub {
+        h3 {
+          font-weight: 600;
+          padding: rem(10) 0;
+        }
+      }
+      .job {
+        --cards-accent: #{$color-main};
+        --cards-accent-rgb:
+                #{color.channel($color-main, "red", $space: rgb)},
+                #{color.channel($color-main, "green", $space: rgb)},
+                #{color.channel($color-main, "blue", $space: rgb)};
+      }
+      .shop {
+        --cards-accent: #{$color-shop};
+        --cards-accent-rgb:
+                #{color.channel($color-shop, "red", $space: rgb)},
+                #{color.channel($color-shop, "green", $space: rgb)},
+                #{color.channel($color-shop, "blue", $space: rgb)};
+      }
+      .comu {
+        --cards-accent: #{$color-comu};
+        --cards-accent-rgb:
+                #{color.channel($color-comu, "red", $space: rgb)},
+                #{color.channel($color-comu, "green", $space: rgb)},
+                #{color.channel($color-comu, "blue", $space: rgb)};
+      }
+      .card {
+        --cards-accent: #{$color-card};
+        --cards-accent-rgb:
+                #{color.channel($color-card, "red", $space: rgb)},
+                #{color.channel($color-card, "green", $space: rgb)},
+                #{color.channel($color-card, "blue", $space: rgb)};
+      }
+      .trip {
+        --cards-accent: #{$color-trip};
+        --cards-accent-rgb:
+                #{color.channel($color-trip, "red", $space: rgb)},
+                #{color.channel($color-trip, "green", $space: rgb)},
+                #{color.channel($color-trip, "blue", $space: rgb)};
+      }
+      .edu {
+        --cards-accent: #{$color-edu};
+        --cards-accent-rgb:
+                #{color.channel($color-edu, "red", $space: rgb)},
+                #{color.channel($color-edu, "green", $space: rgb)},
+                #{color.channel($color-edu, "blue", $space: rgb)};
+      }
+      .insu {
+        --cards-accent: #{$color-insu};
+        --cards-accent-rgb:
+                #{color.channel($color-insu, "red", $space: rgb)},
+                #{color.channel($color-insu, "green", $space: rgb)},
+                #{color.channel($color-insu, "blue", $space: rgb)};
+      }
+      .map {
+        --cards-accent: #{$color-map};
+        --cards-accent-rgb:
+                #{color.channel($color-map, "red", $space: rgb)},
+                #{color.channel($color-map, "green", $space: rgb)},
+                #{color.channel($color-map, "blue", $space: rgb)};
+      }
+      &__subbtn {
+        @include size(100%, auto);
+        @include flex-just(center, rem(20));
+        color: $color-white;
+        background: linear-gradient(
+                100deg,
+                rgba(var(--cards-accent-rgb), 0.5),
+                var(--cards-accent)
+        );
+        margin-top: rem(10);
+        padding: rem(11) 0;
+        border-radius: $radius;
+        font-weight: 400;
+        &:focus-visible {
+          background: linear-gradient(
+                  100deg,
+                  var(--cards-accent),
+                  rgba(var(--cards-accent-rgb), 0.8)
+          );
+          color: $color-white;
+        }
+        &:active {
+          background: linear-gradient(
+                  100deg,
+                  var(--cards-accent),
+                  rgba(var(--cards-accent-rgb), 0.8)
+          );
+          color: $color-white;
+          transform: translateY(rem(2));
+          box-shadow: 0 rem(2) rem(6) 0 rgba($color-black, 0.18);
+        }
+        @media (hover: hover) and (pointer: fine) {
+          &:hover {
+            background: linear-gradient(
+                    100deg,
+                    var(--cards-accent),
+                    rgba(var(--cards-accent-rgb), 0.8)
+            );
+          }
+        }
+      }
+      &__subicon {
+        font-size: rem(20);
+      }
+    }
+  }
+  .intro-final {
+    background-image: url("/img/sso/user/intro_m_img.webp");
+    background-size: cover;
+    background-position: top;
+    min-height: rem(600);
+    background-repeat: no-repeat;
+    &__img {
+      display: flex;
+      align-items: center;
+      height: rem(55);
+      margin-top: rem(40);
+      div {
+        padding-left: rem(10);
+      }
+    }
+  }
+  @media screen and (min-width: 768px) {
+    &__header {
+      padding: rem(30) rem(50) 0;
+      font-size: rem(36);
+    }
+    .intro-reverse {
+      flex-direction: row-reverse;
+    }
+    .intro-box {
+      display: flex;
+      align-items: center;
+      &__inner {
+        width: 55%;
+        padding: rem(50);
+      }
+      &__tit {
+        font-size: rem(28);
+      }
+      &__img {
+        min-height: rem(380);
+        img {
+          height: 100%;
+        }
+      }
+    }
+    .intro-boxs {
+      &__inner {
+        padding: rem(50);
+      }
+      &__tit {
+        font-size: rem(28);
+        text-align: center;
+        padding-bottom: rem(30);
+      }
+      .intro-card {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: rem(30);
+      }
+    }
+    .intro-final {
+      background-image: url("/img/sso/user/intro_pc_img.webp");
+    }
+  }
+}
+

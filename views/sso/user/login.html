@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <div th:replace="~{|sso/include/user/inc_head|}"></div>
+
+        <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+
+        <script src="/js/common/auth.js"></script>
+    </head>
+    <body data-aos-easing="ease-out" data-aos-duration="700" data-aos-delay="0">
+        <div class="app-shell app-shell--auth app-shell--quick-actions-hidden">
+            <div class="app-body">
+                <div class="site-header header-box wrap">
+                    <div th:replace="~{|sso/include/user/inc_header|}"></div>
+                </div>
+                <main class="site-content" aria-live="polite">
+                    <section class="login-page auth-page wrap">
+                        <div class="login-page__wrap auth-page__wrap auth-page__wrap--card">
+                            <header class="login-page__header auth-page__header">
+                                <h2 class="login-page__title auth-page__title">로그인</h2>
+                                <p>돌보미에 오신 것을 환영합니다.</p>
+                            </header>
+                            <div class="login-page__change-user" role="tablist" aria-label="회원 유형 선택">
+                                <button class="login-page__change-user--btn is-active" type="button" role="tab" aria-selected="true" data-user-type="personal">개인회원</button>
+                                <button class="login-page__change-user--btn" type="button" role="tab" aria-selected="false" data-user-type="company">기업회원</button>
+                            </div>
+                            <div data-user-panel="personal">
+                                <div class="re-login__depth">
+                                    <div class="re-login__group">
+                                        <label class="re-login__group--lable" for="login-id">아이디</label>
+                                        <div class="re-login__from">
+                                            <input class="re-login__from--id" id="login-id" type="text" autocomplete="username" aria-describedby="login-id-assist" data-empty-message="아이디를 입력해 주세요." placeholder="아이디 입력" />
+                                            <p class="re-login__from--assist" id="login-id-assist" aria-live="polite"></p>
+                                        </div>
+                                    </div>
+                                    <div class="re-login__group">
+                                        <label class="re-login__group--lable" for="login-password">비밀번호</label>
+                                        <div class="re-login__from">
+                                            <input class="re-login__from--id" id="login-password" type="password" autocomplete="current-password" aria-describedby="login-password-assist" data-empty-message="비밀번호를 입력해 주세요." placeholder="비밀번호 입력" />
+                                            <button class="re-login__from--btn" type="button" aria-label="비밀번호 표시" aria-controls="login-password" aria-pressed="false">
+                                                <span class="re-login__from--vis" aria-hidden="true"></span>
+                                            </button>
+                                            <p class="re-login__from--assist" id="login-password-assist" aria-live="polite"></p>
+                                        </div>
+                                    </div>
+                                    <div class="re-login__options">
+                                        <label class="re-login__options--check">
+                                            <input type="checkbox" name="rememberId" value="true" />
+                                            <span>아이디 저장</span>
+                                        </label>
+                                    </div>
+                                    <p class="re-login__feedback"></p>
+                                    <div class="re-login__actions">
+                                        <button class="re-login__actions--submit" id="company-login-submit" type="button" onclick="fn_idLogin()">로그인</button>
+                                        <button class="re-login__actions--signup" type="button" onclick="movePage('/userJoin')">회원가입</button>
+                                    </div>
+                                    <div class="re-login__find">
+                                        <button class="re-login__find--findbox" type="button" onclick="movePage('/findInfo?target=find-id')">아이디 찾기</button>
+                                        <button class="re-login__find--findbox" type="button" onclick="movePage('/findInfo?target=find-password')">비밀번호 찾기</button>
+                                    </div>
+                                </div>
+
+                                <div class="login-page__easy">간편로그인</div>
+                                <div class="login-page__social" aria-label="간편 로그인">
+                                    <button id="naver_id_login" class="login-page__social-button" type="button" onclick="snsLogin('naver')" aria-label="네이버 로그인">
+                                        <img src="/img/sso/user/icons/naver_icon.svg" alt="naver_icon" />
+                                    </button>
+                                    <button class="login-page__social-button" type="button" onclick="snsLogin('kakao')" aria-label="카카오 로그인">
+                                        <img src="/img/sso/user/icons/kakao_icon.svg" alt="" />
+                                    </button>
+                                    <button class="login-page__social-button" type="button" onclick="snsLogin('google')" aria-label="구글 로그인">
+                                        <img src="/img/sso/user/icons/google_icon.svg" alt="" />
+                                    </button>
+                                    <button class="login-page__social-button" type="button" onclick="snsLogin('apple')" aria-label="애플 로그인">
+                                        <img src="/img/sso/user/icons/apple_icon.svg" alt="" />
+                                    </button>
+                                </div>
+                                <!--                        <button id="appLoginBtn"  class="login-page__note" type="button" style="display: none;" aria-label="ID로그인" onclick="appLogin()">-->
+                                <!--                            ID로그인-->
+                                <!--                        </button>-->
+                                <!--                        <button class="login-page__note" type="button" data-page-target="join" onclick="movePage('/user/myInfo/simpleAccount')">-->
+                                <!--                            본인인증으로 로그인 하기-->
+                                <!--                        </button>-->
+
+                                <div class="login-page__finger" data-role="finger-auth" hidden>
+                                    <button class="login-page__fingerbtn" type="button" onclick="alert('준비중')">생체 인증 다시 하기</button>
+                                </div>
+                            </div>
+                            <div data-user-panel="company" hidden>
+                                <div class="re-login__depth">
+                                    <div class="re-login__group">
+                                        <label class="re-login__group--lable" for="login-id">아이디</label>
+                                        <div class="re-login__from">
+                                            <input class="re-login__from--id" id="login-id" type="text" autocomplete="username" aria-describedby="login-id-assist" data-empty-message="아이디를 입력해 주세요." placeholder="아이디 입력" />
+                                            <p class="re-login__from--assist" id="login-id-assist" aria-live="polite"></p>
+                                        </div>
+                                    </div>
+                                    <div class="re-login__group">
+                                        <label class="re-login__group--lable" for="login-password">비밀번호</label>
+                                        <div class="re-login__from">
+                                            <input class="re-login__from--id" id="login-password" type="password" autocomplete="current-password" aria-describedby="login-password-assist" data-empty-message="비밀번호를 입력해 주세요." placeholder="비밀번호 입력" />
+                                            <button class="re-login__from--btn" type="button" aria-label="비밀번호 표시" aria-controls="login-password" aria-pressed="false">
+                                                <span class="re-login__from--vis" aria-hidden="true"></span>
+                                            </button>
+                                            <p class="re-login__from--assist" id="login-password-assist" aria-live="polite"></p>
+                                        </div>
+                                    </div>
+                                    <div class="re-login__options">
+                                        <label class="re-login__options--check">
+                                            <input type="checkbox" name="rememberId" value="true" />
+                                            <span>아이디 저장</span>
+                                        </label>
+                                    </div>
+                                    <p class="re-login__feedback"></p>
+                                    <div class="re-login__actions">
+                                        <button class="re-login__actions--submit" id="company-login-submit" type="button" onclick="fn_idLogin()">로그인</button>
+                                        <button class="re-login__actions--signup" type="button" onclick="movePage('/companyJoin')">회원가입</button>
+                                    </div>
+                                    <div class="re-login__find">
+                                        <button class="re-login__find--findbox" type="button" onclick="movePage('/findInfo?target=find-id')">아이디 찾기</button>
+                                        <button class="re-login__find--findbox" type="button" onclick="movePage('/findInfo?target=find-password')">비밀번호 찾기</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </main>
+            </div>
+            <div class="footer-box">
+                <div th:replace="~{|sso/include/user/inc_footer|}"></div>
+            </div>
+            <input type="hidden" id="serverSnsResultCd" th:value="${snsResultCd}" />
+            <input type="hidden" id="serverMsg" th:value="${msg}" />
+        </div>
+    </body>
+    <script th:inline="javascript">
+        const _redirectPage = /*[[${redirectPage}]]*/ '';
+
+        const serverTitle = /*[[${title}]]*/ '알림';
+        const userName = /*[[${userName}]]*/ '';
+
+        const snsResultCd = /*[[${snsResultCd}]]*/ '';
+
+        function setLoginUserType(type) {
+            $('[data-user-type]').each(function () {
+                const isActive = $(this).attr('data-user-type') === type;
+                $(this).toggleClass('is-active', isActive);
+                $(this).attr('aria-selected', String(isActive));
+            });
+
+            $('[data-user-panel]').each(function () {
+                $(this).prop('hidden', $(this).attr('data-user-panel') !== type);
+            });
+        }
+
+        $(document).ready(function () {
+            const $loginPage = $('.login-page');
+            const hostname = window.location.hostname;
+            const userAgent = window.navigator.userAgent.toLowerCase();
+            const isApp = userAgent.indexOf('android') > -1 || userAgent.indexOf('iphone') > -1;
+            if (hostname.includes('localhost')) {
+                $('#appLoginBtn').show();
+            }
+
+            const snsResultCd = $('#serverSnsResultCd').val();
+            const serverMsg = $('#serverMsg').val();
+
+            if (snsResultCd && snsResultCd !== 'null' && snsResultCd !== '') {
+                if (snsResultCd === 'F') {
+                    openAlert('연동 결과', '회원이 등록되어있지 않습니다.\n회원가입을 진행해주세요', '확인', true, '취소', () => {
+                        location.href = '/join';
+                    });
+                }
+            }
+
+            $('[data-user-type]').on('click', function () {
+                setLoginUserType($(this).attr('data-user-type'));
+            });
+
+            $loginPage.on('click', '.re-login__from--btn', function () {
+                const $button = $(this);
+                const $input = $button.closest('.re-login__from').find('.re-login__from--id').first();
+                const isPasswordType = $input.attr('type') === 'password';
+
+                if ($input.length === 0) {
+                    return;
+                }
+
+                $input.attr('type', isPasswordType ? 'text' : 'password');
+                $button
+                    .toggleClass('is-visible', isPasswordType)
+                    .attr('aria-pressed', isPasswordType ? 'true' : 'false')
+                    .attr('aria-label', isPasswordType ? '비밀번호 숨기기' : '비밀번호 표시');
+
+                $input.trigger('focus');
+            });
+
+            setLoginUserType('personal');
+        });
+
+        function fn_idLogin() {
+            const userId = $('#login-id').val();
+            const pw = $('#login-password').val();
+            const userType = $('.login-page__change-user--btn.is-active').data('user-type');
+
+            const param = {
+                id: userId,
+                pw: pw,
+                userType: userType,
+            };
+
+            if (!userId || userId.trim() === '') {
+                alert('아이디를 입력해주세요.');
+                return false;
+            }
+            if (!pw || pw.trim() === '') {
+                alert('비밀번호를 입력해주세요.');
+                return false;
+            }
+
+            $.ajax({
+                url: '/ajax/login',
+                type: 'POST',
+                data: param,
+                success: function (res) {
+                    if (res.resultCd === 'S') {
+                        if (_redirectPage) {
+                            location.href = _redirectPage;
+                        } else {
+                            location.href = '/main';
+                        }
+                    } else {
+                        openAlert('로그인 실패', res.resultMsg || '로그인에 실패했습니다.', '확인', false, '');
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert('서버 통신 중 오류가 발생했습니다.');
+                },
+            });
+        }
+
+        function appLogin() {
+            const contentHtml = `<div class="login-input-wrapper">
+           <div style="display: flex; align-items: center;">
+            <label style="width: 80px; font-weight: bold;">아이디</label>
+            <input type="text" id="appLoginIdInput" placeholder="아이디를 입력하세요"
+                   style="flex: 1; padding: 5px; border: 1px solid #ccc; border-radius: 4px;">
+            </div>
+            <div style="display: flex; align-items: center;">
+                <label style="width: 80px; font-weight: bold;">패스워드</label>
+                <input type="password" id="appLoginPwInput" placeholder="비밀번호를 입력하세요"
+                       style="flex: 1; padding: 5px; border: 1px solid #ccc; border-radius: 4px;">
+            </div>
+        </div>`;
+            openAlert('ID 로그인', contentHtml, '로그인', true, '닫기', () => {
+                const userId = $('#appLoginIdInput').val();
+                const pw = $('#appLoginPwInput').val();
+
+                const param = {
+                    id: userId,
+                    pw: pw,
+                };
+
+                if (!userId || userId.trim() === '') {
+                    alert('아이디를 입력해주세요.');
+                    return false;
+                }
+                if (!pw || pw.trim() === '') {
+                    alert('비밀번호를 입력해주세요.');
+                    return false;
+                }
+                $.ajax({
+                    url: '/ajax/login',
+                    type: 'POST',
+                    data: param,
+                    success: function (res) {
+                        if (res.resultCd === 'S') {
+                            if (_redirectPage) {
+                                location.href = _redirectPage;
+                            } else {
+                                location.href = '/main';
+                            }
+                        } else {
+                            openAlert('로그인 실패', res.resultMsg || '로그인에 실패했습니다.', '확인', false, '');
+                        }
+                    },
+                    error: function (xhr, status, error) {
+                        alert('서버 통신 중 오류가 발생했습니다.');
+                    },
+                });
+            });
+        }
+    </script>
+</html>

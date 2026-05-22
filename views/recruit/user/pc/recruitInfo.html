@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+    <head>
+        <div th:replace="~{|recruit/include/user/inc_head|}"></div>
+    </head>
+    <body>
+    <section class="min-h">
+        <section>
+            <div class="recruit-header wrap">
+                <div class="header-box">
+                    <div th:replace="~{|recruit/include/user/inc_header|}"></div>
+                </div>
+                <div class="search-box">
+                    <div th:replace="~{|recruit/include/user/inc_search|}"></div>
+                </div>
+            </div>
+            <div class="sub-pcmenu pc-only">
+                <div th:replace="~{|recruit/include/user/pc/inc_sub_pcmenu|}"></div>
+            </div>
+
+            <section>
+                <div class="re-info wrap">
+                    <h1 class="re-info__title">지역별</h1>
+                    <div class="re-info__box">
+                        <div class="re-info__count">
+                            <div>지정한 검색조건</div>
+                            <div>0 건</div>
+                        </div>
+                        <form class="re-info-filter" action="#" method="get">
+                            <button class="re-info-filter__select re-info-filter__select--region" type="button" aria-label="지역 선택" aria-expanded="false">
+                                <span class="re-info-filter__label">
+                                    <span class="re-info-filter__icon infofilter-location"></span>
+                                    <span>지역 선택</span>
+                                </span>
+                                <svg class="re-info-filter__arrow" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="m6 9 6 6 6-6"></path>
+                                </svg>
+                            </button>
+                            <button class="re-info-filter__select re-info-filter__select--job" type="button" aria-label="직종/직무 선택" aria-expanded="false">
+                                <span class="re-info-filter__label">
+                                    <span class="re-info-filter__icon infofilter-job"></span>
+                                    <span>직종/직무 선택</span>
+                                </span>
+                                <svg class="re-info-filter__arrow" viewBox="0 0 24 24" aria-hidden="true">
+                                    <path d="m6 9 6 6 6-6"></path>
+                                </svg>
+                            </button>
+                            <label class="re-info-filter__keyword">
+                                <span class="re-info-filter__search" aria-hidden="true"></span>
+                                <span class="sound-only">검색어</span>
+                                <input type="search" name="keyword" placeholder="검색어 입력" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                            </label>
+                        </form>
+                        <div class="re-info-condition">
+                            <section class="re-info-panel re-info-panel--region">
+                                <div class="re-info-panel__search">
+                                    <span class="re-info-panel__search-icon" aria-hidden="true"></span>
+                                    <label class="sound-only" for="regionKeyword">지역명 검색</label>
+                                    <input id="regionKeyword" type="search" placeholder="지역명 입력" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                                </div>
+                                <div class="re-info-panel__body">
+                                    <div class="re-info-panel__side" aria-label="지역 분류">
+                                        <button class="is-active" type="button">전북 특별자치도</button>
+                                        <button type="button">전남</button>
+                                        <button type="button">광주</button>
+                                    </div>
+                                    <div class="re-info-panel__checks re-info-panel__checks--region">
+                                        <label class="re-info-check"><input type="checkbox"><span></span>전북 전체 1,427</label>
+                                        <label class="re-info-check"><input type="checkbox"><span></span>고창군 42</label>
+                                        <label class="re-info-check"><input type="checkbox"><span></span>군산시 1,427</label>
+                                        <label class="re-info-check"><input type="checkbox"><span></span>김제시 42</label>
+                                        <label class="re-info-check"><input type="checkbox"><span></span>남원시 1,427</label>
+                                        <label class="re-info-check"><input type="checkbox"><span></span>무주군 42</label>
+                                    </div>
+                                </div>
+                                <div class="re-info-panel__bottom">
+                                    <div class="re-info-selected">
+                                        <button class="recent-btn">
+                                            <div class="recent-btn__flex"><div>전북</div>&#62;<div>김제시</div></div>
+                                            <div class="recent-btn__close"></div>
+                                        </button>
+                                    </div>
+                                    <div class="re-info-panel__actions">
+                                        <button class="re-info-panel__close" type="button">닫기</button>
+                                        <button class="re-info-panel__add" type="button">추가</button>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section class="re-info-panel re-info-panel--job">
+                                <div class="re-info-panel__search">
+                                    <span class="re-info-panel__search-icon" aria-hidden="true"></span>
+                                    <label class="sound-only" for="jobKeyword">직무명 검색</label>
+                                    <input id="jobKeyword" type="search" placeholder="직무명 입력" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false">
+                                </div>
+                                <div class="re-info-panel__body">
+                                    <div class="re-info-panel__side" aria-label="직종 분류">
+                                        <button class="is-active" type="button">돌봄</button>
+                                        <button type="button">의료/간호</button>
+                                        <button type="button">복지/운영</button>
+                                        <button type="button">치료/재활</button>
+                                    </div>
+                                    <div class="re-info-panel__checks re-info-panel__checks--job">
+                                        <label class="re-info-check"><input type="checkbox"><span></span>전체 1,427</label>
+                                        <label class="re-info-check"><input type="checkbox"><span></span>요양보호사 42</label>
+                                        <label class="re-info-check"><input type="checkbox"><span></span>활동지원사 1,427</label>
+                                        <label class="re-info-check"><input type="checkbox"><span></span>생활지원사 42</label>
+                                    </div>
+                                </div>
+                                <div class="re-info-panel__bottom">
+                                    <div class="re-info-selected">
+                                        <button class="recent-btn">
+                                            <div class="recent-btn__flex"><div>전북</div>&#62;<div>김제시</div></div>
+                                            <div class="recent-btn__close"></div>
+                                        </button>
+                                    </div>
+                                    <div class="re-info-panel__actions">
+                                        <button class="re-info-panel__close" type="button">닫기</button>
+                                        <button class="re-info-panel__add" type="button">추가</button>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                    <div class="re-info__list" id="reInfoList">
+
+                    </div>
+                </div>
+            </section>
+        </section>
+        <footer class="min-h__bottom">
+            <div class="footer-box">
+                <div th:replace="~{|recruit/include/user/inc_footer|}"></div>
+            </div>
+        </footer>
+    </section>
+    </body>
+    <script th:inline="javascript">
+        $(function () {
+            const $info = $('.re-info');
+            const $regionBtn = $info.find('.re-info-filter__select--region');
+            const $jobBtn = $info.find('.re-info-filter__select--job');
+            const $regionPanel = $info.find('.re-info-panel--region');
+            const $jobPanel = $info.find('.re-info-panel--job');
+            const $buttons = $regionBtn.add($jobBtn);
+            const $panels = $regionPanel.add($jobPanel);
+            function closePanels() {
+                $buttons.removeClass('is-active').attr('aria-expanded', 'false');
+                $panels.removeClass('is-open');
+            }
+            function togglePanel($button, $panel) {
+                const isOpen = $button.hasClass('is-active');
+                closePanels();
+
+                if (!isOpen) {
+                    $button.addClass('is-active').attr('aria-expanded', 'true');
+                    $panel.addClass('is-open');
+                }
+            }
+            $regionBtn.on('click', function () {
+                togglePanel($regionBtn, $regionPanel);
+            });
+            $jobBtn.on('click', function () {
+                togglePanel($jobBtn, $jobPanel);
+            });
+            $info.find('.re-info-panel__close').on('click', closePanels);
+            $(document).on('click', function (event) {
+                if (!$(event.target).closest('.re-info-filter, .re-info-panel').length) {
+                    closePanels();
+                }
+            });
+        });
+
+        fn_getArticle()
+
+        function fn_getArticle(){
+            let param = {}
+            $.ajax({
+                url : '/recruit/user/test',
+                type : 'post',
+                data : JSON.stringify(param),
+                contentType : 'application/json',
+                success : function(data, status) {
+                    let body = $('#reInfoList');
+                    body.empty();
+                    let article = '';
+                    let testJson = {'title':'title', 'subTitle':'subtitle', 'address':'경기도 어쩌고', 'date':'2029-02-02', 'study':'대졸'};
+                    let list = [];
+                    for(i= 0; i <10; i++){
+                        list.push(testJson)
+                    }
+                    $.each(list, function (index, item){
+                        article += `<article class="re-company">
+                            <div class="re-company__logo pc-only"></div>
+                            <div class="re-company__box">
+                                <div class="re-company__tit">${item.title}</div>
+                                <button class="re-company__scrap" type="button" aria-label="scrap">
+                                    <span></span>
+                                </button>
+                            </div>
+                            <h3>${item.subTitle}</h3>
+                            <div class="re-company__location pc-only">${item.address} | ${item.study} | 학력무관</div>
+                            <p>~${item.date}</p>
+                        </article>`
+                        if(index == 3){
+                            return false;
+                        }
+                    })
+                    body.append(article)
+                }
+            });
+        }
+    </script>
+</html>

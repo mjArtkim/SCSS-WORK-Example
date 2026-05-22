@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="~{|sso/include/user/inc_head|}"></div>
+    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+
+    <script src="/js/common/auth.js"></script>
+</head>
+<body data-aos-easing="ease-out" data-aos-duration="700" data-aos-delay="0">
+<div class="app-shell app-shell--auth app-shell--quick-actions-hidden">
+    <div class="app-body">
+        <div class="site-header header-box wrap">
+            <div th:replace="~{|sso/include/user/inc_header|}"></div>
+        </div>
+        <main class="site-content" aria-live="polite">
+            <section class="login-management-page auth-page wrap">
+                <div class="login-management-page__wrap auth-page__wrap auth-page__wrap--card auth-page__wrap--mobile-half">
+                    <header class="login-management-page__content-header auth-page__header">
+                        <h2 class="login-management-page__title auth-page__title">SNS 계정 연동 관리</h2>
+                        <p class="login-management-page__description auth-page__description">
+                            카카오, 네이버, 구글, 애플에 가입되어 있는 정보를 통해 돌보미 회원전용
+                            서비스를 이용하실 수 있습니다. 회원님의 소셜 계정 연동현황을
+                            보여드립니다. </p>
+                    </header>
+
+                    <div class="login-management-page__list auth-list auth-list--spaced" role="list" aria-label="소셜 로그인 목록">
+                        <div th:each="sns : ${userSnsList}" class="login-management-page__item auth-list__item">
+                            <div class="login-management-page__provider">
+                                <span th:class="${sns.badgeClass}">
+                                    <img th:src="@{/img/sso/user/icons/{type}_min_icon.svg(type=${sns.type})}" th:alt="|${sns.name} 아이콘|"/>
+                                </span>
+                                <div class="login-management-page__provider-text">
+                                    <div class="login-management-page__iconname" th:text="${sns.name}">SNS이름</div>
+                                    <span th:if="${sns.isLinked}" class="linked-date" style="color: #e8485a;">연동됨</span>
+                                </div>
+                            </div>
+                            <button th:if="${sns.isLinked}" class="login-management-page__link-button is-linked" type="button" th:onclick="disconnectSns([[${sns.type}]])">
+                                <!--th:onclick="disconnectSns([[${sns.type}]])"-->
+                                연동해제
+                            </button>
+                            <button th:unless="${sns.isLinked}" class="login-management-page__link-button" type="button" th:onclick="snsLogin([[${sns.type}]])">
+                                연동하기
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="login-management-page__actions auth-page__actions">
+                        <button class="easy-login-page__button auth-button auth-button--primary" type="button" onclick="movePage('/user/myInfo')">
+                            완료
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+    </div>
+    <div class="footer-box">
+        <div th:replace="~{|sso/include/user/inc_footer|}"></div>
+    </div>
+</div>
+</body>
+<script th:inline="javascript">
+    function disconnectSns(site) {
+        openAlert('연동 해제', `${site} 연동을 해제하시겠습니까?`, '확인', true, '취소', () => {
+            let param = {"site": site}
+            $.ajax({
+                url: `/sns/disconnect`,
+                data: JSON.stringify(param),
+                type: 'POST',
+                contentType: 'application/json',
+                beforeSend: function (xhr) {
+                    $('.loading').show();
+                },
+                success: function (data) {
+                    if (data === "success" || data === "S") {
+                        openAlert("결과", "연동이 해제되었습니다.", '확인', false, '', () => {
+                            location.reload();
+                        });
+                    }
+                },
+                error: function (jqXHR, textStatus, errorThrown) {
+                    openAlert('결과', "처리 중 오류가 발생했습니다.\n고객센터에 문의하세요", '확인', false);
+                },
+                complete: function (e) {
+                    $('.loading').hide();
+                }
+            });
+        }); // openAlert end
+    }
+</script>

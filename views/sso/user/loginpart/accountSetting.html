@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="~{|sso/include/user/inc_head|}"></div>
+
+</head>
+<body data-aos-easing="ease-out" data-aos-duration="700" data-aos-delay="0">
+<div class="app-shell app-shell--auth app-shell--quick-actions-hidden">
+    <div class="app-body">
+        <div class="site-header header-box wrap">
+            <div th:replace="~{|sso/include/user/inc_header|}"></div>
+        </div>
+        <main class="site-content" aria-live="polite">
+            <section class="account-settings-page auth-page wrap">
+                <div class="account-settings-page__wrap auth-page__wrap auth-page__wrap--card">
+                    <header class="account-settings-page__content-header auth-page__header">
+                        <h2 class="account-settings-page__title auth-page__title">
+                            계정정보 설정 </h2>
+                    </header>
+
+                    <form class="account-settings-page__form auth-form" action="#" method="post">
+
+
+                        <label class="account-settings-page__field auth-form__field">
+                            <span class="account-settings-page__label auth-form__label">이름</span>
+                            <input class="account-settings-page__input auth-form__input is_readonly" type="text" name="name" th:value="${userInfo['name']}" readonly/>
+                        </label>
+
+                        <label class="account-settings-page__field auth-form__field">
+                            <span class="account-settings-page__label auth-form__label">생년월일</span>
+                            <input class="account-settings-page__input auth-form__input is-disabled is_readonly" type="text" name="birYMD" th:value="${userInfo['birYMD']}" readonly/>
+                        </label>
+
+                        <div class="account-settings-page__field auth-form__field">
+                            <span class="account-settings-page__label auth-form__label">휴대폰 번호</span>
+                            <input class="account-settings-page__input auth-form__input is-disabled is_readonly" type="tel" name="contact" th:value="${userInfo['contact']}" readonly/>
+                        </div>
+
+                        <label class="account-settings-page__field auth-form__field">
+                            <span class="account-settings-page__label auth-form__label">이메일</span>
+                            <input class="account-settings-page__input auth-form__input input-email" type="email" name="email" th:value="${userInfo['email']}"/>
+                            <span class="error-msg" style="color: red; display: none;"></span>
+                        </label>
+
+                        <input type="hidden" name="ci"
+                               th:if="${userInfo != null and userInfo['ci'] != null}"
+                               th:value="${userInfo['ci']}"/>
+
+                        <input type="hidden" name="id"
+                               th:if="${userInfo != null and userInfo['id'] != null}"
+                               th:value="${userInfo['id']}"/>
+
+                        <div class="account-settings-page__actions-row auth-actions auth-actions--split auth-actions--tight">
+                            <button class="account-settings-page__button auth-button auth-button--secondary" type="button" onclick="history.back()">
+                                뒤로가기
+                            </button>
+                            <button class="account-settings-page__button auth-button auth-button--primary" type="button" id="saveBtn">
+                                저장
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </main>
+
+    </div>
+    <div class="footer-box">
+        <div th:replace="~{|sso/include/user/inc_footer|}"></div>
+    </div>
+</div>
+</body>
+<script type="module">
+
+    document.querySelector('input[name="email"]').addEventListener('blur', function () {
+        const result = validateEmail(this.value.trim());
+        displayEmailError(result.isValid, result.msg);
+    });
+
+    $("#modifyNumBtn").click(() => {
+        const $phoneInput = $("#userPhoneNum");
+        $phoneInput.prop('disabled', false);
+        $phoneInput.removeClass('is-disabled');
+        $phoneInput.focus();
+    })
+
+    $("#saveBtn").click(() => {
+        const newEmail = $("input[name='email']").val();
+        const param = {
+            name: $("input[name='name']").val(),
+            birYMD: $("input[name='birYMD']").val(),
+            contact: $("input[name='contact']").val(),
+            email: $("input[name='email']").val(),
+            id: $("input[name='id']").val(), // hidden 필드
+            ci: $("input[name='ci']").val()  // hidden 필드
+        };
+        $.ajax({
+            url: "/ajax/dolbom/user/updateInfo",
+            type: "POST",
+            data: param,
+            success: (res) => {
+                if (res.resultCd === "S") {
+                    openAlert("수정 성공", "정보가 성공적으로 수정되었습니다.", "확인", false, "", () => {
+                        $("input[name='email']").val(newEmail);
+                    });
+                } else {
+                    openAlert("수정 실패", res.resultMsg, "확인", false, "");
+                }
+            }
+        });
+    })
+</script>

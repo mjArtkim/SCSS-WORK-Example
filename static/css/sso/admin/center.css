@@ -1,0 +1,182 @@
+@charset "utf-8";
+
+.wrapperPci *{box-sizing: border-box;}
+.wrapperPci{width:100%; height:100%;}
+
+/* form */
+.containerPci input{height: 56px; border-radius: 3px; border: solid 1px #ccc; background-color: #fff; padding:0 20px; font-size: 16px; font-family: 'NotoSansKR';}
+.containerPci input::placeholder{color:#ccc; font-size: 16px;  font-family: 'NotoSansKR'; letter-spacing: -1px;}
+
+/* button */
+.containerPci button{font-family: 'NotoSansKR';}
+.containerPci button:disabled{border-color:#ddd; background:#fff; color:#bbb; cursor:default;}
+.containerPci .btnType{outline: none; cursor: pointer; transition:all 0.3s ease;}
+.containerPci .btnSize56{font-size:16px; height:56px;}
+.containerPci .btnSize36{font-size:13px; height:36px;}
+.containerPci .btnColorP160{width:160px; color:#f6f6f6;border:1px solid #1E1671; background:#1E1671;  border-radius: 3px; }
+.containerPci .btnColorP{width:200px; color:#f6f6f6;border:1px solid #1E1671; background:#1E1671;  border-radius: 3px; }
+.containerPci .btnColorP:disabled{border-color:#ddd; background:#ddd; color:#fff; cursor:default;}
+.containerPci .btnColorG160{width:160px; color:#333; border:1px solid #ddd; background:#ddd; border-radius: 3px;}
+.containerPci .btnColorG{width:200px; color:#333; border:1px solid #ddd; background:#ddd; border-radius: 3px;}
+.containerPci .btnLineG160{width:160px; color:#333; background:#fff; border: 1px solid #ddd; border-radius: 3px; }
+.containerPci .btnLineG{width:200px; color:#333; background:#fff; border: 1px solid #ddd; border-radius: 3px; }
+
+/* partnerCenterInfo */
+.containerPci{height:100%; display:flex; justify-content: center;}
+.containerPci.flexCenter {align-items: center; background: #f7f7f7;}
+.containerPci .pciTit{text-align: center;}
+.containerPci .pciTit h1{position: relative; font-weight: 500; font-size: 28px; letter-spacing: -1px;}
+.containerPci .pciAccountTit{text-align: center; border-bottom: 1px solid #333;}
+.containerPci .pciAccountTit.v2{border: none;}
+.containerPci .pciAccountTit h1{position: relative; font-weight: 500; font-size: 28px; letter-spacing: -1px; padding:50px 0;}
+.containerPci .pciAccountTit h3{text-align: left; font-weight: 500; font-size: 20px; letter-spacing: -1px; padding: 50px 0 15px;}
+.containerPci .pciAccountTit h3.v2{padding: 30px 0 15px;}
+.containerPci .pciAccountTit p{font-size: 22px; letter-spacing: -1px; font-weight: normal;}
+.containerPci .pciAccountTit h1 .small {position: absolute; right: 0; bottom: 10px; font-size: 12px;}
+.containerPci .sellerInfoTit{padding-top: 100px; text-align: center;}
+.containerPci .sellerInfoTit h1{font-size: 28px; font-weight: 500;}
+
+.containerPci .accountForm{padding: 20px 0; width:640px;}
+.containerPci .accountForm .inpWrap{display: flex; flex-wrap: wrap; align-items: flex-start; padding:0 20px;}
+.containerPci .accountForm .inpWrap + .inpWrap{margin-top:20px;}
+.containerPci .accountForm .inpWrap label{width:140px; font-weight: 500; padding-top:11px;}
+.containerPci .accountForm .inpWrap input{width:330px; height: 44px; font-size: 14px;}
+.containerPci .accountForm .inpWrap input::placeholder{font-size: 14px;}
+.containerPci .accountForm .inpWrap input.v2{width:195px; margin-left:5px !important;}
+.containerPci .accountForm .inpWrap input.v3{width:160px;}
+.containerPci .accountForm .inpWrap input:disabled{background-color: #fafafa; color: #999;}
+.containerPci .accountForm .inpWrap select{height: 44px; vertical-align: top; border: 1px solid #ccc;}
+.containerPci .accountForm .inpWrap button{margin-left:8px; background-repeat: no-repeat;}
+.containerPci .accountForm .inpWrap .BtnSrch{background: url(/static/img/store/admin/ico_search_purple.png) 17px 10px no-repeat; padding-left: 18px;}
+.containerPci .accountForm .inpWrap .resultBox{display: flex; flex-wrap: wrap; position: relative; padding-left: 140px; margin-top: 10px;}
+.containerPci .accountForm .inpWrap .resultBox .resultConfirm{position: relative; width: 100%; margin-top: 10px; font-size: 12px; color:#427cd8; padding-left: 13px;}
+.containerPci .accountForm .inpWrap .resultBox .resultConfirm::before{content:''; position: absolute; left:0; top:5px; display: inline-block; width:10px; height: 8px; background: url(/static/img/store/admin/ico_chk_blue.svg) no-repeat;}
+.containerPci .accountForm .inpWrap .resultWarning{margin-top: 10px;}
+
+.containerPci .accountForm .inpWrap .resultBox .resultInp{padding-right: 50px;}
+.containerPci .accountForm .inpWrap .resultBox .time{position: absolute; right: 140px; top: 11px; color:#f03f40;}
+.containerPci .accountForm .inpWrap.agree{align-items: flex-start;}
+.containerPci .accountForm .inpWrap.agree .title{width:140px; font-weight: 500;}
+.containerPci .accountForm .inpWrap.agree{border-top: 1px solid #333; border-bottom: 1px solid #ddd; padding:20px;}
+.containerPci .accountForm .inpWrap .agreeBox{width:calc(100% - 140px); }
+.containerPci .accountForm .inpWrap .agreeBox label{width:100%; font-weight: 400; padding-top:0;}
+.containerPci .accountForm .inpWrap .agreeBox label .all{display: block; margin-bottom: 5px; font-size: 18px; font-weight: 500;}
+.containerPci .accountForm .inpWrap .agreeBox label .small{font-size: 12px; color:#666;}
+.containerPci .accountForm .inpWrap .agreeBox label em{color:#999;}
+.containerPci .accountForm .inpWrap .agreeBox .p-field-checkbox{position: relative;}
+.containerPci .accountForm .inpWrap .agreeBox .p-field-checkbox .btnTerm{position: absolute; right:0; top:0; display: inline-block; padding-right: 10px; color: #1E1671; cursor: pointer;}
+.containerPci .accountForm .inpWrap .agreeBox .p-field-checkbox .btnTerm.v2{position: absolute; right:0; top: 2px; display: inline-block; padding-right: 10px; color: #1E1671; cursor: pointer;}
+.containerPci .accountForm .inpWrap .agreeBox .p-field-checkbox .btnTerm::after{content: ''; position: absolute; right:0; top:6.5px; display: inline-block; width: 6px; height: 9px; background: url(/static/img/store/admin/ico_list_arrow_p.png) no-repeat;}
+.containerPci .accountForm .inpWrap .agreeBox .p-field-checkbox.fir{margin-bottom: 1.5rem; align-items: flex-start;}
+.containerPci .accountForm .btnWrap{margin:40px 0 20px 0;}
+.containerPci .accountForm .partnerBtnWrap{text-align: center;}
+.containerPci .accountForm .partnerBtnWrap .btnPartner{position: relative; display: inline-block; padding-right: 10px; color: #1E1671; cursor: pointer;}
+.containerPci .accountForm .partnerBtnWrap .btnPartner::after{content: ''; position: absolute; right:0; top:6.5px; display: inline-block; width: 6px; height: 9px; background: url(/static/img/store/admin/ico_list_arrow_p.png) no-repeat;}
+
+
+.containerPci .loginForm{margin-top: 30px; width:400px; padding:20px 30px 60px 30px;}
+.containerPci .loginForm .inpWrap{display: flex; flex-wrap: wrap;}
+.containerPci .loginForm .inpWrap.certify input{width:212px;}
+.containerPci .loginForm .inpWrap.certify button{margin-left:8px;}
+.containerPci .loginForm .inpWrap.certify.resultBox{position: relative;}
+.containerPci .loginForm .inpWrap.certify.resultBox .time{position: absolute; right: 140px; top: 17px; color:#f03f40;}
+.containerPci .loginForm .inpWrap.certify.resultBox input{padding-right: 50px;}
+.containerPci .loginForm input,
+.containerPci .loginForm .p-password{width:100%;}
+.containerPci .loginForm .inpWrap + .inpWrap{margin-top: 10px;}
+.containerPci .loginForm .inpWrap label{display: block; margin-bottom: 10px; font-weight: 500;}
+.containerPci .loginForm .btnWrap{margin: 30px 0 10px 0;}
+.containerPci .loginForm .utilMenu{display: flex; justify-content: center; margin-top:20px;}
+.containerPci .loginForm .utilMenu li{position: relative; font-size: 14px; color:#333;}
+.containerPci .loginForm .utilMenu li + li{margin-left:45px;}
+.containerPci .loginForm .utilMenu li span{cursor: pointer;}
+.containerPci .loginForm .utilMenu li:nth-child(2)::before{content: ''; position: absolute; left:-22px; top:50%; transform: translate(0, -50%); width: 1px; height: 14px; background-color: #d8d8d8;}
+.containerPci .loginForm .utilMenu li:nth-child(2):after{content: ''; position: absolute; right:-22px; top:50%; transform: translate(0, -50%); width: 1px; height: 14px; background-color: #d8d8d8;}
+.containerPci .loginInfo{width:400px; margin-top:20px; font-size:13px; color:#999; line-height: 20px;}
+
+.containerPci .findForm{margin-top: 30px; width:400px; padding:20px 30px 60px 30px; background: #fff;}
+.containerPci .findForm .inpWrap{display: flex; flex-wrap: wrap;}
+.containerPci .findForm .inpWrap.certify input{width:calc(100% - 100px);}
+.containerPci .findForm .inpWrap.certify button{margin-left:8px;}
+.containerPci .findForm .inpWrap.certify.resultBox{position: relative;}
+.containerPci .findForm .inpWrap.certify.resultBox .time{position: absolute; right: 112px; top: 13px; color:#f03f40;}
+.containerPci .findForm .inpWrap.certify.resultBox button{width:92px;}
+.containerPci .findForm .inpWrap.certify.resultBox input{padding-right: 50px;}
+.containerPci .findForm input{width:100%; height:48px;}
+.containerPci .findForm .p-password{width:100%;}
+.containerPci .findForm .inpWrap + .inpWrap{margin-top: 20px;}
+.containerPci .findForm .inpWrap label{display: block; margin-bottom: 10px; font-weight: 500;}
+.containerPci .findForm .btnWrap{margin: 30px 0 10px 0;}
+.containerPci .findForm .utilMenu{display: flex; justify-content: space-evenly; margin-top:20px;}
+.containerPci .findForm .utilMenu li{position: relative;  flex: 1 1 50%; font-size: 14px; color:#333; text-align: center;}
+.containerPci .findForm .utilMenu li span{cursor: pointer;}
+.containerPci .findForm .utilMenu li::after{content: ''; position: absolute; right:0; top:0; width: 1px; height: 14px; background-color: #d8d8d8;}
+.containerPci .findForm .utilMenu li:last-child::after{content: none;}
+.containerPci .findForm #gridTab_center_find .p-tabview-nav li{width:50%;}
+.containerPci .findForm #gridTab_center_find .p-tabview-panels{padding:0; margin-top:30px;}
+.containerPci .findForm .btnWrap.v2{margin: 30px 0 10px 0;}
+.containerPci .findForm .btnWrap.v2 button{width:calc((100% - 15px)/2);}
+
+.containerPci .findForm .result{font-size: 17px; font-weight: 600;}
+.containerPci .findForm .result span{display: inline-block; margin-top:5px; font-size: 13px; font-weight: 500; color: #999; }
+.containerPci .findForm .findIdInfo{min-height: 100px;}
+.containerPci .findForm .findIdInfo .userInfo{display: flex;}
+.containerPci .findForm .findIdInfo .userInfo::before{content:""; display: inline-block; width: 40px; height: 40px; background: url(/static/img/store/admin/ico_user.png) center center no-repeat;}
+.containerPci .findForm .findIdInfo .userInfo .userId{margin-left: 15px; line-height: 19px; font-size: 16px; font-weight: 500;}
+.containerPci .findForm .findIdInfo .userInfo .userId em{font-size: 12px; font-weight: normal; color: #999;}
+
+.containerPci .findForm .mailIco{width: 54px; height: 54px; margin: 40px auto 0; background: url(/static/img/store/admin/ico_mail.svg) center center no-repeat;}
+.containerPci .findForm .mailSend{font-size: 17px; font-weight: 500;}
+.containerPci .findForm .mailSend span{color: #8d4cc4; font-weight: bold;}
+.containerPci .findForm .mailNotice{font-size: 14px; color: #999;}
+
+.containerPci .sellerInfo{margin-top: 40px;}
+.containerPci .sellerInfo .paperInfo{width: 820px; padding: 30px 30px 20px; border: 1px solid #eee;}
+.containerPci .sellerInfo .paperInfo h2{font-size: 16px; font-weight: normal; color: #333;}
+.containerPci .sellerInfo .paperInfo ul{margin-top: 17px;}
+.containerPci .sellerInfo .paperInfo ul li.smTit{margin-top: 0; color: #333; font-size: 14px;}
+.containerPci .sellerInfo .paperInfo ul li{margin-top: 5px; color: #777;}
+.containerPci .sellerInfo .paperInfo li:not(:first-child)::before{content:'·'; padding-right: 5px;}
+.containerPci .sellerInfo .paperInfo ul + ul{margin-bottom: 20px;}
+.containerPci .sellerInfo .paperInfo p{padding-top: 20px; border-top: 1px solid #f4f4f4; color: #999;}
+
+.containerPci .sellerInfo .regiArea{display: flex; justify-content: space-between; margin-top: 30px;}
+.containerPci .sellerInfo .regiArea div{position: relative; padding: 30px; width: 50%; height: 207px; border: 1px solid #eee;}
+.containerPci .sellerInfo .regiArea div + div{border-left: 0;}
+.containerPci .sellerInfo .regiArea div h3{font-size: 18px; color: #333; font-weight: 500;}
+.containerPci .sellerInfo .regiArea div p{margin-top: 12px; line-height: 20px; color: #666;}
+.containerPci .sellerInfo .regiArea div button{position: absolute; bottom: 30px; right: 30px;}
+
+/* sellerInfo-220104 */
+.regist .accountForm .radioWrap{padding: 0	20px;}
+
+/* regist - general-quick */
+.regist{padding-bottom: 60px;}
+.regist .paperInfo{width: 640px; margin-top: 40px; padding: 30px; border: 1px solid #eee;}
+.regist .paperInfo h2{font-size: 16px; font-weight: normal; color: #333;}
+.regist .paperInfo ul{margin-top: 17px;}
+.regist .paperInfo ul li{color: #777; text-indent: -15px;}
+.regist .paperInfo ul li::before{content:'·'; padding-right: 5px;}
+
+.regist .accountForm{padding: 20px 0 0 0;}
+.regist .accountForm .bdArea{border-top: 1px solid #eee; border-bottom: 1px solid #eee; padding: 20px 0; margin-top:20px;}
+
+.regist .regiAreaTit{font-size: 14px; color: #333; font-weight: 500; margin-top: 40px;}
+.regist .regiArea{margin-top: 15px; border: 1px solid #eee;}
+.regist .regiArea li{display: flex; height: 104px; padding: 0 30px; align-items: center; justify-content: space-between; align-content: center;}
+.regist .regiArea li:not(:last-child){border-bottom: 1px solid #eee;}
+.regist .regiArea li p{display: flex; align-items: center;}
+.regist .regiArea li p span{display: flex; align-items: center; width: 160px; font-size: 16px; font-weight: 500;}
+.regist .regiArea li p span.v2{width: 280px;}
+.regist .regiArea li p em{font-size: 12px;}
+.regist .regiArea li p em.txtR{color: #f03f40;}
+.regist .regiArea li p em.txtB{position: relative; padding-left: 13px; color: #427cd8;}
+.regist .regiArea li p em.txtB::before{content:''; position: absolute; left:0; top:5px; display: inline-block; width:10px; height: 8px; background: url(/static/img/store/admin/ico_chk_blue.svg) no-repeat;}
+.regist .regiArea li button{}
+
+.resultTxtBox{margin:10px 0 30px 0;}
+.resultInfo{color: #666; font-size: 12px;}
+.resultInfo::before{content:'·'; padding-right: 5px;}
+.resultConfirm{position: relative; width: 100%; font-size: 12px; color:#427cd8; padding-left: 13px;}
+.resultConfirm::before{content:''; position: absolute; left:0; top:5px; display: inline-block; width:10px; height: 8px; background: url(/static/img/store/admin/ico_chk_blue.svg) no-repeat;}
+.resultWarning{color: #f03f40;  font-size: 12px;}

@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+  <div th:replace="~{|recruit/include/user/inc_head|}"></div>
+</head>
+<body>
+<section>
+  <div class="header-box">
+    <div th:replace="~{|recruit/include/user/mobile/inc_mobile_header|}"></div>
+  </div>
+</section>
+
+<section class="mo-add-detail">
+  <div class="mo-add-detail__page" data-detail-type="region" data-detail-title="지역">
+    <div class="mo-add-detail__content">
+      <div class="mo-add-detail__group-list">
+        <button type="button" class="mo-add-detail__group-btn is-active">전북특별자치도</button>
+        <button type="button" class="mo-add-detail__group-btn">전남</button>
+        <button type="button" class="mo-add-detail__group-btn">광주</button>
+      </div>
+
+      <div class="mo-add-detail__item-list">
+        <div class="mo-add-detail__item-panel">
+          <button type="button" class="mo-add-detail__item-btn">
+            <span class="mo-add-detail__item-label">전북 전체</span>
+            <span class="mo-add-detail__item-count">1,427</span>
+          </button>
+          <button type="button" class="mo-add-detail__item-btn">
+            <span class="mo-add-detail__item-label">고창군</span>
+            <span class="mo-add-detail__item-count">42</span>
+          </button>
+          <button type="button" class="mo-add-detail__item-btn">
+            <span class="mo-add-detail__item-label">군산시</span>
+            <span class="mo-add-detail__item-count">226</span>
+          </button>
+          <button type="button" class="mo-add-detail__item-btn">
+            <span class="mo-add-detail__item-label">김제시</span>
+            <span class="mo-add-detail__item-count">124</span>
+          </button>
+        </div>
+
+        <div class="mo-add-detail__item-panel mo-none">
+          <button type="button" class="mo-add-detail__item-btn">
+            <span class="mo-add-detail__item-label">전남 전체</span>
+            <span class="mo-add-detail__item-count">1,184</span>
+          </button>
+          <button type="button" class="mo-add-detail__item-btn">
+            <span class="mo-add-detail__item-label">목포시</span>
+            <span class="mo-add-detail__item-count">173</span>
+          </button>
+          <button type="button" class="mo-add-detail__item-btn">
+            <span class="mo-add-detail__item-label">여수시</span>
+            <span class="mo-add-detail__item-count">164</span>
+          </button>
+          <button type="button" class="mo-add-detail__item-btn">
+            <span class="mo-add-detail__item-label">순천시</span>
+            <span class="mo-add-detail__item-count">201</span>
+          </button>
+        </div>
+
+        <div class="mo-add-detail__item-panel mo-none">
+          <button type="button" class="mo-add-detail__item-btn">
+            <span class="mo-add-detail__item-label">광주 전체</span>
+            <span class="mo-add-detail__item-count">684</span>
+          </button>
+          <button type="button" class="mo-add-detail__item-btn">
+            <span class="mo-add-detail__item-label">동구</span>
+            <span class="mo-add-detail__item-count">61</span>
+          </button>
+          <button type="button" class="mo-add-detail__item-btn">
+            <span class="mo-add-detail__item-label">서구</span>
+            <span class="mo-add-detail__item-count">182</span>
+          </button>
+          <button type="button" class="mo-add-detail__item-btn">
+            <span class="mo-add-detail__item-label">남구</span>
+            <span class="mo-add-detail__item-count">107</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mo-add-detail__page" data-detail-type="job" data-detail-title="직무">
+    <div class="mo-add-detail__content">
+      <div class="mo-add-detail__group-list">
+        <button type="button" class="mo-add-detail__group-btn is-active">돌봄</button>
+        <button type="button" class="mo-add-detail__group-btn">의료/간호</button>
+        <button type="button" class="mo-add-detail__group-btn">복지/운영</button>
+        <button type="button" class="mo-add-detail__group-btn">치료/재활</button>
+      </div>
+
+      <div class="mo-add-detail__item-list">
+        <div class="mo-add-detail__item-panel">
+          <button type="button" class="mo-add-detail__item-btn">
+            <span class="mo-add-detail__item-label">전체</span>
+            <span class="mo-add-detail__item-count">155</span>
+          </button>
+          <button type="button" class="mo-add-detail__item-btn">
+            <span class="mo-add-detail__item-label">요양보호사</span>
+            <span class="mo-add-detail__item-count">92</span>
+          </button>
+          <button type="button" class="mo-add-detail__item-btn">
+            <span class="mo-add-detail__item-label">활동지원사</span>
+            <span class="mo-add-detail__item-count">41</span>
+          </button>
+          <button type="button" class="mo-add-detail__item-btn">
+            <span class="mo-add-detail__item-label">생활지원사</span>
+            <span class="mo-add-detail__item-count">22</span>
+          </button>
+        </div>
+
+        <div class="mo-add-detail__item-panel mo-none">
+          <button type="button" class="mo-add-detail__item-btn">
+            <span class="mo-add-detail__item-label">전체</span>
+            <span class="mo-add-detail__item-count">88</span>
+          </button>
+          <button type="button" class="mo-add-detail__item-btn">
+            <span class="mo-add-detail__item-label">간호사</span>
+            <span class="mo-add-detail__item-count">31</span>
+          </button>
+          <button type="button" class="mo-add-detail__item-btn">
+            <span class="mo-add-detail__item-label">간호조무사</span>
+            <span class="mo-add-detail__item-count">44</span>
+          </button>
+          <button type="button" class="mo-add-detail__item-btn">
+            <span class="mo-add-detail__item-label">물리치료사</span>
+            <span class="mo-add-detail__item-count">13</span>
+          </button>
+        </div>
+
+        <div class="mo-add-detail__item-panel mo-none" >
+          <button type="button" class="mo-add-detail__item-btn">
+            <span class="mo-add-detail__item-label">전체</span>
+            <span class="mo-add-detail__item-count">155</span>
+          </button>
+          <button type="button" class="mo-add-detail__item-btn">
+            <span class="mo-add-detail__item-label">사회복지사</span>
+            <span class="mo-add-detail__item-count">77</span>
+          </button>
+          <button type="button" class="mo-add-detail__item-btn">
+            <span class="mo-add-detail__item-label">시설장 / 센터장</span>
+            <span class="mo-add-detail__item-count">5</span>
+          </button>
+          <button type="button" class="mo-add-detail__item-btn">
+            <span class="mo-add-detail__item-label">사무원</span>
+            <span class="mo-add-detail__item-count">73</span>
+          </button>
+        </div>
+
+        <div class="mo-add-detail__item-panel mo-none">
+          <button type="button" class="mo-add-detail__item-btn">
+            <span class="mo-add-detail__item-label">전체</span>
+            <span class="mo-add-detail__item-count">57</span>
+          </button>
+          <button type="button" class="mo-add-detail__item-btn">
+            <span class="mo-add-detail__item-label">작업치료사</span>
+            <span class="mo-add-detail__item-count">21</span>
+          </button>
+          <button type="button" class="mo-add-detail__item-btn">
+            <span class="mo-add-detail__item-label">언어치료사</span>
+            <span class="mo-add-detail__item-count">14</span>
+          </button>
+          <button type="button" class="mo-add-detail__item-btn">
+            <span class="mo-add-detail__item-label">재활치료사</span>
+            <span class="mo-add-detail__item-count">22</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="mo-add-detail__footer">
+    <div class="mo-add-detail__footer-head">
+      <div class="mo-add-detail__summary" id="moAddDetailSummary">선택 지역 0개</div>
+      <button type="button" class="mo-add-detail__toggle" id="moAddDetailToggle" aria-label="선택 목록 펼치기" aria-expanded="false" hidden>
+        <span class="mo-add-detail__toggle-icon" aria-hidden="true"></span>
+      </button>
+    </div>
+    <div class="mo-add-detail__selected-wrap" id="moAddDetailSelectedWrap">
+      <div class="mo-add-detail__selected" id="moAddDetailSelected">
+        <p class="mo-add-detail__selected-empty">선택한 지역이 없습니다.</p>
+      </div>
+    </div>
+    <div class="mo-add-detail__actions">
+      <button type="button" class="mo-add-detail__action mo-add-detail__action--line" onclick="fn_back()">
+        <span>이전</span>
+      </button>
+      <button type="button" class="mo-add-detail__action mo-add-detail__action--fill" onclick="fn_submitAddDetail()">
+        선택하기
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  let detailType = 'region';
+
+  function fn_escapeText(text) {
+    return $('<div>').text(text).html();
+  }
+  function fn_getCurrentPage() {
+    return $('.mo-add-detail__page.is-current');
+  }
+  function fn_setCurrentPage() {
+    const queryType = new URLSearchParams(window.location.search).get('type');
+
+    detailType = queryType === 'job' ? 'job' : 'region';
+
+    const $currentPage = $('.mo-add-detail__page[data-detail-type="' + detailType + '"]');
+    const detailTitle = $currentPage.data('detailTitle');
+
+    $('.mo-add-detail__page').hide().removeClass('is-current');
+    $currentPage.show().addClass('is-current');
+
+    $('.menu-h2').text(detailTitle);
+    $('.notice-panel__setting-flex').prop('hidden', false);
+  }
+  function fn_changeGroup($groupButton) {
+    const $page = $groupButton.closest('.mo-add-detail__page');
+    const groupIndex = $groupButton.index();
+
+    $page.find('.mo-add-detail__group-btn').removeClass('is-active');
+    $groupButton.addClass('is-active');
+
+    $page.find('.mo-add-detail__item-panel').hide();
+    $page.find('.mo-add-detail__item-panel').eq(groupIndex).show();
+  }
+
+  //아이템 선택 토글
+  function fn_toggleItem($itemButton) {
+    $itemButton.toggleClass('is-selected');
+    fn_updateAddDetailFooter();
+  }
+  function fn_resetAddDetail() {
+    fn_getCurrentPage().find('.mo-add-detail__item-btn').removeClass('is-selected');
+    fn_updateAddDetailFooter();
+  }
+
+  //선택완료 페이지 이동
+  function fn_submitAddDetail() {
+    movePage('/recruit/user/mobileAddCodition?type=' + detailType);
+  }
+
+  // 하단 각 선택 한 부분 접기 기준 높이
+  const addDetailHeight = 150;
+
+  //모바일 add detail footer 접기/펼치기 선택된 높이에 따라 작동
+  function fn_updateSelectedCollapse() {
+    const $footer = $('.mo-add-detail__footer');
+    const $toggle = $('#moAddDetailToggle');
+    const $selectedWrap = $('#moAddDetailSelectedWrap');
+
+    const selectedHeight = $selectedWrap.prop('scrollHeight') || 0;
+    const isCollapsible = selectedHeight > addDetailHeight;
+
+    $selectedWrap.css('--mo-add-detail-collapse-height', addDetailHeight + 'px');
+
+    if (isCollapsible) {
+      if (!$footer.hasClass('is-collapsible')) {
+        $footer.addClass('is-collapsed');
+      }
+
+      $footer.addClass('is-collapsible');
+      $toggle.prop('hidden', false);
+    } else {
+      $footer.removeClass('is-collapsible is-collapsed');
+      $toggle.prop('hidden', true);
+    }
+
+    const isExpanded = !$footer.hasClass('is-collapsed');
+
+    $toggle.attr('aria-expanded', String(isExpanded));
+    $toggle.attr('aria-label', isExpanded ? '선택 목록 접기' : '선택 목록 펼치기');
+  }
+  //모바일 add detail footer 선택 목록
+  function fn_updateAddDetailFooter() {
+    const $page = fn_getCurrentPage();
+    const detailTitle = detailType === 'job' ? '직무' : '지역';
+
+    let selectedCount = 0;
+    let selectedHtml = '';
+
+    $page.find('.mo-add-detail__group-btn').each(function (groupIndex) {
+      const groupName = $(this).text().trim();
+      const $itemPanel = $page.find('.mo-add-detail__item-panel').eq(groupIndex);
+
+      let itemHtml = '';
+
+      $itemPanel.find('.mo-add-detail__item-btn.is-selected').each(function () {
+        const itemName = $(this).find('.mo-add-detail__item-label').text().trim();
+        const itemIndex = $(this).index();
+        selectedCount += 1;
+        itemHtml += `
+          <button type="button"
+                  class="mo-add-detail__chip mo-add-detail__chip--item"
+                  data-group-index="${groupIndex}"
+                  data-item-index="${itemIndex}">
+            <span>${fn_escapeText(itemName)}</span>
+            <span class="mo-add-detail__delete"></span>
+          </button>
+        `;
+      });
+      if (!itemHtml) {
+        return;
+      }
+      selectedHtml += `
+        <div class="mo-add-detail__selection-row">
+          <span class="mo-add-detail__chip mo-add-detail__chip--group">
+            <span>${fn_escapeText(groupName)}</span>
+          </span>
+          <span class="mo-add-detail__selection-arrow" aria-hidden="true"></span>
+          ${itemHtml}
+        </div>
+      `;
+    });
+
+    $('#moAddDetailSummary').text('선택 ' + detailTitle + ' ' + selectedCount + '개');
+    if (!selectedHtml) {
+      selectedHtml = '<p class="mo-add-detail__selected-empty">선택한 ' + detailTitle + '이 없습니다.</p>';
+    }
+    $('#moAddDetailSelected').html(selectedHtml);
+
+    fn_updateSelectedCollapse();
+  }
+  //mo-add-detail__chip--item 선택시 삭제
+  function fn_removeSelectedItem($deleteButton) {
+    const $chip = $deleteButton.closest('.mo-add-detail__chip--item');
+
+    const groupIndex = Number($chip.data('groupIndex'));
+    const itemIndex = Number($chip.data('itemIndex'));
+
+    const $itemButton = fn_getCurrentPage()
+            .find('.mo-add-detail__item-panel')
+            .eq(groupIndex)
+            .find('.mo-add-detail__item-btn')
+            .eq(itemIndex);
+
+    $itemButton.removeClass('is-selected');
+
+    fn_updateAddDetailFooter();
+  }
+
+  //페이지셋팅, 푸터 렌더링, 이벤트 관련코드
+  function fn_bindAddDetailEvents() {
+    $(document).off('click.moAddDetailGroup').on('click.moAddDetailGroup', '.mo-add-detail__page.is-current .mo-add-detail__group-btn', function () {
+              fn_changeGroup($(this));
+            });
+    $(document).off('click.moAddDetailItem').on('click.moAddDetailItem', '.mo-add-detail__page.is-current .mo-add-detail__item-btn', function () {
+              fn_toggleItem($(this));
+            });
+    $(document).off('click.moAddDetailDelete').on('click.moAddDetailDelete', '.mo-add-detail__chip--item .mo-add-detail__delete', function (event) {
+              event.preventDefault();
+              event.stopPropagation();
+              fn_removeSelectedItem($(this));
+            });
+    $(document).off('click.moAddDetailToggle').on('click.moAddDetailToggle', '#moAddDetailToggle', function () {
+              $('.mo-add-detail__footer').toggleClass('is-collapsed');
+              fn_updateSelectedCollapse();
+            });
+  }
+
+    fn_setCurrentPage();
+    fn_updateAddDetailFooter();
+    fn_bindAddDetailEvents();
+</script>
+</body>
+</html>

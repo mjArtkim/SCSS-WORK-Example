@@ -1,0 +1,621 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <div th:replace="~{|recruit/include/admin/inc_admin_head|}"></div>
+    <script src="//t1.kakaocdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+</head>
+<body id="page-top">
+<div class="wrapper recruitList">
+    <div th:replace="~{|recruit/include/admin/inc_admin_header|}"></div>
+
+    <div class="container">
+        <div th:replace="~{|recruit/include/admin/inc_admin_side_left|}"></div>
+        <div class="contents">
+            <div class="inner">
+                <div class="tabWrap">
+                    <div class="tabCon">
+                        <div class="tab">
+                            <div class="headerArea flexBox">
+                                <h2>센터 관리</h2>
+                                <div class="link">센터 관리 &gt; 센터 관리</div>
+                            </div>
+                            <ul class="outInfo2 mt10">
+                                <li>검색을 통해 센터정보를 찾아보실 수 있습니다.</li>
+                            </ul>
+                            <div class="item mt20">
+                                <div class="itemCon show">
+                                    <div class="recruitColumn v2">
+                                        <h4>검색어</h4>
+                                        <div class="rightCon mb10">
+                                            <select name="searchType" id="searchType" class="wdh_218">
+                                                <option value="center_name">센터명</option>
+                                                <option value="ceo_name">대표자명</option>
+                                            </select>
+                                            <input type="text" class="limit ml5 wdh_450" id="searchKeyword"
+                                                   placeholder="검색어를 입력해주세요." onkeyup="enterKey(event);">
+                                        </div>
+                                    </div>
+                                    <div class="recruitColumn v2">
+                                        <h4>승인여부</h4>
+                                        <div class="rightCon mb10">
+                                            <select name="searchType" id="centerStatus" class="wdh_218">
+                                                <option value="">전체</option>
+                                                <option value="W">대기</option>
+                                                <option value="Y">승인</option>
+                                                <option value="N">미승인</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="recruitColumn v2">
+                                        <h4>등록일</h4>
+                                        <div class="rightCon">
+                                            <div class="selWrap">
+                                                <select name="" id="dateSelect" class="wdh_218">
+                                                    <option value="regDt" id="searchRegDate">등록일</option>
+                                                    <option value="modDt" id="searchModDate">수정일</option>
+                                                </select>
+                                            </div>
+                                            <div class="dateBox flexBox mt10">
+                                                <div class="radioWrap flexBox">
+                                                    <input type="radio" id="dayAll" name="dayType" value="all"
+                                                           class="square" checked="checked">
+                                                    <label for="dayAll">전체</label>
+                                                    <input type="radio" id="dayPeriod" name="dayType" value="period"
+                                                           class="square">
+                                                    <label for="dayPeriod">기간</label>
+                                                </div>
+                                            </div>
+                                            <div class="dateBox flexBox mt10 dateTerms" style="visibility:hidden">
+                                                <div class="radioWrap flexBox">
+                                                    <input type="radio" id="day" name="day" value="1" class="square"
+                                                           checked>
+                                                    <label for="day">오늘</label>
+                                                    <input type="radio" id="day7" name="day" value="7" class="square">
+                                                    <label for="day7">1주일</label>
+                                                    <input type="radio" id="day30" name="day" value="30" class="square">
+                                                    <label for="day30">1개월</label>
+                                                    <input type="radio" id="day90" name="day" value="90" class="square">
+                                                    <label for="day90">3개월</label>
+                                                    <input type="radio" id="day180" name="day" value="180"
+                                                           class="square">
+                                                    <label for="day180">6개월</label>
+                                                    <input type="radio" id="day365" name="day" value="365"
+                                                           class="square">
+                                                    <label for="day365">1년</label>
+                                                </div>
+                                                <div class="calWrap flexBox">
+                                                    <div class="inpWrap">
+                                                        <input type="text" placeholder="" class="" id="str_date"
+                                                               readonly/>
+                                                    </div>
+                                                    <span class="inpTxt ml5">~</span>
+                                                    <div class="inpWrap ml5">
+                                                        <input type="text" placeholder="" class="" id="end_date"
+                                                               readonly/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="btnWrap">
+                                        <button class="btnType btnSize44 btnLineG3" onclick="fn_searchReset()">초기화
+                                        </button>
+                                        <button class="btnType btnSize44 btnColorP2" onclick="fn_searchList()">조회
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- item -->
+                            <div class="item">
+                                <p class="total2 pt20">센터목록 <span class="small ml5">총 <em id="totalCount"></em>개</span>
+                                </p>
+                                <div class="tblTop">
+                                    <div>
+                                        <button type="button" class="btnType btnColorExcel btnSize36 txtExcel"
+                                                onclick="fn_excelDownloadUserInfo()">엑셀다운로드
+                                        </button>
+                                    </div>
+                                    <div>
+                                        <select name=regDate"" id="regDate" class="wdh_160">
+                                            <option value="">등록일순</option>
+                                        </select>
+                                        <select name="pageRow" id="pageRow" class="wdh_160 ml5"
+                                                onchange="fn_searchList()">
+                                            <option value="10" selected>10개씩</option>
+                                            <option value="30">30개씩</option>
+                                            <option value="50">50개씩</option>
+                                            <option value="100">100개씩</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div id="grid_admin_goods_list" class="gridWrap">
+                                    <div class="card" style="overflow-x: auto;">
+                                        <table id="searchList" class="p-datatable" style="width:100%">
+                                            <thead class="p-datatable-thead">
+                                            <tr>
+                                                <th style="width: 4%;">No</th>
+                                                <th style="width: 10%;">센터명</th>
+                                                <th style="width: 6%;">대표자명</th>
+<!--                                                <th style="width: 10%;">사업자등록번호</th>-->
+                                                <th style="width: 15%;">업종</th>
+                                                <th style="width: 10%;">홈페이지 주소</th>
+                                                <th style="width: 10%;">등록일자</th>
+                                                <th style="width: 8%;">승인 여부</th>
+                                               <th style="width: 10%;">정보수정</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+
+                                    </div>
+                                    <!-- Paginator 컴포넌트 -->
+                                    <div class="p-paginator p-paginator-bottom" id="PAGE_NAVI">
+                                    </div>
+                                    <input type="hidden" id="PAGE_INDEX" name="PAGE_INDEX" value="1"/>
+                                </div><!-- item -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="popLayer" class="popOverlay c popClose">
+    <div class="popWrap">
+        <div class="popInner">
+            <span class="btnPopClose" onclick="popLayerClose();">닫기</span>
+            <h2>센터 정보 변경</h2>
+            <div class="popCnt type1">
+                <div class="popItemCon">
+                    <div class="mr10">
+                        <div class="popBasicTblWrap mt20">
+                            <table>
+                                <input type="hidden" id="seq"/>
+                                <colgroup>
+                                    <col width="32%">
+                                    <col width="auto">
+                                </colgroup>
+                                <tbody>
+                                <tr>
+                                    <th>센터명</th>
+                                    <td><input class="productTit popInfo" id="center_name"/></td>
+                                </tr>
+                                <tr>
+                                    <th>대표</th>
+                                    <td><input class="productTit popInfo" id="ceo_name"/></td>
+                                </tr>
+                                <tr>
+                                    <th>업종</th>
+                                    <td><input class="productTit popInfo" id="center_industry_detail"/></td>
+                                </tr>
+                                <tr>
+                                    <th>설립일</th>
+                                    <td><input class="productTit popInfo" id="founded_dt"/></td>
+                                </tr>
+                                <tr>
+                                    <th>사용여부</th>
+                                    <td>
+                                        <label>
+                                            <input type="radio" name="useYn" value="Y"> 사용
+                                        </label>
+                                        <label style="margin-left:10px;">
+                                            <input type="radio" name="useYn" value="N"> 미사용
+                                        </label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>홈페이지 주소</th>
+                                    <td><input class="productTit popInfo" id="hompage_url"/></td>
+                                </tr>
+                                <tr>
+                                    <th>센터 주소</th>
+                                    <td>
+                                        <div class="sign-up-info-address-box">
+                                            <div class="sign-up-info-input-box">
+                                                <input id="center_add_zip" placeholder="우편번호" type="text" readonly>
+                                                <button type="button" class="checkBtn" onclick="fn_openAddrSearch('center_add', 'center_add_zip');">주소 검색</button>
+                                            </div>
+                                            <input id="center_add" placeholder="주소" type="text" readonly>
+                                            <input class="detail" id="center_add_detail" placeholder="상세주소" type="text">
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt20">
+                    <div class="btnWrap">
+                        <button class="btnType btnSize44 btnLineG3" onclick="popLayerClose();">취소</button>
+                        <button class="btnType btnSize44 btnColorP2"
+                                onclick="popLayerInfoUpdate()">저장
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="popLayer02" class="popOverlay c popClose">
+    <div class="popWrap">
+        <div class="popInner">
+            <span class="btnPopClose" onclick="popLayerClose();">닫기</span>
+            <h2>승인여부</h2>
+            <div class="popCnt type7 statusPopupSelect">
+                <select id="statusSelect">
+                    <option value="">선택</option>
+                    <option value="Y">승인</option>
+                    <option value="N">거절</option>
+                </select>
+            </div>
+            <div class="mt20">
+                <div class="btnWrap">
+                    <button class="btnType btnSize44 btnLineG3" onclick="popLayerClose();">취소</button>
+                    <button class="btnType btnSize44 btnColorP2"
+                            onclick="popLayerStatusUpdate()">저장
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="popOverlay c popClose" id="popLayerAddr">
+    <div class="popWrap">
+        <div class="popInner">
+            <span class="btnPopClose" onclick="fn_addrSearchClose();">닫기</span>
+            <h2>주소검색</h2>
+            <div id="addrSearch">
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script th:inline="javascript">
+    let element_layer = document.getElementById('addrSearch');
+
+    $(document).ready(function () {
+        getHistoryList('init');
+    });
+
+    let tableTotalLength;
+    function getHistoryList(type) {
+
+        let dayType = $("input[name='dayType']:checked").val()
+        let param = {
+            "PAGE_INDEX": $("#PAGE_INDEX").val(),
+            "pageRow": $("#pageRow").val(),
+            "searchType": $('#searchType').val(),
+            "searchKeyword": $('#searchKeyword').val(),
+            "centerStatus": $('#centerStatus').val(),
+            "dateType": $("#dateSelect").val(),
+            "strDate": (dayType === 'period') ? $("#str_date").val() : "",
+            "endDate": (dayType === 'period') ? $("#end_date").val() : "",
+        }
+
+        if ($('input[name=dayType]:checked').val() != 'all') {
+            param.strDate = $('#str_date').val();
+            param.endDate = $('#end_date').val();
+        }
+
+        $.ajax({
+            url: "/recruit/admin/center/ajax/centerList",
+            data: JSON.stringify(param),
+            type: 'POST',
+            contentType: 'application/json',
+            beforeSend: () => {
+                $('.loading').show();
+            },
+            success: (data) => {
+                if (type === 'init') {
+                    if("S" === String(data.resultCd).toUpperCase()){
+                        getHistoryListCallback(data);
+                    }else{
+                        confirmModal({title: data.resultMsg});
+                    }
+                } else {
+                    reDrawTable(data);
+                }
+            },
+            error: (jqXHR, textStatus, errorThrown) => {
+                confirmModal({title: jqXHR.statusText});
+            },
+            complete: () => {
+                $('.loading').hide();
+            }
+        })
+    }
+
+    function getHistoryListCallback(value) {
+        tableTotalLength = value.total;
+        const data = value.data;
+
+        const params = {
+            divId: "PAGE_NAVI",
+            pageIndex: "PAGE_INDEX",
+            totalCount: tableTotalLength,
+            recordCount: $("#pageRow").val(),
+            eventName: "getHistoryList"
+        };
+        gfn_renderPaging(params);
+
+        const columns = [
+            {
+                data: null,
+                render: function (data, type, row, meta) {
+                    const pageIdx = parseInt($('#PAGE_INDEX').val() || 1);
+                    const pageRow = parseInt($("#pageRow").val() || 10);
+
+                    return tableTotalLength - ((pageIdx - 1) * pageRow) - meta.row;
+                }
+            },
+            {data: 'center_name'},
+            {data: 'ceo_name'},
+            /* {
+                data: null,
+                render: function (data, type, row, meta) {
+                    return data.biz_no ? data.biz_no : "-"
+                }
+            },*/
+            {
+                data: null,
+                render: function (data, type, row, meta) {
+                    switch (data.center_industry) {
+                        case "1":
+                            return "노인 의료 복지 시설(입소)";
+                        case "2":
+                            return "노인 요양 및 돌봄 시설(방문)";
+                        case "3":
+                            return "노인 여가 복지 시설";
+                        case "4":
+                            return "장애인 복지 시설";
+                        case "5":
+                            return "아동/청소년 돌봄센터";
+                        case "6":
+                            return "종합 사회복지관";
+                        case "7":
+                            return "기타 (" + data.center_industry_detail + ")";
+                    }
+                }
+            },
+            {
+                data: null,
+                render: function (data, type, row, meta) {
+                    return data.hompage_url ? data.hompage_url : "-"
+                }
+            },
+            {
+                data: null,
+                render: function (data, type, row, meta) {
+                    if (!data || !data.regDt) {
+                        return '<span>-</span>';
+                    }
+
+                    return '<span>' + data.regDt + '</span>';
+                }
+            },
+            {
+                data: null,
+                render: function (data, type, row, meta) {
+                    const status = data.center_status ? String(data.center_status).trim().toUpperCase(): "";
+                    if (status === 'Y') return '<span class="badgeStyle badgeUse">승인</span>';
+                    if (status === 'W') return '<span class="badgeStyle badgeWait">대기중</span>';
+                    if (status === 'N') return '<span class="badgeStyle badgeNo">거절</span>';
+                    return "-";
+                }
+            },
+            {
+                data: null,
+                render: function (data, type, row, meta) {
+                    if (!data) return "-";
+
+                    const status = data.center_status ? String(data.center_status).trim().toUpperCase() : "";
+
+                    if (status === 'Y') {
+                        return `<button class="btnType btnColorB btnSize22 txtBlue" onclick="fn_updateInfo('${data.seq}')">정보수정</button>`;
+                    }else if (status === 'W' ) {
+                        return `<button class="btnType btnColorOrg btnSize22 txtOrg" onclick="fn_approveStatus('${data.seq}')">상태변경</button>`;
+                    } else {
+                        return "-";
+                    }
+                }
+            }
+        ];
+
+        $('#searchList').DataTable({
+            destroy: true,
+            data: data,
+            columnDefs: [
+                {targets: '_all', className: 'text-center'}
+            ],
+            columns: columns,
+            scrollY: false,
+            scrollX: false,
+            paging: true,
+            pageLength: 100,
+            dom: 't',
+            language: {
+                emptyTable: "조회하신 결과가 없습니다",
+                info: "Showing _START_ to _END_ of _TOTAL_ entries"
+            },
+            order: [0, 'desc']
+        });
+        $('.total2 #totalCount').html(numberWithCommas(tableTotalLength));
+    }
+
+    function fn_updateInfo(seq) {
+        let param = {
+            "seq": seq
+        }
+        $.ajax({
+            url: "/recruit/admin/center/ajax/selectCenterInfo",
+            data: JSON.stringify(param),
+            type: 'POST',
+            contentType: 'application/json',
+            beforeSend: function (xhr) {
+                $('.loading').show();
+            },
+            success: function (data) {
+                if (String(data.resultCd).toUpperCase() === 'S') {
+                    $('#seq').val(data.data.centerSeq);
+                    $('#center_name').val(data.data.center_name).prop('readonly', true).addClass('is_readonly');
+                    $('#ceo_name').val(data.data.ceo_name);
+                    $('#center_industry_detail').val(data.data.center_industry_detail);
+                    $('#founded_dt').val(data.data.founded_dt);
+                    $('input[name="useYn"][value="' + data.data.use_yn + '"]').prop('checked', true);
+                    $('#hompage_url').val(data.data.hompage_url);
+                    $('#center_add').val(data.data.center_add);
+                    $('#center_add_detail').val(data.data.center_add_detail);
+                    $('#center_add_zip').val(data.data.center_add_zip);
+
+                }else{
+                    confirmModal({title : String(data.resultMsg)});
+                }
+                $('#popLayer').removeClass('popClose');
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                confirmModal({title: jqXHR.statusText});
+            },
+            complete: function () {
+                $('.loading').hide();
+            }
+        })
+    }
+
+    function popLayerInfoUpdate() {
+        const zipVal = $('#center_add_zip').val().trim();
+
+        let param = {
+            "seq": $('#seq').val(),
+            "center_name": $('#center_name').val(),
+            "ceo_name": $('#ceo_name').val(),
+            "center_industry_detail": $('#center_industry_detail').val(),
+            "founded_dt": $('#founded_dt').val(),
+            "hompage_url": $('#hompage_url').val(),
+            "center_add": $('#center_add').val(),
+            "center_add_detail": $('#center_add_detail').val(),
+            "center_add_zip": zipVal === '' ? null : Number(zipVal),
+            "use_yn": $('input[name="useYn"]:checked').val()
+        }
+
+        $.ajax({
+            url: "/recruit/admin/center/ajax/updateCenterInfo",
+            data: JSON.stringify(param),
+            type: 'POST',
+            contentType: 'application/json',
+            beforeSend: function () {
+                $('.loading').show();
+            },
+            success: function (data) {
+                confirmModal({title: data.resultMsg})
+                popLayerClose();
+                getHistoryList();
+            },
+            error: function (jqXHR) {
+                confirmModal({title: jqXHR.statusText});
+            },
+            complete: function () {
+                $('.loading').hide();
+            }
+        })
+    }
+
+    function fn_approveStatus(seq){
+        $('#popLayer02').removeClass('popClose');
+        $('#popLayer02').data('seq', seq);
+    }
+
+    function popLayerStatusUpdate() {
+
+        const seq = $('#popLayer02').data('seq');
+        const status = $('#statusSelect').val(); // 선택된 값 가져오기
+
+        const param = {
+            seq: seq,
+            centerStatus: status
+        };
+
+        $.ajax({
+            url: "/recruit/admin/center/ajax/updateCentrStatus",
+            data: JSON.stringify(param),
+            type: 'POST',
+            contentType: 'application/json',
+            beforeSend: () => {
+                $('.loading').show();
+            },
+            success: (data) => {
+                confirmModal({title: data.resultMsg})
+                popLayerClose();
+                getHistoryList();
+            },
+            error: (jqXHR) => {
+                confirmModal({title: jqXHR.statusText});
+            },
+            complete: () => {
+                $('.loading').hide();
+            }
+        })
+    }
+
+
+
+    function fn_excelDownloadUserInfo() {
+        $('.loading').show();
+        let excelUrl = "/admin/user/ajax/excelDownloadUserInfo";
+
+        let request = new XMLHttpRequest();
+        request.open('POST', excelUrl, true);
+        request.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+        request.responseType = 'blob';
+
+        request.onload = function (e) {
+
+            $(".loading").hide();
+
+            let filename = "";
+            let disposition = request.getResponseHeader('Content-Disposition');
+            if (disposition && disposition.indexOf('attachment') !== -1) {
+                let filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
+                let matches = filenameRegex.exec(disposition);
+                if (matches != null && matches[1])
+                    filename = decodeURI(matches[1].replace(/['"]/g, ''));
+            }
+
+            if (this.status === 200) {
+                let blob = this.response;
+                if (window.navigator.msSaveOrOpenBlob) {
+                    window.navigator.msSaveBlob(blob, filename);
+                } else {
+                    let downloadLink = window.document.createElement('a');
+                    let contentTypeHeader = request.getResponseHeader("Content-Type");
+                    downloadLink.href = window.URL.createObjectURL(new Blob([blob], {type: contentTypeHeader}));
+                    downloadLink.download = filename;
+                    document.body.appendChild(downloadLink);
+                    downloadLink.click();
+                    document.body.removeChild(downloadLink);
+                }
+            }
+        };
+        let params = new URLSearchParams({
+            "searchType": $('#searchType').val(),
+            "searchKeyword": $('#searchKeyword').val()
+        });
+
+        if ($('#selCompany').val() != undefined && $('#selCompany').val() != '') {
+            params.append("selCompany", $('#selCompany').val());
+        }
+        request.send(params.toString());
+    }
+
+    function fn_addrSearchClose() {
+        $('#popLayerAddr').addClass('popClose')
+    }
+
+</script>
+</html>

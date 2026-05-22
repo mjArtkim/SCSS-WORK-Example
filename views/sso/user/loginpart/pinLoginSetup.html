@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="~{|sso/include/user/inc_head|}"></div>
+</head>
+<body data-aos-easing="ease-out" data-aos-duration="700" data-aos-delay="0">
+<div class="app-shell app-shell--auth app-shell--quick-actions-hidden">
+    <div class="app-body">
+        <div class="site-header header-box wrap">
+            <div th:replace="~{|sso/include/user/inc_header|}"></div>
+        </div>
+        <main class="site-content" aria-live="polite">
+            <section class="pin-login-setup-page auth-page wrap">
+                <div class="pin-login-setup-page__wrap auth-page__wrap auth-page__wrap--card">
+                    <header class="pin-login-setup-page__content-header auth-page__header">
+                        <h2 class="pin-login-setup-page__title auth-page__title">핀번호 설정</h2>
+                        <p class="pin-login-setup-page__description auth-page__description">
+                            앱 로그인에 사용할 핀번호 6자리를 입력해 주세요.
+                        </p>
+                    </header>
+
+                    <form
+                            class="pin-login-setup-page__form auth-form auth-form--spaced"
+                            data-form="pin-login-setup"
+                    >
+                        <label class="pin-login-setup-page__field auth-form__field">
+        <span class="pin-login-setup-page__label auth-form__label"
+        >새 핀번호</span
+        >
+                            <input
+                                    class="pin-login-setup-page__input auth-form__input"
+                                    type="password"
+                                    name="pin"
+                                    inputmode="numeric"
+                                    maxlength="6"
+                                    autocomplete="one-time-code"
+                                    placeholder="숫자 6자리"
+                                    data-role="pin-input"
+                            />
+                        </label>
+
+                        <label class="pin-login-setup-page__field auth-form__field">
+        <span class="pin-login-setup-page__label auth-form__label"
+        >핀번호 확인</span
+        >
+                            <input
+                                    class="pin-login-setup-page__input auth-form__input"
+                                    type="password"
+                                    name="pinConfirm"
+                                    inputmode="numeric"
+                                    maxlength="6"
+                                    autocomplete="one-time-code"
+                                    placeholder="숫자 6자리 다시 입력"
+                                    data-role="pin-input"
+                            />
+                        </label>
+
+                        <p
+                                class="pin-login-setup-page__assist auth-page__description auth-page__description--compact"
+                        >
+                            같은 숫자 3개 이상 연속되거나 생년월일처럼 쉬운 번호는 피해 주세요.
+                        </p>
+
+                        <div
+                                class="pin-login-setup-page__actions auth-actions auth-actions--split"
+                        >
+                            <button
+                                    class="pin-login-setup-page__button pin-login-setup-page__button--cancel auth-button auth-button--split auth-button--secondary"
+                                    type="button"
+                                    data-page-target="easy-login"
+                            >
+                                취소
+                            </button>
+                            <button
+                                    class="pin-login-setup-page__button pin-login-setup-page__button--save auth-button auth-button--split auth-button--primary"
+                                    type="submit"
+                            >
+                                저장
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+        </main>
+
+    </div>
+    <div class="footer-box">
+        <div th:replace="~{|sso/include/user/inc_footer|}"></div>
+    </div>
+</div>
+</body>

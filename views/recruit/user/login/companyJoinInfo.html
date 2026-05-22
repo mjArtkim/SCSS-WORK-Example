@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <div th:replace="~{|recruit/include/user/inc_head|}"></div>
+</head>
+<body class="recruit-body">
+<section class="min-h">
+    <section>
+        <div class="recruit-header wrap">
+            <div class="header-box">
+                <div th:replace="~{|recruit/include/user/inc_header|}"></div>
+            </div>
+        </div>
+        <div class="wrap">
+            <div class="re-login">
+                <div class="re-login__inner">
+                    <h2 class="re-login__tit">기업승인</h2>
+                    <div class="re-login__depth re-login__depth--join">
+                        <div class="re-join">
+                            <div class="re-company-join">
+                                <p class="re-company-join__required"><span>*</span>표시는 필수 입력 항목입니다.</p>
+                                <form class="re-company-join__form" novalidate>
+                                    <h3 class="re-company-join__title">정보입력</h3>
+
+                                    <div class="re-company-join__group">
+                                        <label class="re-company-join__label" for="company-join-manager">담당자명<span>*</span></label>
+                                        <input id="company-join-manager" class="re-company-join__input" type="text" placeholder="담당자명을 입력해주세요.">
+                                    </div>
+
+                                    <div class="re-company-join__group">
+                                        <label class="re-company-join__label" for="company-join-phone">회사전화번호<span>*</span></label>
+                                        <input id="company-join-phone" class="re-company-join__input" type="tel" inputmode="numeric" placeholder="000-000-0000">
+                                    </div>
+
+                                    <div class="re-company-join__group">
+                                        <label class="re-company-join__label" for="company-join-license-file">사업자등록증 첨부<span>*</span></label>
+                                        <input id="company-join-license-file" type="file" accept=".pdf,.jpg,.jpeg,.png" hidden>
+                                        <button id="company-join-license-trigger" class="re-company-join__upload" type="button">
+                                            <span class="re-company-join__upload-icon" aria-hidden="true"></span>
+                                            <span id="company-join-license-name">파일 업로드</span>
+                                        </button>
+                                    </div>
+
+                                    <div class="re-company-join__actions">
+                                        <button class="re-company-join__actions-btn re-company-join__actions-btn--prev" type="button" onclick="movePage('/recruit/user/main')">이전</button>
+                                        <button class="re-company-join__actions-btn re-company-join__actions-btn--submit" type="button" onclick="movePage('/recruit/user/companyWait')">승인요청</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <footer class="min-h__bottom">
+        <div class="footer-box">
+            <div th:replace="~{|recruit/include/user/inc_footer|}"></div>
+        </div>
+    </footer>
+    <div class="m-only">
+        <div th:replace="~{|recruit/include/user/mobile/inc_bnb|}"></div>
+    </div>
+</section>
+<script th:inline="javascript">
+    $(function () {
+        const $joinForm = $('.re-company-join__form');
+
+        if ($joinForm.length === 0) {
+            return;
+        }
+
+        const $idInput = $('#company-join-id');
+        const $idCheckButton = $('#company-join-id-check');
+        const $mobileInput = $('#company-join-mobile');
+        const $mobileAuthButton = $('#company-join-mobile-auth');
+        const $licenseInput = $('#company-join-license-file');
+        const $licenseName = $('#company-join-license-name');
+
+        function syncJoinActionState() {
+            $idCheckButton.prop('disabled', $.trim($idInput.val()) === '');
+            $mobileAuthButton.prop('disabled', $.trim($mobileInput.val()) === '');
+        }
+
+        $joinForm.on('input', '#company-join-id, #company-join-mobile', function () {
+            syncJoinActionState();
+        });
+
+        $joinForm.on('click', '.re-company-join__toggle', function () {
+            const $button = $(this);
+            const $target = $($button.data('target'));
+            const isPasswordType = $target.attr('type') === 'password';
+
+            $target.attr('type', isPasswordType ? 'text' : 'password');
+            $button.toggleClass('is-visible', isPasswordType);
+        });
+
+        $('#company-join-license-trigger').on('click', function () {
+            $licenseInput.trigger('click');
+        });
+
+        $licenseInput.on('change', function () {
+            const file = this.files && this.files[0] ? this.files[0] : null;
+
+            $licenseName.text(file ? file.name : '파일 업로드');
+            $('#company-join-license-trigger').toggleClass('is-filled', !!file);
+        });
+
+        syncJoinActionState();
+    });
+</script>
+</body>
+</html>

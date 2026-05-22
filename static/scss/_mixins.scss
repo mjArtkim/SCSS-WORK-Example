@@ -1,0 +1,194 @@
+@charset "utf-8";
+@use "variables" as *;
+
+@mixin flex-center($direction: row, $gap: 0) {
+  display: flex;
+  flex-direction: $direction;
+  align-items: center;
+  justify-content: center;
+  gap: $gap;
+}
+
+@mixin flex-align($align: center, $gap: 0) {
+  display: flex;
+  align-items: $align;
+  justify-content: center;
+  gap: $gap;
+}
+@mixin flex-just($justify: center, $gap: 0) {
+  display: flex;
+  align-items: center;
+  justify-content: $justify;
+  gap: $gap;
+}
+@mixin flex-custom($direction: row, $align: center, $justify: center, $gap: 0) {
+  display: flex;
+  flex-direction: $direction;
+  align-items: $align;
+  justify-content: $justify;
+  gap: $gap;
+}
+@mixin size($width, $height: $width) {
+  width: $width;
+  height: $height;
+}
+
+@mixin hover-main(
+  $property: color,
+  $hover-color: $color-main,
+  $duration: 0.2s,
+  $timing: ease
+) {
+  transition: #{$property} $duration $timing;
+
+  &:focus-visible,
+  &:active,
+  &[aria-current="page"] {
+    #{$property}: $hover-color;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      #{$property}: $hover-color;
+    }
+  }
+}
+
+@mixin auth-focus-frame(
+  $text-color: $color-card,
+  $background-color: $color-white,
+  $border-color: $color-card
+) {
+  border: 1px solid $border-color;
+  background-color: $background-color;
+  color: $text-color;
+  box-shadow: $shadow-base rgba($color-card, 0.18);
+  outline: none;
+}
+
+@mixin auth-focusable(
+  $text-color: $color-card,
+  $background-color: $color-white,
+  $border-color: $color-card
+) {
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.12s ease;
+
+  &:focus-visible {
+    @include auth-focus-frame($text-color, $background-color, $border-color);
+  }
+
+  &:active {
+    @include auth-focus-frame($text-color, $background-color, $border-color);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      @include auth-focus-frame($text-color, $background-color, $border-color);
+    }
+  }
+}
+
+@mixin btn-focusable(
+  $text-color: $color-mainlight,
+  $background-color: $color-white,
+  $border-color: $color-mainlight
+) {
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.12s ease;
+
+  &:focus-visible {
+    @include auth-focus-frame($text-color, $background-color, $border-color);
+  }
+
+  &:active {
+    @include auth-focus-frame($text-color, $background-color, $border-color);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    &:hover {
+      @include auth-focus-frame($text-color, $background-color, $border-color);
+    }
+  }
+}
+@mixin btn-focus-frame(
+  $text-color: $color-mainlight,
+  $background-color: $color-white,
+  $border-color: $color-mainlight
+) {
+  border: 1px solid $border-color;
+  background-color: $background-color;
+  color: $text-color;
+  box-shadow: $shadow-base rgba($color-mainlight, 0.18);
+  outline: none;
+}
+@mixin re-company-card($gap: null, $interactive: false) {
+  position: relative;
+  flex-shrink: 0;
+  min-height: rem(140);
+  border: rem(1) solid #ddd;
+  border-radius: $radius;
+  background-color: $color-white;
+  padding: rem(20);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  @if $gap != null {
+    gap: $gap;
+  }
+
+  @if $interactive {
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+
+    &:focus-within,
+    &:active {
+      border-color: rgba($color-main, 0.35);
+      box-shadow: 0 0 rem(10) rgba(0, 0, 0, 0.08);
+    }
+  }
+
+  p {
+    font-size: rem(14);
+    color: $color-grey;
+  }
+
+  &__location {
+    font-size: rem(14);
+    color: $color-grey;
+  }
+}
+
+@mixin re-company-scrap {
+  display: flex;
+  justify-content: end;
+  width: rem(40);
+  height: rem(40);
+}
+
+@mixin re-company-button {
+  position: absolute;
+  bottom: rem(20);
+  right: rem(20);
+  border: 1px solid $color-main;
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  border-radius: $radius;
+  padding: 10px;
+  color: $color-main;
+  font-size: rem(14);
+
+  &:focus-within,
+  &:active {
+    background-color: $color-main;
+    color: $color-white;
+  }
+}

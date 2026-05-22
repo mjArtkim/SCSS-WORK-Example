@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!--    <div th:replace="~{|sso/include/common/inc_user_head|}"></div>-->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+</head>
+<body>
+<div class="wrap">
+    <!--    <div th:replace="~{|sso/include/user/inc_user_header_logo|}"></div>-->
+    <main class="main">
+        <div class="myPageContainer">
+            <div class="myInfoBox">
+                <div class="myPageTitle">[[#{CHPW_0001}]]</div>
+                <div class="userInfoBox">
+                    <ul>
+                        <li>
+                            <div class="inpTitle">
+                                <label for="id">[[#{CHPW_0002}]]</label>
+                            </div>
+                            <div class="inpWrap">
+                                <input type="text" name="id" id="id" th:value="${userInfo.id}" readonly/>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="inpTitle">
+                                <label for="pw">[[#{CHPW_0003}]]</label>
+                            </div>
+                            <div class="inpWrap">
+                                <input type="password" name="pw" id="pw" th:placeholder="#{CHPW_0004}"/>
+                            </div>
+                            <div class="authWrap"></div>
+                        </li>
+                        <li>
+                            <div class="inpTitle">
+                                <label for="newPw">[[#{CHPW_0005}]]</label>
+                            </div>
+                            <div class="inpWrap">
+                                <input type="password" name="newPw" id="newPw" th:placeholder="#{CHPW_0006}"/>
+                            </div>
+                            <div class="authWrap"></div>
+                        </li>
+                        <li>
+                            <div class="inpTitle">
+                                <label for="newPw2">[[#{CHPW_0007}]]</label>
+                            </div>
+                            <div class="inpWrap">
+                                <input type="password" name="newPw2" id="newPw2" th:placeholder="#{CHPW_0008}"/>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="btnWrap">
+                        <div class="sendBtn active1" onclick="fn_changeUserPw();">[[#{CHPW_0001}]]</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <!--    <div th:replace="~{|sso/include/common/inc_user_footer|}"></div>-->
+</div>
+</body>
+<script th:inline="javascript">
+    const _type = /*[[${type}]]*/ [];
+    const _siteType = /*[[${companyInfo.siteType}]]*/ '';
+
+    function fn_changeUserPw() {
+        let pw = $('#pw').val().trim();
+        let newPw = $('#newPw').val().trim();
+        let newPw2 = $('#newPw2').val().trim();
+        if (pw == '') {
+            confirmModal({title:/*[[#{CHPW_0004}]]*/''})
+            return;
+        }
+
+        if (pw.length < 4) {
+            confirmModal({title:/*[[#{CHPW_0009}]]*/''})
+            return;
+        }
+
+        if (newPw == '') {
+            confirmModal({title:/*[[#{CHPW_0006}]]*/''})
+            return;
+        }
+
+        if (newPw.length < 4) {
+            confirmModal({title:/*[[#{CHPW_0010}]]*/''})
+            return;
+        }
+
+        if (newPw2 == '') {
+            confirmModal({title:/*[[#{CHPW_0008}]]*/''})
+            return;
+        }
+
+        if (newPw != newPw2) {
+            confirmModal({title:/*[[#{CHPW_0011}]]*/''})
+            return;
+        }
+
+        let param = {
+            'oldPw': pw,
+            'newPw': newPw
+
+        }
+
+        confirmModal({
+            title:/*[[#{CHPW_0012}]]*/'', cancelUse: true, confirm: function () {
+                alertLayerClose();
+                $.ajax({
+                    url: "/user/ajax/changeUserPw",
+                    data: JSON.stringify(param),
+                    type: 'POST',
+                    contentType: 'application/json',
+                    beforeSend: function (xhr) {
+                        $('.loading').show();
+                    },
+                    success: function (data) {
+                        console.log(data)
+                        confirmModal({
+                            title: data.resultMsg, confirm: function () {
+                                alertLayerClose();
+                                if (data.resultCd == 'S') {
+                                    let url = '/' + _siteType + '/user/my/myPage';
+                                    fn_location(url);
+                                }
+                            }
+                        });
+                    },
+                    error: function (jqXHR, textStatus, errorThrown) {
+                        confirmModal({'title': /*[[#{ERR_0001}]]*/''});
+                    },
+                    complete: function () {
+                        $('.loading').hide();
+                    }
+                })
+            }
+        })
+    }
+
+</script>
+</html>

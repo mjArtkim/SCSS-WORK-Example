@@ -1,0 +1,82 @@
+<div class="loading" hidden="hidden">
+    <div class="loadingBox">
+        <div class="spinnerBox"></div>
+    </div>
+</div>
+
+<header class="rehead">
+    <div class="rehead__header">
+        <button type="button" onclick="movePage('/recruit/user/main')" class="rehead__img">
+            <img src="/img/recruit/user/logo_recruit.svg">
+        </button>
+        <div class="rehead__box m-only">
+            <button class="rehead__notice" type="button" onclick="movePage('/recruit/user/mobileNotice')" >
+                <svg width="21" height="26" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M1 17C0.716667 17 0.479167 16.9042 0.2875 16.7125C0.0958333 16.5208 0 16.2833 0 16C0 15.7167 0.0958333 15.4792 0.2875 15.2875C0.479167 15.0958 0.716667 15 1 15H2V8C2 6.61667 2.41667 5.3875 3.25 4.3125C4.08333 3.2375 5.16667 2.53333 6.5 2.2V1.5C6.5 1.08333 6.64583 0.729167 6.9375 0.4375C7.22917 0.145833 7.58333 0 8 0C8.41667 0 8.77083 0.145833 9.0625 0.4375C9.35417 0.729167 9.5 1.08333 9.5 1.5V2.2C10.8333 2.53333 11.9167 3.2375 12.75 4.3125C13.5833 5.3875 14 6.61667 14 8V15H15C15.2833 15 15.5208 15.0958 15.7125 15.2875C15.9042 15.4792 16 15.7167 16 16C16 16.2833 15.9042 16.5208 15.7125 16.7125C15.5208 16.9042 15.2833 17 15 17H1ZM8 20C7.45 20 6.97917 19.8042 6.5875 19.4125C6.19583 19.0208 6 18.55 6 18H10C10 18.55 9.80417 19.0208 9.4125 19.4125C9.02083 19.8042 8.55 20 8 20ZM4 15H12V8C12 6.9 11.6083 5.95833 10.825 5.175C10.0417 4.39167 9.1 4 8 4C6.9 4 5.95833 4.39167 5.175 5.175C4.39167 5.95833 4 6.9 4 8V15Z" fill="currentColor"/>
+                </svg>
+                <div>알림</div>
+            </button>
+            <button class="re-menu"
+                    type="button"
+                    aria-expanded="false"
+                    onclick="movePage('/recruit/user/mobileAllMenu')" >
+                    <span class="re-menu__icon" aria-hidden="true">
+                        <span class="re-menu__line re-menu__line--top"></span>
+                        <span class="re-menu__line re-menu__line--middle"></span>
+                        <span class="re-menu__line re-menu__line--bottom"></span>
+                    </span>
+                <div>전체메뉴</div>
+            </button>
+        </div>
+        <div class="rehead__box pc-only">
+<!--            <div class="rehead__before">-->
+<!--                <button class="rehead__login" onclick='movePage("/login")'>로그인</button>-->
+<!--                <div>&nbsp;|&nbsp;</div>-->
+<!--                <button class="rehead__join" onclick='movePage("/login")'>회원가입</button>-->
+<!--            </div>-->
+            <div class="rehead__after">
+                <button class="notice" type="button" aria-expanded="false">
+                    <svg width="20" height="26" viewBox="0 0 16 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M1 17C0.716667 17 0.479167 16.9042 0.2875 16.7125C0.0958333 16.5208 0 16.2833 0 16C0 15.7167 0.0958333 15.4792 0.2875 15.2875C0.479167 15.0958 0.716667 15 1 15H2V8C2 6.61667 2.41667 5.3875 3.25 4.3125C4.08333 3.2375 5.16667 2.53333 6.5 2.2V1.5C6.5 1.08333 6.64583 0.729167 6.9375 0.4375C7.22917 0.145833 7.58333 0 8 0C8.41667 0 8.77083 0.145833 9.0625 0.4375C9.35417 0.729167 9.5 1.08333 9.5 1.5V2.2C10.8333 2.53333 11.9167 3.2375 12.75 4.3125C13.5833 5.3875 14 6.61667 14 8V15H15C15.2833 15 15.5208 15.0958 15.7125 15.2875C15.9042 15.4792 16 15.7167 16 16C16 16.2833 15.9042 16.5208 15.7125 16.7125C15.5208 16.9042 15.2833 17 15 17H1ZM8 20C7.45 20 6.97917 19.8042 6.5875 19.4125C6.19583 19.0208 6 18.55 6 18H10C10 18.55 9.80417 19.0208 9.4125 19.4125C9.02083 19.8042 8.55 20 8 20ZM4 15H12V8C12 6.9 11.6083 5.95833 10.825 5.175C10.0417 4.39167 9.1 4 8 4C6.9 4 5.95833 4.39167 5.175 5.175C4.39167 5.95833 4 6.9 4 8V15Z" fill="currentColor"/>
+                    </svg>
+                </button>
+                <button class="user-my">
+<!--                    <div>박옥자</div>-->
+                    <div class="user-my__company">
+                        <div class="user-my__comimg" style="background-image: url('/img/recruit/user/icon/my_icon.png')"></div>
+                        <div class="user-my__comname">기업이름 여기에</div>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="rehead-notice pc-only">
+        <div th:replace="~{|recruit/include/user/pc/inc_notice|}"></div>
+    </div>
+</header>
+
+<script th:inline="javascript">
+    $(function () {
+        const $notice = $(".notice");
+        const $panel = $(".rehead-notice");
+
+        $(".re-menu").on("click", function () {
+            $(this).attr("aria-expanded", $(this).attr("aria-expanded") !== "true");
+        });
+        $notice.on("click", function () {
+            const open = !$panel.hasClass("is-open");
+            $panel.toggleClass("is-open", open);
+            $notice.attr("aria-expanded", open);
+        });
+        $(".notice-panel__close").on("click", function () {
+            $panel.removeClass("is-open");
+            $notice.attr("aria-expanded", false);
+        });
+        $(document).on("click", function (e) {
+            if (!$(e.target).closest(".notice, .rehead-notice").length) {
+                $panel.removeClass("is-open");
+                $notice.attr("aria-expanded", false);
+            }
+        });
+    });
+</script>

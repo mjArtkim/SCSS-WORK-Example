@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+  <head>
+    <div th:replace="~{|recruit/include/user/inc_head|}"></div>
+  </head>
+  <body>
+    <section>
+      <div class="header-box">
+        <div th:replace="~{|recruit/include/user/mobile/inc_mobile_header|}"></div>
+      </div>
+    </section>
+    <section class="mo-add-condition">
+      <div class="mo-add-condition__section">
+        <div class="mo-add-condition__head">
+          <h3 class="mo-add-condition__title">지역</h3>
+          <button type="button" class="mo-add-condition__select-btn" onclick="movePage('/recruit/user/mobileAddDetail?type=region')">선택하기</button>
+        </div>
+        <div class="mo-add-condition__tags" data-group="region">
+<!--          <button type="button" class="mo-add-condition__tag" aria-label="전북전체 삭제">-->
+<!--            <span>전북전체</span>-->
+<!--            <span class="mo-add-condition__tag-close" aria-hidden="true"></span>-->
+<!--          </button>-->
+        </div>
+        <div class="mo-add-condition__empty" data-group-empty="region">지역을 선택해주세요</div>
+      </div>
+
+      <div class="mo-add-condition__section">
+        <div class="mo-add-condition__head">
+          <h3 class="mo-add-condition__title">직종</h3>
+          <button type="button" class="mo-add-condition__select-btn" onclick="movePage('/recruit/user/mobileAddDetail?type=job')">선택하기</button>
+        </div>
+        <div class="mo-add-condition__tags" data-group="job">
+<!--          <button type="button" class="mo-add-condition__tag">-->
+<!--            <span>복지/운영 &gt; 사회복지사</span>-->
+<!--            <span class="mo-add-condition__tag-close" aria-hidden="true"></span>-->
+<!--          </button>-->
+        </div>
+        <div class="mo-add-condition__empty" data-group-empty="job">직종을 선택해주세요</div>
+      </div>
+
+      <div class="mo-add-condition__section mo-add-condition__section--last">
+        <div class="mo-add-condition__head">
+          <h3 class="mo-add-condition__title">경력</h3>
+        </div>
+        <div class="mo-add-condition__check-list">
+          <label class="mo-add-condition__check">
+            <input type="checkbox"/>
+            <span>신입</span>
+          </label>
+          <label class="mo-add-condition__check">
+            <input type="checkbox"/>
+            <span>경력</span>
+          </label>
+          <label class="mo-add-condition__check">
+            <input type="checkbox"/>
+            <span>경력무관</span>
+          </label>
+        </div>
+      </div>
+
+      <div class="mo-add-condition__actions">
+        <button type="button" class="mo-add-condition__action mo-add-condition__action--line" onclick="fn_back()">
+          취소하기
+        </button>
+        <button type="button" class="mo-add-condition__action mo-add-condition__action--fill">
+          검색하기
+        </button>
+      </div>
+    </section>
+
+    <script>
+      function fn_getAddDetailStorage(type) {
+        try {
+          const rawData = sessionStorage.getItem('mobileAddDetail:' + type);
+          return rawData ? JSON.parse(rawData) : null;
+        } catch (error) {
+          return null;
+        }
+      }
+
+      function fn_setAddDetailStorage(type, payload) {
+        if (!payload || !Array.isArray(payload.groups) || !payload.groups.length) {
+          sessionStorage.removeItem('mobileAddDetail:' + type);
+          return;
+        }
+        sessionStorage.setItem('mobileAddDetail:' + type, JSON.stringify(payload));
+      }
+
+      function fn_countStoredSelections(groups) {
+        return (groups || []).reduce(function (total, group) {
+          return total + ((group.items || []).length);
+        }, 0);
+      }
+
+      function fn_renderAddConditionTags(type) {
+        const $tags = $('.mo-add-condition__tags[data-group="' + type + '"]');
+        const $empty = $('.mo-add-condition__empty[data-group-empty="' + type + '"]');
+        const storedData = fn_getAddDetailStorage(type);
+        let tagHtml = '';
+
+        if (storedData && Array.isArray(storedData.groups)) {
+          storedData.groups.forEach(function (group) {
+            const groupLabel = group.summaryLabel || group.label || '';
+            (group.items || []).forEach(function (item) {
+              const tagLabel = groupLabel ? groupLabel + ' > ' + item.label : item.label;
+              tagHtml +=
+                '<button type="button" class="mo-add-condition__tag" data-type="' + type + '" data-group-id="' + group.id + '" data-item-id="' + item.id + '" aria-label="' + tagLabel + ' 삭제">' +
+                '<span>' + tagLabel + '</span>' +
+                '<span class="mo-add-condition__tag-close" aria-hidden="true"></span>' +
+                '</button>';
+            });
+          });
+        }
+
+        $tags.html(tagHtml);
+        $empty.toggle(!tagHtml);
+      }
+
+      function fn_renderAddConditionSelections() {
+        fn_renderAddConditionTags('region');
+        fn_renderAddConditionTags('job');
+      }
+
+      function fn_removeAddConditionSelection(type, groupId, itemId) {
+        const storedData = fn_getAddDetailStorage(type);
+        if (!storedData || !Array.isArray(storedData.groups)) {
+          fn_renderAddConditionTags(type);
+          return;
+        }
+
+        storedData.groups = storedData.groups.map(function (group) {
+          if (group.id !== groupId) {
+            return group;
+          }
+          group.items = (group.items || []).filter(function (item) {
+            return item.id !== itemId;
+          });
+          return group;
+        }).filter(function (group) {
+          return Array.isArray(group.items) && group.items.length;
+        });
+
+        storedData.count = fn_countStoredSelections(storedData.groups);
+        fn_setAddDetailStorage(type, storedData);
+        fn_renderAddConditionTags(type);
+      }
+
+      function fn_resetSearchCondition() {
+        sessionStorage.removeItem('mobileAddDetail:region');
+        sessionStorage.removeItem('mobileAddDetail:job');
+        $('.mo-add-condition__check input').prop('checked', false);
+        fn_renderAddConditionSelections();
+      }
+
+      $(function () {
+        fn_renderAddConditionSelections();
+
+        $(document).off('click.moAddConditionTag', '.mo-add-condition__tag').on('click.moAddConditionTag', '.mo-add-condition__tag', function () {
+          fn_removeAddConditionSelection($(this).data('type'), $(this).data('groupId'), $(this).data('itemId'));
+        });
+      });
+    </script>
+  </body>
+</html>

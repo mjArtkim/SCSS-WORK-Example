@@ -1,0 +1,464 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <div th:replace="~{|recruit/include/admin/inc_admin_head|}"></div>
+
+    <link href="/bootstrap-3.4.1/css/bootstrap.css" rel="stylesheet">
+    <script src="/bootstrap-3.4.1/js/bootstrap.js"></script>
+    <link href="/summernote-0.9.0/summernote-lite.min.css" rel="stylesheet">
+    <script src="/summernote-0.9.0/summernote-lite.min.js"></script>
+    <style>
+        .container {
+            width: auto !important;
+        }
+    </style>
+</head>
+<body id="page-top">
+<div class="wrapper recruitList">
+    <div th:replace="~{|recruit/include/admin/inc_admin_header|}"></div>
+
+    <div class="container">
+        <div th:replace="~{|recruit/include/admin/inc_admin_side_left|}"></div>
+        <div class="contents">
+            <div class="inner">
+                <div class="tabWrap">
+                    <div class="tabCon">
+                        <div class="tab">
+                            <div class="headerArea flexBox" th:if="${data != null}">
+                                <h2>게시물 수정</h2>
+                                <div class="link">게시물 관리 &gt; 게시물 수정</div>
+                            </div>
+                            <div class="headerArea flexBox" th:if="${data == null}">
+                                <h2>게시물 등록</h2>
+                                <div class="link">게시물 관리 &gt; 게시물 등록</div>
+                            </div>
+                            <div class="item">
+                                <div class="itemCon show">
+                                    <div class="recruitColumn v2">
+                                        <h4>제목<i class="must" aria-label="필수항목">*</i></h4>
+                                        <div class="rightCon">
+                                            <div class="inpWrap">
+                                                <input type="text" id="title" name="title" class="wdh_full limit"
+                                                       value=""/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="recruitColumn v2">
+                                        <h4>기재기간<i class="must" aria-label="필수항목">*</i></h4>
+                                        <div class="rightCon">
+                                            <div class="formWrap">
+                                                <div class="selWrap">
+
+                                                    <select id="periodSelect" class="periodSelect wdh_180">
+                                                        <option value="" selected disabled>선택</option>
+                                                        <option value="7">7일</option>
+                                                        <option value="30">30일</option>
+                                                        <option value="60">60일</option>
+                                                        <option value="forever">무기한</option>
+                                                        <option value="custom">직접 입력</option>
+                                                    </select>
+
+                                                    <!-- 7/30/60 선택 시 표시 (readonly) -->
+                                                    <div id="autoRange" class="rangeWrap" style="display:none;">
+                                                        <input id="autoStart" type="date" readonly/>
+                                                        <span class="tilde"> ~ </span>
+                                                        <input id="autoEnd" type="date" readonly/>
+                                                    </div>
+
+                                                    <!-- 무기한 선택 시 표시 -->
+                                                    <div id="foreverText" class="foreverText" style="display:none;">
+                                                        무기한
+                                                    </div>
+
+                                                    <!-- 직접입력 선택 시 표시 -->
+                                                    <div id="customRange" class="rangeWrap" style="display:none;">
+                                                        <input id="customStart" type="date" readonly/>
+                                                        <span class="tilde"> ~ </span>
+                                                        <input id="customEnd" type="date"/>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="recruitColumn v2">
+                                        <h4>타입<i class="must" aria-label="필수항목">*</i></h4>
+                                        <div class="rightCon">
+                                            <div class="formWrap">
+                                                <div class="selWrap">
+                                                    <select name="type" id="type" class="wdh_180">
+                                                        <option value="">선택</option>
+                                                        <option value="1">공지사항</option>
+                                                        <option value="2">FAQ</option>
+                                                    </select>
+                                                </div>
+                                                <div class="ml20 chkWrap goodsList">
+                                                    <input id="popYn" type="checkbox" class="chkRoundSmall">
+                                                    <label for="popYn"><span>메인 팝업 적용</span></label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="recruitColumn v2">
+                                        <h4>내용<i aria-label="필수항목" class="must">*</i></h4>
+                                        <div class="rightCon registerBox">
+                                            <div class="text_form">
+                                                <div id="summernote" class=" summernote wdh_full"
+                                                     style="border:solid 1px #ddd"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="btnWrap">
+                                        <button class="btnType btnSize44 btnLineG3" id="cancelBtn">취소</button>
+                                        <button class="btnType btnSize44 btnColorP2" id="saveBtn">저장</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+<script th:inline="javascript">
+    $('.loading').hide();
+
+    $('#summernote').summernote({
+        height: 450
+    });
+
+    let _seq;
+    const isNew = [[${isNew}]];
+    const boardData = [[${data}]];
+    const currentUserSeq = [[${session.loginUserSeq}]];
+
+    // boardData가 존재하고, 그 안에 boardSeq라는 키가 실제로 있을 때만 "수정"
+    const isUpdate = (boardData && boardData.boardSeq);
+
+    const periodSelect = document.getElementById("periodSelect");
+
+    const autoRange = document.getElementById("autoRange");
+    const foreverText = document.getElementById("foreverText");
+    const customRange = document.getElementById("customRange");
+
+    const autoStart = document.getElementById("autoStart");
+    const autoEnd = document.getElementById("autoEnd");
+
+    const customStart = document.getElementById("customStart");
+
+    // YYYY-MM-DD (로컬 기준) 만들기
+    function toYmd(date) {
+        const y = date.getFullYear();
+        const m = String(date.getMonth() + 1).padStart(2, "0");
+        const d = String(date.getDate()).padStart(2, "0");
+        return `${y}-${m}-${d}`;
+    }
+
+    function addDays(baseDate, days) {
+        const d = new Date(baseDate);
+        d.setDate(d.getDate() + days);
+        return d;
+    }
+
+    function hideAll() {
+        autoRange.style.display = "none";
+        foreverText.style.display = "none";
+        customRange.style.display = "none";
+    }
+
+    function setTodayDefaults() {
+        const today = new Date();
+        const todayYmd = toYmd(today);
+
+        // 직접입력 시작일 기본값 = 오늘
+        customStart.value = todayYmd;
+
+        // 자동 영역 시작일도 오늘로 (표시될 때만 의미)
+        autoStart.value = todayYmd;
+    }
+
+    // 초기 기본 세팅
+    setTodayDefaults();
+
+    periodSelect.addEventListener("change", () => {
+        const val = periodSelect.value;
+        const today = new Date();
+        const todayYmd = toYmd(today);
+
+        hideAll();
+
+        // 선택 값이 7/30/60(숫자)면 자동 범위 표시
+        if (/^\d+$/.test(val)) {
+            const days = Number(val);
+            const end = addDays(today, days);
+
+            autoStart.value = todayYmd;
+            autoEnd.value = toYmd(end);
+
+            autoRange.style.display = "flex";
+            return;
+        }
+
+        // 무기한
+        if (val === "forever") {
+            foreverText.style.display = "flex";
+            return;
+        }
+
+        // 직접입력
+        if (val === "custom") {
+            customStart.value = todayYmd;
+            customRange.style.display = "flex";
+            return;
+        }
+    });
+
+    function toYmd(date) {
+        const y = date.getFullYear();
+        const m = String(date.getMonth() + 1).padStart(2, '0');
+        const d = String(date.getDate()).padStart(2, '0');
+        return `${y}-${m}-${d}`;
+    }
+
+    function getPeriodParam() {
+        const sel = $('#periodSelect').val(); // "7" | "30" | "60" | "forever" | "custom" | ""(미선택)
+
+        const result = {
+            periodYn: 'N',
+            periodStartDt: null,
+            periodEndDt: null
+        };
+
+        if (!sel) return result;
+
+        // 선택했다면 기간 기능 사용
+        result.periodYn = 'Y';
+
+        if (sel === 'forever') {
+            // 무기한: 시작일만 저장(없으면 오늘), 종료일 null
+            const start = $('#autoStart').val() || toYmd(new Date());
+            result.periodStartDt = start + ' 00:00:00';
+            result.periodEndDt = null;
+            return result;
+        }
+
+        if (sel === 'custom') {
+            const start = $('#customStart').val();
+            const end = $('#customEnd').val();
+
+            if (!start) {
+                alert('시작날짜를 선택해주세요.');
+                return null;
+            }
+            if (end && end < start) {
+                alert('종료날짜는 시작날짜보다 빠를 수 없습니다.');
+                return null;
+            }
+
+            result.periodStartDt = start + ' 00:00:00';
+            result.periodEndDt = end ? (end + ' 23:59:59') : null;
+            return result;
+        }
+
+        // 7/30/60 자동기간
+        if (/^\d+$/.test(sel)) {
+            const start = $('#autoStart').val() || toYmd(new Date());
+            const end = $('#autoEnd').val();
+
+            if (!end) {
+                alert('종료날짜 계산 값이 없습니다. 기간 선택을 다시 해주세요.');
+                return null;
+            }
+
+            result.periodStartDt = start + ' 00:00:00';
+            result.periodEndDt = end + ' 23:59:59';
+            return result;
+        }
+
+        return result;
+    }
+
+    function toDateOnly(yyyyMMddOrDatetime) {
+        if (!yyyyMMddOrDatetime) return '';
+        return String(yyyyMMddOrDatetime).substring(0, 10);
+    }
+
+    function dayDiffInclusive(startYmd, endYmd) {
+        const s = new Date(startYmd + 'T00:00:00');
+        const e = new Date(endYmd + 'T00:00:00');
+        const ms = e - s;
+        const days = Math.round(ms / (1000 * 60 * 60 * 24));
+        return days;
+    }
+
+    function applyPeriodToForm(boardData) {
+
+        if (!boardData?.period_yn || boardData.period_yn === 'N') {
+            $('#periodSelect').val('');
+            return;
+        }
+
+        if (!boardData?.periodStartDt || !boardData.periodEndDt) {
+            return;
+        }
+
+        const start = toDateOnly(boardData.periodStartDt);
+        const end = toDateOnly(boardData.periodEndDt); // 무기한이면 '' 가능
+
+        // 무기한: end가 없으면 forever로 처리
+        if (!end) {
+            $('#periodSelect').val('forever').trigger('change');
+            $('#autoStart').val(start || toYmd(new Date()));
+            $('#autoRange').show();
+            $('#foreverText').show();
+            return;
+        }
+
+        // 7/30/60인지 판별(시작~종료 차이)
+        const diff = dayDiffInclusive(start, end);
+        if (diff === 7 || diff === 30 || diff === 60) {
+            $('#periodSelect').val(String(diff)).trigger('change');
+            $('#autoStart').val(start);
+            $('#autoEnd').val(end);
+            $('#autoRange').show();
+            return;
+        }
+
+        $('#periodSelect').val('custom').trigger('change');
+        $('#customStart').val(start);
+        $('#customEnd').val(end);
+        $('#customRange').show();
+    }
+
+    //----
+    if (boardData?.boardSeq) {
+        $('#title').val(boardData.title);
+        $('#type').val(boardData.type);
+        $('#boardDate').val(boardData.regDt);
+        $('#useYn').val(boardData.useYn);
+        $('#summernote').summernote('code', boardData.content);
+        if (boardData.popYn == 'Y') {
+            $('#popYn').prop('checked', true);
+        } else {
+            $('#popYn').prop('checked', false);
+        }
+        _seq = boardData.boardSeq;
+
+        applyPeriodToForm(boardData);
+
+        $('#saveBtn').val("수정하기");
+    } else {
+        $('#saveBtn').val("저장하기");
+    }
+
+    // 취소버튼
+    $('#cancelBtn').on('click', function () {
+        confirmModal({
+            title: '게시글 작성을 취소하시겠습니까?',
+            'content': '취소 시 입력한 정보는 저장되지 않습니다.',
+            'cancelUse': true,
+            'confirm': function () {
+                history.back();
+            }
+        });
+    });
+
+    // 게시글 저장
+    $('#saveBtn').on('click', function () {
+        const action = isUpdate ? "수정" : "등록";
+        const saveType = isUpdate ? "update" : "insert";
+        confirmModal({
+            'title': action + '하시겠습니까?',
+            'cancelUse': true,
+            'confirm': function () {
+                alertLayerClose();
+                fn_boardInsert(saveType)
+            }
+        })
+    });
+
+    function fn_boardInsert(saveType) {
+        const periodParam = getPeriodParam();
+        if (periodParam === null) return; // 검증 실패
+
+        const param = settingParam(saveType,periodParam);
+
+        $.ajax({
+            url: '/recruit/admin/board/ajax/saveBoard',
+            data: JSON.stringify(param),
+            type: 'POST',
+            processData: false,
+            contentType: 'application/json; charset=utf-8',
+            success: function (data) {
+                if (data.resultCd == 'S') {
+                    confirmModal({
+                        title: '등록되었습니다.', 'confirm': function () {
+                            location.href = '/recruit/admin/board/boardList';
+                        }
+                    })
+                } else {
+                    confirmModal({title: '등록에 실패하였습니다.'})
+                }
+            },
+            beforeSend: function () {
+                $('.loading').show();
+            },
+            complete: function () {
+                $('.loading').hide();
+            },
+            error: function (xhr, status, error) {
+                alert("서비스 오류입니다. 다시 새로고침후 이용해주시기 바랍니다.");
+            }
+        });
+    }
+
+    $('#summernote').summernote({
+        placeholder: '내용을 입력하세요',
+        height: 300, // set editor height
+        minHeight: null, // set minimum height of editor
+        maxHeight: null, // set maximum height of editor
+        focus: true, // set focus to editable area after initializing summernote
+        codemirror: { // codemirror options
+            theme: 'monokai'
+        }
+    });
+
+    var edit = function () {
+        $('.click2edit').summernote({focus: true});
+    };
+
+    var save = function () {
+        var markup = $('.click2edit').summernote('code');
+        $('.click2edit').summernote('destroy');
+    };
+
+    // ---
+    function settingParam(saveType ,periodParam){
+        const type = $('#type').val();
+        const useYn = $('#useYn').val() || 'Y';
+        const popYn = $('#popYn').is(':checked') ? 'Y' : 'N';
+        const content = $('#summernote').summernote('code');
+
+        return {
+            'boardSeq': (boardData && boardData.boardSeq) ? boardData.boardSeq : null
+            , 'userSeq': currentUserSeq
+            , 'saveType': saveType || ""
+            , 'title': $('#title').val()
+            , 'type': type
+            , 'content': content
+            , 'use_yn': useYn
+            , 'pop_yn': popYn
+            , 'period_yn': periodParam.periodYn
+            , 'period_start_dt': periodParam.periodStartDt
+            , 'period_end_dt': periodParam.periodEndDt
+        }
+    }
+
+
+</script>
+</html>

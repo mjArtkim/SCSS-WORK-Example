@@ -1,0 +1,14 @@
+<div class="re-company-recruit__hero"
+     th:fragment="recruitHead"
+     th:with="
+        resolvedStep=${recruitStepActive != null ? recruitStepActive : 1},
+        resolvedTitle=${recruitStepTitle != null ? recruitStepTitle : '담당자 정보를 확인해주세요'}
+     ">
+    <ol class="re-company-recruit__steps" aria-label="공고 등록 단계">
+        <li class="re-company-recruit__step" th:classappend="${resolvedStep == 1} ? ' is-active'">STEP 1</li>
+        <li class="re-company-recruit__step" th:classappend="${resolvedStep == 2} ? ' is-active'">STEP 2</li>
+        <li class="re-company-recruit__step" th:classappend="${resolvedStep == 3} ? ' is-active'">STEP 3</li>
+        <li class="re-company-recruit__step" th:classappend="${resolvedStep == 4} ? ' is-active'">STEP 4</li>
+    </ol>
+    <h1 class="re-company-recruit__title" th:text="${resolvedTitle}">담당자 정보를 확인해주세요</h1>
+</div>

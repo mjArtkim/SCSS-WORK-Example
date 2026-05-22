@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+  <head>
+    <div th:replace="~{|recruit/include/user/inc_head|}"></div>
+  </head>
+  <body>
+    <section>
+      <div class="header-box">
+        <div th:replace="~{|recruit/include/user/mobile/inc_mobile_main_header|}"></div>
+      </div>
+    </section>
+    <section class="mo-info">
+      <div class="mo-info__top">
+        <div class="mo-info-top">
+          <button
+              type="button"
+              onclick="movePage('/recruit/user/mobileInfo?type=region')"
+              th:classappend="${infoType == 'region'} ? ' is-active' : ''">
+            지역별
+          </button>
+          <button
+              type="button"
+              onclick="movePage('/recruit/user/mobileInfo?type=job')"
+              th:classappend="${infoType == 'job'} ? ' is-active' : ''">
+            직종별
+          </button>
+        </div>
+        <div class="mo-info-location">
+          <div class="mo-info-selected">
+            <button
+                type="button"
+                class="mo-info-selected__btn"
+                th:attr="onclick=|movePage('/recruit/user/mobileAddCodition?type=${infoType}')|">
+              조건선택
+            </button>
+            <button class="recent-btn">
+              <div class="recent-btn__flex"><div>전북</div>&#62;<div>김제시</div></div>
+              <div class="recent-btn__close"></div>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="mo-info__body">
+        <div class="mo-info__body-top">
+          <div>총 0건</div>
+          <div class="mo-info__body-top-select">
+            <select>
+              <option>추천순</option>
+              <option>최신순</option>
+              <option>마감순</option>
+              <option>지원순</option>
+              <option>조회순</option>
+            </select>
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M5 8L10 13L15 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+        </div>
+        <div class="mo-info__list" id="moInfoList">
+
+        </div>
+      </div>
+    </section>
+    <div class="m-only">
+      <div th:replace="~{|recruit/include/user/mobile/inc_bnb|}"></div>
+    </div>
+  </body>
+<script th:inline="javascript">
+  fn_getArticle()
+
+  function fn_getArticle(){
+    let param = {}
+    $.ajax({
+      url : '/recruit/user/test',
+      type : 'post',
+      data : JSON.stringify(param),
+      contentType : 'application/json',
+      success : function(data, status) {
+        let body = $('#moInfoList');
+        body.empty();
+        let testJson = {'title':'title', 'subTitle':'subtitle', 'address':'경기도 어쩌고', 'career':'신입, 경력' , 'date':'2029-02-02', 'study':'대졸'};
+
+        let list = [];
+        for(i= 0; i <10; i++){
+          list.push(testJson)
+        }
+
+        if (!list || list.length === 0) {
+          body.append(`        <div>
+          <h4>선택한 조건의 채용정보가 없습니다.</h4>
+          <p>선택하신 조건을 다시 확인해주세요.</p>
+        </div>`);
+          return;
+        }
+
+        let article = '';
+        $.each(list, function (index, item){
+          console.log(item.seq)
+          article += `<article class="re-company">
+                          <div class="re-company__tit">${item.title}</div>
+                          <div class="re-company__box">
+                            <h3 class="re-company__tit">${item.subTitle}</h3>
+                            <button class="re-company__scrap" type="button" aria-label="scrap">
+                              <span></span>
+                            </button>
+                          </div>
+                          <div class="re-company__location">${item.address} | ${item.career} | ${item.study} </div>
+                         <p>~${item.date}</p>
+                          <button class="re-company__button">지원하기</button>
+                        </article>`
+        })
+        body.append(article)
+      }
+    });
+  }
+</script>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="~{|sso/include/user/inc_head|}"></div>
+
+    <script type="text/javascript" src="https://static.nid.naver.com/js/naverLogin_implicit-1.0.3.js" charset="utf-8"></script>
+
+    <script src="/js/common/auth.js"></script>
+</head>
+<body>
+<div class="app-shell app-shell--auth app-shell--quick-actions-hidden app-shell--join">
+    <div class="app-body">
+        <div class="site-header header-box wrap join-header-wrap">
+            <div th:replace="~{|sso/include/user/inc_header|}"></div>
+        </div>
+        <div class="site-content">
+            <div class="re-login wrap">
+                <button class="join-page__back" type="button" data-role="join-back" aria-label="이전 단계로 이동" onclick="goBack()">
+                    <span class="icon-svg join-page__back-icon" data-icon-name="chevron_left" aria-hidden="true" style="--icon-url: url('/img/sso/user/icons/chevron_left_icon.svg');"></span>
+                </button>
+                <div class="re-login__inner">
+                    <h2 class="re-login__tit">본인인증가입</h2>
+                    <div class="re-login__depth">
+                        <div class="re-join">
+                            <div class="re-join__steps" aria-label="회원가입 단계">
+                                <div class="re-join__step re-join__step--active">
+                                    <span class="re-join__step-icon re-join__step-icon--terms" aria-hidden="true"></span>
+                                    <strong class="re-join__step-label">약관동의</strong>
+                                </div>
+                                <span class="re-join__step-arrow" aria-hidden="true"></span>
+                                <div class="re-join__step">
+                                    <span class="re-join__step-icon re-join__step-icon--profile" aria-hidden="true"></span>
+                                    <strong class="re-join__step-label">정보입력</strong>
+                                </div>
+                                <span class="re-join__step-arrow" aria-hidden="true"></span>
+                                <div class="re-join__step">
+                                    <span class="re-join__step-icon re-join__step-icon--done" aria-hidden="true"></span>
+                                    <strong class="re-join__step-label">가입완료</strong>
+                                </div>
+                            </div>
+
+                            <div class="re-join__terms">
+                                <label class="re-join__check re-join__check--headline" for="join-agree-all">
+                                    <input class="re-join__check-input" id="join-agree-all" type="checkbox" />
+                                    <span class="re-join__check-icon" aria-hidden="true"></span>
+                                    <span class="re-join__check-copy">아래 약관 및 정보처리방침에 동의합니다.</span>
+                                </label>
+
+                                <div class="re-join__divider" aria-hidden="true"></div>
+
+                                <div class="re-join__item">
+                                    <label class="re-join__check" for="join-agree-service">
+                                        <input class="re-join__check-input re-join__check-input--item" id="join-agree-service" type="checkbox" />
+                                        <span class="re-join__check-icon" aria-hidden="true"></span>
+                                        <span class="re-join__check-copy"><em>[필수]</em> 기업회원 이용약관에 동의합니다.</span>
+                                    </label>
+                                    <button class="re-join__view" type="button" data-role="open-terms-modal" data-terms-key="termsOfUse" onclick="openTermsModal(this)">내용 보기</button>
+                                </div>
+
+                                <div class="re-join__divider" aria-hidden="true"></div>
+
+                                <div class="re-join__item">
+                                    <label class="re-join__check" for="join-agree-privacy">
+                                        <input class="re-join__check-input re-join__check-input--item" id="join-agree-privacy" type="checkbox" />
+                                        <span class="re-join__check-icon" aria-hidden="true"></span>
+                                        <span class="re-join__check-copy"><em>[필수]</em> 개인 정보 처리 방침에 동의합니다.</span>
+                                    </label>
+                                    <button class="re-join__view" type="button" data-role="open-terms-modal"  data-terms-key="privacyPolicy" onclick="openTermsModal(this)">내용 보기</button>
+                                </div>
+
+                                <div class="re-join__divider" aria-hidden="true"></div>
+
+                                <button class="re-join__submit" id="company-join-submit" type="button" disabled onclick="movePage('/companyJoinInfo')">
+                                    회원가입
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-box">
+        <div th:replace="~{|sso/include/user/inc_footer|}"></div>
+    </div>
+    <input type="hidden" id="serverSnsResultCd" th:value="${snsResultCd}">
+    <input type="hidden" id="serverMsg" th:value="${msg}">
+</div>
+</body>
+<script th:inline="javascript">
+    $(function () {
+        const $joinPage = $('.re-join');
+
+        if ($joinPage.length === 0) {
+            return;
+        }
+
+        const $allAgree = $('#join-agree-all');
+        const $requiredAgreements = $joinPage.find('.re-join__check-input--item');
+        const $submitButton = $('#company-join-submit');
+        function syncAgreementState() {
+            const checkedCount = $requiredAgreements.filter(':checked').length;
+            const isAllChecked = checkedCount === $requiredAgreements.length;
+            $allAgree.prop('checked', isAllChecked);
+            $submitButton.prop('disabled', !isAllChecked);
+        }
+        $allAgree.on('change', function () {
+            const isChecked = $(this).is(':checked');
+            $requiredAgreements.prop('checked', isChecked);
+            syncAgreementState();
+        });
+        $requiredAgreements.on('change', function () {
+            syncAgreementState();
+        });
+        syncAgreementState();
+    });
+
+    const openTermsModal = (ele) => {
+        const termsData = {
+            "termsOfUse": {
+                "title": "페이마 주식회사 이용약관",
+                "content": [
+                    "제 1 장 총칙",
+                    "제 1 조 (목적) 이 약관은 페이마 주식회사(이하 “회사”)가 운영하는 “돌보미” 플랫폼(이하 “서비스”)의 이용과 관련하여 회사와 회원 간의 권리, 의무 및 책임사항을 규정함을 목적으로 합니다.",
+                    "제 2 조 (정의) 1. “서비스”란 회사가 제공하는 돌봄 관련 통합 플랫폼을 의미합니다. 2. “회원”이란 약관에 동의하고 이용계약을 체결한 자를 말하며, 개인회원과 기관회원으로 구분됩니다.",
+                    "제 3 조 (서비스의 성격) ① 회사는 회원 간 정보 제공 및 거래를 연결하는 플랫폼 사업자입니다. ② 회원 간의 구인·구직 및 거래에 대한 책임은 해당 회원에게 있으며, 회사는 이에 대해 책임을 지지 않습니다.",
+                    "제 4 조 (약관의 게시 및 개정) 회사는 약관을 서비스 화면에 게시하며, 관련 법령을 위반하지 않는 범위에서 개정할 수 있습니다. 변경 시 최소 7일(중대 변경 시 30일) 전 공지합니다.",
+                    "제 2 장 이용계약",
+                    "제 5 조 (이용계약 체결) 회원가입 신청 후 회사가 승낙함으로써 계약이 성립합니다. 기관회원은 필요 시 추가 서류를 제출해야 합니다.",
+                    "제 6 조 (가입 제한) 타인 명의 도용, 허위 정보 입력, 법령 위반 이력 등이 있는 경우 가입이 제한될 수 있습니다.",
+                    "제 3 장 공통 의무",
+                    "제 8 조 (계정 관리) 회원은 ID/비밀번호 관리 책임이 있으며 제3자에게 양도할 수 없습니다.",
+                    "제 9 조 (회원의 금지행위) 타인 정보 도용, 허위 정보 등록, 불법 행위 및 플랫폼을 악용하는 행위를 금지합니다.",
+                    "제 4 장 개인회원 조항",
+                    "제 10 조 (개인회원의 서비스 이용) 개인회원은 구인구직, 쇼핑, 커뮤니티, 교육, 금융/보험 등 제공되는 혜택을 이용할 수 있습니다.",
+                    "제 11 조 (개인회원의 책임) 제공 정보의 정확성을 보장해야 하며, 서비스 이용 결과에 대한 책임은 본인에게 있습니다.",
+                    "제 5 장 기관회원 조항",
+                    "제 13 조 (기관회원의 의무) 등록 정보의 진실성을 보장해야 하며 채용조건, 급여 등에 대한 법적 책임은 해당 기관회원에게 있습니다.",
+                    "제 14 조 (기관회원 제재) 허위 채용공고, 임금 미지급, 법령 위반 시 즉시 이용이 제한됩니다.",
+                    "제 6 장 서비스 이용",
+                    "제 15 조 (서비스 제공) 서비스는 연중무휴 제공을 원칙으로 하되, 시스템 점검 시 중단될 수 있습니다.",
+                    "제 16 조 (게시물 관리) 욕설, 비방, 불법 정보 및 음란물 게시물은 사전 통보 없이 삭제될 수 있습니다.",
+                    "제 7 장 계약해지 및 이용제한",
+                    "제 17 조 (해지) 회원은 언제든지 서비스 내 제공되는 기능을 통해 탈퇴를 신청할 수 있습니다.",
+                    "제 18 조 (이용제한) 약관 위반 시 사전 통지 없이 서비스 이용 제한, 계정 정지 또는 삭제 조치가 취해질 수 있습니다.",
+                    "제 8 장 면책",
+                    "제 19 조 (면책) ① 회사는 회원 간 거래 및 채용에 개입하지 않으며 책임을 지지 않습니다. ② 정보의 정확성을 보증하지 않으며 분쟁 발생 시 당사자 간 해결을 원칙으로 합니다.",
+                    "제 9 장 기타",
+                    "제 20 조 (관할법원) 서비스 이용으로 발생한 분쟁에 대해 소송이 제기될 경우 회사의 본사 소재지 법원을 관할로 합니다."
+                ]
+            },
+            "privacyPolicy": {
+                "title": "개인정보 처리방침",
+                "content": [
+                    "제 1 조 (총칙)",
+                    "페이마 주식회사(이하 “회사”)는 이용자의 개인정보를 중요시하며, 「개인정보 보호법」 등 관련 법령을 준수합니다. 회사는 개인정보처리방침을 통해 이용자의 개인정보가 어떻게 수집·이용·보관되는지 안내드립니다.",
+                    "제 2 조 (수집하는 개인정보 항목)",
+                    "1. 개인회원 회사는 회원가입 및 서비스 이용을 위해 다음 정보를 수집합니다.",
+                    "① 필수항목: 아이디(ID), 비밀번호, 이름, 휴대전화번호",
+                    "② 선택항목: 이메일 주소",
+                    "③ 서비스 이용 과정에서 자동 수집: 접속 IP, 쿠키, 서비스 이용 기록, 접속 로그",
+                    "2. 기관회원",
+                    "① 필수항목: 기관명, 사업자등록번호, 담당자 이름, 담당자 연락처, 아이디(ID), 비밀번호",
+                    "② 선택항목: 이메일 주소",
+                    "③ 서비스 이용 과정에서 자동 수집: 접속 IP, 쿠키, 서비스 이용 기록",
+                    "제 3 조 (개인정보의 수집 및 이용 목적)",
+                    "회사는 수집한 개인정보를 다음의 목적을 위해 이용합니다: 회원가입 및 본인 확인, 서비스 제공 및 운영, 구인구직 매칭, 쇼핑 및 결제 서비스, 커뮤니티 운영, 교육 및 정보 제공, 고객 상담 및 문의 대응, 서비스 개선 및 통계 분석, 부정 이용 방지",
+                    "제 4 조 (개인정보의 보유 및 이용기간)",
+                    "① 회사는 개인정보 수집 목적이 달성된 후에는 지체 없이 파기합니다.",
+                    "② 단, 다음의 경우 일정 기간 보관합니다. 계약 또는 청약철회 관련 기록: 5년 / 소비자 불만 및 분쟁 처리 기록: 3년 / 접속 로그 기록: 3개월 (전자상거래법 및 통신비밀보호법 기준)",
+                    "제 5 조 (개인정보의 제3자 제공)",
+                    "① 회사는 원칙적으로 개인정보를 외부에 제공하지 않습니다. ② 다만 회원이 사전에 동의한 경우나 법령에 의한 경우 제공될 수 있습니다. ③ 서비스 이용 과정에서 회원 간 서비스 제공을 위해 필요한 최소한의 개인정보가 상대방 회원에게 제공될 수 있습니다.",
+                    "제 6 조 (개인정보 처리 위탁)",
+                    "회사는 원활한 서비스 제공을 위해 일부 업무를 외부에 위탁할 수 있습니다. (예: 문자 발송 서비스, 결제 시스템(PG사), 클라우드 서버 운영 등) 위탁 시 관련 법령에 따라 안전하게 관리합니다.",
+                    "제 7 조 (이용자의 권리)",
+                    "이용자는 언제든지 다음 권리를 행사할 수 있습니다: 개인정보 조회, 수정 요청, 삭제 요청, 처리 정지 요청 (마이페이지 또는 고객센터 통해 가능)",
+                    "제 8 조 (개인정보 보호 조치)",
+                    "회사는 개인정보 보호를 위해 다음 조치를 시행합니다: 암호화 저장, 접근 권한 제한, 보안 시스템 운영",
+                    "제 9 조 (쿠키 사용)",
+                    "회사는 서비스 개선을 위해 쿠키를 사용할 수 있습니다. 이용자는 브라우저 설정을 통해 쿠키를 거부할 수 있습니다.",
+                    "제 10 조 (개인정보 보호 책임자)",
+                    "담당자: 이승현 / 연락처: 1566-0821 / 이메일: payma@payma.co.kr",
+                    "제 11 조 (변경에 대한 공지)",
+                    "본 방침이 변경될 경우 최소 7일 전에 공지합니다. 부칙: 본 개인정보처리방침은 2026년 3월 17일부터 적용됩니다."
+                ]
+            }
+        };
+        const targetKey = ele.getAttribute('data-terms-key');
+        const data = termsData[targetKey];
+        if (!data) {
+            console.error("해당 약관 데이터를 찾을 수 없습니다:", targetKey);
+            return;
+        }
+        const contentHtml = data.content
+            .map(line => `<p style="margin-bottom: 8px;">${line}</p>`)
+            .join('');
+        openModal(data.title, contentHtml);
+    }
+</script>
+</html>

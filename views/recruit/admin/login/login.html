@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <div th:replace="~{|recruit/include/admin/inc_admin_head|}"></div>
+</head>
+<body>
+<article class="wrapperPci">
+    <section class="containerPci flexCenter">
+        <div class="pciWrap">
+            <div class="pciTit">
+                <img class="mb-4 wdh_260" src="" alt="">
+                <h1 class="mt10">관리자 로그인</h1>
+            </div>
+            <div class="loginForm">
+                <div id="grid_center_login">
+                    <div class="inpWrap">
+                        <input class="p-inputtext p-component p-d-block" placeholder="아이디를 입력해 주세요." value="" id="id" name="id" required autofocus>
+                    </div>
+                    <div class="inpWrap">
+                        <div id="password" class="p-password p-component p-inputwrapper p-d-block">
+                            <input placeholder="비밀번호를 입력해 주세요" type="password" class="p-inputtext p-component p-password-input" id="pw" name="pw" value="">
+                        </div>
+                    </div>
+                </div>
+                <div class="btnWrap">
+                    <button class="btnType btnSize56 btnColorP wdh_full" id="btn_login" onclick="adminLogin();">로그인</button>
+                </div>
+            </div> <!-- loginForm -->
+            <div class="loginInfo text-center">
+                &copy; 2024
+            </div>
+        </div>
+    </section>
+</article>
+</body>
+<script th:inline="javascript">
+    let _idCode = /*[[${session.companyIdCode}]]*/ [];
+
+
+    function adminLogin(){
+        if($('#id').val().replaceAll(' ','') == ''){
+            confirmModal({'title' : '아이디를 입력해주세요.', 'confirm' : function(){
+                alertLayerClose();
+                $('#id').focus();
+            }});
+            return false;
+        }
+
+        if($('#pw').val() == ''){
+            confirmModal({'title' : '비밀번호를 입력해 주세요.', 'confirm' : function(){
+                    alertLayerClose();
+                    $('#pw').focus();
+                }});
+            return false;
+        }
+        let param = {
+            'id' : $('#id').val().replaceAll(' ','').toLowerCase(),
+            'pw' : $('#pw').val()
+        }
+
+        $.ajax({
+            url:"/recruit/admin/ajax/login",
+            data: JSON.stringify(param),
+            type:'POST',
+            dataType : 'json',
+            contentType:' application/json',
+            success:function(data){
+                if(data.resultCd == 'S'){
+                    location.href = '/recruit/admin/user/userList';
+                }else{
+                    confirmModal({'title' : '아이디와 비밀번호를 확인해주세요.'});
+                }
+            },
+            error:function(jqXHR, textStatus, errorThrown){
+                confirmModal({title: '오류발생'})
+            }
+        });
+
+    }
+
+    $('#pw').keyup(function(e){
+        if(e.keyCode == 13){
+            $('#pw').blur();
+            adminLogin()
+        }
+    })
+</script>
+</html>

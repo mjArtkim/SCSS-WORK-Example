@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <div th:replace="~{|recruit/include/user/inc_head|}"></div>
+    <script src="//t1.kakaocdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+</head>
+<body id="page-top">
+<div class="wrapper goodList">
+    <div th:replace="~{|recruit/include/user/inc_header|}"></div>
+    <div class="container">
+        <div th:replace="~{|recruit/include/user/inc_side_left|}"></div>
+        <div class="contents btnWrapper">
+            <div class="inner">
+               <div class="recruitContainer">
+                   <div class="recruitJoinTitle">
+                       <h2>구인구직 회원등록</h2>
+                   </div>
+                   <div>
+                       <div class="recruitJoinRadio">
+                           <input type="radio" id="typeM" name="userType" value="M" checked>
+                           <label for="typeM">개인회원</label>
+
+                           <input type="radio" id="typeC" name="userType" value="C">
+                           <label for="typeC">센터회원</label>
+                       </div>
+                   </div>
+                   <div class="recruitJoin">
+                       <table class="joinTable user-only">
+                           <tr>
+                               <th><span style="color: red;">*</span> 이름</th>
+                               <td>
+                                   <input type="text" id="user_name" name="user_name" placeholder="성함을 입력하세요" required/>
+                               </td>
+                           </tr>
+
+                           <tr>
+                               <th><span style="color: red;">*</span> 생년월일</th>
+                               <td>
+                                   <input type="text" id="user_birth" name="user_birth"
+                                          placeholder="예: 1994-01-01" maxlength="10" required/>
+                               </td>
+                           </tr>
+
+                           <tr>
+                               <th><span style="color: red;">*</span> 전화번호</th>
+                               <td>
+                                   <input type="tel" id="user_phone" name="user_phone"
+                                          placeholder="'-'를 포함하여 입력하세요" maxlength="13" required/>
+                               </td>
+                           </tr>
+                       </table>
+                       <table class="joinTable center-only" style="display: none;">
+                           <tr>
+                               <th><span style="color: red;">*</span> 센터 이름</th>
+                               <td>
+                                   <input type="text" id="center_name" name="center_name" placeholder="센터명을 입력하세요" required/>
+                               </td>
+                           </tr>
+
+                           <tr>
+                               <th><span style="color: red;">*</span> 대표자명</th>
+                               <td>
+                                   <input type="text" id="ceo_name" name="ceo_name" placeholder="대표자 성함을 입력하세요" required/>
+                               </td>
+                           </tr>
+
+                           <tr>
+                               <th><span style="color: red;">*</span> 사업자등록번호</th>
+                               <td>
+                                   <input type="text" id="biz_no" name="biz_no" placeholder="'-' 제외 10자리 입력" maxlength="10" required/>
+                               </td>
+                           </tr>
+                           <tr>
+                               <th><span style="color: red;">*</span> 사업자 등록증</th>
+                               <td>
+                                   <input type="file" id="center_license_file" name="center_resume_file"/>
+                               </td>
+                           </tr>
+                           <tr>
+                               <th>법인등록번호</th>
+                               <td>
+                                   <input type="text" id="corp_no" name="corp_no" placeholder="'-' 제외 13자리 입력" maxlength="13"/>
+                               </td>
+                           </tr>
+
+                           <tr>
+                               <th>법인형태</th>
+                               <td>
+                                   <select class="recruitJoinSelect" id="corp_type" name="corp_type">
+                                       <option value="">선택하세요</option>
+                                       <option value="CORP">주식회사</option>
+                                       <option value="LTD">유한회사</option>
+                                       <option value="IND">개인사업자</option>
+                                   </select>
+                               </td>
+                           </tr>
+
+                           <tr>
+                               <th>상장여부</th>
+                               <td>
+                                   <select class="recruitJoinSelect" id="listing_status" name="listing_status">
+                                       <option value="NONE">비상장</option>
+                                       <option value="KOSPI">KOSPI</option>
+                                       <option value="KOSDAQ">KOSDAQ</option>
+                                       <option value="KONEX">KONEX</option>
+                                   </select>
+                               </td>
+                           </tr>
+
+                           <tr>
+                               <th>기업규모</th>
+                               <td>
+                                   <select class="recruitJoinSelect" id="center_scale" name="center_scale">
+                                       <option value="">선택하세요</option>
+                                       <option value="SME">중소기업</option>
+                                       <option value="MID">중견기업</option>
+                                       <option value="LARGE">대기업</option>
+                                       <option value="START">스타트업</option>
+                                   </select>
+                               </td>
+                           </tr>
+
+                           <tr>
+                               <th>사원수</th>
+                               <td>
+                                   <input type="number" id="employee_cnt" name="employee_cnt" style="width: 80px;"/> 명
+                                   (기준 연도: <input type="number" id="employee_cnt_year" name="employee_cnt_year" placeholder="YYYY" style="width: 80px;" maxlength="4"/>년)
+                               </td>
+                           </tr>
+
+                           <tr>
+                               <th><span style="color: red;">*</span> 업종</th>
+                               <td>
+                                   <select class="recruitJoinSelect" id="center_industry" name="center_industry" required>
+                                       <option value="">업종을 선택하세요</option>
+                                       <option value="1">노인 의료 복지 시설 (입소)</option>
+                                       <option value="2">노인 요양 및 돌봄 시설 (방문)</option>
+                                       <option value="3">노인여가복지시설</option>
+                                       <option value="4">장애인 복지 시설</option>
+                                       <option value="5">아동/청소년 돌봄센터</option>
+                                       <option value="6">종합사회복지관</option>
+                                       <option value="7">기타</option>
+                                   </select>
+                               </td>
+                           </tr>
+
+                           <tr>
+                               <th>업종 상세 정보</th>
+                               <td>
+                                   <input type="text" id="center_industry_detail" name="center_industry_detail" placeholder="상세 업종을 입력하세요"/>
+                               </td>
+                           </tr>
+
+                           <tr>
+                               <th>설립일</th>
+                               <td>
+                                   <input type="date" id="founded_dt" name="founded_dt"/>
+                               </td>
+                           </tr>
+
+                           <tr>
+                               <th><span style="color: red;">*</span> 센터 주소</th>
+                               <td>
+                                   <div style="margin-bottom: 5px;">
+                                       <input type="text" id="center_add_zip" name="center_add_zip" placeholder="우편번호" readonly style="width: 100px;"/>
+                                       <button type="button" onclick="execDaumPostcode()">우편번호 찾기</button>
+                                   </div>
+                                   <div style="margin-bottom: 5px;">
+                                       <input type="text" id="center_add" name="center_add" placeholder="기본 주소" readonly style="width: 80%;" required/>
+                                   </div>
+                                   <div>
+                                       <input type="text" id="center_add_detail" name="center_add_detail" placeholder="상세 주소를 입력하세요" style="width: 80%;"/>
+                                   </div>
+                               </td>
+                           </tr>
+
+                           <tr>
+                               <th>홈페이지 주소</th>
+                               <td>
+                                   <input type="url" id="hompage_url" name="hompage_url" placeholder="https://example.com"/>
+                               </td>
+                           </tr>
+                           <tr>
+                               <th>자사 이력서 양식</th>
+                               <td>
+                                   <input type="file" id="center_resume_file" name="center_resume_file"/>
+                               </td>
+                           </tr>
+                       </table>
+                   </div>
+                   <div class="btnArea">
+                       <button type="button" class="btnJoin" onclick="fn_joinRecruit()">등록하기</button>
+                   </div>
+               </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+<script th:inline="javascript">
+
+     $(document).ready(function() {
+        $('input[name="userType"]').on('change', function() {
+            const selectedType = $(this).val();
+
+            if (selectedType === 'C') {
+                $('.user-only').hide();
+                $('.center-only').fadeIn(200);
+                $('#businessLicense').val('');
+            } else {
+                $('.center-only').hide();
+                $('.user-only').fadeIn(200);
+            }
+        });
+
+        if($('input[name="userType"]:checked').val() === 'M') {
+            $('.center-only').hide();
+        }else {
+            $('.user-only').hide();
+        }
+    });
+
+
+    const fn_joinRecruit = () => {
+        const recruitName = $('.recruitJoinName').val();
+
+        if(recruitName === "") {
+            alert("별명을 입력해주세요");
+            $('.recruitJoinName').focus();
+            return;
+        }
+
+        const userType = $('input[name="userType"]:checked').val();
+
+        const seq = info.seq
+
+        const param = {
+            user_type: userType,
+            recruit_name: recruitName
+        };
+
+        const formData = new FormData();
+
+        formData.append("userType", userType);
+        formData.append("recruitName", recruitName);
+        if (userType === 'M') {
+            param.user_seq = seq;
+            param.status = 'Y';
+            formData.append("userSeq", info.seq);
+            formData.append("status",'Y');
+        } else if (userType === 'C') {
+            param.center_seq = seq;
+            param.status = 'W';
+           formData.append("centerSeq", info.seq);
+            formData.append("status",'W');
+
+            const fileInput = $("#businessLicense")[0];
+            if(fileInput.files.length > 0){
+                formData.append("licenseFile", fileInput.files[0]);
+            }else{
+                alert("사업자 등록증 첨부바람");
+                return;
+            }
+        }
+
+        $.ajax({
+            url :  "/recruit/user/ajax/insertUserDetail",
+            data : formData,
+            type : 'POST',
+            processData:false,
+            contentType :false,
+            beforeSend: function() {
+                $('.loading').show();
+            },
+            success : function(data) {
+                if(data.resultCd == "S"){
+                    confirmModal({title:data.resultMsg, confirm : function (){
+                            alertLayerClose();
+                            location.href = "/recruit/user/main";
+                        }})
+                }else if(data.resultCd == "F"){
+
+                }
+            },
+            error : function(xhr, status, error) {
+                confirmModal({title: xhr.statusText});
+            },
+            complete: function() {
+                $('.loading').hide();
+            }
+        });
+    }
+
+</script>
+</html>

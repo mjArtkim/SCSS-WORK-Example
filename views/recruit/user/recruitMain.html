@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+<head>
+    <div th:replace="~{|recruit/include/user/inc_head|}"></div>
+</head>
+<body class="recruit-body">
+    <section>
+        <div class="recruit-header wrap">
+            <div class="header-box">
+                <div th:replace="~{|recruit/include/user/inc_header|}"></div>
+            </div>
+            <div class="search-box">
+                <div th:replace="~{|recruit/include/user/inc_search|}"></div>
+            </div>
+        </div>
+        <div class="sub-pcmenu pc-only">
+            <div th:replace="~{|recruit/include/user/pc/inc_sub_pcmenu|}"></div>
+        </div>
+    </section>
+    <section>
+        <div class="re-main wrap">
+            <div class="re-main__inner">
+                <div class="re-main__hero re-main__hero-swiper swiper">
+                    <div class="swiper-wrapper">
+                        <th:block th:each="item, itemStat : ${list}">
+                            <article class="re-hero swiper-slide">
+                                <div class="re-hero__bg">
+                                    <div class="re-hero__badge" th:text="${item.name}"></div>
+                                    <h1 class="re-hero__tit">[[${item.badgeTitle}]]<br>[[${item.subTitle}]]</h1>
+                                    <div class="re-hero__meta">
+                                        <span th:text="${item.date}"></span>
+                                        <span>[[${itemStat.count}]]/[[${itemStat.size}]]</span>
+                                    </div>
+                                </div>
+                            </article>
+                        </th:block>
+                    </div>
+                </div>
+<!--                <div class="re-hero__empty">-->
+<!--                    <div class="re-hero__empty-tit">해당 공고가 없습니다.</div>-->
+<!--                </div>-->
+                <article>
+                    <div class="re-banner"
+                         th:if="${banner != null}"
+                         th:style="|background-image: url('${banner.imageUrl}');|">
+                    </div>
+                    <div class="re-banner-empty"
+                         th:if="${banner == null}">
+                        등록된 배너가 없습니다.
+                    </div>
+                </article>
+
+                <ul class="re-section">
+                    <li class="re-section__inner" >
+                        <div class="re-section__head">
+                            <h2>오늘의 기업별 공고</h2>
+                            <button>전체보기</button>
+                        </div>
+                        <div class="re-section__card">
+                            <th:block th:unless="${#lists.isEmpty(list)}" >
+                                <th:block th:each="item, itemStat : ${list}">
+                                    <article class="re-company" th:onclick="|movePage('/recruit/user/jobInfo')|">
+                                        <div class="re-company__logo pc-only" th:style="|background: url('${item.logoUrl}') no-repeat center / contain;|"></div>
+                                        <div class="re-company__box">
+                                            <div class="re-company__tit" th:text="${item.title}"></div>
+                                            <button class="re-company__scrap" type="button" aria-label="scrap">
+                                                <span></span>
+                                            </button>
+                                        </div>
+                                        <h3 th:text="${item.subTitle}"></h3>
+                                        <div class="re-company__location pc-only">[[${item.address}]] | [[${item.worktime}]] | [[${item.study}]] </div>
+                                        <p>[[${item.date}]]</p>
+                                    </article>
+                                </th:block>
+                            </th:block>
+                            <th:block th:if="${#lists.isEmpty(list)}">
+                                <div class="re-section__empty">
+                                    등록된 내용이 없습니다.
+                                </div>
+                            </th:block>
+                        </div>
+                    </li>
+                    <li class="re-section__inner m-only">
+                        <div class="re-section__head">
+                            <h2>지역별 공고</h2>
+                            <button type="button" onclick="movePage('/recruit/user/mobileInfo')">전체보기</button>
+                        </div>
+                        <div class="re-section__card-grid">
+                            <th:block th:unless="${#lists.isEmpty(list)}" >
+                                <th:block th:each="item, itemStat : ${list}">
+                                    <article class="re-company">
+                                        <div class="re-company__box">
+                                            <h3 class="re-company__tit" th:text="${item.title}"></h3>
+                                            <button class="re-company__scrap" type="button" aria-label="scrap">
+                                                <span></span>
+                                            </button>
+                                        </div>
+                                        <div class="re-company__location">[[${item.address}]] | [[${item.worktime}]] | [[${item.study}]] </div>
+                                        <p>[[${item.date}]]</p>
+                                    </article>
+                                </th:block>
+                            </th:block>
+                            <th:block th:if="${#lists.isEmpty(list)}">
+                                <div class="re-section__empty">
+                                    등록된 내용이 없습니다.
+                                </div>
+                            </th:block>
+                        </div>
+                    </li>
+                    <li class="re-section__inner pc-only">
+                        <div class="re-section__head">
+                            <h2>지역별 공고</h2>
+                            <button type="button" onclick="movePage('/recruit/user/recruitInfo')">전체보기</button>
+                        </div>
+
+                        <div class="re-section__card-grid">
+                            <div class="re-section__article">
+                                <h2>광주광역시</h2>
+                                <th:block th:unless="${#lists.isEmpty(list)}">
+                                    <th:block th:each="item, itemStat : ${list}">
+                                        <article class="re-company">
+                                            <div class="re-company__logo pc-only" th:style="|background: url('${item.logoUrl}') no-repeat center / contain;|"></div>
+                                            <div class="re-company__box">
+                                                <div class="re-company__tit" th:text="${item.title}"></div>
+                                                <button class="re-company__scrap" type="button" aria-label="scrap">
+                                                    <span></span>
+                                                </button>
+                                            </div>
+                                            <h3 th:text="${item.subTitle}"></h3>
+                                            <div class="re-company__location pc-only">[[${item.address}]] | [[${item.worktime}]] | [[${item.study}]] </div>
+                                            <p>[[${item.date}]]</p>
+                                        </article>
+                                    </th:block>
+                                </th:block>
+                                <th:block th:if="${#lists.isEmpty(list)}">
+                                    <div class="re-section__empty">
+                                        등록된 내용이 없습니다.
+                                    </div>
+                                </th:block>
+                            </div>
+                            <div class="re-section__article">
+                                <h2>전북특별자치도</h2>
+                                <th:block th:unless="${#lists.isEmpty(list)}">
+                                    <th:block th:each="item, itemStat : ${list}">
+                                        <article class="re-company">
+                                            <div class="re-company__logo pc-only" th:style="|background: url('${item.logoUrl}') no-repeat center / contain;|"></div>
+                                            <div class="re-company__box">
+                                                <div class="re-company__tit" th:text="${item.title}"></div>
+                                                <button class="re-company__scrap" type="button" aria-label="scrap">
+                                                    <span></span>
+                                                </button>
+                                            </div>
+                                            <h3 th:text="${item.subTitle}"></h3>
+                                            <div class="re-company__location pc-only">[[${item.address}]] | [[${item.worktime}]] | [[${item.study}]] </div>
+                                            <p>[[${item.date}]]</p>
+                                        </article>
+                                    </th:block>
+                                </th:block>
+                                <th:block th:if="${#lists.isEmpty(list)}">
+                                    <div class="re-section__empty">
+                                        등록된 내용이 없습니다.
+                                    </div>
+                                </th:block>
+                            </div>
+                            <div class="re-section__article">
+                                <h2>전라남도</h2>
+                                <th:block th:unless="${#lists.isEmpty(list)}">
+                                    <th:block th:each="item, itemStat : ${list}">
+                                        <article class="re-company">
+                                            <div class="re-company__logo pc-only" th:style="|background: url('${item.logoUrl}') no-repeat center / contain;|"></div>
+                                            <div class="re-company__box">
+                                                <div class="re-company__tit" th:text="${item.title}"></div>
+                                                <button class="re-company__scrap" type="button" aria-label="scrap">
+                                                    <span></span>
+                                                </button>
+                                            </div>
+                                            <h3 th:text="${item.subTitle}"></h3>
+                                            <div class="re-company__location pc-only">[[${item.address}]] | [[${item.worktime}]] | [[${item.study}]] </div>
+                                            <p>[[${item.date}]]</p>
+                                        </article>
+                                    </th:block>
+                                </th:block>
+                                <th:block th:if="${#lists.isEmpty(list)}">
+                                    <div class="re-section__empty">
+                                        등록된 내용이 없습니다.
+                                    </div>
+                                </th:block>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="re-section__inner" >
+                        <div class="re-section__head">
+                            <h2>공지사항</h2>
+                            <button>전체보기</button>
+                        </div>
+                        <div class="re-notice" id="reNotice">
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+    <footer>
+        <div class="footer-box">
+            <div th:replace="~{|recruit/include/user/inc_footer|}"></div>
+        </div>
+    </footer>
+    <div class="m-only">
+        <div th:replace="~{|recruit/include/user/mobile/inc_bnb|}"></div>
+    </div>
+</body>
+
+<script th:inline="javascript">
+    $(window).on('load', function () {
+        var $heroSwiper = $('.re-main__hero-swiper');
+        if (!$heroSwiper.length) {
+            return;
+        }
+        new Swiper($heroSwiper[0], {
+            slidesPerView: 'auto',
+            spaceBetween: 16,
+            grabCursor: true,
+            observer: true,
+            observeParents: true,
+            watchOverflow: true,
+            breakpoints: {
+                768: {
+                    spaceBetween: 20
+                }
+            }
+        });
+    });
+
+    fn_getNotice()
+
+    function fn_getNotice(){
+        let param = {}
+        $.ajax({
+            url : '/recruit/user/test',
+            type : 'post',
+            data : JSON.stringify(param),
+            contentType : 'application/json',
+            success : function(data, status) {
+                let body = $('#reNotice');
+                body.empty();
+                let testJson = {'category':'플랫폼 소식', 'title':'구인구직 플랫폼', 'content':'메뉴 구성과 정보 접근성이 개선되어 더 쉽게 공고를 확인할 수 있습니다.', 'date':'2029-02-02'};
+
+                let list = [];
+                for(i= 0; i <3; i++){
+                    list.push(testJson)
+                }
+
+                if (!list || list.length === 0) {
+                    body.append(`<div class="re-notice__empty">
+                                등록된 내용이 없습니다.
+                            </div>`
+                    );
+                    return;
+                }
+                let article = '';
+                $.each(list, function (index, item){
+                    if(index >= 3){
+                        return false;
+                    }
+                    article += `<article class="re-notice__card">
+                                    <div class="re-notice__cate">${item.category}</div>
+                                    <h3>${item.title}</h3>
+                                    <p>${item.content}</p>
+                                    <div class="re-notice__meta">
+                                        <time datetime="${item.date}"></time>
+                                        <a href="#">자세히 보기</a>
+                                    </div>
+                                </article>`;
+
+                });
+                body.append(article);
+            }
+        });
+    }
+</script>
+</html>

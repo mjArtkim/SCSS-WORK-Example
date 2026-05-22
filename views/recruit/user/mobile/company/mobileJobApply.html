@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity6">
+
+<head>
+    <div th:replace="~{|recruit/include/user/inc_head|}"></div>
+</head>
+<body>
+    <section>
+        <div class="header-box">
+            <div th:replace="~{|recruit/include/user/mobile/inc_mobile_main_header|}"></div>
+        </div>
+    </section>
+    <section class="mo-mys">
+        <div class="mo-my__top">
+            <button type="button" class="mo-my__top--btn js-mo-my-tab--all" th:classappend="${myType == 'all'} ? ' is-active' : ''">
+                전체(40)
+            </button>
+            <button type="button" class="mo-my__top--btn js-mo-my-tab--notopen" th:classappend="${myType == 'notopen'} ? ' is-active' : ''">
+                미열람(10)
+            </button>
+            <button type="button" class="mo-my__top--btn js-mo-my-tab--open" th:classappend="${myType == 'open'} ? ' is-active' : ''">
+                열람(30)
+            </button>
+            <button type="button" class="mo-my__top--btn js-mo-my-tab--bookmark" th:classappend="${myType == 'bookmark'} ? ' is-active' : ''">
+                스크랩(10)
+            </button>
+        </div>
+
+        <div class="mo-my__panel js-mo-my-panel--all" th:classappend="${myType == 'all'} ? ' is-open' : ''">
+            <div class="mo-job">
+                <div class="mo-job__filter">
+                    <button class="mo-job__filter--trigger" type="button">
+                        <span class="mo-job__filter--label">공고 목록</span>
+                        <strong class="mo-job__filter--value">간호 조무사(간호사) 채용</strong>
+                        <span class="mo-job__filter--search-icon" aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="mo-job__toolbar">
+                    <select class="mo-job__toolbar--sort" type="button">
+                        <option>지원일순</option>
+                        <option>경력 높은순</option>
+                        <option>경력 낮은순</option>
+                        <option>나이 높은순</option>
+                        <option>나이 낮은순</option>
+                    </select>
+                </div>
+                <div class="mo-job__list">
+                    <article class="mo-job__card">
+                        <button class="mo-job__card--bookmark" type="button" aria-label="스크랩">
+                            <span class="mo-job__card--bookmarkicon"></span>
+                        </button>
+                        <div th:onclick="|movePage('/recruit/user/applicantDetail')|">
+                            <div class="mo-job__card--body">
+                                <div class="mo-job__card--thumb">
+                                    <img src="/img/recruit/user/test_img.png" alt="프로필">
+                                </div>
+                                <div class="mo-job__card--content">
+                                    <div class="mo-job__card--head">
+                                        <strong class="mo-job__card--name">박옥자</strong>
+                                        <span class="mo-job__card--meta">(여, 만 40)</span>
+                                    </div>
+                                    <p class="mo-job__card--spec">경력 5년 6개월 | 희망연봉 3,000 ~ 4,000만원</p>
+                                    <p class="mo-job__card--company">최종회사 <span>페이마주식회사</span></p>
+                                </div>
+                            </div>
+                            <div class="mo-job__card--foot">
+                                <span class="mo-job__card--date">2026.05.22 지원</span>
+                                <span class="mo-job__card--status is-unread">미열람</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="mo-job__card">
+                        <button class="mo-job__card--bookmark is-active" type="button" aria-label="스크랩됨">
+                            <span class="mo-job__card--bookmarkicon is-active"></span>
+                        </button>
+                        <div th:onclick="|movePage('/recruit/user/applicantDetail')|">
+                            <div class="mo-job__card--body">
+                                <div class="mo-job__card--thumb">
+                                    <img src="/img/recruit/user/test_img.png" alt="프로필">
+                                </div>
+                                <div class="mo-job__card--content">
+                                    <div class="mo-job__card--head">
+                                        <strong class="mo-job__card--name">박옥자</strong>
+                                        <span class="mo-job__card--meta">(여, 만 40)</span>
+                                    </div>
+                                    <p class="mo-job__card--spec">신입 | 희망연봉 회사내규에 따름</p>
+                                    <p class="mo-job__card--company">최종회사 <span>페이마주식회사</span></p>
+                                </div>
+                            </div>
+                            <div class="mo-job__card--foot">
+                                <span class="mo-job__card--date">2026.05.22 지원</span>
+                                <span class="mo-job__card--status">열람</span>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="mo-job__card">
+                        <button class="mo-job__card--bookmark is-active" type="button" aria-label="스크랩됨">
+                            <span class="mo-job__card--bookmarkicon is-active"></span>
+                        </button>
+                        <div th:onclick="|movePage('/recruit/user/applicantDetail')|">
+                        <div class="mo-job__card--body">
+                            <div class="mo-job__card--thumb">
+                                <img src="/img/recruit/user/test_img.png" alt="프로필">
+                            </div>
+                            <div class="mo-job__card--content">
+                                <div class="mo-job__card--head">
+                                    <strong class="mo-job__card--name">박옥자</strong>
+                                    <span class="mo-job__card--meta">(여, 만 40)</span>
+                                </div>
+                                <p class="mo-job__card--spec">경력 3년 | 희망연봉 3,000~4,000만원</p>
+                                <p class="mo-job__card--company">최종회사 <span>페이마주식회사</span></p>
+                            </div>
+                        </div>
+                        <div class="mo-job__card--foot">
+                            <span class="mo-job__card--date">2026.05.22 지원</span>
+                            <span class="mo-job__card--status">열람</span>
+                        </div>
+                        </div>
+                    </article>
+
+                    <article class="mo-job__card">
+                        <button class="mo-job__card--bookmark" type="button" aria-label="스크랩">
+                            <span class="mo-job__card--bookmarkicon"></span>
+                        </button>
+                        <div th:onclick="|movePage('/recruit/user/applicantDetail')|">
+                        <div class="mo-job__card--body">
+                            <div class="mo-job__card--thumb">
+                                <img src="/img/recruit/user/test_img.png" alt="프로필">
+                            </div>
+                            <div class="mo-job__card--content">
+                                <div class="mo-job__card--head">
+                                    <strong class="mo-job__card--name">박옥자</strong>
+                                    <span class="mo-job__card--meta">(여, 만 40)</span>
+                                </div>
+                                <p class="mo-job__card--spec">경력 12년 12개월 | 희망연봉 5,000~6,000만원</p>
+                                <p class="mo-job__card--company">최종회사 <span>페이마주식회사</span></p>
+                            </div>
+                        </div>
+                        <div class="mo-job__card--foot">
+                            <span class="mo-job__card--date">2026.05.22 지원</span>
+                            <span class="mo-job__card--status is-unread">미열람</span>
+                        </div>
+                        </div>
+                    </article>
+
+                    <article class="mo-job__card">
+                        <button class="mo-job__card--bookmark" type="button" aria-label="스크랩">
+                            <span class="mo-job__card--bookmarkicon"></span>
+                        </button>
+                        <div th:onclick="|movePage('/recruit/user/applicantDetail')|">
+                        <div class="mo-job__card--body">
+                            <div class="mo-job__card--thumb">
+                                <img src="/img/recruit/user/test_img.png" alt="프로필">
+                            </div>
+                            <div class="mo-job__card--content">
+                                <div class="mo-job__card--head">
+                                    <strong class="mo-job__card--name">박옥자</strong>
+                                    <span class="mo-job__card--meta">(여, 만 40)</span>
+                                </div>
+                                <p class="mo-job__card--spec">신입</p>
+                                <p class="mo-job__card--company">최종회사 <span>페이마주식회사</span></p>
+                            </div>
+                        </div>
+                        <div class="mo-job__card--foot">
+                            <span class="mo-job__card--date">2026.05.22 지원</span>
+                            <span class="mo-job__card--status">열람</span>
+                        </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+        <div class="mo-my__panel js-mo-my-panel--notopen" th:classappend="${myType == 'notopen'} ? ' is-open' : ''">
+            <div class="mo-job">
+                <div class="mo-job__filter">
+                    <button class="mo-job__filter--trigger" type="button">
+                        <span class="mo-job__filter--label">공고 목록</span>
+                        <strong class="mo-job__filter--value">간호 조무사(간호사) 채용</strong>
+                        <span class="mo-job__filter--search-icon" aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="mo-job__toolbar">
+                    <select class="mo-job__toolbar--sort" type="button">
+                        <option>지원일순</option>
+                        <option>경력 높은순</option>
+                        <option>경력 낮은순</option>
+                        <option>나이 높은순</option>
+                        <option>나이 낮은순</option>
+                    </select>
+                </div>
+                <div class="mo-job__list">
+                    <article class="mo-job__card">
+                        <button class="mo-job__card--bookmark" type="button" aria-label="스크랩">
+                            <span class="mo-job__card--bookmarkicon"></span>
+                        </button>
+                        <div th:onclick="|movePage('/recruit/user/applicantDetail')|">
+                            <div class="mo-job__card--body">
+                                <div class="mo-job__card--thumb">
+                                    <img src="/img/recruit/user/test_img.png" alt="프로필">
+                                </div>
+                                <div class="mo-job__card--content">
+                                    <div class="mo-job__card--head">
+                                        <strong class="mo-job__card--name">박옥자</strong>
+                                        <span class="mo-job__card--meta">(여, 만 40)</span>
+                                    </div>
+                                    <p class="mo-job__card--spec">경력 5년 6개월 | 희망연봉 3,000 ~ 4,000만원</p>
+                                    <p class="mo-job__card--company">최종회사 <span>페이마주식회사</span></p>
+                                </div>
+                            </div>
+                            <div class="mo-job__card--foot">
+                                <span class="mo-job__card--date">2026.05.22 지원</span>
+                                <span class="mo-job__card--status is-unread">미열람</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+        <div class="mo-my__panel js-mo-my-panel--open" th:classappend="${myType == 'open'} ? ' is-open' : ''">
+            <div class="mo-job">
+                <div class="mo-job__filter">
+                    <button class="mo-job__filter--trigger" type="button">
+                        <span class="mo-job__filter--label">공고 목록</span>
+                        <strong class="mo-job__filter--value">간호 조무사(간호사) 채용</strong>
+                        <span class="mo-job__filter--search-icon" aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="mo-job__toolbar">
+                    <select class="mo-job__toolbar--sort" type="button">
+                        <option>지원일순</option>
+                        <option>경력 높은순</option>
+                        <option>경력 낮은순</option>
+                        <option>나이 높은순</option>
+                        <option>나이 낮은순</option>
+                    </select>
+                </div>
+                <div class="mo-job__list">
+                    <article class="mo-job__card">
+                        <button class="mo-job__card--bookmark" type="button" aria-label="스크랩">
+                            <span class="mo-job__card--bookmarkicon"></span>
+                        </button>
+                        <div th:onclick="|movePage('/recruit/user/applicantDetail')|">
+                            <div class="mo-job__card--body">
+                                <div class="mo-job__card--thumb">
+                                    <img src="/img/recruit/user/test_img.png" alt="프로필">
+                                </div>
+                                <div class="mo-job__card--content">
+                                    <div class="mo-job__card--head">
+                                        <strong class="mo-job__card--name">박옥자</strong>
+                                        <span class="mo-job__card--meta">(여, 만 40)</span>
+                                    </div>
+                                    <p class="mo-job__card--spec">신입</p>
+                                    <p class="mo-job__card--company">최종회사 <span>페이마주식회사</span></p>
+                                </div>
+                            </div>
+                            <div class="mo-job__card--foot">
+                                <span class="mo-job__card--date">2026.05.22 지원</span>
+                                <span class="mo-job__card--status">열람</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+        <div class="mo-my__panel js-mo-my-panel--bookmark" th:classappend="${myType == 'bookmark'} ? ' is-open' : ''">
+            <div class="mo-job">
+                <div class="mo-job__filter">
+                    <button class="mo-job__filter--trigger" type="button">
+                        <span class="mo-job__filter--label">공고 목록</span>
+                        <strong class="mo-job__filter--value">간호 조무사(간호사) 채용</strong>
+                        <span class="mo-job__filter--search-icon" aria-hidden="true"></span>
+                    </button>
+                </div>
+                <div class="mo-job__toolbar">
+                    <select class="mo-job__toolbar--sort" type="button">
+                        <option>지원일순</option>
+                        <option>경력 높은순</option>
+                        <option>경력 낮은순</option>
+                        <option>나이 높은순</option>
+                        <option>나이 낮은순</option>
+                    </select>
+                </div>
+                <div class="mo-job__list">
+                    <article class="mo-job__card">
+                        <button class="mo-job__card--bookmark is-active" type="button" aria-label="스크랩됨">
+                            <span class="mo-job__card--bookmarkicon is-active"></span>
+                        </button>
+                        <div th:onclick="|movePage('/recruit/user/applicantDetail')|">
+                            <div class="mo-job__card--body">
+                                <div class="mo-job__card--thumb">
+                                    <img src="/img/recruit/user/test_img.png" alt="프로필">
+                                </div>
+                                <div class="mo-job__card--content">
+                                    <div class="mo-job__card--head">
+                                        <strong class="mo-job__card--name">박옥자</strong>
+                                        <span class="mo-job__card--meta">(여, 만 40)</span>
+                                    </div>
+                                    <p class="mo-job__card--spec">신입 | 희망연봉 회사내규에 따름</p>
+                                    <p class="mo-job__card--company">최종회사 <span>페이마주식회사</span></p>
+                                </div>
+                            </div>
+                            <div class="mo-job__card--foot">
+                                <span class="mo-job__card--date">2026.05.22 지원</span>
+                                <span class="mo-job__card--status">열람</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+
+    </section>
+    <footer class="min-h__bottom">
+        <div class="footer-box">
+            <div th:replace="~{|recruit/include/user/inc_footer|}"></div>
+        </div>
+    </footer>
+</body>
+<script th:inline="javascript">
+    $(function () {
+
+        $('.mo-my__top--btn').on('click', function () {
+            const target = fn_getClassTarget($(this), 'js-mo-my-tab--');
+            $('.mo-my__top--btn').removeClass('is-active');
+            $(this).addClass('is-active');
+            $('.mo-my__panel').removeClass('is-open');
+            $(`.js-mo-my-panel--${target}`).addClass('is-open');
+        });
+
+    });
+
+
+    function fn_getClassTarget($element, prefix) {
+        const classNames = ($element.attr('class') || '').split(/\s+/);
+        const targetClass = classNames.find(function (className) {
+            return className.indexOf(prefix) === 0;
+        });
+
+        return targetClass ? targetClass.slice(prefix.length) : '';
+    }
+
+
+</script>
+</html>

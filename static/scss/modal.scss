@@ -1,0 +1,383 @@
+@charset "utf-8";
+@use "variables" as *;
+@use "mixins" as *;
+
+body.is-modal-open {
+  overflow: hidden;
+}
+
+.dolbom-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: rem(30);
+
+  &[hidden] {
+    display: none;
+  }
+
+  &__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+  }
+
+  &__dialog {
+    position: relative;
+    width: min(100%, rem(700));
+    max-height: min(80vh, rem(680));
+    padding: rem(20);
+    border-radius: $radius;
+    background: $color-white;
+    box-shadow: shadow($color-black, 0.18);
+    overflow: hidden;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: rem(16);
+    margin-bottom: rem(18);
+  }
+
+  &__title {
+    font-size: rem(20);
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  &__close {
+    height: 45px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    color: $color-grey;
+    font-size: rem(14);
+    gap: rem(10);
+    .icon-svg {
+      font-size: rem(12);
+      margin-left: rem(5);
+    }
+    &:focus-visible {
+      color: $color-main;
+      outline: 2px solid rgba($color-main, 0.35);
+      outline-offset: 2px;
+      border-radius: rem(6);
+    }
+
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        color: $color-main;
+        .dolbom-modal__popclose {
+          background-image: url("/img/sso/user/icons/close_icon.svg");
+        }
+      }
+    }
+  }
+  &__dialogs {
+    position: relative;
+    width: min(100%, rem(500));
+    max-height: min(80vh, rem(680));
+    padding: rem(20);
+    border-radius: $radius;
+    background: $color-white;
+    box-shadow: shadow($color-black, 0.18);
+    overflow: hidden;
+  }
+
+  &__body {
+    max-height: calc(min(80vh, #{rem(680)}) - #{rem(92)});
+    color: $color-text;
+    font-size: rem(14);
+    word-break: keep-all;
+    overflow: auto;
+    p + p {
+      margin-top: rem(6);
+    }
+    &--img{
+      width: 100%;
+      min-height: 50vh;
+      background-repeat: no-repeat;
+      background-size: 100%;
+    }
+  }
+  &__popclose {
+    display: block;
+    width: rem(18);
+    height: rem(18);
+    background: url("/img/sso/user/icons/close_small_icon.svg") no-repeat center / cover;
+  }
+  @media screen and (max-width: 767px) {
+    padding: rem(20);
+
+    &__dialog {
+      width: 100%;
+      max-height: 78vh;
+      padding: rem(20);
+    }
+    &__body {
+      max-height: calc(78vh - #{rem(84)});
+    }
+  }
+  @media screen and (min-width: 768px) {
+    &__dialog {
+      padding: rem(30);
+    }
+  }
+}
+
+
+
+.dolbom-modals {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: rem(30);
+
+  &[hidden] {
+    display: none;
+  }
+
+  &__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+  }
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    gap: rem(20);
+    padding-right: rem(20);
+    .not-today {
+      position: relative;
+      font-size: rem(14);
+      color: $color-grey;
+      &::after{
+        position: absolute;
+        top: 0;
+        right: -11px;
+        display: block;
+        content: '';
+        clear: both;
+        width: 2px;
+        height: 16px;
+        border-radius: 2px;
+        background-color: $color-light-grey;
+      }
+      @media (hover: hover) and (pointer: fine) {
+        &:hover {
+          color: $color-main;
+        }
+      }
+    }
+  }
+
+  &__title {
+    font-size: rem(20);
+    font-weight: 700;
+  }
+
+  &__close {
+    height: 45px;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+    color: $color-grey;
+    font-size: rem(14);
+    gap: rem(10);
+    &:focus-visible {
+      color: $color-main;
+      outline: 2px solid rgba($color-main, 0.35);
+      outline-offset: 2px;
+      border-radius: rem(6);
+    }
+    @media (hover: hover) and (pointer: fine) {
+      &:hover {
+        color: $color-main;
+        .dolbom-modals__popclose {
+          background-image: url("/img/sso/user/icons/close_icon.svg");
+        }
+      }
+    }
+  }
+  &__dialogs {
+    position: relative;
+    width: min(100%, rem(500));
+    max-height: min(80vh, rem(680));
+    border-radius: $radius;
+    background: $color-white;
+    box-shadow: shadow($color-black, 0.18);
+    overflow: hidden;
+  }
+
+  &__body {
+    max-height: calc(min(80vh, #{rem(680)}) - #{rem(92)});
+    color: $color-text;
+    font-size: rem(14);
+    word-break: keep-all;
+    overflow: auto;
+    p + p {
+      margin-top: rem(6);
+    }
+    &--img{
+      width: 100%;
+      min-height: 50vh;
+      background-repeat: no-repeat;
+      background-size: 100%;
+    }
+  }
+  &__popclose {
+    display: block;
+    width: rem(14);
+    height: rem(14);
+    background: url("/img/sso/user/icons/close_small_icon.svg") no-repeat center / cover;
+  }
+  @media screen and (max-width: 767px) {
+    padding: rem(20);
+    &__body {
+      max-height: calc(78vh - #{rem(84)});
+    }
+  }
+  @media screen and (min-width: 768px) {
+  }
+}
+//alert
+body.is-alert-open {
+  overflow: hidden;
+}
+
+.dolbom-alert {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: rem(30);
+
+  &[hidden] {
+    display: none;
+  }
+
+  &__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba($color-black, 0.5);
+    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(2px);
+  }
+
+  &__dialog {
+    position: relative;
+    width: 100%;
+    padding: rem(20);
+    border-radius: rem(16);
+    background: $color-white;
+    box-shadow: 0 rem(16) rem(36) rgba($color-black, 0.18);
+  }
+
+  &__content {
+    padding: rem(2) 0 rem(24);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__title {
+    font-size: rem(18);
+    font-weight: 700;
+    line-height: 1.35;
+  }
+
+  &__message {
+    margin-top: rem(34);
+    color: $color-text;
+    font-size: rem(15);
+    line-height: 1.6;
+    white-space: pre-line;
+    word-break: keep-all;
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: rem(10);
+  }
+
+  &__button {
+    width: 100%;
+    min-height: rem(50);
+    border-radius: rem(10);
+    color: $color-white;
+    font-size: rem(15);
+    transition:
+            transform 0.14s ease,
+            opacity 0.2s ease,
+            box-shadow 0.2s ease;
+
+    &:focus-visible {
+      outline: rem(2) solid rgba($color-main, 0.35);
+      outline-offset: rem(2);
+    }
+
+    &:active {
+      transform: translateY(rem(1));
+    }
+  }
+
+  &__button--confirm {
+    order: 2;
+    background: $color-main;
+    box-shadow: 0 rem(8) rem(20) rgba($color-main, 0.2);
+  }
+
+  &__button--cancel {
+    order: 1;
+    background: $color-light-grey;
+  }
+
+  &.is-cancel-primary {
+    .dolbom-alert__button--confirm {
+      order: 1;
+      background: $color-light-grey;
+      box-shadow: none;
+    }
+
+    .dolbom-alert__button--cancel {
+      order: 2;
+      background: $color-main;
+      box-shadow: 0 rem(8) rem(20) rgba($color-main, 0.2);
+    }
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    &__button:hover {
+      opacity: 0.8;
+    }
+  }
+
+  @media screen and (min-width: 768px) {
+    &__dialog {
+      width: min(100%, #{rem(360)});
+      padding: rem(24);
+    }
+
+    &__title {
+      font-size: rem(20);
+    }
+  }
+}

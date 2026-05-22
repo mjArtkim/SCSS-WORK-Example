@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko"
+      xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <div th:replace="~{|sso/include/user/inc_head|}"></div>
+</head>
+<body data-aos-easing="ease-out" data-aos-duration="700" data-aos-delay="0">
+<div class="app-shell app-shell--auth app-shell--quick-actions-hidden">
+    <div class="app-body">
+        <div class="site-header header-box wrap">
+            <div th:replace="~{|sso/include/user/inc_header|}"></div>
+        </div>
+        <main class="site-content" aria-live="polite">
+            <section class="easy-login-page auth-page wrap">
+                <div
+                        class="easy-login-page__wrap auth-page__wrap auth-page__wrap--card auth-page__wrap--mobile-half"
+                >
+                    <header class="easy-login-page__content-header auth-page__header">
+                        <h2 class="easy-login-page__title auth-page__title">앱 로그인 관리</h2>
+                        <p
+                                class="easy-login-page__description auth-page__description auth-page__description--padded"
+                        >
+                            생체로그인이나, 핀번호 로그인을 통해 앱내에서 자동으로 로그인 하여
+                            돌보미 서비스를 이용 할 수 있습니다.
+                        </p>
+                    </header>
+                    <div>
+                        <div
+                                class="easy-login-page__settings auth-list auth-list--spaced"
+                                role="list"
+                                aria-label="로그인 설정"
+                        >
+                            <div
+                                    class="easy-login-page__setting auth-list__item auth-list__item--roomy"
+                                    role="listitem"
+                            >
+                                <span class="easy-login-page__setting-label">생체 자동 로그인</span>
+                                <label class="easy-login-page__switch">
+                                    <span class="sound-only">생체 자동 로그인 설정</span>
+                                    <input type="checkbox" name="biometricLogin" />
+                                    <span
+                                            class="easy-login-page__switch-track"
+                                            aria-hidden="true"
+                                    ></span>
+                                </label>
+                            </div>
+
+                            <div
+                                    class="easy-login-page__setting auth-list__item auth-list__item--roomy"
+                                    role="listitem"
+                            >
+                                <span class="easy-login-page__setting-label">핀번호 설정</span>
+                                <label class="easy-login-page__switch">
+                                    <span class="sound-only">핀번호 설정</span>
+                                    <input
+                                            type="checkbox"
+                                            name="pinLogin"
+                                            data-role="pin-login-toggle"
+                                    />
+                                    <span
+                                            class="easy-login-page__switch-track"
+                                            aria-hidden="true"
+                                    ></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="easy-login-page__actions auth-page__actions">
+                        <button
+                                class="easy-login-page__button auth-button auth-button--primary"
+                                type="button"
+                                onclick="goBack()"
+                        >
+                            완료
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+    </div>
+    <div class="footer-box">
+        <div th:replace="~{|sso/include/user/inc_footer|}"></div>
+    </div>
+</div>
+</body>
